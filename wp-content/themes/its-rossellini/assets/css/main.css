@@ -2670,10 +2670,10 @@ dd {
 
 .colophon {
 	position: relative;
-	margin: var(--section) var(--inset) var(--inset);
+	margin-top: var(--section);
 	padding-top: clamp(3rem, 5vw, 4.5rem);
 	overflow: hidden;
-	border-radius: var(--r-xl);
+	border-top: 1px solid var(--bordo-dark);
 	background:
 		radial-gradient(70% 60% at 50% 115%, rgb(16 50 207 / 0.55) 0%, rgb(16 50 207 / 0) 70%),
 		var(--abisso);

@@ -180,7 +180,7 @@ Interior pages (courses, news, documents) are light: white ground with a soft bl
 ## Layout
 
 - Canvas inset `clamp(0.5rem, 1.2vw, 1rem)`; container 1320px; section rhythm `clamp(4rem, 8vw, 7rem)`.
-- Home: full-bleed hero (full viewport, no inset or corners) → partner bar overlapping its lower edge → bento on canvas → courses in a white panel → comparison card on canvas → image with overlapping white card (path) → place (text + chips, globe) → news in a white panel → FAQ on canvas → gradient call card → footer card.
+- Home: full-bleed hero (full viewport, no inset or corners) → partner bar overlapping its lower edge → bento on canvas → courses in a white panel → comparison card on canvas → image with overlapping white card (path) → place (text + chips, globe) → news in a white panel → FAQ on canvas → gradient call card → full-bleed footer.
 - Bento (desktop): `cta s1 i1 s2 i2 / cta head head head head / wide wide list list s3`; 4 columns under 1100px; 2 under 640px.
 - Course grid: 4 columns, 2 under 1100px, 1 under 640px. News: 3 cards, 1 under 900px.
 - Header: sticky floating bar; transparent at the top, glass after 24px of scroll (dark glass on the home, light glass elsewhere). Under 1080px the nav collapses behind a "Menu" pill.
@@ -191,7 +191,7 @@ Depth comes from layering: panels over the canvas, the partner bar over the hero
 
 ## Shapes
 
-- 40px: panels, footer, call card, page-head photo, article photo.
+- 40px: panels, call card, page-head photo, article photo.
 - 30px: tiles, cards, rows container, document table, filter bar.
 - 22px: glass cards, news photo, index links.
 - Pills: buttons, nav, chips, inputs, filters, breadcrumbs. Circles: arrows, icons, pause control, language.
@@ -226,7 +226,7 @@ Text (display heading, lead) with four navy chips in a 2×2 grid (address, Metro
 Native `<details>` items in navy rounded rows (22px), question as h3, chevron that turns on open; the first item open. Content comes from the FAQ page (Details blocks or heading + paragraph). Works without JavaScript.
 
 ### Footer
-Navy card: logo, claim and circular social icons; three columns (offer, contacts, transparency + legal); the funding strip in a white rounded bar; base row with ©, the animations switch and languages; the logo as a giant outlined watermark fading into the bottom edge.
+Full-bleed navy band (no inset or corners, user decision, hairline top edge): logo, claim and circular social icons; three columns (offer, contacts, transparency + legal); the funding strip in a white rounded bar; base row with ©, the animations switch and languages; the logo as a giant outlined watermark fading into the bottom edge.
 
 ### Lists and documents
 Rows in a rounded container with circular arrows; the document filter is a light rounded bar with pill fields; the table is a rounded bordered container.
