@@ -615,14 +615,10 @@ dd {
 	}
 }
 
-/* ---------- Home hero: footage in a rounded card ---------- */
+/* ---------- Home hero: full-bleed footage ---------- */
 
 .has-hero .site-main {
 	margin-top: calc(-1 * (var(--header) + var(--inset)));
-}
-
-.hero {
-	padding: var(--inset) var(--inset) 0;
 }
 
 .hero__card {
@@ -631,10 +627,10 @@ dd {
 	grid-template-columns: minmax(0, 1fr) auto;
 	align-items: end;
 	gap: 2rem;
-	min-height: calc(100svh - 2 * var(--inset));
-	padding: calc(var(--header) + 3rem) clamp(1.25rem, 4vw, 3.5rem) calc(clamp(1.5rem, 4vw, 3.25rem) + 2.75rem);
+	/* Edge to edge; the extra 1.5rem covers the part tucked under the sticky header. */
+	min-height: calc(100svh + 1.5rem);
+	padding: calc(var(--header) + 3rem) calc(var(--inset) + clamp(1.25rem, 4vw, 3.5rem)) calc(clamp(1.5rem, 4vw, 3.25rem) + 2.75rem);
 	overflow: hidden;
-	border-radius: var(--r-xl);
 	background: var(--abisso-2);
 	isolation: isolate;
 }

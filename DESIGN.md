@@ -130,7 +130,7 @@ components:
 
 **Creative North Star: "La scuola, in una card"**
 
-The direction comes from three references the user chose (a dark biotech site, a light AI-health site, a dark IT-services site), translated into the institute's palette and Raleway; a fourth (a hosting site) adds the comparison card, the place block with the globe, the FAQ accordion and the fuller footer. Content lives in large rounded containers: the home hero is a rounded card holding the real footage, light sections are white panels inset into a deep-navy canvas, figures and photos sit in a bento of tiles. Type is light and large, in sentence case, with one phrase emphasised. Glass is used only where something floats over imagery: the navigation pill, the stat cards on the hero, the chips on photos.
+The direction comes from three references the user chose (a dark biotech site, a light AI-health site, a dark IT-services site), translated into the institute's palette and Raleway; a fourth (a hosting site) adds the comparison card, the place block with the globe, the FAQ accordion and the fuller footer. Content lives in large rounded containers: the home hero runs the real footage edge to edge (the user dropped its outer inset and corners), light sections are white panels inset into a deep-navy canvas, figures and photos sit in a bento of tiles. Type is light and large, in sentence case, with one phrase emphasised. Glass is used only where something floats over imagery: the navigation pill, the stat cards on the hero, the chips on photos.
 
 Interior pages (courses, news, documents) are light: white ground with a soft blue glow at the top, the same pills, radii and type.
 
@@ -180,18 +180,18 @@ Interior pages (courses, news, documents) are light: white ground with a soft bl
 ## Layout
 
 - Canvas inset `clamp(0.5rem, 1.2vw, 1rem)`; container 1320px; section rhythm `clamp(4rem, 8vw, 7rem)`.
-- Home: hero card (full viewport minus inset) → partner bar overlapping its lower edge → bento on canvas → courses in a white panel → comparison card on canvas → image with overlapping white card (path) → place (text + chips, globe) → news in a white panel → FAQ on canvas → gradient call card → footer card.
+- Home: full-bleed hero (full viewport, no inset or corners) → partner bar overlapping its lower edge → bento on canvas → courses in a white panel → comparison card on canvas → image with overlapping white card (path) → place (text + chips, globe) → news in a white panel → FAQ on canvas → gradient call card → footer card.
 - Bento (desktop): `cta s1 i1 s2 i2 / cta head head head head / wide wide list list s3`; 4 columns under 1100px; 2 under 640px.
 - Course grid: 4 columns, 2 under 1100px, 1 under 640px. News: 3 cards, 1 under 900px.
 - Header: sticky floating bar; transparent at the top, glass after 24px of scroll (dark glass on the home, light glass elsewhere). Under 1080px the nav collapses behind a "Menu" pill.
 
 ## Elevation & Depth
 
-Depth comes from layering: panels over the canvas, the partner bar over the hero card, glass over footage, the white path card over its photo. The footer switch "Animazioni" (remembered per visitor, hidden without JavaScript) turns off transitions and stops the hero video; reduced-motion users get the same. Shadows are soft and offset (`0 30px 60px -36px rgb(4 21 43 / 0.45)`); primary buttons carry a blue glow (`0 14px 32px -12px rgb(16 50 207 / 0.65)`). Glass: white or navy at 12–72% with `backdrop-filter: blur(14–18px)`.
+Depth comes from layering: panels over the canvas, the partner bar over the hero's lower edge, glass over footage, the white path card over its photo. The footer switch "Animazioni" (remembered per visitor, hidden without JavaScript) turns off transitions and stops the hero video; reduced-motion users get the same. Shadows are soft and offset (`0 30px 60px -36px rgb(4 21 43 / 0.45)`); primary buttons carry a blue glow (`0 14px 32px -12px rgb(16 50 207 / 0.65)`). Glass: white or navy at 12–72% with `backdrop-filter: blur(14–18px)`.
 
 ## Shapes
 
-- 40px: hero card, panels, footer, call card, page-head photo, article photo.
+- 40px: panels, footer, call card, page-head photo, article photo.
 - 30px: tiles, cards, rows container, document table, filter bar.
 - 22px: glass cards, news photo, index links.
 - Pills: buttons, nav, chips, inputs, filters, breadcrumbs. Circles: arrows, icons, pause control, language.
