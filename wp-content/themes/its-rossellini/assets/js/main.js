@@ -146,7 +146,7 @@
 		if (!('IntersectionObserver' in window)) return null;
 
 		const TARGETS = {
-			words: '.display, .hero__title, .page-head__title, .page-hero__title',
+			words: '.display, .hero__title, .page-head__title',
 			up: [
 				'.lead:not(.hero__lead)', '.panel__head > p', '.split-head > p', '.panel__more',
 				'.bento > *', '.grid__item', '.news-grid > *', '.rows > *',
@@ -160,7 +160,7 @@
 			].join(', '),
 			draw: '.colophon__mark',
 		};
-		const FIRST_VIEW = '.hero, .page-head, .page-hero';
+		const FIRST_VIEW = '.hero, .page-head';
 		const STEP = 80;
 
 		/* Headings become words that rise from a mask; screen readers keep the plain text. */
@@ -377,7 +377,7 @@
 		}, { threshold: 0.6 });
 
 		/* Parallax: the hero footage and the path photo drift against the scroll. */
-		const heroMedia = document.querySelector('.hero__media, .page-hero__backdrop');
+		const heroMedia = document.querySelector('.hero__media');
 		const pathPhoto = document.querySelector('.overlap__media img');
 		let parallax = false;
 		let queued = false;

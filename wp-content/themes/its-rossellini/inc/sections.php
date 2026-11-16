@@ -323,3 +323,37 @@ function its_child_cards( int $post_id, string $content ): array {
 	}
 	return $cards;
 }
+
+/**
+ * Footage for an interior hero, as on the home page: the page photo when it is large enough for the full
+ * width, otherwise the home video (with the home cover as poster), otherwise the home cover photo.
+ *
+ * @return array{video: string, image: int}
+ */
+function its_page_hero_media( int $image_id ): array {
+	$meta = $image_id ? wp_get_attachment_metadata( $image_id ) : array();
+	if ( $image_id && (int) ( $meta['width'] ?? 0 ) >= 1400 ) {
+		return array(
+			'video' => '',
+			'image' => $image_id,
+		);
+	}
+	$front = (int) get_option( 'page_on_front' );
+	$cover = $front && has_post_thumbnail( $front ) ? (int) get_post_thumbnail_id( $front ) : 0;
+	if ( ! $cover ) {
+		$widest = 0;
+		foreach ( its_courses( 12 )->posts as $course ) {
+			$id    = (int) get_post_thumbnail_id( $course );
+			$width = $id ? (int) ( wp_get_attachment_metadata( $id )['width'] ?? 0 ) : 0;
+			if ( $width > $widest ) {
+				$widest = $width;
+				$cover  = $id;
+			}
+		}
+	}
+	$video = its_hero_video();
+	return array(
+		'video' => $video,
+		'image' => $video ? $cover : ( $cover ?: $image_id ),
+	);
+}

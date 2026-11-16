@@ -25,6 +25,11 @@ foreach ( $sections as $n => $section ) {
 	}
 	$surfaces[ $n ] = $wants;
 }
+// What follows the sections (the news panel) is a panel too: the last section stays on the dark.
+$last = count( $sections ) - 1;
+if ( 'panel' === ( $args['next'] ?? '' ) && $last >= 0 && 'panel' === $surfaces[ $last ] && 'courses' !== $sections[ $last ]['kind'] ) {
+	$surfaces[ $last ] = 'dark';
+}
 
 foreach ( $sections as $n => $section ) :
 	$surface = $surfaces[ $n ];

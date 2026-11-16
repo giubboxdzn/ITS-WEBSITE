@@ -35,6 +35,23 @@ while ( have_posts() ) :
 		}
 		$callout = $parsed['callout'];
 		$links   = $callout['links'] ?? array();
+		// Hero actions: the page's own call first, then a meeting, as on the home page.
+		$meet       = array( its_page_url( 'incontriamoci', its_page_url( 'contatti' ) ), __( 'Prenota un incontro', 'its-rossellini' ) );
+		$hero_links = $links ?: array( $meet );
+		if ( count( $hero_links ) < 2 && $hero_links[0][0] !== $meet[0] ) {
+			$hero_links[] = $meet;
+		}
+		if ( count( $hero_links ) < 2 ) {
+			$hero_links[] = array( its_page_url( 'iscrizioni' ), __( 'Preiscriviti', 'its-rossellini' ) );
+		}
+		// The glass figure: the page's first figure, else the employment rate (home).
+		$stat = array();
+		foreach ( $parsed['sections'] as $section ) {
+			if ( $section['facts'] ) {
+				$stat = $section['facts'][0];
+				break;
+			}
+		}
 		get_template_part(
 			'template-parts/page-hero',
 			null,
@@ -43,13 +60,20 @@ while ( have_posts() ) :
 				'lead'     => has_excerpt() ? get_the_excerpt() : '',
 				'image_id' => (int) get_post_thumbnail_id(),
 				'index'    => $index,
-				'links'    => $links ?: array(
-					array( its_page_url( 'incontriamoci', its_page_url( 'contatti' ) ), __( 'Prenota un incontro', 'its-rossellini' ) ),
-					array( its_page_url( 'iscrizioni' ), __( 'Preiscriviti', 'its-rossellini' ) ),
-				),
+				'links'    => $hero_links,
+				'stat'     => $stat,
 			)
 		);
-		get_template_part( 'template-parts/page-sections', null, array( 'sections' => $parsed['sections'] ) );
+		get_template_part(
+			'template-parts/page-sections',
+			null,
+			array(
+				'sections' => $parsed['sections'],
+				'next'     => 'panel',
+			)
+		);
+		get_template_part( 'template-parts/news-panel' );
+		get_template_part( 'template-parts/faq-section' );
 		get_template_part(
 			'template-parts/cta-card',
 			null,
