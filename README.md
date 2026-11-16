@@ -44,6 +44,8 @@ Il server ascolta solo su questa macchina (`127.0.0.1`); `HOST=0.0.0.0 dev/serve
 3. **Python 3** da python.org, con l'opzione *Add python.exe to PATH*.
 4. Riaprire Git Bash, poi `dev/setup.sh` e `dev/serve.sh` dalla cartella del repo.
 
+Se `serve.sh` risponde *Failed to listen … autorizzazioni di accesso*, la porta è riservata da Hyper-V/WSL/Docker (`netsh interface ipv4 show excludedportrange protocol=tcp` mostra quali): usare un'altra porta, ad esempio `PORT=8888 dev/serve.sh`.
+
 Su Windows il tema è collegato con una *junction* (non servono permessi di amministratore). Per ripartire da un database vuoto basta cancellare `.wp/db/` e rilanciare `dev/setup.sh`.
 
 `dev/seed/fetch.py` legge (solo GET) l'API REST e le pagine pubbliche di itsrossellini.it e salva tutto in `.wp/seed/` (ignorato da git). `dev/seed/import.php` lo importa nel database locale. Non scrive nulla sul sito live.

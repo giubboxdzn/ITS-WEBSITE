@@ -295,6 +295,7 @@ foreach ( $data['partners'] as $partner ) {
 	$meta      = wp_get_attachment_metadata( $att );
 	$wide      = ! empty( $meta['width'] ) && ! empty( $meta['height'] ) && $meta['width'] / $meta['height'] > 5;
 	$img       = wp_get_attachment_image( $att, $wide ? 'full' : 'medium', false, array( 'alt' => $partner['name'] ) );
+	$img       = str_replace( untrailingslashit( home_url() ), '', $img ); // Root-relative: works on any local port.
 	$partners .= '<li' . ( $wide ? ' class="is-wide"' : '' ) . '>' . ( $partner['url'] ? '<a href="' . esc_url( $partner['url'] ) . '">' . $img . '</a>' : $img ) . "</li>\n";
 }
 $home_id = $page_ids['home'] ?? its_seed_upsert( 'page', 'home', array( 'post_title' => 'Home' ) );
