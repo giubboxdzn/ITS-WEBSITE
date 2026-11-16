@@ -277,8 +277,48 @@
    },
    {
     "name": "motion-switch",
-    "value": "html.motion-off, localStorage its-motion",
-    "purpose": "Footer switch: turns off transitions and stops the hero video; reduced motion does the same."
+    "value": "html.motion-off / html.anim; localStorage its-motion = on | off, default from prefers-reduced-motion",
+    "purpose": "Footer switch: every animation below runs only while it is on; off = static site, video paused, native accordions."
+   },
+   {
+    "name": "word-rise",
+    "value": "translate 115% -> 0, 1.1s ease-out, 55ms per word",
+    "purpose": "Headings (hero, page heads, display) split into masked words; plain text kept for screen readers."
+   },
+   {
+    "name": "reveal-up",
+    "value": "opacity 0 -> 1, translate 2rem -> 0, 0.8-1s ease-out, 80ms stagger per batch",
+    "purpose": "Cards, tiles, rows, chips, FAQ items, footer columns as they enter the viewport."
+   },
+   {
+    "name": "first-view",
+    "value": "keyframes its-rise / its-settle, 0.45-1.05s delays",
+    "purpose": "Hero lead, actions, glass cards, partner bar; page-head lead, actions and photo on load."
+   },
+   {
+    "name": "count-up",
+    "value": "0 -> value, 1.5s ease-out cubic",
+    "purpose": "Figures in tiles and glass cards (87%, courses, areas, 360 m2)."
+   },
+   {
+    "name": "parallax",
+    "value": "hero media 0.3x scroll; path photo +-5% at scale 1.1",
+    "purpose": "Depth on the footage and the overlap photo."
+   },
+   {
+    "name": "globe",
+    "value": "dots drift 110px / 14s linear; pin ping scale 1 -> 3.2, 2.4s",
+    "purpose": "The place block globe."
+   },
+   {
+    "name": "accordion",
+    "value": "height animation 0.45s ease-out (Web Animations API)",
+    "purpose": "FAQ open/close; native details when motion is off."
+   },
+   {
+    "name": "footer-wipe",
+    "value": "clip-path inset(0 100% 0 0) -> inset(0), 2s",
+    "purpose": "The outlined logo watermark."
    }
   ],
   "breakpoints": [

@@ -2,8 +2,45 @@
 (() => {
 	'use strict';
 
+	const root = document.documentElement;
 	const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 	const saveData = Boolean(navigator.connection && navigator.connection.saveData);
+	const EASE = 'cubic-bezier(0.16, 1, 0.3, 1)';
+
+	/* Motion: the footer switch decides; with no choice made, the system setting does.
+	   The <head> script already set .motion-off from the same rule before first paint. */
+	const readChoice = () => {
+		try {
+			return localStorage.getItem('its-motion');
+		} catch (e) {
+			return null;
+		}
+	};
+	let choice = readChoice();
+	const motionOn = () => !root.classList.contains('motion-off');
+	const motionToggle = document.querySelector('[data-motion-toggle]');
+
+	const setMotion = (on, remember) => {
+		root.classList.toggle('motion-off', !on);
+		if (remember) {
+			choice = on === !reduceMotion.matches ? null : (on ? 'on' : 'off');
+			try {
+				if (choice) localStorage.setItem('its-motion', choice);
+				else localStorage.removeItem('its-motion');
+			} catch (e) { /* storage unavailable: the choice lasts for this page only */ }
+		}
+		if (motionToggle) motionToggle.setAttribute('aria-checked', String(on));
+		document.dispatchEvent(new CustomEvent('its:motion', { detail: { off: !on } }));
+	};
+
+	if (motionToggle) {
+		motionToggle.hidden = false;
+		motionToggle.setAttribute('aria-checked', String(motionOn()));
+		motionToggle.addEventListener('click', () => setMotion(!motionOn(), true));
+	}
+	reduceMotion.addEventListener('change', (mq) => {
+		if (!choice) setMotion(!mq.matches, false);
+	});
 
 	/* Floating header: turns into a glass pill once the page scrolls. */
 	const masthead = document.querySelector('[data-masthead]');
@@ -39,26 +76,6 @@
 		window.matchMedia('(min-width: 1081px)').addEventListener('change', (mq) => mq.matches && setOpen(false));
 	}
 
-	/* Motion switch (footer): remembered per visitor, also stops the hero video. */
-	const root = document.documentElement;
-	const motionOff = () => root.classList.contains('motion-off') || reduceMotion.matches;
-	const motionToggle = document.querySelector('[data-motion-toggle]');
-	if (motionToggle) {
-		motionToggle.hidden = false;
-		const sync = () => motionToggle.setAttribute('aria-checked', String(!root.classList.contains('motion-off')));
-		sync();
-		motionToggle.addEventListener('click', () => {
-			const off = !root.classList.contains('motion-off');
-			root.classList.toggle('motion-off', off);
-			try {
-				if (off) localStorage.setItem('its-motion', 'off');
-				else localStorage.removeItem('its-motion');
-			} catch (e) { /* storage unavailable: the choice lasts for this page only */ }
-			sync();
-			document.dispatchEvent(new CustomEvent('its:motion', { detail: { off } }));
-		});
-	}
-
 	/* Hero video: plays only when motion and data allow; always pausable. */
 	const video = document.querySelector('[data-hero-video]');
 	const videoToggle = document.querySelector('[data-video-toggle]');
@@ -76,7 +93,7 @@
 				setState(true);
 			}
 		});
-		if (!motionOff() && !saveData) play();
+		if (motionOn() && !saveData) play();
 		else setState(true);
 		document.addEventListener('its:motion', (event) => {
 			if (event.detail.off) {
@@ -84,13 +101,278 @@
 				setState(true);
 			} else if (!saveData) play();
 		});
-		reduceMotion.addEventListener('change', (mq) => {
-			if (mq.matches) {
-				video.pause();
-				setState(true);
+	}
+
+	/* ---------- Animations (only while the switch is on) ---------- */
+
+	const Motion = (() => {
+		if (!('IntersectionObserver' in window)) return null;
+
+		const TARGETS = {
+			words: '.display, .hero__title, .page-head__title',
+			up: [
+				'.lead:not(.hero__lead)', '.panel__head > p', '.split-head > p', '.panel__more',
+				'.bento > *', '.grid__item', '.news-grid > *', '.rows > *',
+				'.compare', '.compare__row', '.compare__actions',
+				'.overlap__media', '.overlap__card', '.steps > li',
+				'.place__chips > li', '.place__globe', '.faq__item', '.faq-section__more',
+				'.cta-card', '.prose-card', '.index-list > li', '.editions__group',
+				'.area-filter', '.doc-filter', '.doc-table', '.article__photo', '.article__nav',
+				'.colophon__grid > *', '.colophon__funding', '.colophon__base',
+			].join(', '),
+			wipe: '.colophon__mark',
+		};
+		const FIRST_VIEW = '.hero, .page-head';
+		const STEP = 80;
+
+		/* Headings become words that rise from a mask; screen readers keep the plain text. */
+		const split = (el) => {
+			if (el.dataset.split) return;
+			el.dataset.split = '1';
+			const label = document.createElement('span');
+			label.className = 'screen-reader-text';
+			label.textContent = el.textContent.replace(/\s+/g, ' ').trim();
+			const visual = document.createElement('span');
+			visual.setAttribute('aria-hidden', 'true');
+			let n = 0;
+			const walk = (from, into) => {
+				from.childNodes.forEach((node) => {
+					if (node.nodeType === Node.TEXT_NODE) {
+						node.textContent.split(/(\s+)/).forEach((part) => {
+							if (!part) return;
+							if (!part.trim()) {
+								into.append(' ');
+								return;
+							}
+							const word = document.createElement('span');
+							const inner = document.createElement('span');
+							word.className = 'word';
+							inner.className = 'word__in';
+							inner.style.setProperty('--w', String(n++));
+							inner.textContent = part;
+							word.append(inner);
+							into.append(word);
+						});
+					} else if (node.nodeType === Node.ELEMENT_NODE) {
+						const copy = node.cloneNode(false);
+						copy.removeAttribute('id');
+						into.append(copy);
+						walk(node, copy);
+					}
+				});
+			};
+			walk(el, visual);
+			el.replaceChildren(label, visual);
+		};
+
+		const finish = (el) => {
+			el.dataset.reveal = 'done';
+			el.style.removeProperty('--d');
+		};
+
+		const reveal = (els) => {
+			els.sort((a, b) => {
+				const ra = a.getBoundingClientRect();
+				const rb = b.getBoundingClientRect();
+				return ra.top - rb.top || ra.left - rb.left;
+			});
+			els.forEach((el, i) => {
+				const delay = Math.min(i, 8) * STEP;
+				const words = el.dataset.reveal === 'words' ? el.querySelectorAll('.word').length : 0;
+				el.style.setProperty('--d', `${delay}ms`);
+				el.classList.add('is-in');
+				window.setTimeout(() => finish(el), delay + 1900 + words * 55);
+			});
+		};
+
+		const pending = new Set();
+		const release = (els) => {
+			els.forEach((el) => {
+				revealer.unobserve(el);
+				pending.delete(el);
+			});
+			if (els.length) reveal(els);
+		};
+		const revealer = new IntersectionObserver((entries) => {
+			release(entries.filter((entry) => entry.isIntersecting).map((entry) => entry.target));
+		}, { rootMargin: '0px 0px -8% 0px' });
+		const watch = (el) => {
+			pending.add(el);
+			revealer.observe(el);
+		};
+
+		/* Figures count up from zero; the final value stays in the page for assistive tech. */
+		const counters = [];
+		const prepareCounter = (el) => {
+			if (el.dataset.count) return null;
+			const text = el.textContent.trim();
+			const m = text.match(/^(\D*)(\d{1,3}(?:\.\d{3})+|\d+)(.*)$/s);
+			if (!m) return null;
+			el.dataset.count = '1';
+			const label = document.createElement('span');
+			label.className = 'screen-reader-text';
+			label.textContent = text;
+			const visual = document.createElement('span');
+			visual.className = 'count';
+			visual.setAttribute('aria-hidden', 'true');
+			visual.textContent = text;
+			el.replaceChildren(label, visual);
+			const target = parseInt(m[2].replace(/\./g, ''), 10);
+			const dots = m[2].includes('.');
+			const format = (v) => m[1] + (dots ? String(v).replace(/\B(?=(\d{3})+(?!\d))/g, '.') : String(v)) + m[3];
+			const counter = { el, visual, target, format, frame: 0, done: false };
+			counters.push(counter);
+			return counter;
+		};
+		const settle = (c) => {
+			window.cancelAnimationFrame(c.frame);
+			c.visual.textContent = c.format(c.target);
+			c.done = true;
+		};
+		const count = (c) => {
+			const start = performance.now() + (c.el.closest('.hero') ? 700 : 0);
+			const duration = 1500;
+			const tick = (now) => {
+				const t = Math.min(1, Math.max(0, (now - start) / duration));
+				c.visual.textContent = c.format(Math.round(c.target * (1 - (1 - t) ** 3)));
+				if (t < 1) c.frame = window.requestAnimationFrame(tick);
+				else c.done = true;
+			};
+			c.frame = window.requestAnimationFrame(tick);
+		};
+		const counterWatch = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if (!entry.isIntersecting) return;
+				counterWatch.unobserve(entry.target);
+				const c = counters.find((item) => item.el === entry.target);
+				if (c && !c.done) {
+					if (motionOn()) count(c);
+					else settle(c);
+				}
+			});
+		}, { threshold: 0.6 });
+
+		/* Parallax: the hero footage and the path photo drift against the scroll. */
+		const heroMedia = document.querySelector('.hero__media');
+		const pathPhoto = document.querySelector('.overlap__media img');
+		let parallax = false;
+		let queued = false;
+		const drift = () => {
+			queued = false;
+			if (!parallax) return;
+			const vh = window.innerHeight;
+			const y = window.scrollY;
+			/* At the very bottom, whatever is left (the footer mark) comes in too. */
+			if (pending.size && y + vh >= document.documentElement.scrollHeight - 4) {
+				release([...pending].filter((el) => el.getBoundingClientRect().top < vh));
 			}
+			if (heroMedia && y < vh * 1.5) heroMedia.style.translate = `0 ${(y * 0.3).toFixed(1)}px`;
+			if (pathPhoto) {
+				const r = pathPhoto.parentElement.getBoundingClientRect();
+				if (r.bottom > 0 && r.top < vh) {
+					const p = Math.max(-1, Math.min(1, (r.top + r.height / 2 - vh / 2) / vh));
+					pathPhoto.style.translate = `0 ${(p * -5).toFixed(2)}%`;
+				}
+			}
+		};
+		const onScroll = () => {
+			if (!queued) {
+				queued = true;
+				window.requestAnimationFrame(drift);
+			}
+		};
+
+		const below = (el) => el.getBoundingClientRect().top > window.innerHeight;
+
+		const enable = (initial) => {
+			root.classList.add('anim');
+			document.querySelectorAll(TARGETS.words).forEach(split);
+			Object.entries(TARGETS).forEach(([type, selector]) => {
+				document.querySelectorAll(selector).forEach((el) => {
+					if (type !== 'words' && el.closest(FIRST_VIEW)) return;
+					/* Switched on mid-page: what is already on screen stays put. */
+					if (!initial && !below(el)) return;
+					el.classList.remove('is-in');
+					el.dataset.reveal = type;
+					if (initial && el.closest(FIRST_VIEW)) {
+						window.requestAnimationFrame(() => window.requestAnimationFrame(() => reveal([el])));
+					} else {
+						watch(el);
+					}
+				});
+			});
+			document.querySelectorAll('.tile__num, .glass-card__num').forEach((el) => {
+				const c = prepareCounter(el) || counters.find((item) => item.el === el);
+				if (!c || (!initial && !below(el))) return;
+				c.done = false;
+				c.visual.textContent = c.format(0);
+				counterWatch.observe(el);
+			});
+			parallax = true;
+			window.addEventListener('scroll', onScroll, { passive: true });
+			drift();
+		};
+
+		const disable = () => {
+			root.classList.remove('anim');
+			pending.clear();
+			document.querySelectorAll('[data-reveal]').forEach((el) => {
+				revealer.unobserve(el);
+				el.classList.add('is-in');
+				finish(el);
+			});
+			counters.forEach((c) => {
+				counterWatch.unobserve(c.el);
+				settle(c);
+			});
+			parallax = false;
+			window.removeEventListener('scroll', onScroll);
+			if (heroMedia) heroMedia.style.translate = '';
+			if (pathPhoto) pathPhoto.style.translate = '';
+		};
+
+		return { enable, disable };
+	})();
+
+	if (Motion) {
+		if (motionOn()) Motion.enable(true);
+		document.addEventListener('its:motion', (event) => {
+			if (event.detail.off) Motion.disable();
+			else Motion.enable(false);
 		});
 	}
+
+	/* Accordions (FAQ): open and close with a height animation; native otherwise. */
+	document.querySelectorAll('details.faq__item, .prose details').forEach((details) => {
+		const summary = details.querySelector('summary');
+		if (!summary || !details.animate) return;
+		let running = null;
+		summary.addEventListener('click', (event) => {
+			if (!motionOn()) return;
+			event.preventDefault();
+			const from = details.offsetHeight;
+			const closing = details.open && !details.classList.contains('is-closing');
+			if (running) running.cancel();
+			let to;
+			if (closing) {
+				const cs = getComputedStyle(details);
+				to = summary.offsetHeight + parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth) + parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+				details.classList.add('is-closing');
+			} else {
+				details.classList.remove('is-closing');
+				details.open = true;
+				to = details.offsetHeight;
+			}
+			details.style.overflow = 'clip';
+			running = details.animate({ height: [`${from}px`, `${to}px`] }, { duration: 450, easing: EASE });
+			running.onfinish = () => {
+				if (closing) details.open = false;
+				details.classList.remove('is-closing');
+				details.style.overflow = '';
+				running = null;
+			};
+		});
+	});
 
 	/* Course grid: filter by area in place, keep the URL shareable. */
 	const filter = document.querySelector('.area-filter');
@@ -101,17 +383,28 @@
 		const links = [...filter.querySelectorAll('a[data-area]')];
 
 		const apply = (area) => {
-			let visible = 0;
+			const shown = [];
 			items.forEach((item) => {
 				const show = !area || item.dataset.area === area;
 				item.hidden = !show;
-				if (show) visible += 1;
+				if (show) shown.push(item);
+				/* A card brought back by the filter is shown now, not on the next scroll. */
+				if (show && item.dataset.reveal && item.dataset.reveal !== 'done') {
+					item.classList.add('is-in');
+					item.dataset.reveal = 'done';
+				}
 			});
 			links.forEach((link) => {
 				if (link.dataset.area === area) link.setAttribute('aria-current', 'true');
 				else link.removeAttribute('aria-current');
 			});
-			if (status) status.textContent = visible === 1 ? '1 corso' : `${visible} corsi`;
+			if (status) status.textContent = shown.length === 1 ? '1 corso' : `${shown.length} corsi`;
+			if (motionOn() && grid.animate) {
+				shown.forEach((item, i) => item.animate(
+					[{ opacity: 0, translate: '0 1.25rem' }, { opacity: 1, translate: '0 0' }],
+					{ duration: 550, delay: Math.min(i, 8) * 50, easing: EASE, fill: 'backwards' }
+				));
+			}
 		};
 
 		filter.addEventListener('click', (event) => {

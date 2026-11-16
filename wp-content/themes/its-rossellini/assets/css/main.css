@@ -2893,8 +2893,143 @@ dd {
 	vector-effect: non-scaling-stroke;
 }
 
-/* ---------- Motion off (footer switch) ---------- */
+/* ---------- Motion: on only while the footer switch is on ---------- */
 
+/* First view (hero, page head): plays on load, before the script runs. */
+@keyframes its-rise {
+	from {
+		opacity: 0;
+		translate: 0 1.5rem;
+	}
+}
+
+@keyframes its-settle {
+	from {
+		opacity: 0;
+		scale: 0.96;
+	}
+}
+
+@keyframes its-show {
+	to {
+		opacity: 1;
+	}
+}
+
+.js:not(.motion-off) :is(.hero__lead, .hero__actions, .hero__float > *, .hero__toggle, .logos-bar, .page-head__text > :not(.page-head__title)) {
+	animation: its-rise 0.9s var(--ease-out) 0.45s both;
+}
+
+.js:not(.motion-off) .hero__actions { animation-delay: 0.6s; }
+.js:not(.motion-off) .hero__float > :first-child { animation-delay: 0.75s; }
+.js:not(.motion-off) .hero__float > :nth-child(2) { animation-delay: 0.85s; }
+.js:not(.motion-off) .hero__toggle { animation-delay: 0.95s; }
+.js:not(.motion-off) .logos-bar { animation-delay: 1.05s; }
+.js:not(.motion-off) .page-head__text > .crumbs { animation-delay: 0.05s; }
+.js:not(.motion-off) .page-head__text > :not(.crumbs, .page-head__title, .page-head__lead) { animation-delay: 0.6s; }
+
+.js:not(.motion-off) .page-head__photo {
+	animation: its-settle 1.2s var(--ease-out) 0.2s both;
+}
+
+/* Titles wait for the script to split them into words; shown anyway after 2.5s if it never runs. */
+.js:not(.motion-off) :is(.hero__title, .page-head__title):not([data-split]) {
+	opacity: 0;
+	animation: its-show 0.01s 2.5s forwards;
+}
+
+/* Scroll reveals, set up by the script (.anim) and released in batches with a stagger (--d). */
+.anim [data-reveal="up"]:not(.is-in) {
+	opacity: 0;
+	translate: 0 2rem;
+}
+
+.anim [data-reveal="up"] {
+	transition:
+		opacity 0.8s var(--ease-out) var(--d, 0ms),
+		translate 1s var(--ease-out) var(--d, 0ms);
+}
+
+.word {
+	display: inline-block;
+	padding: 0.1em 0.05em 0.16em;
+	margin: -0.1em -0.05em -0.16em;
+	overflow: clip;
+}
+
+.word__in {
+	display: inline-block;
+}
+
+.anim [data-reveal="words"]:not(.is-in) .word__in {
+	translate: 0 115%;
+}
+
+.anim [data-reveal="words"] .word__in {
+	transition: translate 1.1s var(--ease-out) calc(var(--d, 0ms) + var(--w, 0) * 55ms);
+}
+
+.anim [data-reveal="wipe"]:not(.is-in) {
+	clip-path: inset(0 100% 0 0);
+}
+
+.anim [data-reveal="wipe"] {
+	transition: clip-path 2s var(--ease-out) var(--d, 0ms);
+}
+
+.count {
+	font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* Path photo: a little larger so the parallax never shows an edge. */
+.anim .overlap__media {
+	overflow: clip;
+	border-radius: var(--r-xl);
+}
+
+.anim .overlap__media img {
+	scale: 1.1;
+}
+
+/* The globe turns slowly; Rome sends out a ping. */
+@keyframes its-globe {
+	to {
+		background-position: 110px 0, 0 0;
+	}
+}
+
+@keyframes its-ping {
+	from {
+		opacity: 0.9;
+		scale: 1;
+	}
+
+	to {
+		opacity: 0;
+		scale: 3.2;
+	}
+}
+
+.anim .globe {
+	animation: its-globe 14s linear infinite;
+}
+
+.anim .globe__pin::before {
+	content: "";
+	position: absolute;
+	inset: -3px;
+	border: 2px solid var(--ciano);
+	border-radius: 50%;
+	animation: its-ping 2.4s var(--ease-out) infinite;
+}
+
+/* Accordion closing: the chevron turns back at the start, not at the end. */
+.faq__item.is-closing .faq__chevron {
+	color: var(--muted-dark);
+	transform: none;
+}
+
+/* Switch off: a static site. */
 .motion-off *,
 .motion-off *::before,
 .motion-off *::after {
@@ -3139,10 +3274,11 @@ dd {
 	}
 }
 
+/* Without JavaScript the system setting applies directly (with it, the switch does). */
 @media (prefers-reduced-motion: reduce) {
-	*,
-	*::before,
-	*::after {
+	.no-js *,
+	.no-js *::before,
+	.no-js *::after {
 		animation: none !important;
 		transition: none !important;
 		scroll-behavior: auto !important;
@@ -3150,6 +3286,13 @@ dd {
 }
 
 @media print {
+	[data-reveal],
+	.word__in {
+		opacity: 1 !important;
+		translate: none !important;
+		clip-path: none !important;
+	}
+
 	.masthead,
 	.colophon,
 	.area-filter,

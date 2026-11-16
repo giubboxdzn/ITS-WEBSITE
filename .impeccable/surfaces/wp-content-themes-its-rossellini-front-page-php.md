@@ -23,6 +23,6 @@ STORY: The visitor lands on the footage, edge to edge, reads "Il futuro si gira 
 
 FIRST VIEWPORT: Full-bleed hero (no inset, no corners: user decision), video under a left-weighted navy scrim; floating pill header (logo, glass nav pill, white "Preiscriviti"); headline bottom-left up to ~7.25rem with "si gira" in cyan 600; lead; white "Prenota un incontro ↗" and glass "Scopri i corsi"; bottom-right two glass cards (87%, visit/next event) and the pause control; white partner bar overlapping the card's lower edge.
 
-FORM: user-supplied references (three Dribbble shots, then deluxhost.net for the comparison card, place block, FAQ and footer) translated into the institutional palette and Raleway; seed: none (user-pinned references). Signature interaction: the header pill turning into a glass bar on scroll; arrows rotating to ↗ on hover across buttons and cards.
+FORM: user-supplied references (three Dribbble shots, then deluxhost.net for the comparison card, place block, FAQ and footer) translated into the institutional palette and Raleway; seed: none (user-pinned references). Signature interaction: the header pill turning into a glass bar on scroll; arrows rotating to ↗ on hover across buttons and cards; headline words rising from a mask and staggered scroll reveals, all governed by the footer "Animazioni" switch (off = static).
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance

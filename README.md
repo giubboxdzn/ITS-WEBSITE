@@ -15,7 +15,7 @@ wp-content/themes/its-rossellini/   il tema (da installare in produzione)
   template-parts/                   card corso, griglia corsi con filtro, riga datata, testata pagina
   inc/                              helper, icone SVG, query, Customizer
   assets/css/main.css               tutto lo stile (token in :root)
-  assets/js/main.js                 header, video dell'hero, menu mobile, filtro corsi (miglioramento progressivo)
+  assets/js/main.js                 header, video dell'hero, menu mobile, filtro corsi, animazioni legate all'interruttore «Animazioni» (miglioramento progressivo)
   assets/fonts/                     Raleway variabile, normale e corsivo (OFL), self-hosted
 dev/                                ambiente locale (non va in produzione)
 .claude/skills/                     skill per Claude Code: find-skills, impeccable, web-design-guidelines

@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) || exit;
 <head>
 <meta charset="<?php bloginfo( 'charset' ); ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>document.documentElement.classList.replace('no-js','js');try{if(localStorage.getItem('its-motion')==='off'){document.documentElement.classList.add('motion-off');}}catch(e){}</script>
+<script>(function(r){r.classList.replace('no-js','js');var m=null;try{m=localStorage.getItem('its-motion');}catch(e){}if(m==='off'||(m!=='on'&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)){r.classList.add('motion-off');}})(document.documentElement);</script>
 <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
