@@ -24,3 +24,6 @@
 
 # Local WordPress for theme development (dev/setup.sh): core, SQLite DB, seed content
 .wp/
+
+# Python bytecode
+__pycache__/
