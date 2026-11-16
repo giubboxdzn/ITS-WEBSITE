@@ -146,7 +146,7 @@
 		if (!('IntersectionObserver' in window)) return null;
 
 		const TARGETS = {
-			words: '.display, .hero__title, .page-head__title',
+			words: '.display, .hero__title, .page-head__title, .page-hero__title',
 			up: [
 				'.lead:not(.hero__lead)', '.panel__head > p', '.split-head > p', '.panel__more',
 				'.bento > *', '.grid__item', '.news-grid > *', '.rows > *',
@@ -154,12 +154,13 @@
 				'.overlap__media', '.overlap__card', '.steps > li',
 				'.place__chips > li', '.place__globe', '.faq__item', '.faq-section__more',
 				'.cta-card', '.prose-card', '.index-list > li', '.editions__group',
+				'.psec__head > *', '.figures > *', '.pcards > *', '.psteps > *',
 				'.area-filter', '.doc-filter', '.doc-table', '.article__photo', '.article__nav',
 				'.colophon__grid > *', '.colophon__funding', '.colophon__base',
 			].join(', '),
 			draw: '.colophon__mark',
 		};
-		const FIRST_VIEW = '.hero, .page-head';
+		const FIRST_VIEW = '.hero, .page-head, .page-hero';
 		const STEP = 80;
 
 		/* Headings become words that rise from a mask; screen readers keep the plain text. */
@@ -376,7 +377,7 @@
 		}, { threshold: 0.6 });
 
 		/* Parallax: the hero footage and the path photo drift against the scroll. */
-		const heroMedia = document.querySelector('.hero__media');
+		const heroMedia = document.querySelector('.hero__media, .page-hero__backdrop');
 		const pathPhoto = document.querySelector('.overlap__media img');
 		let parallax = false;
 		let queued = false;

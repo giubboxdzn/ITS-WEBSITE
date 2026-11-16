@@ -15,6 +15,7 @@ import re
 import sys
 import urllib.parse
 import urllib.request
+from html.parser import HTMLParser
 
 BASE = "https://itsrossellini.it"
 UA = "its-rossellini-theme-dev/1.0"
@@ -97,6 +98,203 @@ def to_blocks(fragment):
     return "\n".join(out)
 
 
+# ---------- Editorial pages -> block editor content ----------
+# The live interior pages share one template (hero, sections with an eyebrow, facts, card grids, a closing
+# call). They become core blocks with the theme's block styles, the same an editor would use:
+# Paragraph "Occhiello" (is-style-eyebrow), List "Numeri" (is-style-facts), Group "Invito finale" (is-style-callout).
+
+VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"}
+
+
+class Node:
+    __slots__ = ("tag", "attrs", "children", "parent")
+
+    def __init__(self, tag, attrs, parent):
+        self.tag, self.attrs, self.children, self.parent = tag, dict(attrs), [], parent
+
+    def has(self, name):
+        return name in (self.attrs.get("class") or "").split()
+
+    def elements(self):
+        return [c for c in self.children if isinstance(c, Node)]
+
+    def find_all(self, pred):
+        out = []
+        for c in self.elements():
+            if pred(c):
+                out.append(c)
+            out.extend(c.find_all(pred))
+        return out
+
+    def find(self, pred):
+        hits = self.find_all(pred)
+        return hits[0] if hits else None
+
+    def text(self):
+        return re.sub(r"\s+", " ", "".join(c if isinstance(c, str) else c.text() for c in self.children)).strip()
+
+
+class Tree(HTMLParser):
+    def __init__(self, markup):
+        super().__init__(convert_charrefs=True)
+        self.root = self.cur = Node("root", [], None)
+        self.feed(markup)
+        self.close()
+
+    def handle_starttag(self, tag, attrs):
+        node = Node(tag, attrs, self.cur)
+        self.cur.children.append(node)
+        if tag not in VOID:
+            self.cur = node
+
+    def handle_startendtag(self, tag, attrs):
+        self.cur.children.append(Node(tag, attrs, self.cur))
+
+    def handle_endtag(self, tag):
+        node = self.cur
+        while node is not None and node.tag != tag:
+            node = node.parent
+        if node is not None and node.parent is not None:
+            self.cur = node.parent
+
+    def handle_data(self, data):
+        self.cur.children.append(data)
+
+
+def local_url(href):
+    """Links between pages of the site become root-relative (they work on the local copy); files stay on the live site."""
+    return re.sub(r"^https?://(?:www\.)?itsrossellini\.it(?=/)(?!/wp-content/)", "", href.strip())
+
+
+def inline(node):
+    out = []
+    for c in node.children:
+        if isinstance(c, str):
+            out.append(html.escape(c, quote=False))
+        elif c.tag in ("strong", "b"):
+            out.append(f"<strong>{inline(c)}</strong>")
+        elif c.tag in ("em", "i"):
+            out.append(f"<em>{inline(c)}</em>")
+        elif c.tag == "a" and c.attrs.get("href"):
+            out.append(f'<a href="{html.escape(local_url(c.attrs["href"]))}">{inline(c)}</a>')
+        elif c.tag == "br":
+            out.append("<br>")
+        else:
+            out.append(inline(c))
+    return re.sub(r"\s+", " ", "".join(out)).strip()
+
+
+def b_para(inner, style=""):
+    attrs = f' {{"className":"{style}"}}' if style else ""
+    cls = f' class="{style}"' if style else ""
+    return f"<!-- wp:paragraph{attrs} -->\n<p{cls}>{inner}</p>\n<!-- /wp:paragraph -->"
+
+
+def b_heading(level, inner, anchor=""):
+    attrs = f' {{"level":{level}}}' if level != 2 else ""
+    ident = f' id="{html.escape(anchor)}"' if anchor else ""
+    return f'<!-- wp:heading{attrs} -->\n<h{level} class="wp-block-heading"{ident}>{inner}</h{level}>\n<!-- /wp:heading -->'
+
+
+def b_list(items, style="", ordered=False):
+    attrs = ("{" + ",".join(x for x in ('"ordered":true' if ordered else "", f'"className":"{style}"' if style else "") if x) + "}")
+    attrs = f" {attrs}" if attrs != "{}" else ""
+    tag = "ol" if ordered else "ul"
+    lis = "".join(f"<!-- wp:list-item -->\n<li>{i}</li>\n<!-- /wp:list-item -->" for i in items)
+    return f'<!-- wp:list{attrs} -->\n<{tag} class="wp-block-list{" " + style if style else ""}">{lis}</{tag}>\n<!-- /wp:list -->'
+
+
+def b_buttons(links):
+    inner = "".join(
+        f'<!-- wp:button -->\n<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="{html.escape(h)}">{t}</a></div>\n<!-- /wp:button -->'
+        for h, t in links
+    )
+    return f'<!-- wp:buttons -->\n<div class="wp-block-buttons">{inner}</div>\n<!-- /wp:buttons -->'
+
+
+def b_group(blocks, style):
+    return (f'<!-- wp:group {{"className":"{style}","layout":{{"type":"constrained"}}}} -->\n'
+            f'<div class="wp-block-group {style}">' + "\n".join(blocks) + "</div>\n<!-- /wp:group -->")
+
+
+def editorial_components(node, out):
+    for el in node.elements():
+        if el.has("inner-section-heading") or el.has("inner-section-menu") or el.tag in ("nav", "script", "form"):
+            continue
+        if el.tag == "dl":
+            items = []
+            for row in el.elements():
+                dt, dd = row.find(lambda n: n.tag == "dt"), row.find(lambda n: n.tag == "dd")
+                if dt and dd:
+                    items.append(f"<strong>{inline(dd)}</strong> {inline(dt)}")
+            if items:
+                out.append(b_list(items, "is-style-facts"))
+        elif el.tag in ("ul", "ol"):
+            items = [inline(li) for li in el.elements() if li.tag == "li" and li.text()]
+            if items:
+                out.append(b_list(items, ordered=el.tag == "ol"))
+        elif el.has("inner-card"):
+            meta = el.find(lambda n: n.has("inner-card-meta"))
+            title = el.find(lambda n: n.tag in ("h3", "h4"))
+            more = el.find(lambda n: n.has("inner-card-link"))
+            if meta:
+                out.append(b_para(inline(meta), "is-style-eyebrow"))
+            if title:
+                inner = inline(title)
+                if "<a " not in inner and more and more.attrs.get("href"):
+                    inner = f'<a href="{html.escape(local_url(more.attrs["href"]))}">{inner}</a>'
+                out.append(b_heading(3, inner))
+            for p in el.find_all(lambda n: n.tag == "p" and not n.has("inner-card-meta")):
+                if p.text():
+                    out.append(b_para(inline(p)))
+        elif el.tag == "p":
+            if el.text():
+                out.append(b_para(inline(el), "is-style-eyebrow" if el.has("inner-eyebrow") else ""))
+        elif el.tag in ("h3", "h4"):
+            out.append(b_heading(3, inline(el)))
+        else:
+            editorial_components(el, out)
+
+
+def editorial(page_html, media_dir):
+    """Content, excerpt (the hero lead) and featured image of a live interior page; None for other templates."""
+    if "sub-editorial-page" not in page_html:
+        return None
+    root = Tree(main_html(page_html)).root
+    page = root.find(lambda n: n.has("sub-editorial-page")) or root
+    blocks = []
+    for sec in page.find_all(lambda n: n.has("inner-content-section") or n.has("inner-related") or n.has("inner-callout")):
+        if sec.has("inner-callout"):
+            inner = []
+            for el in sec.find_all(lambda n: n.tag in ("h2", "p")):
+                inner.append(b_heading(2, inline(el)) if el.tag == "h2" else b_para(inline(el)))
+            links = [(local_url(a.attrs["href"]), inline(a)) for a in sec.find_all(lambda n: n.tag == "a" and n.has("inner-button") and n.attrs.get("href"))]
+            if links:
+                inner.append(b_buttons(links))
+            blocks.append(b_group(inner, "is-style-callout"))
+            continue
+        head = sec.find(lambda n: n.has("inner-section-heading"))
+        eyebrow = head and head.find(lambda n: n.has("inner-eyebrow"))
+        h2 = head and head.find(lambda n: n.tag == "h2")
+        if eyebrow and eyebrow.text():
+            blocks.append(b_para(inline(eyebrow), "is-style-eyebrow"))
+        if h2:
+            blocks.append(b_heading(2, inline(h2), sec.attrs.get("id", "")))
+        editorial_components(sec, blocks)
+    lead = page.find(lambda n: n.has("inner-lead"))
+    img = page.find(lambda n: n.has("inner-hero-image"))
+    src = ""
+    if img:
+        candidates = [c.strip().rsplit(" ", 1) for c in (img.attrs.get("srcset") or "").split(",") if c.strip()]
+        sized = sorted(((int(w[:-1]), u) for u, w in candidates if w.endswith("w") and w[:-1].isdigit()), reverse=True)
+        src = sized[0][1] if sized else img.attrs.get("src", "")
+    return {
+        "content": "\n\n".join(blocks),
+        "excerpt": lead.text() if lead else "",
+        "image": download(src, media_dir) if src else None,
+    }
+
+
 def section(lines, start, stops):
     # Course pages repeat the labels in an in-page tab bar first: the real heading is the last one.
     hits = [n for n, line in enumerate(lines) if line == start]
@@ -164,6 +362,43 @@ def it_slug(page_html):
         return ""
     path = urllib.parse.urlparse(m.group(1)).path.strip("/")
     return path.rsplit("/", 1)[-1] if path else "home"
+
+
+# Version of the page content format in data.json: setup.sh refreshes only the pages when it is older.
+PAGES_FORMAT = 2
+
+
+def fetch_pages(media_dir, lang):
+    """Pages of one language: editorial pages as blocks with lead and photo, the others as plain semantic HTML."""
+    pages = []
+    all_pages = {p["id"]: p for p in rest("pages")}
+    for p in all_pages.values():
+        english = "/en/" in p.get("link", "") or urllib.parse.urlparse(p.get("link", "")).path.rstrip("/") == "/en"
+        if english != (lang == "en") or p["slug"] in ("pagina-di-esempio",):
+            continue
+        try:
+            page_html = get(p["link"])
+        except Exception:
+            page_html = ""
+        content, excerpt, image = p["content"]["rendered"], "", None
+        ed = editorial(page_html, media_dir) if page_html else None
+        if ed:
+            excerpt, image = ed["excerpt"], ed["image"]
+        if ed and ed["content"]:
+            content = ed["content"]
+        elif len(content.strip()) < 40:
+            content = to_blocks(main_html(page_html)) if page_html else ""
+        parent = all_pages.get(p["parent"])
+        item = {
+            "id": p["id"], "title": html.unescape(p["title"]["rendered"]), "slug": p["slug"],
+            "parent_slug": parent["slug"] if parent else "", "menu_order": p.get("menu_order", 0),
+            "content": content, "excerpt": excerpt, "image": image, "link": p["link"],
+        }
+        if lang == "en":
+            item["it_slug"] = it_slug(page_html) if page_html else ""
+            item["front"] = urllib.parse.urlparse(p["link"]).path.rstrip("/") == "/en"
+        pages.append(item)
+    return pages
 
 
 def run_en(out, tx, media_dir, cache):
@@ -250,25 +485,7 @@ def run_en(out, tx, media_dir, cache):
         "biennio": [tx["biennio"][t]["name"] for t in ed.get("biennio", []) if t in tx["biennio"]],
     } for ed in filter(en, rest("edizione_corso"))]
 
-    pages = []
-    all_pages = {p["id"]: p for p in rest("pages")}
-    for p in all_pages.values():
-        if not en(p):
-            continue
-        try:
-            page_html = get(p["link"])
-        except Exception:
-            continue
-        content = p["content"]["rendered"]
-        if len(content.strip()) < 40:
-            content = to_blocks(main_html(page_html))
-        parent = all_pages.get(p["parent"])
-        pages.append({
-            "title": html.unescape(p["title"]["rendered"]), "slug": p["slug"], "it_slug": it_slug(page_html),
-            "parent_slug": parent["slug"] if parent else "", "menu_order": p.get("menu_order", 0),
-            "content": content, "link": p["link"],
-            "front": urllib.parse.urlparse(p["link"]).path.rstrip("/") == "/en",
-        })
+    pages = fetch_pages(media_dir, "en")
 
     return {
         "courses": courses, "posts": posts, "events": events, "documents": docs, "editions": editions,
@@ -276,10 +493,22 @@ def run_en(out, tx, media_dir, cache):
     }
 
 
-def run(out, courses_only=False, faq_only=False, en_only=False):
+def run(out, courses_only=False, faq_only=False, en_only=False, pages_only=False):
     media_dir = os.path.join(out, "media")
     os.makedirs(media_dir, exist_ok=True)
     cache = {}
+    data_path = os.path.join(out, "data.json")
+    if pages_only and os.path.exists(data_path):
+        with open(data_path, encoding="utf-8") as f:
+            previous = json.load(f)
+        previous["pages"] = fetch_pages(media_dir, "it")
+        previous["pages_format"] = PAGES_FORMAT
+        if "en" in previous:
+            previous["en"]["pages"] = fetch_pages(media_dir, "en")
+        with open(data_path, "w", encoding="utf-8") as f:
+            json.dump(previous, f, ensure_ascii=False, indent=1)
+        print(f"pages: it={len(previous['pages'])} en={len(previous.get('en', {}).get('pages', []))} (refreshed)")
+        return
     data = {"source": BASE, "taxonomies": {}}
     for tax in ("area_tecnologica", "tipo_evento", "famiglia", "biennio", "tipo", "categories"):
         data["taxonomies"][tax] = terms(tax)
@@ -404,24 +633,8 @@ def run(out, courses_only=False, faq_only=False, en_only=False):
         })
     data["editions"] = editions
 
-    pages = []
-    all_pages = {p["id"]: p for p in rest("pages")}
-    for p in all_pages.values():
-        if not is_it(p) or p["slug"] in ("pagina-di-esempio",):
-            continue
-        content = p["content"]["rendered"]
-        if len(content.strip()) < 40:
-            try:
-                content = to_blocks(main_html(get(p["link"])))
-            except Exception:
-                content = ""
-        parent = all_pages.get(p["parent"])
-        pages.append({
-            "id": p["id"], "title": html.unescape(p["title"]["rendered"]), "slug": p["slug"],
-            "parent_slug": parent["slug"] if parent else "", "menu_order": p.get("menu_order", 0),
-            "content": content, "link": p["link"],
-        })
-    data["pages"] = pages
+    data["pages"] = fetch_pages(media_dir, "it")
+    data["pages_format"] = PAGES_FORMAT
     data["faq"] = faq_items(get(BASE + "/faq/"))
 
     partners = []
@@ -442,5 +655,7 @@ if __name__ == "__main__":
     ap.add_argument("--courses-only", action="store_true", help="refresh only the courses in an existing data.json")
     ap.add_argument("--faq-only", action="store_true", help="refresh only the FAQ in an existing data.json")
     ap.add_argument("--en-only", action="store_true", help="add or refresh only the English content in an existing data.json")
+    ap.add_argument("--pages-only", action="store_true", help="refresh only the pages (both languages) in an existing data.json")
     args = ap.parse_args()
-    run(os.path.abspath(args.out), courses_only=args.courses_only, faq_only=args.faq_only, en_only=args.en_only)
+    run(os.path.abspath(args.out), courses_only=args.courses_only, faq_only=args.faq_only, en_only=args.en_only,
+        pages_only=args.pages_only)

@@ -49,7 +49,7 @@ msgstr "All offices"
 msgid "Trasparenza"
 msgstr "Transparency"
 
-#: footer.php:63 inc/helpers.php:354
+#: footer.php:63 inc/helpers.php:372
 msgid "Bandi e albi"
 msgstr "Calls and registers"
 
@@ -231,7 +231,7 @@ msgstr "The answers that matter before you apply, taken from the Academy’s cal
 msgid "ITS Academy Roberto Rossellini"
 msgstr "ITS Academy Roberto Rossellini"
 
-#: front-page.php:204 header.php:58
+#: front-page.php:204 header.php:58 page.php:48
 msgid "Preiscriviti"
 msgstr "Pre-enrol"
 
@@ -331,18 +331,6 @@ msgstr "or"
 msgid "scrivici"
 msgstr "write to us"
 
-#: front-page.php:329
-msgid "Vuoi visitare <strong>i laboratori?</strong>"
-msgstr "Want to visit <strong>the labs?</strong>"
-
-#: front-page.php:330
-msgid "Prenota un open day o un incontro individuale."
-msgstr "Book an open day or a one-to-one meeting."
-
-#: front-page.php:334
-msgid "Preiscriviti al biennio"
-msgstr "Pre-enrol for the two-year course"
-
 #: front-page.php:72
 msgid "Il futuro <strong>si gira</strong> adesso."
 msgstr "Your future <strong>starts rolling</strong> now."
@@ -351,7 +339,7 @@ msgstr "Your future <strong>starts rolling</strong> now."
 msgid "Due anni per trasformare il tuo talento in una professione tra cinema, TV, digital, live e tecnologia."
 msgstr "Two years to turn your talent into a profession across cinema, TV, digital media, live production and technology."
 
-#: front-page.php:75 front-page.php:333 single-evento.php:50 templates/template-eventi.php:40
+#: front-page.php:75 page.php:47 single-evento.php:50 template-parts/cta-card.php:23 templates/template-eventi.php:40
 msgid "Prenota un incontro"
 msgstr "Book a meeting"
 
@@ -375,15 +363,15 @@ msgstr "Pause the video"
 msgid "Riproduci il video"
 msgstr "Play the video"
 
-#: functions.php:32
+#: functions.php:34
 msgid "Menu principale"
 msgstr "Main menu"
 
-#: functions.php:33
+#: functions.php:35
 msgid "Menu footer"
 msgstr "Footer menu"
 
-#: functions.php:34
+#: functions.php:36
 msgid "Note legali"
 msgstr "Legal notes"
 
@@ -463,7 +451,7 @@ msgstr "Graduates in work within 12 months"
 msgid "Fonte del dato occupazionale"
 msgstr "Source of the employment figure"
 
-#: inc/customizer.php:38 inc/helpers.php:345
+#: inc/customizer.php:38 inc/helpers.php:363
 msgid "Home"
 msgstr "Home"
 
@@ -495,15 +483,15 @@ msgstr "Next"
 msgid "Pagine"
 msgstr "Pages"
 
-#: inc/helpers.php:342 inc/helpers.php:362
+#: inc/helpers.php:360 inc/helpers.php:380
 msgid "Percorso"
 msgstr "Breadcrumb"
 
-#: inc/helpers.php:353
+#: inc/helpers.php:371
 msgid "Eventi"
 msgstr "Events"
 
-#: inc/helpers.php:355
+#: inc/helpers.php:373
 msgid "Edizioni dei corsi"
 msgstr "Course editions"
 
@@ -527,6 +515,18 @@ msgstr "Today"
 msgid "Ultimi giorni"
 msgstr "Last days"
 
+#: inc/sections.php:43
+msgid "Occhiello"
+msgstr "Eyebrow"
+
+#: inc/sections.php:50
+msgid "Numeri"
+msgstr "Figures"
+
+#: inc/sections.php:57
+msgid "Invito finale"
+msgstr "Closing call"
+
 #: index.php:14
 msgid "Risultati per “%s”"
 msgstr "Results for “%s”"
@@ -535,13 +535,17 @@ msgstr "Results for “%s”"
 msgid "Avvisi, graduatorie, progetti e risultati degli studenti."
 msgstr "Notices, rankings, projects and student achievements."
 
-#: index.php:23 inc/helpers.php:356
+#: index.php:23 inc/helpers.php:374
 msgid "News"
 msgstr "News"
 
 #: index.php:58
 msgid "Nessun contenuto trovato. Prova con un’altra parola o torna alla home."
 msgstr "Nothing found. Try another word or go back to the home page."
+
+#: page.php:21 template-parts/child-pages.php:21
+msgid "In questa sezione"
+msgstr "In this section"
 
 #: searchform.php:13
 msgid "Cerca nel sito"
@@ -653,10 +657,6 @@ msgstr "Previous"
 msgid "Successiva"
 msgstr "Next"
 
-#: template-parts/child-pages.php:21
-msgid "In questa sezione"
-msgstr "In this section"
-
 #: template-parts/course-wall.php:19
 msgid "Filtra i corsi per area"
 msgstr "Filter courses by area"
@@ -673,11 +673,27 @@ msgstr "1 course"
 msgid "%d corsi"
 msgstr "%d courses"
 
+#: template-parts/cta-card.php:18
+msgid "Vuoi visitare i laboratori?"
+msgstr "Want to visit the labs?"
+
+#: template-parts/cta-card.php:19
+msgid "Prenota un open day o un incontro individuale."
+msgstr "Book an open day or a one-to-one meeting."
+
+#: template-parts/cta-card.php:24
+msgid "Preiscriviti al biennio"
+msgstr "Pre-enrol for the two-year course"
+
+#: template-parts/page-hero.php:65
+msgid "In questa pagina"
+msgstr "On this page"
+
 #: templates/template-corsi.php:19
 msgid "Otto percorsi biennali post-diploma: scegli l’area, poi il mestiere."
 msgstr "Eight two-year post-diploma programmes: choose the area, then the profession."
 
-#: templates/template-corsi.php:23 inc/helpers.php:352
+#: templates/template-corsi.php:23 inc/helpers.php:370
 msgid "Corsi"
 msgstr "Courses"
 

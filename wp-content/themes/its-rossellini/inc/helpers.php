@@ -337,6 +337,24 @@ function its_pagination( ?WP_Query $query = null ): void {
 /**
  * Breadcrumb trail: Home › ancestors › current. Yoast's trail wins when enabled.
  */
+/**
+ * The short label a page has in the main menu ("Servizi"), when it is there: page titles are often whole sentences.
+ */
+function its_menu_label( int $post_id ): string {
+	static $labels = null;
+	if ( null === $labels ) {
+		$labels    = array();
+		$locations = get_nav_menu_locations();
+		$items     = empty( $locations['primary'] ) ? array() : (array) wp_get_nav_menu_items( $locations['primary'] );
+		foreach ( $items as $item ) {
+			if ( 'page' === $item->object && ! isset( $labels[ (int) $item->object_id ] ) ) {
+				$labels[ (int) $item->object_id ] = (string) $item->title;
+			}
+		}
+	}
+	return $labels[ $post_id ] ?? '';
+}
+
 function its_breadcrumbs(): void {
 	if ( function_exists( 'yoast_breadcrumb' ) && current_theme_supports( 'yoast-seo-breadcrumbs' ) ) {
 		yoast_breadcrumb( '<nav class="crumbs" aria-label="' . esc_attr__( 'Percorso', 'its-rossellini' ) . '">', '</nav>' );
@@ -346,7 +364,7 @@ function its_breadcrumbs(): void {
 	if ( is_singular() ) {
 		$post = get_queried_object();
 		foreach ( array_reverse( get_post_ancestors( $post ) ) as $ancestor ) {
-			$items[] = array( get_permalink( $ancestor ), get_the_title( $ancestor ) );
+			$items[] = array( get_permalink( $ancestor ), its_menu_label( (int) $ancestor ) ?: get_the_title( $ancestor ) );
 		}
 		$parents = array(
 			'corso'          => array( 'offerta-formativa/corsi', __( 'Corsi', 'its-rossellini' ) ),

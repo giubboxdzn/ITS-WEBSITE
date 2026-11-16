@@ -14,6 +14,7 @@ require ITS_ROSSELLINI_DIR . '/inc/helpers.php';
 require ITS_ROSSELLINI_DIR . '/inc/icons.php';
 require ITS_ROSSELLINI_DIR . '/inc/content.php';
 require ITS_ROSSELLINI_DIR . '/inc/customizer.php';
+require ITS_ROSSELLINI_DIR . '/inc/sections.php';
 
 
 add_action(
@@ -86,7 +87,7 @@ add_filter( 'emoji_svg_url', '__return_false' );
 add_filter(
 	'body_class',
 	static function ( array $classes ): array {
-		if ( is_front_page() ) {
+		if ( is_front_page() || ( is_page() && its_has_sections() ) ) {
 			$classes[] = 'has-hero';
 		}
 		return $classes;

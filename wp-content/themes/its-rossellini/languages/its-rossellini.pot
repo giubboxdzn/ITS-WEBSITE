@@ -49,7 +49,7 @@ msgstr ""
 msgid "Trasparenza"
 msgstr ""
 
-#: footer.php:63 inc/helpers.php:354
+#: footer.php:63 inc/helpers.php:372
 msgid "Bandi e albi"
 msgstr ""
 
@@ -231,7 +231,7 @@ msgstr ""
 msgid "ITS Academy Roberto Rossellini"
 msgstr ""
 
-#: front-page.php:204 header.php:58
+#: front-page.php:204 header.php:58 page.php:48
 msgid "Preiscriviti"
 msgstr ""
 
@@ -331,18 +331,6 @@ msgstr ""
 msgid "scrivici"
 msgstr ""
 
-#: front-page.php:329
-msgid "Vuoi visitare <strong>i laboratori?</strong>"
-msgstr ""
-
-#: front-page.php:330
-msgid "Prenota un open day o un incontro individuale."
-msgstr ""
-
-#: front-page.php:334
-msgid "Preiscriviti al biennio"
-msgstr ""
-
 #: front-page.php:72
 msgid "Il futuro <strong>si gira</strong> adesso."
 msgstr ""
@@ -351,7 +339,7 @@ msgstr ""
 msgid "Due anni per trasformare il tuo talento in una professione tra cinema, TV, digital, live e tecnologia."
 msgstr ""
 
-#: front-page.php:75 front-page.php:333 single-evento.php:50 templates/template-eventi.php:40
+#: front-page.php:75 page.php:47 single-evento.php:50 template-parts/cta-card.php:23 templates/template-eventi.php:40
 msgid "Prenota un incontro"
 msgstr ""
 
@@ -375,15 +363,15 @@ msgstr ""
 msgid "Riproduci il video"
 msgstr ""
 
-#: functions.php:32
+#: functions.php:34
 msgid "Menu principale"
 msgstr ""
 
-#: functions.php:33
+#: functions.php:35
 msgid "Menu footer"
 msgstr ""
 
-#: functions.php:34
+#: functions.php:36
 msgid "Note legali"
 msgstr ""
 
@@ -463,7 +451,7 @@ msgstr ""
 msgid "Fonte del dato occupazionale"
 msgstr ""
 
-#: inc/customizer.php:38 inc/helpers.php:345
+#: inc/customizer.php:38 inc/helpers.php:363
 msgid "Home"
 msgstr ""
 
@@ -495,15 +483,15 @@ msgstr ""
 msgid "Pagine"
 msgstr ""
 
-#: inc/helpers.php:342 inc/helpers.php:362
+#: inc/helpers.php:360 inc/helpers.php:380
 msgid "Percorso"
 msgstr ""
 
-#: inc/helpers.php:353
+#: inc/helpers.php:371
 msgid "Eventi"
 msgstr ""
 
-#: inc/helpers.php:355
+#: inc/helpers.php:373
 msgid "Edizioni dei corsi"
 msgstr ""
 
@@ -527,6 +515,18 @@ msgstr ""
 msgid "Ultimi giorni"
 msgstr ""
 
+#: inc/sections.php:43
+msgid "Occhiello"
+msgstr ""
+
+#: inc/sections.php:50
+msgid "Numeri"
+msgstr ""
+
+#: inc/sections.php:57
+msgid "Invito finale"
+msgstr ""
+
 #: index.php:14
 msgid "Risultati per “%s”"
 msgstr ""
@@ -535,12 +535,16 @@ msgstr ""
 msgid "Avvisi, graduatorie, progetti e risultati degli studenti."
 msgstr ""
 
-#: index.php:23 inc/helpers.php:356
+#: index.php:23 inc/helpers.php:374
 msgid "News"
 msgstr ""
 
 #: index.php:58
 msgid "Nessun contenuto trovato. Prova con un’altra parola o torna alla home."
+msgstr ""
+
+#: page.php:21 template-parts/child-pages.php:21
+msgid "In questa sezione"
 msgstr ""
 
 #: searchform.php:13
@@ -653,10 +657,6 @@ msgstr ""
 msgid "Successiva"
 msgstr ""
 
-#: template-parts/child-pages.php:21
-msgid "In questa sezione"
-msgstr ""
-
 #: template-parts/course-wall.php:19
 msgid "Filtra i corsi per area"
 msgstr ""
@@ -673,11 +673,27 @@ msgstr ""
 msgid "%d corsi"
 msgstr ""
 
+#: template-parts/cta-card.php:18
+msgid "Vuoi visitare i laboratori?"
+msgstr ""
+
+#: template-parts/cta-card.php:19
+msgid "Prenota un open day o un incontro individuale."
+msgstr ""
+
+#: template-parts/cta-card.php:24
+msgid "Preiscriviti al biennio"
+msgstr ""
+
+#: template-parts/page-hero.php:65
+msgid "In questa pagina"
+msgstr ""
+
 #: templates/template-corsi.php:19
 msgid "Otto percorsi biennali post-diploma: scegli l’area, poi il mestiere."
 msgstr ""
 
-#: templates/template-corsi.php:23 inc/helpers.php:352
+#: templates/template-corsi.php:23 inc/helpers.php:370
 msgid "Corsi"
 msgstr ""
 

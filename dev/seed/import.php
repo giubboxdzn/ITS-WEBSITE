@@ -375,7 +375,7 @@ function its_seed_editions( array $items, string $lang ): array {
  * @param callable $template Page slug (and item) to page template, or ''.
  * @return array<string,int> slug => id
  */
-function its_seed_pages( array $pages, string $lang, callable $template ): array {
+function its_seed_pages( array $pages, string $lang, callable $template, string $seed_dir ): array {
 	usort( $pages, static fn( $a, $b ) => (int) ( '' !== $a['parent_slug'] ) <=> (int) ( '' !== $b['parent_slug'] ) );
 	$ids = array();
 	foreach ( $pages as $p ) {
@@ -391,12 +391,16 @@ function its_seed_pages( array $pages, string $lang, callable $template ): array
 			array(
 				'post_title'   => $front ? 'Home' : $p['title'],
 				'post_content' => $front ? '' : $p['content'],
+				'post_excerpt' => $front ? '' : (string) ( $p['excerpt'] ?? '' ),
 				'post_parent'  => $ids[ $p['parent_slug'] ] ?? 0,
 				'menu_order'   => $p['menu_order'],
 			),
 			$lang
 		);
 		$ids[ $slug ] = $id;
+		if ( ! $front && ! empty( $p['image'] ) ) {
+			its_seed_image( $id, $p['image'], '', $seed_dir );
+		}
 		if ( ! $front && $p['slug'] !== $slug ) {
 			$ids[ $p['slug'] ] = $id;
 		}
@@ -504,7 +508,7 @@ $it = array(
 	'evento'         => its_seed_events( $data['events'], $it_lang, $seed_dir ),
 	'documento'      => its_seed_documents( $data['documents'], $it_lang ),
 	'edizione_corso' => its_seed_editions( $data['editions'], $it_lang ),
-	'page'           => its_seed_pages( $data['pages'], $it_lang, static fn( $slug ) => $templates[ $slug ] ?? '' ),
+	'page'           => its_seed_pages( $data['pages'], $it_lang, static fn( $slug ) => $templates[ $slug ] ?? '', $seed_dir ),
 );
 $page_ids = $it['page'];
 its_seed_faq( $page_ids['faq'] ?? 0, $data['faq'] ?? array(), 'Risposte su corsi, ammissioni, frequenza, stage e servizi.' );
@@ -611,7 +615,7 @@ if ( $multilingual ) {
 		'evento'         => its_seed_events( $en['events'], 'en', $seed_dir ),
 		'documento'      => its_seed_documents( $en['documents'], 'en' ),
 		'edizione_corso' => its_seed_editions( $en['editions'], 'en' ),
-		'page'           => its_seed_pages( $en['pages'], 'en', $en_template ),
+		'page'           => its_seed_pages( $en['pages'], 'en', $en_template, $seed_dir ),
 	);
 	$linked = 0;
 	foreach ( array( 'corso' => 'courses', 'post' => 'posts', 'evento' => 'events', 'documento' => 'documents', 'page' => 'pages' ) as $type => $key ) {

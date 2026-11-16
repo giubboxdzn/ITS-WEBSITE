@@ -125,7 +125,7 @@ php "$ROOT/dev/languages.php"
 
 if [ "${1:-}" != "--no-seed" ]; then
 	SEED="$WPDIR/seed/data.json"
-	if [ ! -f "$SEED" ] || ! grep -q '"en": {' "$SEED"; then
+	if [ ! -f "$SEED" ] || ! grep -q '"en": {' "$SEED" || ! grep -q '"pages_format": 2' "$SEED"; then
 		# On Windows "python3" is often the Microsoft Store stub: take the first interpreter that runs.
 		PY=""
 		for candidate in python3 python py; do
@@ -138,9 +138,13 @@ if [ "${1:-}" != "--no-seed" ]; then
 			echo "Python 3.8+ non trovato (serve solo per scaricare i contenuti). Installalo o usa: dev/setup.sh --no-seed" >&2
 			exit 1
 		fi
-		if [ -f "$SEED" ]; then
+		if [ -f "$SEED" ] && ! grep -q '"en": {' "$SEED"; then
 			echo "Scarico la versione inglese del sito (qualche minuto)..."
 			"$PY" -I "$ROOT/dev/seed/fetch.py" --out "$WPDIR/seed" --en-only
+		fi
+		if [ -f "$SEED" ]; then
+			echo "Aggiorno le pagine interne dal sito (un paio di minuti)..."
+			"$PY" -I "$ROOT/dev/seed/fetch.py" --out "$WPDIR/seed" --pages-only
 		else
 			echo "Scarico i contenuti del sito, italiano e inglese (qualche minuto)..."
 			"$PY" -I "$ROOT/dev/seed/fetch.py" --out "$WPDIR/seed"

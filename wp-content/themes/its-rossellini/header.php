@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
 <?php wp_body_open(); ?>
 <a class="skip-link" href="#main"><?php esc_html_e( 'Vai al contenuto', 'its-rossellini' ); ?></a>
 
-<header class="masthead<?php echo is_front_page() ? ' masthead--over' : ''; ?>" data-masthead>
+<header class="masthead<?php echo is_front_page() || ( is_page() && its_has_sections() ) ? ' masthead--over' : ''; ?>" data-masthead>
 	<div class="masthead__bar wrap">
 		<a class="masthead__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
 			<?php echo its_logo(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>

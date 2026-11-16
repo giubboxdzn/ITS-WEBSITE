@@ -51,7 +51,7 @@ Se `serve.sh` risponde *Failed to listen … autorizzazioni di accesso*, la port
 
 Su Windows il tema è collegato con una *junction* (non servono permessi di amministratore). Per ripartire da un database vuoto basta cancellare `.wp/db/` e rilanciare `dev/setup.sh`.
 
-`dev/seed/fetch.py` legge (solo GET) l'API REST e le pagine pubbliche di itsrossellini.it, in italiano e in inglese, e salva tutto in `.wp/seed/` (ignorato da git). `dev/seed/import.php` lo importa nel database locale. Non scrive nulla sul sito live. Se `data.json` esiste già senza la parte inglese, `setup.sh` scarica solo quella (`fetch.py --en-only`, qualche minuto).
+`dev/seed/fetch.py` legge (solo GET) l'API REST e le pagine pubbliche di itsrossellini.it, in italiano e in inglese, e salva tutto in `.wp/seed/` (ignorato da git). `dev/seed/import.php` lo importa nel database locale. Non scrive nulla sul sito live. Se `data.json` esiste già senza la parte inglese, `setup.sh` scarica solo quella (`fetch.py --en-only`, qualche minuto); se le pagine sono nel formato precedente, riscarica solo le pagine (`fetch.py --pages-only`, un paio di minuti). Le pagine interne del live diventano blocchi dell'editor con gli stili del tema (occhielli, numeri, card, invito finale), con lead (riassunto) e foto (immagine in evidenza).
 
 ### Lingue (Polylang)
 
@@ -66,7 +66,13 @@ Il selettore con le bandiere è nell'header (bandiera + codice) e nel footer (ba
 1. Installare la cartella `wp-content/themes/its-rossellini` come nuovo tema (slug diverso da `rossellini`, il tema attuale resta intatto per tornare indietro).
 2. Tenere attivo **Rossellini Core**: il tema legge i suoi tipi di contenuto e tassonomie.
 3. **Lingue**: con Polylang attivo il selettore con le bandiere compare da solo (italiano e inglese già configurati sul sito live). Le traduzioni dei testi del tema sono incluse (`en_GB`); indirizzo, orari, "come arrivare" e fonte del dato occupazionale, se modificati nel Customizer, si traducono in *Lingue → Traduzioni* (gruppo *ITS Rossellini*).
-4. **Contenuti delle pagine.** Sul sito attuale quasi tutte le pagine hanno l'editor vuoto, perché il testo è scritto nel tema o nel plugin. Questo tema mostra il contenuto dell'editor, quindi prima di attivarlo i testi vanno inseriti nelle pagine (lo script di import locale mostra il risultato atteso).
+4. **Contenuti delle pagine.** Sul sito attuale quasi tutte le pagine hanno l'editor vuoto, perché il testo è scritto nel tema o nel plugin. Questo tema mostra il contenuto dell'editor, quindi prima di attivarlo i testi vanno inseriti nelle pagine (lo script di import locale mostra il risultato atteso). Le pagine interne si compongono con blocchi standard e tre stili del tema, da cui il layout sceglie da solo i componenti della home:
+   - **Riassunto** della pagina → sottotitolo dell'hero; **immagine in evidenza** → foto dell'hero.
+   - Paragrafo stile **Occhiello** prima di un Titolo H2 → etichetta della sezione; prima di un Titolo H3 → etichetta della card.
+   - **Titolo H2** → nuova sezione (l'ancora HTML va nell'indice «In questa pagina»); **Titolo H3** + paragrafi → una card; un link nel titolo H3 rende cliccabile tutta la card. Titoli numerati (`01 · …`) → passi numerati; card che puntano tutte a corsi → card dei corsi con foto.
+   - Elenco stile **Numeri**: una cifra per voce, la cifra in grassetto e poi l'etichetta (`**800** ore di tirocinio`).
+   - Gruppo stile **Invito finale** (titolo, testo, pulsanti) → banda blu di chiusura; i suoi pulsanti sono anche le azioni dell'hero.
+   Per ora il layout a sezioni è attivo solo su *Stage & Placement* (pagina pilota, `its_has_sections()` in `inc/sections.php`).
 5. Assegnare i modelli: *Elenco corsi* a `/offerta-formativa/corsi/`, *Eventi* a `/eventi/`, *Bandi e documenti* a `/bandi-albi/` e `/bandi/`, *Edizioni dei corsi* a `/offerta-formativa/corsi-in-svolgimento-e-conclusi/`; impostare `/news/` come pagina degli articoli.
 6. Menu: posizioni *Menu principale*, *Menu footer*, *Note legali*.
 7. Home: Customizer → *Home* → video dell'hero (MP4 muto); l'immagine in evidenza della pagina iniziale fa da copertina del video. Il contenuto della pagina (loghi con link) diventa la sezione «I nostri partner».

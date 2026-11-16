@@ -322,20 +322,7 @@ $news   = new WP_Query(
 	</section>
 <?php endif; ?>
 
-<section class="section" aria-labelledby="cta-title">
-	<div class="wrap">
-		<div class="cta-card">
-			<div>
-				<h2 id="cta-title" class="display"><?php echo wp_kses( __( 'Vuoi visitare <strong>i laboratori?</strong>', 'its-rossellini' ), $em ); ?></h2>
-				<p class="lead"><?php esc_html_e( 'Prenota un open day o un incontro individuale.', 'its-rossellini' ); ?> <?php echo esc_html( $contacts['address'] ); ?>, <?php echo esc_html( $contacts['transit'] ); ?>.</p>
-			</div>
-			<div class="cta-card__actions">
-				<a class="btn btn--white" href="<?php echo esc_url( $meet_url ); ?>"><?php esc_html_e( 'Prenota un incontro', 'its-rossellini' ); ?><?php echo its_icon( 'arrow-up' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
-				<a class="btn btn--outline-light" href="<?php echo esc_url( its_page_url( 'iscrizioni' ) ); ?>"><?php esc_html_e( 'Preiscriviti al biennio', 'its-rossellini' ); ?></a>
-			</div>
-		</div>
-	</div>
-</section>
+<?php get_template_part( 'template-parts/cta-card' ); ?>
 
 <?php
 get_footer();
