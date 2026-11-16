@@ -66,6 +66,46 @@
 		});
 	}
 
+	/* Course index: the hovered course's photo follows the pointer (fine pointers only). */
+	const index = document.querySelector('[data-course-index]');
+	const preview = document.querySelector('[data-course-preview]');
+	const finePointer = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 761px)');
+	if (index && preview && finePointer.matches && !reduceMotion.matches) {
+		const img = preview.querySelector('img');
+		const section = index.closest('section') || index;
+		let x = 0, y = 0, cx = 0, cy = 0, raf = 0;
+		const loop = () => {
+			cx += (x - cx) * 0.18;
+			cy += (y - cy) * 0.18;
+			preview.style.transform = `translate3d(${cx}px, ${cy}px, 0) translate(1.75rem, -60%) rotate(${Math.max(-6, Math.min(6, (x - cx) * 0.05))}deg)`;
+			raf = Math.abs(x - cx) + Math.abs(y - cy) > 0.3 ? requestAnimationFrame(loop) : 0;
+		};
+		const move = (event) => {
+			x = event.clientX;
+			y = event.clientY;
+			if (!raf) raf = requestAnimationFrame(loop);
+		};
+		document.body.classList.add('is-following');
+		index.addEventListener('pointerover', (event) => {
+			const link = event.target.closest('.course-index__link');
+			const source = link && link.querySelector('img');
+			if (!source) return;
+			img.src = source.currentSrc || source.src;
+			if (!preview.classList.contains('is-visible')) {
+				cx = x = event.clientX;
+				cy = y = event.clientY;
+				preview.style.transform = `translate3d(${cx}px, ${cy}px, 0) translate(1.75rem, -60%)`;
+			}
+			preview.classList.add('is-visible');
+		});
+		index.addEventListener('pointermove', move, { passive: true });
+		index.addEventListener('pointerleave', () => preview.classList.remove('is-visible'));
+		section.addEventListener('scroll', () => preview.classList.remove('is-visible'), { passive: true });
+		window.addEventListener('scroll', () => preview.classList.remove('is-visible'), { passive: true });
+		// Preload the photos so the preview never flashes empty.
+		index.querySelectorAll('img[loading="lazy"]').forEach((image) => { image.loading = 'eager'; });
+	}
+
 	/* Course grid: filter by area in place, keep the URL shareable. */
 	const filter = document.querySelector('.area-filter');
 	const grid = document.querySelector('[data-wall]');

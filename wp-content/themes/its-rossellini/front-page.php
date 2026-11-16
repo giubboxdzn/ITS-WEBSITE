@@ -27,11 +27,23 @@ foreach ( its_courses( 12 )->posts as $course ) {
 $photos     = array_values( array_unique( array_filter( $photos ) ) );
 $hero_photo = $photos[0] ?? 0;
 $academy    = get_page_by_path( 'academy' );
-$set_photo  = ( $academy && has_post_thumbnail( $academy ) ) ? get_post_thumbnail_id( $academy ) : ( $photos[5] ?? end( $photos ) ?: 0 );
+// The academy band is full width: use the Academy page image, else the sharpest course photo not used by the hero.
+$set_photo = ( $academy && has_post_thumbnail( $academy ) ) ? get_post_thumbnail_id( $academy ) : 0;
+if ( ! $set_photo ) {
+	$widest = 0;
+	foreach ( array_slice( $photos, 1 ) as $candidate ) {
+		$meta = wp_get_attachment_metadata( $candidate );
+		if ( ! empty( $meta['width'] ) && $meta['width'] > $widest ) {
+			$widest    = (int) $meta['width'];
+			$set_photo = $candidate;
+		}
+	}
+}
 $poster     = $hero_photo ? (string) wp_get_attachment_image_url( $hero_photo, 'full' ) : '';
 ?>
 
 <section class="hero" aria-labelledby="hero-title">
+	<div class="hero__stage">
 	<div class="hero__media">
 		<?php if ( $video ) : ?>
 			<video class="hero__video" muted loop playsinline preload="metadata" poster="<?php echo esc_url( $poster ); ?>" aria-hidden="true" data-hero-video>
@@ -76,9 +88,10 @@ $poster     = $hero_photo ? (string) wp_get_attachment_image_url( $hero_photo, '
 			<?php endif; ?>
 		</div>
 	</div>
+	</div>
 </section>
 
-<section class="section section--light" id="corsi" aria-labelledby="corsi-title">
+<section class="section section--black" id="corsi" aria-labelledby="corsi-title">
 	<div class="wrap">
 		<div class="section__head">
 			<h2 id="corsi-title" class="headline">
@@ -95,21 +108,25 @@ $poster     = $hero_photo ? (string) wp_get_attachment_image_url( $hero_photo, '
 				?>
 			</p>
 		</div>
-		<?php get_template_part( 'template-parts/course-wall' ); ?>
+		<?php get_template_part( 'template-parts/course-index' ); ?>
 	</div>
 </section>
 
-<section class="section" aria-labelledby="set-title">
-	<div class="wrap split">
+<section class="section section--navy section--stack" aria-labelledby="set-title">
+	<div class="wrap showcase">
+		<div class="showcase__head">
+			<h2 id="set-title" class="headline headline--xl"><?php echo wp_kses( __( 'Non una classe. <em>Un set aperto.</em>', 'its-rossellini' ), array( 'em' => array() ) ); ?></h2>
+			<p class="section__lead"><?php esc_html_e( 'Qui teoria e pratica entrano nella stessa inquadratura. Produci, sperimenti, sbagli, riprovi e costruisci un portfolio mentre impari.', 'its-rossellini' ); ?></p>
+		</div>
 		<?php if ( $set_photo ) : ?>
-			<figure class="split__media">
+			<figure class="showcase__media">
 				<?php
 				echo wp_get_attachment_image(
 					$set_photo,
-					'large',
+					'full',
 					false,
 					array(
-						'sizes' => '(max-width: 900px) 92vw, 50vw',
+						'sizes' => '(max-width: 1400px) 92vw, 1360px',
 						'alt'   => '',
 					)
 				);
@@ -120,25 +137,21 @@ $poster     = $hero_photo ? (string) wp_get_attachment_image_url( $hero_photo, '
 				?>
 			</figure>
 		<?php endif; ?>
-		<div class="split__text">
-			<h2 id="set-title" class="headline"><?php echo wp_kses( __( 'Non una classe. <em>Un set aperto.</em>', 'its-rossellini' ), array( 'em' => array() ) ); ?></h2>
-			<p class="section__lead"><?php esc_html_e( 'Qui teoria e pratica entrano nella stessa inquadratura. Produci, sperimenti, sbagli, riprovi e costruisci un portfolio mentre impari.', 'its-rossellini' ); ?></p>
-			<dl class="features">
-				<div><dt><?php esc_html_e( 'Laboratori veri', 'its-rossellini' ); ?></dt><dd><?php esc_html_e( 'Spazi e tecnologie per lavorare come in produzione.', 'its-rossellini' ); ?></dd></div>
-				<div><dt><?php esc_html_e( 'Teatro di posa', 'its-rossellini' ); ?></dt><dd><?php esc_html_e( '360 m² nella sede di Via Tiburtina, con aule e laboratori.', 'its-rossellini' ); ?></dd></div>
-				<div><dt><?php esc_html_e( 'Docenti dall’industria', 'its-rossellini' ); ?></dt><dd><?php esc_html_e( 'Professionisti che insegnano facendo.', 'its-rossellini' ); ?></dd></div>
-				<div><dt><?php esc_html_e( 'Imprese nel percorso', 'its-rossellini' ); ?></dt><dd><?php esc_html_e( 'Stage, brief e relazioni che iniziano prima del diploma.', 'its-rossellini' ); ?></dd></div>
-			</dl>
-			<a class="link-arrow" href="<?php echo esc_url( its_page_url( 'academy' ) ); ?>"><?php esc_html_e( 'Conosci l’Academy', 'its-rossellini' ); ?><?php echo its_icon( 'arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
-		</div>
+		<dl class="features features--row">
+			<div><dt><?php esc_html_e( 'Laboratori veri', 'its-rossellini' ); ?></dt><dd><?php esc_html_e( 'Spazi e tecnologie per lavorare come in produzione.', 'its-rossellini' ); ?></dd></div>
+			<div><dt><?php esc_html_e( 'Teatro di posa', 'its-rossellini' ); ?></dt><dd><?php esc_html_e( '360 m² nella sede di Via Tiburtina, con aule e laboratori.', 'its-rossellini' ); ?></dd></div>
+			<div><dt><?php esc_html_e( 'Docenti dall’industria', 'its-rossellini' ); ?></dt><dd><?php esc_html_e( 'Professionisti che insegnano facendo.', 'its-rossellini' ); ?></dd></div>
+			<div><dt><?php esc_html_e( 'Imprese nel percorso', 'its-rossellini' ); ?></dt><dd><?php esc_html_e( 'Stage, brief e relazioni che iniziano prima del diploma.', 'its-rossellini' ); ?></dd></div>
+		</dl>
+		<a class="link-arrow" href="<?php echo esc_url( its_page_url( 'academy' ) ); ?>"><?php esc_html_e( 'Conosci l’Academy', 'its-rossellini' ); ?><?php echo its_icon( 'arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 	</div>
 </section>
 
-<section class="section section--dark" aria-labelledby="fuori-title">
+<section class="section section--black section--stack" aria-labelledby="fuori-title">
 	<div class="wrap">
 		<h2 id="fuori-title" class="headline"><?php echo wp_kses( __( 'La formazione <em>succede fuori.</em>', 'its-rossellini' ), array( 'em' => array() ) ); ?></h2>
 
-		<div class="outcome">
+		<div class="outcome outcome--wide">
 			<p class="outcome__claim">
 				<?php
 				printf(
@@ -201,7 +214,7 @@ $news   = new WP_Query(
 	)
 );
 ?>
-<section class="section" aria-labelledby="news-title">
+<section class="section section--navy section--stack" aria-labelledby="news-title">
 	<div class="wrap">
 		<div class="section__head section__head--row">
 			<h2 id="news-title" class="headline"><?php echo wp_kses( __( 'News, eventi, <em>occasioni.</em>', 'its-rossellini' ), array( 'em' => array() ) ); ?></h2>
@@ -228,7 +241,7 @@ $news   = new WP_Query(
 $partners = trim( (string) apply_filters( 'the_content', (string) get_post_field( 'post_content', get_queried_object_id() ) ) );
 if ( $partners ) :
 	?>
-	<section class="section section--light" aria-labelledby="partner-title">
+	<section class="section section--black section--stack" aria-labelledby="partner-title">
 		<div class="wrap partners">
 			<h2 id="partner-title" class="headline headline--m"><?php esc_html_e( 'I nostri partner', 'its-rossellini' ); ?></h2>
 			<div class="partners__logos"><?php echo $partners; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
@@ -236,7 +249,7 @@ if ( $partners ) :
 	</section>
 <?php endif; ?>
 
-<section class="cta" aria-labelledby="cta-title">
+<section class="cta section--stack" aria-labelledby="cta-title">
 	<div class="wrap cta__grid">
 		<h2 id="cta-title" class="headline"><?php echo wp_kses( __( 'Vuoi visitare <em>i laboratori?</em>', 'its-rossellini' ), array( 'em' => array() ) ); ?></h2>
 		<div class="cta__text">

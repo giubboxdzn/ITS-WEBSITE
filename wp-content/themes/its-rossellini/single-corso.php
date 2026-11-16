@@ -30,6 +30,7 @@ while ( have_posts() ) :
 				'lead'     => has_excerpt() ? get_the_excerpt() : '',
 				'image_id' => (int) get_post_thumbnail_id(),
 				'aside'    => $aside,
+				'cover'    => true,
 			)
 		);
 		?>

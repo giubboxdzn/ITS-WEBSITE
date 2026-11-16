@@ -214,6 +214,14 @@
    "small": {
     "displayName": "Small",
     "purpose": "Area labels, table headers, badges."
+   },
+   "headline-xl": {
+    "displayName": "Headline XL",
+    "purpose": "Academy showcase heading on the home."
+   },
+   "index-title": {
+    "displayName": "Index title",
+    "purpose": "Course titles in the home course index."
    }
   },
   "shadows": [
@@ -243,6 +251,16 @@
     "name": "hero-video",
     "value": "muted loop, started by script",
     "purpose": "Plays only without reduced motion or data saving; always pausable."
+   },
+   {
+    "name": "hero-frame",
+    "value": "clip-path inset(0 round 0) → inset(7svh gutter 9svh round 28px), scroll(root) 0–65svh",
+    "purpose": "Footage closes into a frame as the page starts to scroll; static fallback."
+   },
+   {
+    "name": "course-preview",
+    "value": "pointer follow, lerp 0.18, tilt ≤6deg",
+    "purpose": "Course photo follows the pointer over the index on fine pointers."
    }
   ],
   "breakpoints": [
@@ -332,17 +350,25 @@
    "description": "Field with label above.",
    "html": "<label class=\"ds-field\"><span>Cerca</span><input type=\"search\" placeholder=\"Es. graduatoria Videomaker…\"></label>",
    "css": ":host{--blu:#004590;--blu-notte:#002c64;--ciano:#49b7e9;--elettrico:#1032cf;--bordo:#dfe4ec;--muted:#4a5466;--f:'Raleway',system-ui,sans-serif}.ds-field{display:grid;gap:.35rem;font:700 .9375rem var(--f)}.ds-field input{min-height:3rem;padding:0 1rem;border:1.5px solid var(--bordo);border-radius:10px;font:400 1rem var(--f);caret-color:var(--blu)}.ds-field input:focus-visible{outline:3px solid var(--elettrico);outline-offset:3px}"
+  },
+  {
+   "name": "Course Index Row",
+   "kind": "custom",
+   "refersTo": "course-index",
+   "description": "Huge title, area and line, circular arrow; hover turns title cyan.",
+   "html": "<div class=\"ds-ci\"><a href=\"#\"><span class=\"t\">Digital Sound Designer</span><span class=\"m\"><b>Audio</b>Suono per cinema, live, podcast, gaming e ambienti immersivi.</span><span class=\"a\">↗</span></a></div>",
+   "css": ":host{--ciano:#49b7e9;--f:'Raleway',system-ui,sans-serif}.ds-ci{background:#080b10;padding:12px 24px}.ds-ci a{display:grid;grid-template-columns:1fr 16rem auto;gap:2rem;align-items:center;padding:1.4rem 0;border-bottom:1px solid rgba(255,255,255,.2);color:#fff;text-decoration:none;font-family:var(--f)}.ds-ci .t{font-size:3rem;font-weight:900;letter-spacing:-.04em;text-transform:uppercase;line-height:.95;transition:color .3s}.ds-ci .m{display:grid;color:#b9c6da;font-size:.9375rem}.ds-ci .m b{color:var(--ciano)}.ds-ci .a{display:grid;place-items:center;width:3rem;height:3rem;border:1.5px solid rgba(255,255,255,.3);border-radius:50%}.ds-ci a:hover .t{color:var(--ciano)}.ds-ci a:hover .a{background:var(--ciano);border-color:var(--ciano);color:#002c64}"
   }
  ],
  "narrative": {
-  "northStar": "Lo stesso Rossellini, più adulto",
-  "overview": "The system keeps what makes the current itsrossellini.it recognisable and removes what makes it read as machine-made. Kept: the institutional blues with cyan, Raleway set heavy and uppercase with a second line in italic, the real hero video, real photography, rounded course cards, pill buttons, the news list with large titles, partner logos in tiles. Removed: monospace micro-labels, section counters, kickers, grid-line backgrounds, glows, outlined giant numbers, the \"REC\" camera frame, coloured stripes, the marquee, 9–10px text.\n\nModern here means restraint and confidence rather than effects: big real footage, big type, generous space, few colours used as whole fields, one accent. Motion is the video itself; the interface only settles the header and lifts cards on hover.",
+  "northStar": "Lo stesso Rossellini, al cinema",
+  "overview": "The system keeps what makes the current itsrossellini.it recognisable and removes what makes it read as machine-made. Kept: the institutional blues with cyan, Raleway set heavy and uppercase with a second line in italic, the real hero video, real photography, rounded course cards, pill buttons, the news list with large titles, partner logos in tiles. Removed: monospace micro-labels, section counters, kickers, grid-line backgrounds, glows, outlined giant numbers, the \"REC\" camera frame, coloured stripes, the marquee, 9–10px text.\n\nModern here means a cinematic home: dark fields, the real footage as the opening shot, type at poster scale, and two authored moves only. The footage closes into a rounded frame as the page starts to scroll, and the course index shows each course's photo at the pointer. Reading pages (courses, news, documents) stay light for legibility.",
   "keyCharacteristics": [
    "Institutional palette only: blue, deep blue, cyan, electric blue (hover and focus), near-black, white, a cool light grey.",
    "Raleway everywhere; headlines in 900 caps with an italic 500 second line.",
    "Real footage and photographs in 14px rounded frames.",
    "Pill buttons in sentence case; circular arrow buttons on list rows.",
-   "Fields of colour by section: video, light grey, white, deep blue, white, light grey, cyan, near-black."
+   "Home fields: footage → near-black (courses) → deep blue (academy) → near-black (outcome, path) → deep blue (news) → near-black (partners) → cyan (call) → near-black footer, each sliding over the previous with 28px rounded shoulders."
   ],
   "rules": [
    {
@@ -371,7 +397,8 @@
    "Do use only the institutional palette, with cyan as the single accent.",
    "Do show real footage and real photographs, rounded at 14px.",
    "Do keep every action a pill with a verb.",
-   "Do keep content visible without JavaScript and without scrolling animations."
+   "Do keep content visible without JavaScript and without scrolling animations.",
+   "Do keep the two authored moves (closing frame, pointer preview) and add no third."
   ],
   "donts": [
    "Don't add yellow, green, red or per-area colours.",

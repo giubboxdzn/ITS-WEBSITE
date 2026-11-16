@@ -1,6 +1,6 @@
 ---
 name: ITS Academy Roberto Rossellini
-description: The current Rossellini site, modernised — institutional blues and cyan, Raleway, real video and photography.
+description: The current Rossellini site, made cinematic — dark fields, institutional blues and cyan, Raleway, the footage as the opening shot.
 colors:
   blu: "#004590"
   blu-notte: "#002c64"
@@ -16,9 +16,9 @@ colors:
 typography:
   hero:
     fontFamily: "Raleway, Segoe UI, system-ui, sans-serif"
-    fontSize: "clamp(3.4rem, 9.5vw, 8.25rem)"
+    fontSize: "clamp(3.4rem, 10.6vw, 10.75rem)"
     fontWeight: 900
-    lineHeight: 0.88
+    lineHeight: 0.86
     letterSpacing: "-0.04em"
   headline:
     fontFamily: "Raleway, Segoe UI, system-ui, sans-serif"
@@ -26,6 +26,18 @@ typography:
     fontWeight: 900
     lineHeight: 0.95
     letterSpacing: "-0.035em"
+  headline-xl:
+    fontFamily: "Raleway, Segoe UI, system-ui, sans-serif"
+    fontSize: "clamp(2.75rem, 7.5vw, 7rem)"
+    fontWeight: 900
+    lineHeight: 0.9
+    letterSpacing: "-0.04em"
+  index-title:
+    fontFamily: "Raleway, Segoe UI, system-ui, sans-serif"
+    fontSize: "clamp(1.9rem, 4.4vw, 4rem)"
+    fontWeight: 900
+    lineHeight: 0.95
+    letterSpacing: "-0.04em"
   headline-m:
     fontFamily: "Raleway, Segoe UI, system-ui, sans-serif"
     fontSize: "clamp(2rem, 3.6vw, 3rem)"
@@ -78,6 +90,7 @@ typography:
 rounded:
   s: "10px"
   m: "14px"
+  xl: "28px"
   pill: "999px"
 spacing:
   gutter: "clamp(1rem, 4vw, 3.5rem)"
@@ -128,18 +141,18 @@ components:
 
 ## Overview
 
-**Creative North Star: "Lo stesso Rossellini, più adulto"**
+**Creative North Star: "Lo stesso Rossellini, al cinema"**
 
 The system keeps what makes the current itsrossellini.it recognisable and removes what makes it read as machine-made. Kept: the institutional blues with cyan, Raleway set heavy and uppercase with a second line in italic, the real hero video, real photography, rounded course cards, pill buttons, the news list with large titles, partner logos in tiles. Removed: monospace micro-labels, section counters, kickers, grid-line backgrounds, glows, outlined giant numbers, the "REC" camera frame, coloured stripes, the marquee, 9–10px text.
 
-Modern here means restraint and confidence rather than effects: big real footage, big type, generous space, few colours used as whole fields, one accent. Motion is the video itself; the interface only settles the header and lifts cards on hover.
+Modern here means a cinematic home: dark fields, the real footage as the opening shot, type at poster scale, and two authored moves only. The footage closes into a rounded frame as the page starts to scroll, and the course index shows each course's photo at the pointer. Reading pages (courses, news, documents) stay light for legibility.
 
 **Key Characteristics:**
 - Institutional palette only: blue, deep blue, cyan, electric blue (hover and focus), near-black, white, a cool light grey.
 - Raleway everywhere; headlines in 900 caps with an italic 500 second line.
 - Real footage and photographs in 14px rounded frames.
 - Pill buttons in sentence case; circular arrow buttons on list rows.
-- Fields of colour by section: video, light grey, white, deep blue, white, light grey, cyan, near-black.
+- Home fields: footage → near-black (courses) → deep blue (academy) → near-black (outcome, path) → deep blue (news) → near-black (partners) → cyan (call) → near-black footer, each sliding over the previous with 28px rounded shoulders.
 
 ## Colors
 
@@ -186,18 +199,19 @@ Modern here means restraint and confidence rather than effects: big real footage
 ## Layout
 
 - Container `min(100% - 2 × gutter, 1360px)`, gutter `clamp(1rem, 4vw, 3.5rem)`, section rhythm `clamp(4.5rem, 9vw, 8rem)`.
-- Home sequence: video hero → courses on light grey → academy split on white → outcome and path on deep blue → news on white → partners on light grey → final call on cyan → footer on near-black.
-- Course grid: 4 columns, 2 under 1100px, 1 under 640px. Split sections stack under 900px.
+- Home sequence: hero footage (165svh tall with a sticky 100svh stage when scroll-driven animation is supported, 100svh otherwise) → course index on near-black → academy showcase on deep blue → outcome and path on near-black → news rows on deep blue → partners on near-black → call on cyan → footer on near-black with the logo across the full width. Every section after the courses carries `section--stack`: 28px rounded top corners and a −28px overlap.
+- Course index (home): one row per course, title | area + line | arrow; under 760px it becomes a horizontal snapping carousel of 4:5 photo cards. Course grid (interior pages): 4 columns, 2 under 1100px, 1 under 640px.
 - Sticky masthead, 5rem tall; on the home page it is transparent over the video and turns deep blue after 24px of scroll.
 - Breakpoints: 1100px, 1080px (navigation behind the Menu button), 900px, 760px (document table to rows), 640px.
 
 ## Elevation & Depth
 
-Mostly flat. One shadow exists: the card hover lift `0 18px 40px -22px rgb(0 44 100 / 0.45)` with a 4px rise. The hero uses a deep-blue legibility scrim over the video; no other gradients, no glows, no glass.
+Mostly flat. Depth comes from the stack: each dark section slides over the previous one with rounded shoulders. One shadow exists: the course card hover lift `0 18px 40px -22px rgb(0 44 100 / 0.45)` on interior grids. The hero and the course cover heads use a deep-blue legibility scrim over the footage; no other gradients, no glows, no glass.
 
 ## Shapes
 
-- Photographs, video poster frames, cards, facts panels, filter bar: 14px radius.
+- Full-width bands (the closing hero frame, the academy photo, section shoulders, footer top): 28px.
+- Photographs, cards, course previews, facts panels, filter bar: 14px radius.
 - Inputs and partner tiles: 10px.
 - Buttons, filter pills, badges, search field: full pill.
 - Arrow buttons on list rows and the video control: circles.
@@ -223,8 +237,14 @@ White, 1.5px light border, 10px radius, 3rem tall, blue caret; labels above in 7
 ### Navigation
 Logo left; links at 600 with a 2px cyan underline for hover and current page; cyan "Preiscriviti" pill. Under 1080px a pill "Menu" button opens a deep-blue panel with large 800 links; Escape closes it. Without JavaScript the links stay visible.
 
+### Course index (home)
+Large Raleway 900 caps titles in white on near-black; area in cyan and one line in muted text; circular arrow. Hovering or focusing a row turns its title cyan, dims the others, rotates the arrow into a cyan fill and shows the course photo: beside the row without JS, following the pointer (with a slight lag and tilt) on fine pointers. Phones get a snapping carousel of photo cards instead.
+
+### Course cover head
+On a course page whose photo is at least 1200px wide, the photo fills the head behind the title under a deep-blue scrim; smaller photos sit beside the title.
+
 ### Hero video
-Muted, looping, `playsinline`, no autoplay attribute: the script starts it only when reduced motion and data saving are off. A circular pause/play button is always available; the front page's featured image is the poster.
+Muted, looping, `playsinline`, no autoplay attribute: the script starts it only when reduced motion and data saving are off. A circular pause/play button is always available; the front page's featured image is the poster. Where `animation-timeline: scroll()` is supported and motion is allowed, the footage closes from full bleed into `inset(7svh gutter 9svh round 28px)` over the first 65svh of scroll while the copy drifts up 6svh; otherwise the hero is a static full-viewport stage.
 
 ## Do's and Don'ts
 
@@ -234,6 +254,7 @@ Muted, looping, `playsinline`, no autoplay attribute: the script starts it only 
 - **Do** show real footage and real photographs, rounded at 14px.
 - **Do** keep every action a pill with a verb.
 - **Do** keep content visible without JavaScript and without scrolling animations.
+- **Do** keep the two authored moves (closing frame, pointer preview) and add no third.
 
 ### Don't:
 - **Don't** add yellow, green, red or per-area colours.

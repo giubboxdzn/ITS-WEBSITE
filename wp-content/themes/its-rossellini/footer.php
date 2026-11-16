@@ -43,6 +43,8 @@ $tel      = preg_replace( '/[^0-9+]/', '', $contacts['phone'] );
 		</nav>
 	</div>
 
+	<div class="wrap colophon__wordmark" aria-hidden="true"><?php echo its_logo(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
+
 	<div class="wrap colophon__base">
 		<p>&copy; <?php echo esc_html( wp_date( 'Y' ) ); ?> <?php esc_html_e( 'Fondazione ITS Academy Roberto Rossellini', 'its-rossellini' ); ?></p>
 		<?php

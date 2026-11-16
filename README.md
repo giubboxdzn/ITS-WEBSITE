@@ -2,7 +2,7 @@
 
 Nuovo tema classico per [itsrossellini.it](https://itsrossellini.it), stesso stack del sito attuale: WordPress, PHP, CSS e JavaScript scritti a mano, senza framework né build.
 
-Direzione visiva: **il sito attuale di Rossellini, modernizzato**. Stessa palette istituzionale (blu `#004590`, blu notte `#002c64`, ciano `#49b7e9`, blu elettrico `#1032cf`), stesso Raleway con il titolo maiuscolo pesante e la seconda riga in corsivo, video e foto reali, card arrotondate, pulsanti a pillola. Tolti i dettagli che lo facevano sembrare generato da AI (etichette monospace, contatori "01 / 05", occhielli, griglie di sfondo, aloni, cornice "REC", strisce colorate, scritta che scorre). Regole complete in [`DESIGN.md`](DESIGN.md), contesto di prodotto in [`PRODUCT.md`](PRODUCT.md).
+Direzione visiva: **il sito attuale di Rossellini, in versione cinematografica**: home scura con il video come prima inquadratura, che si chiude in una cornice arrotondata quando si scorre, e indice dei corsi con la foto che segue il puntatore. Stessa palette istituzionale (blu `#004590`, blu notte `#002c64`, ciano `#49b7e9`, blu elettrico `#1032cf`), stesso Raleway con il titolo maiuscolo pesante e la seconda riga in corsivo, video e foto reali, card arrotondate, pulsanti a pillola. Tolti i dettagli che lo facevano sembrare generato da AI (etichette monospace, contatori "01 / 05", occhielli, griglie di sfondo, aloni, cornice "REC", strisce colorate, scritta che scorre). Regole complete in [`DESIGN.md`](DESIGN.md), contesto di prodotto in [`PRODUCT.md`](PRODUCT.md).
 
 ## Struttura
 
