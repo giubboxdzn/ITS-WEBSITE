@@ -27,3 +27,6 @@
 
 # Python bytecode
 __pycache__/
+
+# Third-party design references (Dribbble), local only
+.impeccable/references/

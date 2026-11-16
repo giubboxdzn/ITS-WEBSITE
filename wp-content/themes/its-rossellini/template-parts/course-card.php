@@ -1,6 +1,6 @@
 <?php
 /**
- * Course card: real photo, title, area, one line, link.
+ * Course card: full-height photo, area chip, title and line over a scrim, arrow.
  *
  * Args: 'heading' (h2|h3), 'loading' (lazy|eager).
  *
@@ -19,7 +19,7 @@ $area    = its_area( get_the_ID() );
 			<?php
 			if ( has_post_thumbnail() ) {
 				the_post_thumbnail(
-					'its-card',
+					'its-portrait',
 					array(
 						'loading' => $args['loading'] ?? 'lazy',
 						'sizes'   => '(max-width: 640px) 92vw, (max-width: 1100px) 46vw, 330px',
@@ -31,13 +31,13 @@ $area    = its_area( get_the_ID() );
 		</div>
 		<div class="card__body">
 			<<?php echo tag_escape( $heading ); ?> class="card__title"><?php the_title(); ?></<?php echo tag_escape( $heading ); ?>>
-			<?php if ( $area ) : ?>
-				<p class="card__area"><?php echo esc_html( $area->name ); ?></p>
-			<?php endif; ?>
 			<?php if ( has_excerpt() ) : ?>
 				<p class="card__text"><?php echo esc_html( get_the_excerpt() ); ?></p>
 			<?php endif; ?>
-			<span class="card__more"><?php esc_html_e( 'Scopri il corso', 'its-rossellini' ); ?><?php echo its_icon( 'arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 		</div>
+		<?php if ( $area ) : ?>
+			<span class="card__area glass-chip"><?php echo esc_html( $area->name ); ?></span>
+		<?php endif; ?>
+		<span class="card__arrow" aria-hidden="true"><?php echo its_icon( 'arrow-up' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 	</a>
 </article>

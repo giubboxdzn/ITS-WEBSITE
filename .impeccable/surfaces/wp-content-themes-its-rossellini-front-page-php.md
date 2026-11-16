@@ -15,14 +15,14 @@ Superseded: the earlier "locandina e fotobusta" direction (yellow second ink, ar
 
 ## Direction contract
 
-THESIS: The current Rossellini site, made cinematic: same institution, palette, Raleway voice and footage, on dark fields where the video is the opening shot. It refuses the light corporate template (card grids, split blocks) and the "film-tech HUD" costume of the current site.
+THESIS: The institution's site in today's product-site language the user pointed to: rounded panels on a deep-navy canvas, glass over real footage, light display type. It refuses both the current site's film-tech HUD costume and the flat corporate template.
 
-OWN-WORLD: Near-black and deep blue fields with cyan as the single accent; light grey and white only on reading pages. Raleway 900 caps at very large sizes with the italic second line in cyan. Real footage and photographs in rounded frames (14px, 28px for full-width bands). Sections slide over the previous one with 28px rounded shoulders. Pill buttons, circular arrows. No glows, no grids, no mono labels.
+OWN-WORLD: Canvas in deep-navy tones of the institutional blue (#04152b, #0a2140); white light panels with a soft cyan glow; cyan as emphasis on dark, electric blue on light; electric-to-blue gradient for primary buttons and the accent tile. Raleway 300 for display in sentence case with one phrase at 600; 22–40px radii; glass pills and cards (blur 14–18px); pill buttons with a rotating arrow.
 
-STORY: The visitor lands inside the footage, reads "Il futuro si gira adesso." and can act. As the page moves the footage closes into a frame and the eight courses appear as huge titles; hovering one shows its photo at the pointer. Then the open set, the 87% statement and the three steps, the news, the partners, the cyan call to visit, and the institution's name across the footer.
+STORY: The visitor lands on the footage inside a rounded card, reads "Il futuro si gira adesso.", sees the 87% figure and where the school is, and can book a visit. Below: partners, a bento of figures and photos about the open set, the eight courses as image cards, the path from guidance to work, news, and a gradient call to visit.
 
-FIRST VIEWPORT: Full-bleed hero video under a deep-blue scrim, transparent header (turns near-black on scroll). Headline across the width at up to ~10.75rem, "si gira" italic cyan; lead bottom-left; cyan "Prenota un incontro" and outline "Scopri i corsi" bottom-right with a round pause control.
+FIRST VIEWPORT: Rounded hero card inset 8–16px from the viewport, video under a left-weighted navy scrim; floating pill header (logo, glass nav pill, white "Preiscriviti"); headline bottom-left up to ~7.25rem with "si gira" in cyan 600; lead; white "Prenota un incontro ↗" and glass "Scopri i corsi"; bottom-right two glass cards (87%, visit/next event) and the pause control; white partner bar overlapping the card's lower edge.
 
-FORM: the incumbent itsrossellini.it theme, made cinematic (user-chosen "Cinematografico, scuro" from two overdrive directions; seed: none (user-pinned incumbent world)). Signature moment: the footage closes into a rounded frame on scroll (CSS scroll-driven, static fallback). Signature interaction: the course index preview that follows the pointer (fine pointers only; phones get a snapping carousel; works as plain links without JS).
+FORM: user-supplied references (three Dribbble shots) translated into the institutional palette and Raleway; seed: none (user-pinned references). Signature interaction: the header pill turning into a glass bar on scroll; arrows rotating to ↗ on hover across buttons and cards.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance

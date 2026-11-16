@@ -1,6 +1,6 @@
 <?php
 /**
- * Front page.
+ * Front page: rounded panels on a deep-navy canvas.
  *
  * @package its-rossellini
  */
@@ -13,74 +13,82 @@ $facts    = its_facts();
 $contacts = its_contacts();
 $meet_url = its_page_url( 'incontriamoci', its_page_url( 'contatti' ) );
 $video    = its_hero_video();
+$next     = its_next_event();
+$em       = array(
+	'em'     => array(),
+	'strong' => array(),
+);
 
-// Real photography only: the front page's featured image, else course photos.
-$photos = array();
-if ( has_post_thumbnail( get_queried_object_id() ) ) {
-	$photos[] = get_post_thumbnail_id( get_queried_object_id() );
-}
+// Real photography only: the front page's featured image, then course photos sorted by size.
+$hero_photo = has_post_thumbnail( get_queried_object_id() ) ? (int) get_post_thumbnail_id( get_queried_object_id() ) : 0;
+$photos     = array();
 foreach ( its_courses( 12 )->posts as $course ) {
 	if ( has_post_thumbnail( $course ) ) {
-		$photos[] = get_post_thumbnail_id( $course );
+		$id            = (int) get_post_thumbnail_id( $course );
+		$meta          = wp_get_attachment_metadata( $id );
+		$photos[ $id ] = (int) ( $meta['width'] ?? 0 );
 	}
 }
-$photos     = array_values( array_unique( array_filter( $photos ) ) );
-$hero_photo = $photos[0] ?? 0;
-$academy    = get_page_by_path( 'academy' );
-// The academy band is full width: use the Academy page image, else the sharpest course photo not used by the hero.
-$set_photo = ( $academy && has_post_thumbnail( $academy ) ) ? get_post_thumbnail_id( $academy ) : 0;
-if ( ! $set_photo ) {
-	$widest = 0;
-	foreach ( array_slice( $photos, 1 ) as $candidate ) {
-		$meta = wp_get_attachment_metadata( $candidate );
-		if ( ! empty( $meta['width'] ) && $meta['width'] > $widest ) {
-			$widest    = (int) $meta['width'];
-			$set_photo = $candidate;
-		}
-	}
-}
+unset( $photos[ $hero_photo ] );
+arsort( $photos );
+$photos     = array_keys( $photos );
+$hero_photo = $hero_photo ?: ( $photos[0] ?? 0 );
 $poster     = $hero_photo ? (string) wp_get_attachment_image_url( $hero_photo, 'full' ) : '';
+$wide_photo = $photos[0] ?? 0;
+$tile_a     = $photos[1] ?? 0;
+$tile_b     = $photos[2] ?? 0;
+// With the video playing, its poster photo is free for the path section (the sharpest after the wide one).
+$path_photo = $video ? $hero_photo : ( $photos[3] ?? $wide_photo );
+
+$partners = trim( (string) apply_filters( 'the_content', (string) get_post_field( 'post_content', get_queried_object_id() ) ) );
 ?>
 
 <section class="hero" aria-labelledby="hero-title">
-	<div class="hero__stage">
-	<div class="hero__media">
-		<?php if ( $video ) : ?>
-			<video class="hero__video" muted loop playsinline preload="metadata" poster="<?php echo esc_url( $poster ); ?>" aria-hidden="true" data-hero-video>
-				<source src="<?php echo esc_url( $video ); ?>" type="video/mp4">
-			</video>
-		<?php elseif ( $hero_photo ) : ?>
-			<?php
-			echo wp_get_attachment_image(
-				$hero_photo,
-				'full',
-				false,
-				array(
-					'class'         => 'hero__image',
-					'loading'       => 'eager',
-					'fetchpriority' => 'high',
-					'sizes'         => '100vw',
-					'alt'           => '',
-				)
-			);
-			?>
-		<?php endif; ?>
-	</div>
-	<div class="wrap hero__content">
-		<h1 id="hero-title" class="hero__title">
-			<?php
-			echo wp_kses(
-				__( 'Il futuro <em>si gira</em> adesso.', 'its-rossellini' ),
-				array( 'em' => array() )
-			);
-			?>
-		</h1>
-		<div class="hero__bottom">
+	<div class="hero__card">
+		<div class="hero__media">
+			<?php if ( $video ) : ?>
+				<video class="hero__video" muted loop playsinline preload="metadata" poster="<?php echo esc_url( $poster ); ?>" aria-hidden="true" data-hero-video>
+					<source src="<?php echo esc_url( $video ); ?>" type="video/mp4">
+				</video>
+			<?php elseif ( $hero_photo ) : ?>
+				<?php
+				echo wp_get_attachment_image(
+					$hero_photo,
+					'full',
+					false,
+					array(
+						'class'         => 'hero__image',
+						'loading'       => 'eager',
+						'fetchpriority' => 'high',
+						'sizes'         => '100vw',
+						'alt'           => '',
+					)
+				);
+				?>
+			<?php endif; ?>
+		</div>
+
+		<div class="hero__content">
+			<h1 id="hero-title" class="hero__title"><?php echo wp_kses( __( 'Il futuro <strong>si gira</strong> adesso.', 'its-rossellini' ), $em ); ?></h1>
 			<p class="hero__lead"><?php esc_html_e( 'Due anni per trasformare il tuo talento in una professione tra cinema, TV, digital, live e tecnologia.', 'its-rossellini' ); ?></p>
 			<div class="hero__actions">
-				<a class="btn btn--cyan" href="<?php echo esc_url( $meet_url ); ?>"><?php esc_html_e( 'Prenota un incontro', 'its-rossellini' ); ?></a>
-				<a class="btn btn--ghost" href="#corsi"><?php esc_html_e( 'Scopri i corsi', 'its-rossellini' ); ?></a>
+				<a class="btn btn--white" href="<?php echo esc_url( $meet_url ); ?>"><?php esc_html_e( 'Prenota un incontro', 'its-rossellini' ); ?><?php echo its_icon( 'arrow-up' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+				<a class="btn btn--glass" href="#corsi"><?php esc_html_e( 'Scopri i corsi', 'its-rossellini' ); ?></a>
 			</div>
+		</div>
+
+		<div class="hero__float">
+			<div class="glass-card">
+				<p class="glass-card__num"><?php echo esc_html( $facts['employment'] ); ?></p>
+				<p class="glass-card__text"><?php esc_html_e( 'dei diplomati lavora entro 12 mesi', 'its-rossellini' ); ?></p>
+			</div>
+			<a class="glass-card glass-card--link" href="<?php echo esc_url( $next ? get_permalink( $next ) : $meet_url ); ?>">
+				<span class="glass-card__icon"><?php echo its_icon( 'pin' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+				<span>
+					<strong><?php echo esc_html( $next ? get_the_title( $next ) : __( 'Visita la sede', 'its-rossellini' ) ); ?></strong>
+					<span><?php echo esc_html( $next ? wp_date( 'j F Y', $next->its_date->getTimestamp() ) : $contacts['address'] ); ?></span>
+				</span>
+			</a>
 			<?php if ( $video ) : ?>
 				<button class="hero__toggle" type="button" hidden data-video-toggle data-label-pause="<?php esc_attr_e( 'Metti in pausa il video', 'its-rossellini' ); ?>" data-label-play="<?php esc_attr_e( 'Riproduci il video', 'its-rossellini' ); ?>" aria-label="<?php esc_attr_e( 'Metti in pausa il video', 'its-rossellini' ); ?>">
 					<?php echo its_icon( 'pause', 'when-playing' ) . its_icon( 'play', 'when-paused' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
@@ -88,16 +96,72 @@ $poster     = $hero_photo ? (string) wp_get_attachment_image_url( $hero_photo, '
 			<?php endif; ?>
 		</div>
 	</div>
+
+	<?php if ( $partners ) : ?>
+		<div class="logos-bar">
+			<h2 class="screen-reader-text"><?php esc_html_e( 'I nostri partner', 'its-rossellini' ); ?></h2>
+			<?php echo $partners; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+		</div>
+	<?php endif; ?>
+</section>
+
+<section class="section" aria-labelledby="set-title">
+	<div class="wrap bento">
+		<article class="tile tile--cta">
+			<h3><?php esc_html_e( 'Vieni a vedere i laboratori', 'its-rossellini' ); ?></h3>
+			<p><?php esc_html_e( 'Prenota un open day o un incontro individuale. Ti mostriamo aule, laboratori e il teatro di posa.', 'its-rossellini' ); ?></p>
+			<div class="tile__actions">
+				<a class="btn btn--outline-light" href="<?php echo esc_url( its_page_url( 'academy' ) ); ?>"><?php esc_html_e( 'L’Academy', 'its-rossellini' ); ?></a>
+				<a class="btn btn--white" href="<?php echo esc_url( $meet_url ); ?>"><?php esc_html_e( 'Prenota', 'its-rossellini' ); ?><?php echo its_icon( 'arrow-up' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+			</div>
+		</article>
+		<div class="tile tile--stat bento__s1">
+			<p class="tile__label"><?php esc_html_e( 'Ore in aula e lab', 'its-rossellini' ); ?></p>
+			<p class="tile__num"><?php echo esc_html( $facts['hours'] ); ?></p>
+		</div>
+		<?php if ( $tile_a ) : ?>
+			<figure class="tile tile--img bento__i1"><?php echo wp_get_attachment_image( $tile_a, 'its-card', false, array( 'alt' => '', 'sizes' => '(max-width: 760px) 46vw, 220px' ) ); ?></figure>
+		<?php endif; ?>
+		<div class="tile tile--stat bento__s2">
+			<p class="tile__label"><?php esc_html_e( 'Ore di stage', 'its-rossellini' ); ?></p>
+			<p class="tile__num"><?php echo esc_html( $facts['internship'] ); ?></p>
+		</div>
+		<?php if ( $tile_b ) : ?>
+			<figure class="tile tile--img bento__i2"><?php echo wp_get_attachment_image( $tile_b, 'its-card', false, array( 'alt' => '', 'sizes' => '(max-width: 760px) 46vw, 220px' ) ); ?></figure>
+		<?php endif; ?>
+		<div class="bento__head">
+			<h2 id="set-title" class="display"><?php echo wp_kses( __( 'Non una classe. <strong>Un set aperto.</strong>', 'its-rossellini' ), $em ); ?></h2>
+			<p class="lead"><?php esc_html_e( 'Qui teoria e pratica entrano nella stessa inquadratura. Produci, sperimenti, sbagli, riprovi e costruisci un portfolio mentre impari.', 'its-rossellini' ); ?></p>
+		</div>
+		<?php if ( $wide_photo ) : ?>
+			<figure class="tile tile--img bento__wide">
+				<?php echo wp_get_attachment_image( $wide_photo, 'full', false, array( 'alt' => '', 'sizes' => '(max-width: 900px) 92vw, 760px' ) ); ?>
+				<span class="glass-chip" aria-hidden="true"><?php esc_html_e( 'Imparare facendo', 'its-rossellini' ); ?></span>
+			</figure>
+		<?php endif; ?>
+		<ul class="tile tile--list bento__list">
+			<li><strong><?php esc_html_e( 'Laboratori veri', 'its-rossellini' ); ?></strong><span><?php esc_html_e( 'Spazi e tecnologie per lavorare come in produzione.', 'its-rossellini' ); ?></span></li>
+			<li><strong><?php esc_html_e( 'Docenti dall’industria', 'its-rossellini' ); ?></strong><span><?php esc_html_e( 'Professionisti che insegnano facendo.', 'its-rossellini' ); ?></span></li>
+			<li><strong><?php esc_html_e( 'Imprese nel percorso', 'its-rossellini' ); ?></strong><span><?php esc_html_e( 'Stage, brief e relazioni che iniziano prima del diploma.', 'its-rossellini' ); ?></span></li>
+		</ul>
+		<div class="tile tile--stat tile--accent bento__s3">
+			<p class="tile__label"><?php esc_html_e( 'Posti per corso', 'its-rossellini' ); ?></p>
+			<p class="tile__num"><?php echo esc_html( $facts['places'] ); ?></p>
+			<p class="tile__note">
+				<?php
+				/* translators: %s: course length in years */
+				printf( esc_html__( 'Percorsi di %s anni, post-diploma, finanziati.', 'its-rossellini' ), esc_html( $facts['years'] ) );
+				?>
+			</p>
+		</div>
 	</div>
 </section>
 
-<section class="section section--black" id="corsi" aria-labelledby="corsi-title">
+<section class="panel" id="corsi" aria-labelledby="corsi-title">
 	<div class="wrap">
-		<div class="section__head">
-			<h2 id="corsi-title" class="headline">
-				<?php echo wp_kses( __( 'Trova il tuo <em>campo d’azione.</em>', 'its-rossellini' ), array( 'em' => array() ) ); ?>
-			</h2>
-			<p class="section__lead">
+		<div class="panel__head panel__head--center">
+			<h2 id="corsi-title" class="display display--dark"><?php echo wp_kses( __( 'Trova il tuo <strong>campo d’azione.</strong>', 'its-rossellini' ), $em ); ?></h2>
+			<p class="lead">
 				<?php
 				$count = (int) wp_count_posts( 'corso' )->publish;
 				printf(
@@ -108,97 +172,42 @@ $poster     = $hero_photo ? (string) wp_get_attachment_image_url( $hero_photo, '
 				?>
 			</p>
 		</div>
-		<?php get_template_part( 'template-parts/course-index' ); ?>
+		<?php get_template_part( 'template-parts/course-wall' ); ?>
 	</div>
 </section>
 
-<section class="section section--navy section--stack" aria-labelledby="set-title">
-	<div class="wrap showcase">
-		<div class="showcase__head">
-			<h2 id="set-title" class="headline headline--xl"><?php echo wp_kses( __( 'Non una classe. <em>Un set aperto.</em>', 'its-rossellini' ), array( 'em' => array() ) ); ?></h2>
-			<p class="section__lead"><?php esc_html_e( 'Qui teoria e pratica entrano nella stessa inquadratura. Produci, sperimenti, sbagli, riprovi e costruisci un portfolio mentre impari.', 'its-rossellini' ); ?></p>
-		</div>
-		<?php if ( $set_photo ) : ?>
-			<figure class="showcase__media">
-				<?php
-				echo wp_get_attachment_image(
-					$set_photo,
-					'full',
-					false,
-					array(
-						'sizes' => '(max-width: 1400px) 92vw, 1360px',
-						'alt'   => '',
-					)
-				);
-				$caption = wp_get_attachment_caption( $set_photo );
-				if ( $caption ) {
-					echo '<figcaption>' . esc_html( $caption ) . '</figcaption>';
-				}
-				?>
-			</figure>
+<section class="section" aria-labelledby="percorso-title">
+	<div class="wrap overlap">
+		<?php if ( $path_photo ) : ?>
+			<figure class="overlap__media"><?php echo wp_get_attachment_image( $path_photo, 'full', false, array( 'alt' => '', 'sizes' => '(max-width: 900px) 92vw, 60vw' ) ); ?></figure>
 		<?php endif; ?>
-		<dl class="features features--row">
-			<div><dt><?php esc_html_e( 'Laboratori veri', 'its-rossellini' ); ?></dt><dd><?php esc_html_e( 'Spazi e tecnologie per lavorare come in produzione.', 'its-rossellini' ); ?></dd></div>
-			<div><dt><?php esc_html_e( 'Teatro di posa', 'its-rossellini' ); ?></dt><dd><?php esc_html_e( '360 m² nella sede di Via Tiburtina, con aule e laboratori.', 'its-rossellini' ); ?></dd></div>
-			<div><dt><?php esc_html_e( 'Docenti dall’industria', 'its-rossellini' ); ?></dt><dd><?php esc_html_e( 'Professionisti che insegnano facendo.', 'its-rossellini' ); ?></dd></div>
-			<div><dt><?php esc_html_e( 'Imprese nel percorso', 'its-rossellini' ); ?></dt><dd><?php esc_html_e( 'Stage, brief e relazioni che iniziano prima del diploma.', 'its-rossellini' ); ?></dd></div>
-		</dl>
-		<a class="link-arrow" href="<?php echo esc_url( its_page_url( 'academy' ) ); ?>"><?php esc_html_e( 'Conosci l’Academy', 'its-rossellini' ); ?><?php echo its_icon( 'arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
-	</div>
-</section>
-
-<section class="section section--black section--stack" aria-labelledby="fuori-title">
-	<div class="wrap">
-		<h2 id="fuori-title" class="headline"><?php echo wp_kses( __( 'La formazione <em>succede fuori.</em>', 'its-rossellini' ), array( 'em' => array() ) ); ?></h2>
-
-		<div class="outcome outcome--wide">
-			<p class="outcome__claim">
-				<?php
-				printf(
-					/* translators: 1: article (Il / L’), 2: share of graduates employed, e.g. 87% */
-					esc_html__( '%1$s%2$s dei diplomati lavora entro 12 mesi.', 'its-rossellini' ),
-					esc_html( its_article_for_number( $facts['employment'] ) ),
-					'<strong>' . esc_html( $facts['employment'] ) . '</strong>'
-				);
-				?>
-				<span class="outcome__source"><?php echo esc_html( $facts['source'] ); ?>.</span>
-			</p>
-			<ul class="outcome__facts">
-				<li><strong><?php echo esc_html( $facts['hours'] ); ?> ore</strong> <?php esc_html_e( 'in aula e laboratorio', 'its-rossellini' ); ?></li>
-				<li><strong><?php echo esc_html( $facts['internship'] ); ?> ore</strong> <?php esc_html_e( 'di tirocinio in azienda', 'its-rossellini' ); ?></li>
-				<li><strong><?php echo esc_html( $facts['years'] ); ?> anni</strong> <?php esc_html_e( 'per entrare nel settore', 'its-rossellini' ); ?></li>
-			</ul>
-		</div>
-
-		<div class="path">
-			<h2 class="headline headline--m path__title"><?php echo wp_kses( __( 'Dal primo ciak <em>al primo contratto.</em>', 'its-rossellini' ), array( 'em' => array() ) ); ?></h2>
-			<ol class="path__steps">
+		<div class="overlap__card">
+			<h2 id="percorso-title" class="display display--dark display--m"><?php echo wp_kses( __( 'Dal primo ciak <strong>al primo contratto.</strong>', 'its-rossellini' ), $em ); ?></h2>
+			<ol class="steps">
 				<li>
 					<h3><?php esc_html_e( 'Orientati', 'its-rossellini' ); ?></h3>
-					<p class="path__line"><?php esc_html_e( 'Conosci persone, corsi e laboratori.', 'its-rossellini' ); ?></p>
-					<p class="path__detail"><?php esc_html_e( 'Open day, colloquio individuale, FAQ', 'its-rossellini' ); ?></p>
+					<p><?php esc_html_e( 'Conosci persone, corsi e laboratori: open day, colloquio individuale, FAQ.', 'its-rossellini' ); ?></p>
 				</li>
 				<li>
 					<h3><?php esc_html_e( 'Fai esperienza', 'its-rossellini' ); ?></h3>
-					<p class="path__line"><?php esc_html_e( 'Lavora su brief, set e progetti reali.', 'its-rossellini' ); ?></p>
-					<p class="path__detail">
+					<p>
 						<?php
 						/* translators: %s: hours of classes and labs */
-						printf( esc_html__( '%s ore, portfolio, lavoro in team', 'its-rossellini' ), esc_html( $facts['hours'] ) );
+						printf( esc_html__( 'Lavora su brief, set e progetti reali: %s ore, portfolio, lavoro in team.', 'its-rossellini' ), esc_html( $facts['hours'] ) );
 						?>
 					</p>
 				</li>
 				<li>
 					<h3><?php esc_html_e( 'Entra nel settore', 'its-rossellini' ); ?></h3>
-					<p class="path__line"><?php esc_html_e( 'Porta le competenze dentro un’azienda.', 'its-rossellini' ); ?></p>
-					<p class="path__detail">
+					<p>
 						<?php
 						/* translators: %s: internship hours */
-						printf( esc_html__( '%s ore di stage, placement', 'its-rossellini' ), esc_html( $facts['internship'] ) );
+						printf( esc_html__( 'Porta le competenze dentro un’azienda: %s ore di stage e placement.', 'its-rossellini' ), esc_html( $facts['internship'] ) );
 						?>
 					</p>
 				</li>
 			</ol>
+			<a class="btn btn--grad" href="<?php echo esc_url( its_page_url( 'servizi/placement', its_page_url( 'servizi' ) ) ); ?>"><?php esc_html_e( 'Stage e placement', 'its-rossellini' ); ?><?php echo its_icon( 'arrow-up' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 		</div>
 	</div>
 </section>
@@ -208,28 +217,34 @@ $events = its_events_by_date( 0 );
 $news   = new WP_Query(
 	array(
 		'post_type'           => 'post',
-		'posts_per_page'      => 4,
+		'posts_per_page'      => 3,
 		'ignore_sticky_posts' => true,
 		'no_found_rows'       => true,
 	)
 );
 ?>
-<section class="section section--navy section--stack" aria-labelledby="news-title">
+<section class="panel" aria-labelledby="news-title">
 	<div class="wrap">
-		<div class="section__head section__head--row">
-			<h2 id="news-title" class="headline"><?php echo wp_kses( __( 'News, eventi, <em>occasioni.</em>', 'its-rossellini' ), array( 'em' => array() ) ); ?></h2>
-			<a class="link-arrow" href="<?php echo esc_url( get_permalink( (int) get_option( 'page_for_posts' ) ) ?: its_page_url( 'news' ) ); ?>"><?php esc_html_e( 'Tutte le news', 'its-rossellini' ); ?><?php echo its_icon( 'arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+		<div class="panel__head">
+			<h2 id="news-title" class="display display--dark"><?php echo wp_kses( __( 'News, eventi, <strong>occasioni.</strong>', 'its-rossellini' ), $em ); ?></h2>
+			<a class="btn btn--outline" href="<?php echo esc_url( get_permalink( (int) get_option( 'page_for_posts' ) ) ?: its_page_url( 'news' ) ); ?>"><?php esc_html_e( 'Tutte le news', 'its-rossellini' ); ?><?php echo its_icon( 'arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 		</div>
-		<div class="rows">
+		<?php if ( $events['upcoming'] ) : ?>
+			<div class="rows rows--events">
+				<?php
+				foreach ( array_slice( $events['upcoming'], 0, 2 ) as $post ) :
+					setup_postdata( $GLOBALS['post'] = $post ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+					get_template_part( 'template-parts/dated-item' );
+				endforeach;
+				wp_reset_postdata();
+				?>
+			</div>
+		<?php endif; ?>
+		<div class="news-grid">
 			<?php
-			foreach ( array_slice( $events['upcoming'], 0, 2 ) as $post ) :
-				setup_postdata( $GLOBALS['post'] = $post ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
-				get_template_part( 'template-parts/dated-item' );
-			endforeach;
-			wp_reset_postdata();
 			while ( $news->have_posts() ) :
 				$news->the_post();
-				get_template_part( 'template-parts/dated-item' );
+				get_template_part( 'template-parts/news-card' );
 			endwhile;
 			wp_reset_postdata();
 			?>
@@ -237,26 +252,16 @@ $news   = new WP_Query(
 	</div>
 </section>
 
-<?php
-$partners = trim( (string) apply_filters( 'the_content', (string) get_post_field( 'post_content', get_queried_object_id() ) ) );
-if ( $partners ) :
-	?>
-	<section class="section section--black section--stack" aria-labelledby="partner-title">
-		<div class="wrap partners">
-			<h2 id="partner-title" class="headline headline--m"><?php esc_html_e( 'I nostri partner', 'its-rossellini' ); ?></h2>
-			<div class="partners__logos"><?php echo $partners; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
-		</div>
-	</section>
-<?php endif; ?>
-
-<section class="cta section--stack" aria-labelledby="cta-title">
-	<div class="wrap cta__grid">
-		<h2 id="cta-title" class="headline"><?php echo wp_kses( __( 'Vuoi visitare <em>i laboratori?</em>', 'its-rossellini' ), array( 'em' => array() ) ); ?></h2>
-		<div class="cta__text">
-			<p><?php esc_html_e( 'Prenota un open day o un incontro individuale.', 'its-rossellini' ); ?> <?php echo esc_html( $contacts['address'] ); ?>, <?php echo esc_html( $contacts['transit'] ); ?>.</p>
-			<div class="cta__actions">
-				<a class="btn btn--navy" href="<?php echo esc_url( $meet_url ); ?>"><?php esc_html_e( 'Prenota un incontro', 'its-rossellini' ); ?></a>
-				<a class="btn btn--outline-navy" href="<?php echo esc_url( its_page_url( 'iscrizioni' ) ); ?>"><?php esc_html_e( 'Preiscriviti al biennio', 'its-rossellini' ); ?></a>
+<section class="section" aria-labelledby="cta-title">
+	<div class="wrap">
+		<div class="cta-card">
+			<div>
+				<h2 id="cta-title" class="display"><?php echo wp_kses( __( 'Vuoi visitare <strong>i laboratori?</strong>', 'its-rossellini' ), $em ); ?></h2>
+				<p class="lead"><?php esc_html_e( 'Prenota un open day o un incontro individuale.', 'its-rossellini' ); ?> <?php echo esc_html( $contacts['address'] ); ?>, <?php echo esc_html( $contacts['transit'] ); ?>.</p>
+			</div>
+			<div class="cta-card__actions">
+				<a class="btn btn--white" href="<?php echo esc_url( $meet_url ); ?>"><?php esc_html_e( 'Prenota un incontro', 'its-rossellini' ); ?><?php echo its_icon( 'arrow-up' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+				<a class="btn btn--outline-light" href="<?php echo esc_url( its_page_url( 'iscrizioni' ) ); ?>"><?php esc_html_e( 'Preiscriviti al biennio', 'its-rossellini' ); ?></a>
 			</div>
 		</div>
 	</div>

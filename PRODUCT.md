@@ -57,7 +57,7 @@ The current itsrossellini.it theme is the visual reference: the new theme stays 
 - **Logo**: the existing monochrome SVG (media-controls mark "pause · record · play" + "ITS ACADEMY / ROBERTO ROSSELLINI" wordmark).
 - **Institutional palette, and only it**: blue `#004590`, deep blue `#002c64`, cyan `#49b7e9`, electric blue `#1032cf`, plus near-black and white neutrals. Yellow, green, red or any other hue are not institute colours and must not be introduced, not even as category colours.
 - **Typeface**: Raleway (the current site's face), self-hosted.
-- **Signature voice of the current site**: heavy uppercase headline with a second line in italic, in cyan on dark grounds or blue on light ones; real photography and the hero video; rounded course cards; pill buttons; the news list with large titles.
+- **What "modern" means, per the user's references** (three Dribbble shots: a dark biotech site, a light AI-health site, a dark IT-services site; kept locally in `.impeccable/references/`, not committed): content in large rounded containers (the hero is a rounded card holding the footage), a floating pill navigation, light-weight large sentence-case headlines with one emphasised phrase, glass cards floating over imagery, bento tiles mixing figures and photos, image cards with overlapping text cards, partner logos in a white rounded bar, white and blue-gradient pill buttons, light interior pages with a soft blue glow.
 - **To move away from** (what makes the current site read as AI-made): monospace micro-labels, "01 / 05" section counters, kickers above headings, grid-line backgrounds, radial glows, outlined giant numbers, the "REC / CH 04" camera frame, coloured stripes on cards, the marquee ticker, 9–10px text.
 
 ## Evidence on Hand

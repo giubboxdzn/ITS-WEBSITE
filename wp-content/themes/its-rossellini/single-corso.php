@@ -15,10 +15,16 @@ while ( have_posts() ) :
 	$facts   = its_facts();
 	$apply   = add_query_arg( 'corso', get_post_field( 'post_name' ), its_page_url( 'iscrizioni' ) );
 	$actions = '<div class="page-head__actions">'
-		. '<a class="btn btn--cyan" href="' . esc_url( $apply ) . '">' . esc_html__( 'Preiscriviti a questo corso', 'its-rossellini' ) . '</a>'
-		. '<a class="btn btn--ghost" href="' . esc_url( its_page_url( 'incontriamoci', its_page_url( 'contatti' ) ) ) . '">' . esc_html__( 'Parla con l’orientamento', 'its-rossellini' ) . '</a>'
+		. '<a class="btn btn--grad" href="' . esc_url( $apply ) . '">' . esc_html__( 'Preiscriviti a questo corso', 'its-rossellini' ) . '</a>'
+		. '<a class="btn btn--outline" href="' . esc_url( its_page_url( 'incontriamoci', its_page_url( 'contatti' ) ) ) . '">' . esc_html__( 'Parla con l’orientamento', 'its-rossellini' ) . '</a>'
 		. '</div>';
-	$aside   = ( $area ? '<p class="page-head__area">' . esc_html( $area->name ) . '</p>' : '' ) . $actions;
+	$aside   = ( $area ? '<p class="page-head__area"><span class="chip">' . esc_html( $area->name ) . '</span></p>' : '' ) . $actions;
+	$float   = '<div class="glass-card glass-card--facts"><ul>'
+		. '<li><strong>' . esc_html( $facts['years'] ) . '</strong> ' . esc_html( _n( 'anno', 'anni', (int) $facts['years'], 'its-rossellini' ) ) . '</li>'
+		. '<li><strong>' . esc_html( $facts['hours'] ) . '</strong> ' . esc_html__( 'ore in aula e lab', 'its-rossellini' ) . '</li>'
+		. '<li><strong>' . esc_html( $facts['internship'] ) . '</strong> ' . esc_html__( 'ore di stage', 'its-rossellini' ) . '</li>'
+		. '<li><strong>' . esc_html( $facts['places'] ) . '</strong> ' . esc_html__( 'posti', 'its-rossellini' ) . '</li>'
+		. '</ul></div>';
 	?>
 	<article <?php post_class( 'corso' ); ?>>
 		<?php
@@ -30,22 +36,17 @@ while ( have_posts() ) :
 				'lead'     => has_excerpt() ? get_the_excerpt() : '',
 				'image_id' => (int) get_post_thumbnail_id(),
 				'aside'    => $aside,
-				'cover'    => true,
+				'float'    => $float,
 			)
 		);
 		?>
 
-		<div class="facts-strip">
-			<ul class="wrap facts-strip__list" aria-label="<?php esc_attr_e( 'Il corso in breve', 'its-rossellini' ); ?>">
-				<li><strong><?php echo esc_html( $facts['years'] . ' ' . _n( 'anno', 'anni', (int) $facts['years'], 'its-rossellini' ) ); ?></strong> <?php esc_html_e( 'post-diploma', 'its-rossellini' ); ?></li>
-				<li><strong><?php echo esc_html( $facts['hours'] ); ?> <?php esc_html_e( 'ore', 'its-rossellini' ); ?></strong> <?php esc_html_e( 'in aula e laboratorio', 'its-rossellini' ); ?></li>
-				<li><strong><?php echo esc_html( $facts['internship'] ); ?> <?php esc_html_e( 'ore', 'its-rossellini' ); ?></strong> <?php esc_html_e( 'di stage in azienda', 'its-rossellini' ); ?></li>
-				<li><strong><?php echo esc_html( $facts['places'] ); ?> <?php esc_html_e( 'posti', 'its-rossellini' ); ?></strong> <?php esc_html_e( 'per corso', 'its-rossellini' ); ?></li>
-			</ul>
-		</div>
-
 		<div class="wrap corso__body prose prose--split">
-			<?php the_content(); ?>
+			<?php
+			// Each "heading + list" pair of the course content becomes one card.
+			$content = (string) apply_filters( 'the_content', get_the_content() );
+			echo preg_replace( '#(<h2\b[^>]*>.*?</h2>)\s*(<(ul|ol)\b[^>]*>.*?</\3>)#s', '<section class="prose-card">$1$2</section>', $content ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			?>
 		</div>
 	</article>
 
