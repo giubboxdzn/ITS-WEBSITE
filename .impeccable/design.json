@@ -282,8 +282,8 @@
    },
    {
     "name": "word-rise",
-    "value": "translate 115% -> 0, 1.1s ease-out, 55ms per word",
-    "purpose": "Headings (hero, page heads, display) split into masked words; plain text kept for screen readers."
+    "value": "translate 115% -> 0 (1.1s) and blur 0.12em -> 0 (1.5s), ease-out, 55ms per word",
+    "purpose": "Headings (hero, page heads, display) split into masked words that rise and sharpen like a focus pull; plain text kept for screen readers."
    },
    {
     "name": "reveal-up",
@@ -319,6 +319,11 @@
     "name": "footer-draw",
     "value": "stroke-dashoffset 1 -> 0 on 42 split paths (pathLength 1), 2.4s, 40ms stagger left to right, at 60% in view",
     "purpose": "The outlined logo watermark is traced from 0 to 100% when the page end comes into view."
+   },
+   {
+    "name": "focus-pull",
+    "value": "blur 18px -> 0 (1.6s) with scale 1.22 -> 1.1 on the path photo; blur 16px -> 0 (1.6s) on page-head photos",
+    "purpose": "Large photos come into focus as they appear."
    }
   ],
   "breakpoints": [

@@ -2958,8 +2958,8 @@ dd {
 
 .word {
 	display: inline-block;
-	padding: 0.1em 0.05em 0.16em;
-	margin: -0.1em -0.05em -0.16em;
+	padding: 0.12em 0.18em 0.2em;
+	margin: -0.12em -0.18em -0.2em;
 	overflow: clip;
 }
 
@@ -2967,12 +2967,16 @@ dd {
 	display: inline-block;
 }
 
+/* Words rise out of focus and sharpen, like a focus pull. */
 .anim [data-reveal="words"]:not(.is-in) .word__in {
 	translate: 0 115%;
+	filter: blur(0.12em);
 }
 
 .anim [data-reveal="words"] .word__in {
-	transition: translate 1.1s var(--ease-out) calc(var(--d, 0ms) + var(--w, 0) * 55ms);
+	transition:
+		translate 1.1s var(--ease-out) calc(var(--d, 0ms) + var(--w, 0) * 55ms),
+		filter 1.5s var(--ease-out) calc(var(--d, 0ms) + var(--w, 0) * 55ms);
 }
 
 /* Footer logo: each outline is traced from 0 to 100% (pathLength = 1), left to right. */
@@ -2989,7 +2993,7 @@ dd {
 	font-variant-numeric: tabular-nums lining-nums;
 }
 
-/* Path photo: a little larger so the parallax never shows an edge. */
+/* Path photo: a little larger so the parallax never shows an edge; it comes into focus as it appears. */
 .anim .overlap__media {
 	overflow: clip;
 	border-radius: var(--r-xl);
@@ -2997,6 +3001,28 @@ dd {
 
 .anim .overlap__media img {
 	scale: 1.1;
+}
+
+.anim .overlap__media[data-reveal="up"]:not(.is-in) img {
+	filter: blur(18px);
+	scale: 1.22;
+}
+
+.anim .overlap__media[data-reveal="up"] img {
+	transition:
+		filter 1.6s var(--ease-out) var(--d, 0ms),
+		scale 1.9s var(--ease-out) var(--d, 0ms);
+}
+
+/* Large page-head photos (courses): the same focus pull on load. */
+@keyframes its-focus {
+	from {
+		filter: blur(16px);
+	}
+}
+
+.js:not(.motion-off) .page-head__photo img {
+	animation: its-focus 1.6s var(--ease-out) 0.2s both;
 }
 
 /* The globe turns slowly; Rome sends out a ping. */
