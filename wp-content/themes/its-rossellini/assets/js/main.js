@@ -20,26 +20,63 @@
 	const motionOn = () => !root.classList.contains('motion-off');
 	const motionToggle = document.querySelector('[data-motion-toggle]');
 
-	const setMotion = (on, remember) => {
+	const setMotion = (on) => {
 		root.classList.toggle('motion-off', !on);
-		if (remember) {
-			choice = on === !reduceMotion.matches ? null : (on ? 'on' : 'off');
-			try {
-				if (choice) localStorage.setItem('its-motion', choice);
-				else localStorage.removeItem('its-motion');
-			} catch (e) { /* storage unavailable: the choice lasts for this page only */ }
-		}
 		if (motionToggle) motionToggle.setAttribute('aria-checked', String(on));
 		document.dispatchEvent(new CustomEvent('its:motion', { detail: { off: !on } }));
 	};
+	const store = (on) => {
+		const value = on === !reduceMotion.matches ? null : (on ? 'on' : 'off');
+		try {
+			if (value) localStorage.setItem('its-motion', value);
+			else localStorage.removeItem('its-motion');
+			choice = value;
+			return true;
+		} catch (e) {
+			return false;
+		}
+	};
 
+	/* The switch saves the choice and reloads: the page starts again, from the top. */
 	if (motionToggle) {
 		motionToggle.hidden = false;
 		motionToggle.setAttribute('aria-checked', String(motionOn()));
-		motionToggle.addEventListener('click', () => setMotion(!motionOn(), true));
+		motionToggle.addEventListener('click', () => {
+			const on = !motionOn();
+			motionToggle.setAttribute('aria-checked', String(on));
+			if (store(on)) window.location.reload();
+			else setMotion(on); /* storage blocked: switch in place, for this page only */
+		});
 	}
 	reduceMotion.addEventListener('change', (mq) => {
-		if (!choice) setMotion(!mq.matches, false);
+		if (!choice) setMotion(!mq.matches);
+	});
+
+	/* Scroll: a reload always starts at the top (restoration is manual, set in <head>).
+	   Back/forward put you back where you were: the page is usually restored whole from the
+	   back-forward cache; when it is loaded again, the position saved on leaving is used. */
+	const scrollKey = `its-scroll:${window.location.pathname}${window.location.search}`;
+	window.addEventListener('pagehide', () => {
+		try {
+			sessionStorage.setItem(scrollKey, String(Math.round(window.scrollY)));
+		} catch (e) { /* storage unavailable */ }
+	});
+	const navigation = performance.getEntriesByType?.('navigation')[0];
+	if (navigation && navigation.type === 'back_forward') {
+		let saved = 0;
+		try {
+			saved = Number(sessionStorage.getItem(scrollKey)) || 0;
+		} catch (e) { /* storage unavailable */ }
+		if (saved) window.addEventListener('load', () => window.scrollTo(0, saved), { once: true });
+	}
+
+	/* Back to top: smooth while motion is on; keyboard focus goes back to the top too. */
+	document.querySelectorAll('[data-to-top]').forEach((link) => {
+		link.addEventListener('click', (event) => {
+			event.preventDefault();
+			window.scrollTo({ top: 0, behavior: motionOn() ? 'smooth' : 'auto' });
+			document.querySelector('.masthead__logo')?.focus({ preventScroll: true });
+		});
 	});
 
 	/* Floating header: turns into a glass pill once the page scrolls. */

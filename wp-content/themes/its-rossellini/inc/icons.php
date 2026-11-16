@@ -14,6 +14,7 @@ function its_icon( string $name, string $class = '' ): string {
 	$paths = array(
 		'arrow'    => '<path d="M4 12h15M13 6l6 6-6 6"/>',
 		'arrow-up' => '<path d="M7 17 17 7M8 7h9v9"/>',
+		'top'      => '<path d="M12 20V5M6 11l6-6 6 6"/>',
 		'download' => '<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>',
 		'menu'     => '<path d="M3 7h18M3 12h18M3 17h18"/>',
 		'close'    => '<path d="M5 5l14 14M19 5 5 19"/>',

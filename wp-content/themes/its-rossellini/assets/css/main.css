@@ -2824,13 +2824,50 @@ dd {
 }
 
 .colophon__base p {
-	margin: 0;
+	margin: 0 auto 0 0;
+}
+
+/* Back to top: label and a white circle with the arrow, last thing in the footer. */
+.to-top {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.65rem;
+	min-height: 2.75rem;
+	padding: 0.3rem 0.3rem 0.3rem 1rem;
+	border: 1px solid var(--bordo-dark);
+	border-radius: 999px;
+	background: rgb(255 255 255 / 0.04);
+	color: var(--bianco);
+	font: 500 0.875rem/1 var(--f);
+	text-decoration: none;
+	transition: border-color 0.3s;
+}
+
+.to-top__icon {
+	display: grid;
+	place-items: center;
+	width: 2.1rem;
+	height: 2.1rem;
+	border-radius: 50%;
+	background: var(--bianco);
+	color: var(--inchiostro);
+	transition: translate 0.35s var(--ease-out), background-color 0.3s;
+}
+
+.to-top:hover {
+	border-color: rgb(73 183 233 / 0.5);
+}
+
+.to-top:hover .to-top__icon {
+	background: var(--ciano);
+	translate: 0 -3px;
 }
 
 .motion-switch {
 	display: inline-flex;
 	align-items: center;
 	gap: 0.6rem;
+	min-height: 2.75rem;
 	padding: 0.35rem 0.85rem 0.35rem 0.4rem;
 	border: 1px solid var(--bordo-dark);
 	border-radius: 999px;

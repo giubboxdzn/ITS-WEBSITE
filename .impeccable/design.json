@@ -278,7 +278,7 @@
    {
     "name": "motion-switch",
     "value": "html.motion-off / html.anim; localStorage its-motion = on | off, default from prefers-reduced-motion",
-    "purpose": "Footer switch: every animation below runs only while it is on; off = static site, video paused, native accordions."
+    "purpose": "Footer switch: saves the choice and reloads the page from the top; every animation below runs only while it is on; off = static site, video paused, native accordions."
    },
    {
     "name": "word-rise",

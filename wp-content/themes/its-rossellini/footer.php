@@ -87,6 +87,10 @@ $funding  = (string) get_post_field( 'post_content', (int) get_option( 'page_on_
 			<span><?php esc_html_e( 'Animazioni', 'its-rossellini' ); ?></span>
 		</button>
 		<?php echo its_language_links(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+		<a class="to-top" href="#top" data-to-top>
+			<span><?php esc_html_e( 'Torna su', 'its-rossellini' ); ?></span>
+			<span class="to-top__icon" aria-hidden="true"><?php echo its_icon( 'top' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+		</a>
 	</div>
 
 	<div class="colophon__mark" aria-hidden="true"><?php echo its_logo(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
