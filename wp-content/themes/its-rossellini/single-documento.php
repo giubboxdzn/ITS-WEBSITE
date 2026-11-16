@@ -37,7 +37,7 @@ while ( have_posts() ) :
 			<?php the_content(); ?>
 			<p class="prose__actions">
 				<?php if ( $file ) : ?>
-					<a class="button button--blue" href="<?php echo esc_url( $file ); ?>">
+					<a class="btn btn--blue" href="<?php echo esc_url( $file ); ?>">
 						<?php echo its_icon( 'download' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						<?php
 						/* translators: %s: file format, e.g. PDF */

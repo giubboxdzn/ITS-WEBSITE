@@ -30,9 +30,7 @@ while ( have_posts() ) :
 		</header>
 		<?php if ( has_post_thumbnail() ) : ?>
 			<figure class="wrap article__photo">
-				<div class="duotone" data-ink="blu">
-					<?php the_post_thumbnail( 'large', array( 'sizes' => '(max-width: 1100px) 92vw, 1000px' ) ); ?>
-				</div>
+				<?php the_post_thumbnail( 'large', array( 'sizes' => '(max-width: 1100px) 92vw, 1000px' ) ); ?>
 			</figure>
 		<?php endif; ?>
 		<div class="wrap page-body">

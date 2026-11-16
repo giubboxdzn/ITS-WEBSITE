@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
 <?php wp_body_open(); ?>
 <a class="skip-link" href="#main"><?php esc_html_e( 'Vai al contenuto', 'its-rossellini' ); ?></a>
 
-<header class="masthead">
+<header class="masthead<?php echo is_front_page() ? ' masthead--over' : ''; ?>" data-masthead>
 	<div class="masthead__bar wrap">
 		<a class="masthead__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
 			<?php echo its_logo(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
@@ -55,7 +55,7 @@ defined( 'ABSPATH' ) || exit;
 			</nav>
 			<div class="masthead__aside">
 				<?php echo its_language_links(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-				<a class="button button--yellow button--small" href="<?php echo esc_url( its_page_url( 'iscrizioni' ) ); ?>"><?php esc_html_e( 'Preiscriviti', 'its-rossellini' ); ?></a>
+				<a class="btn btn--cyan btn--small" href="<?php echo esc_url( its_page_url( 'iscrizioni' ) ); ?>"><?php esc_html_e( 'Preiscriviti', 'its-rossellini' ); ?></a>
 			</div>
 		</div>
 	</div>

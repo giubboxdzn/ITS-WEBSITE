@@ -79,9 +79,9 @@ function its_event_date( int $post_id ): ?DateTimeImmutable {
 }
 
 /**
- * Programme stamp state for a dated item.
+ * Status of a dated item, computed from its date.
  *
- * @return array{0:string,1:string}|null [label, variant]
+ * @return array{0:string,1:string}|null [label, variant: soon|live|spent]
  */
 function its_stamp_state( ?DateTimeImmutable $date, bool $is_deadline = false ): ?array {
 	if ( ! $date ) {
@@ -102,17 +102,28 @@ function its_stamp_state( ?DateTimeImmutable $date, bool $is_deadline = false ):
 }
 
 /**
- * Programme stamp markup.
+ * Status badge markup.
  */
 function its_stamp( ?array $state ): string {
 	if ( ! $state ) {
 		return '';
 	}
-	return sprintf( '<span class="stamp stamp--%1$s">%2$s</span>', esc_attr( $state[1] ), esc_html( $state[0] ) );
+	return sprintf( '<span class="badge badge--%1$s">%2$s</span>', esc_attr( $state[1] ), esc_html( $state[0] ) );
 }
 
 /**
- * Fixed date slot: same cell, same place, on every dated item.
+ * Hero video URL (Customizer), if any.
+ */
+function its_hero_video(): string {
+	$value = get_theme_mod( 'its_hero_video', '' );
+	if ( is_numeric( $value ) ) {
+		$value = wp_get_attachment_url( (int) $value );
+	}
+	return is_string( $value ) ? $value : '';
+}
+
+/**
+ * Date cell: same place on every dated item.
  */
 function its_date_slot( DateTimeInterface|int $date, string $tag = 'time' ): string {
 	$ts = $date instanceof DateTimeInterface ? $date->getTimestamp() : $date;
@@ -132,31 +143,6 @@ function its_date_slot( DateTimeInterface|int $date, string $tag = 'time' ): str
 function its_area( int $post_id ): ?WP_Term {
 	$terms = get_the_terms( $post_id, 'area_tecnologica' );
 	return ( $terms && ! is_wp_error( $terms ) ) ? $terms[0] : null;
-}
-
-/**
- * Fixed printing ink per technological area.
- */
-function its_area_ink( ?WP_Term $term ): string {
-	if ( ! $term ) {
-		return 'blu';
-	}
-	$name = sanitize_title( $term->name );
-	$map  = (array) apply_filters(
-		'its_rossellini_area_inks',
-		array(
-			'cinema'     => 'blu',
-			'multimedia' => 'rosso',
-			'audio'      => 'verde',
-			'tech'       => 'nero',
-		)
-	);
-	foreach ( $map as $needle => $ink ) {
-		if ( str_contains( $name, $needle ) ) {
-			return $ink;
-		}
-	}
-	return 'blu';
 }
 
 /**

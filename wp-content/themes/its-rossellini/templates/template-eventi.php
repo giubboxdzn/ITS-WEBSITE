@@ -25,7 +25,7 @@ while ( have_posts() ) :
 		<section class="listing" aria-labelledby="upcoming-title">
 			<h2 id="upcoming-title" class="listing__title"><?php esc_html_e( 'In programma', 'its-rossellini' ); ?></h2>
 			<?php if ( $events['upcoming'] ) : ?>
-				<div class="listing__items">
+				<div class="rows">
 					<?php
 					foreach ( $events['upcoming'] as $post ) :
 						setup_postdata( $GLOBALS['post'] = $post ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
@@ -37,7 +37,7 @@ while ( have_posts() ) :
 			<?php else : ?>
 				<div class="empty">
 					<p><?php esc_html_e( 'Nessun evento in calendario in questo momento. Puoi visitare la sede con un incontro individuale, su appuntamento.', 'its-rossellini' ); ?></p>
-					<a class="button button--blue" href="<?php echo esc_url( its_page_url( 'incontriamoci', its_page_url( 'contatti' ) ) ); ?>"><?php esc_html_e( 'Prenota un incontro', 'its-rossellini' ); ?></a>
+					<a class="btn btn--blue" href="<?php echo esc_url( its_page_url( 'incontriamoci', its_page_url( 'contatti' ) ) ); ?>"><?php esc_html_e( 'Prenota un incontro', 'its-rossellini' ); ?></a>
 				</div>
 			<?php endif; ?>
 		</section>
@@ -45,7 +45,7 @@ while ( have_posts() ) :
 		<?php if ( $events['past'] ) : ?>
 			<section class="listing listing--past" aria-labelledby="past-title">
 				<h2 id="past-title" class="listing__title"><?php esc_html_e( 'Già andati in scena', 'its-rossellini' ); ?></h2>
-				<div class="listing__items">
+				<div class="rows">
 					<?php
 					foreach ( $events['past'] as $post ) :
 						setup_postdata( $GLOBALS['post'] = $post ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited

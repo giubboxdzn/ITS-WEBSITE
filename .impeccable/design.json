@@ -1,12 +1,12 @@
 {
  "schemaVersion": 2,
- "generatedAt": "2026-11-16T19:20:23+00:00",
+ "generatedAt": "2026-11-16T19:39:32+00:00",
  "title": "Design System: ITS Academy Roberto Rossellini",
  "extensions": {
   "colorMeta": {
    "blu": {
     "role": "primary",
-    "displayName": "Blu istituzionale",
+    "displayName": "Blu",
     "canonical": "oklch(40.1% 0.138 256)",
     "tonalRamp": [
      "oklch(15% 0.028 256)",
@@ -34,24 +34,39 @@
      "oklch(95% 0.022 257)"
     ]
    },
-   "giallo": {
+   "ciano": {
     "role": "secondary",
-    "displayName": "Giallo cromo",
-    "canonical": "oklch(85.4% 0.171 87)",
+    "displayName": "Ciano",
+    "canonical": "oklch(73.7% 0.122 232)",
     "tonalRamp": [
-     "oklch(15% 0.034 87)",
-     "oklch(25% 0.068 87)",
-     "oklch(35% 0.102 87)",
-     "oklch(45% 0.136 87)",
-     "oklch(58% 0.160 87)",
-     "oklch(70% 0.119 87)",
-     "oklch(83% 0.075 87)",
-     "oklch(95% 0.034 87)"
+     "oklch(15% 0.024 232)",
+     "oklch(25% 0.049 232)",
+     "oklch(35% 0.073 232)",
+     "oklch(45% 0.098 232)",
+     "oklch(58% 0.115 232)",
+     "oklch(70% 0.085 232)",
+     "oklch(83% 0.054 232)",
+     "oklch(95% 0.024 232)"
     ]
    },
-   "carta": {
+   "elettrico": {
+    "role": "secondary",
+    "displayName": "Blu elettrico",
+    "canonical": "oklch(43.1% 0.238 265)",
+    "tonalRamp": [
+     "oklch(15% 0.048 265)",
+     "oklch(25% 0.095 265)",
+     "oklch(35% 0.143 265)",
+     "oklch(45% 0.190 265)",
+     "oklch(58% 0.223 265)",
+     "oklch(70% 0.166 265)",
+     "oklch(83% 0.105 265)",
+     "oklch(95% 0.048 265)"
+    ]
+   },
+   "bianco": {
     "role": "neutral",
-    "displayName": "Carta",
+    "displayName": "Bianco",
     "canonical": "oklch(100.0% 0.000 90)",
     "tonalRamp": [
      "oklch(15% 0.000 90)",
@@ -64,159 +79,170 @@
      "oklch(95% 0.000 90)"
     ]
    },
-   "ink-rosso": {
-    "role": "tertiary",
-    "displayName": "Inchiostro rosso (Multimedia)",
-    "canonical": "oklch(54.3% 0.174 30)",
+   "chiaro": {
+    "role": "neutral",
+    "displayName": "Grigio chiaro",
+    "canonical": "oklch(96.9% 0.005 258)",
     "tonalRamp": [
-     "oklch(15% 0.035 30)",
-     "oklch(25% 0.070 30)",
-     "oklch(35% 0.104 30)",
-     "oklch(45% 0.139 30)",
-     "oklch(58% 0.164 30)",
-     "oklch(70% 0.122 30)",
-     "oklch(83% 0.077 30)",
-     "oklch(95% 0.035 30)"
+     "oklch(15% 0.001 258)",
+     "oklch(25% 0.002 258)",
+     "oklch(35% 0.003 258)",
+     "oklch(45% 0.004 258)",
+     "oklch(58% 0.004 258)",
+     "oklch(70% 0.003 258)",
+     "oklch(83% 0.002 258)",
+     "oklch(95% 0.001 258)"
     ]
    },
-   "ink-verde": {
-    "role": "tertiary",
-    "displayName": "Inchiostro verde (Audio)",
-    "canonical": "oklch(47.1% 0.097 158)",
+   "inchiostro": {
+    "role": "neutral",
+    "displayName": "Inchiostro",
+    "canonical": "oklch(19.1% 0.000 90)",
     "tonalRamp": [
-     "oklch(15% 0.019 158)",
-     "oklch(25% 0.039 158)",
-     "oklch(35% 0.058 158)",
-     "oklch(45% 0.078 158)",
-     "oklch(58% 0.091 158)",
-     "oklch(70% 0.068 158)",
-     "oklch(83% 0.043 158)",
-     "oklch(95% 0.019 158)"
+     "oklch(15% 0.000 90)",
+     "oklch(25% 0.000 90)",
+     "oklch(35% 0.000 90)",
+     "oklch(45% 0.000 90)",
+     "oklch(58% 0.000 90)",
+     "oklch(70% 0.000 90)",
+     "oklch(83% 0.000 90)",
+     "oklch(95% 0.000 90)"
     ]
    },
-   "ink-nero": {
-    "role": "tertiary",
-    "displayName": "Inchiostro nero (Tech)",
-    "canonical": "oklch(23.1% 0.008 275)",
+   "nero": {
+    "role": "neutral",
+    "displayName": "Nero",
+    "canonical": "oklch(14.9% 0.012 260)",
     "tonalRamp": [
-     "oklch(15% 0.008 275)",
-     "oklch(25% 0.008 275)",
-     "oklch(35% 0.008 275)",
-     "oklch(45% 0.008 275)",
-     "oklch(58% 0.008 275)",
-     "oklch(70% 0.008 275)",
-     "oklch(83% 0.008 275)",
-     "oklch(95% 0.008 275)"
+     "oklch(15% 0.002 260)",
+     "oklch(25% 0.005 260)",
+     "oklch(35% 0.007 260)",
+     "oklch(45% 0.010 260)",
+     "oklch(58% 0.011 260)",
+     "oklch(70% 0.008 260)",
+     "oklch(83% 0.005 260)",
+     "oklch(95% 0.002 260)"
     ]
    },
    "muted": {
     "role": "neutral",
     "displayName": "Testo secondario",
-    "canonical": "oklch(44.6% 0.065 258)",
+    "canonical": "oklch(44.4% 0.032 262)",
     "tonalRamp": [
-     "oklch(15% 0.013 258)",
-     "oklch(25% 0.026 258)",
-     "oklch(35% 0.039 258)",
-     "oklch(45% 0.052 258)",
-     "oklch(58% 0.061 258)",
-     "oklch(70% 0.045 258)",
-     "oklch(83% 0.029 258)",
-     "oklch(95% 0.013 258)"
+     "oklch(15% 0.006 262)",
+     "oklch(25% 0.013 262)",
+     "oklch(35% 0.019 262)",
+     "oklch(45% 0.026 262)",
+     "oklch(58% 0.030 262)",
+     "oklch(70% 0.023 262)",
+     "oklch(83% 0.014 262)",
+     "oklch(95% 0.006 262)"
     ]
    },
-   "muted-on-blue": {
+   "muted-on-dark": {
     "role": "neutral",
-    "displayName": "Testo secondario su blu",
-    "canonical": "oklch(87.8% 0.034 258)",
+    "displayName": "Testo secondario su scuro",
+    "canonical": "oklch(82.3% 0.032 259)",
     "tonalRamp": [
-     "oklch(15% 0.007 258)",
-     "oklch(25% 0.014 258)",
-     "oklch(35% 0.021 258)",
-     "oklch(45% 0.028 258)",
-     "oklch(58% 0.032 258)",
-     "oklch(70% 0.024 258)",
-     "oklch(83% 0.015 258)",
-     "oklch(95% 0.007 258)"
+     "oklch(15% 0.006 259)",
+     "oklch(25% 0.013 259)",
+     "oklch(35% 0.019 259)",
+     "oklch(45% 0.025 259)",
+     "oklch(58% 0.030 259)",
+     "oklch(70% 0.022 259)",
+     "oklch(83% 0.014 259)",
+     "oklch(95% 0.006 259)"
     ]
    },
-   "rule": {
+   "bordo": {
     "role": "neutral",
-    "displayName": "Filetto",
-    "canonical": "oklch(85.1% 0.022 257)",
+    "displayName": "Bordo",
+    "canonical": "oklch(91.7% 0.012 260)",
     "tonalRamp": [
-     "oklch(15% 0.004 257)",
-     "oklch(25% 0.009 257)",
-     "oklch(35% 0.013 257)",
-     "oklch(45% 0.018 257)",
-     "oklch(58% 0.021 257)",
-     "oklch(70% 0.016 257)",
-     "oklch(83% 0.010 257)",
-     "oklch(95% 0.004 257)"
+     "oklch(15% 0.002 260)",
+     "oklch(25% 0.005 260)",
+     "oklch(35% 0.007 260)",
+     "oklch(45% 0.010 260)",
+     "oklch(58% 0.011 260)",
+     "oklch(70% 0.008 260)",
+     "oklch(83% 0.005 260)",
+     "oklch(95% 0.002 260)"
     ]
    }
   },
   "typographyMeta": {
-   "poster-title": {
-    "displayName": "Poster title",
-    "purpose": "Front page title only, two plates settling into register."
+   "hero": {
+    "displayName": "Hero",
+    "purpose": "Home headline only."
    },
-   "display": {
-    "displayName": "Display",
-    "purpose": "Section headings (h2)."
+   "headline": {
+    "displayName": "Headline",
+    "purpose": "Section headings with italic second line."
+   },
+   "headline-m": {
+    "displayName": "Headline M",
+    "purpose": "Secondary section headings."
    },
    "page-title": {
     "displayName": "Page title",
-    "purpose": "Interior h1 on the blue page head; long titles step down."
+    "purpose": "Interior h1; long titles switch to sentence case."
+   },
+   "statement": {
+    "displayName": "Statement",
+    "purpose": "Path step sentences and the outcome claim."
    },
    "card-title": {
     "displayName": "Card title",
-    "purpose": "Fotobusta titles."
+    "purpose": "Course cards."
    },
-   "billing": {
-    "displayName": "Billing",
-    "purpose": "Fact lines in the billing block, figure in yellow 900."
+   "row-title": {
+    "displayName": "Row title",
+    "purpose": "News and event rows."
    },
    "body": {
     "displayName": "Body",
-    "purpose": "Reading text, 53ch measure."
+    "purpose": "Reading text, 50ch measure."
    },
    "lead": {
     "displayName": "Lead",
-    "purpose": "One-sentence introductions under titles."
-   },
-   "label": {
-    "displayName": "Label",
-    "purpose": "Area chip only."
+    "purpose": "Introductions under headings."
    },
    "ui": {
     "displayName": "UI",
-    "purpose": "Button labels."
+    "purpose": "Buttons, filters, meta."
    },
    "small": {
     "displayName": "Small",
-    "purpose": "Filter tabs, meta lines, card links, breadcrumbs, footer base."
-   },
-   "caption": {
-    "displayName": "Caption",
-    "purpose": "Field and table headers, fact labels."
+    "purpose": "Area labels, table headers, badges."
    }
   },
-  "shadows": [],
+  "shadows": [
+   {
+    "name": "card-lift",
+    "value": "0 18px 40px -22px rgb(0 44 100 / 0.45)",
+    "purpose": "Course card hover only, with a 4px rise."
+   }
+  ],
   "motion": [
    {
     "name": "ease-out",
     "value": "cubic-bezier(0.16, 1, 0.3, 1)",
-    "purpose": "All state transitions and the register settle."
+    "purpose": "State transitions."
    },
    {
-    "name": "register",
-    "value": "translate(0.05em, -0.035em) → none, 1s, delay 0.2s",
-    "purpose": "Front page title: yellow plate settles onto the white plate once on load; disabled under reduced motion."
+    "name": "header-settle",
+    "value": "background-color 0.35s",
+    "purpose": "Home masthead from transparent to deep blue after 24px of scroll."
    },
    {
-    "name": "duotone-lift",
-    "value": "filter + overlay opacity, 0.6s",
-    "purpose": "Fotobusta photo lifts from area-ink duotone to full colour on hover/focus."
+    "name": "card-lift",
+    "value": "transform/box-shadow 0.35s, image scale 1.04 over 0.6s",
+    "purpose": "Course card hover."
+   },
+   {
+    "name": "hero-video",
+    "value": "muted loop, started by script",
+    "purpose": "Plays only without reduced motion or data saving; always pausable."
    }
   ],
   "breakpoints": [
@@ -225,7 +251,7 @@
     "value": "640px"
    },
    {
-    "name": "table-stack",
+    "name": "table-rows",
     "value": "760px"
    },
    {
@@ -237,135 +263,121 @@
     "value": "1080px"
    },
    {
-    "name": "wall-2",
+    "name": "grid-2",
     "value": "1100px"
    }
   ]
  },
  "components": [
   {
-   "name": "Yellow Button",
+   "name": "Cyan Button",
    "kind": "button",
-   "refersTo": "button-yellow",
-   "description": "Primary action on blue grounds.",
-   "html": "<div class=\"ds-blue\"><a class=\"ds-btn ds-btn-yellow\" href=\"#\">Prenota un incontro</a></div>",
-   "css": ":host{--blu:#004590;--blu-notte:#002c64;--giallo:#ffc61a;--carta:#fff;--rule:#c5cfdd;--muted:#3d5578;--f-display:'Sofia Sans Extra Condensed','Arial Narrow',sans-serif;--f-text:'Sofia Sans',system-ui,sans-serif}.ds-blue{background:var(--blu);padding:24px}.ds-btn{display:inline-flex;align-items:center;min-height:3rem;padding:.8rem 1.35rem;border:2px solid transparent;border-radius:0;font:750 1rem/1.1 var(--f-text);text-decoration:none;transition:background-color .2s,color .2s}.ds-btn-yellow{background:var(--giallo);color:var(--blu-notte)}.ds-btn-yellow:hover{background:var(--carta)}.ds-btn:focus-visible{outline:3px solid var(--giallo);outline-offset:3px}.ds-btn:active{transform:translateY(1px)}"
+   "refersTo": "button-cyan",
+   "description": "Primary action on dark grounds and over the video.",
+   "html": "<div class=\"ds-dark\"><a class=\"ds-btn ds-btn-cyan\" href=\"#\">Prenota un incontro</a></div>",
+   "css": ":host{--blu:#004590;--blu-notte:#002c64;--ciano:#49b7e9;--elettrico:#1032cf;--bordo:#dfe4ec;--muted:#4a5466;--f:'Raleway',system-ui,sans-serif}.ds-dark{background:var(--blu-notte);padding:24px}.ds-btn{display:inline-flex;align-items:center;min-height:3rem;padding:.75rem 1.5rem;border-radius:999px;font:700 .9375rem/1.1 var(--f);text-decoration:none;transition:background-color .2s}.ds-btn-cyan{background:var(--ciano);color:var(--blu-notte)}.ds-btn-cyan:hover{background:#fff}.ds-btn:focus-visible{outline:3px solid var(--ciano);outline-offset:3px}"
   },
   {
    "name": "Blue Button",
    "kind": "button",
    "refersTo": "button-blue",
-   "description": "Primary action on white paper.",
-   "html": "<a class=\"ds-btn ds-btn-blue\" href=\"#\">Filtra</a>",
-   "css": ":host{--blu:#004590;--blu-notte:#002c64;--giallo:#ffc61a;--carta:#fff;--rule:#c5cfdd;--muted:#3d5578;--f-display:'Sofia Sans Extra Condensed','Arial Narrow',sans-serif;--f-text:'Sofia Sans',system-ui,sans-serif}.ds-btn{display:inline-flex;align-items:center;min-height:3rem;padding:.8rem 1.35rem;border-radius:0;font:750 1rem/1.1 var(--f-text);text-decoration:none;transition:background-color .2s}.ds-btn-blue{background:var(--blu);color:var(--carta)}.ds-btn-blue:hover{background:var(--blu-notte)}.ds-btn:focus-visible{outline:3px solid var(--blu-notte);outline-offset:3px}"
+   "description": "Primary action on light grounds.",
+   "html": "<a class=\"ds-btn ds-btn-blue\" href=\"#\">Prenota un incontro</a>",
+   "css": ":host{--blu:#004590;--blu-notte:#002c64;--ciano:#49b7e9;--elettrico:#1032cf;--bordo:#dfe4ec;--muted:#4a5466;--f:'Raleway',system-ui,sans-serif}.ds-btn{display:inline-flex;align-items:center;min-height:3rem;padding:.75rem 1.5rem;border-radius:999px;font:700 .9375rem/1.1 var(--f);text-decoration:none;transition:background-color .2s}.ds-btn-blue{background:var(--blu);color:#fff}.ds-btn-blue:hover{background:var(--elettrico)}.ds-btn:focus-visible{outline:3px solid var(--elettrico);outline-offset:3px}"
   },
   {
-   "name": "Line Button",
+   "name": "Ghost Button",
    "kind": "button",
-   "refersTo": "button-line",
-   "description": "Secondary action on blue grounds.",
-   "html": "<div class=\"ds-blue\"><a class=\"ds-btn-line\" href=\"#\">Scopri gli 8 corsi</a></div>",
-   "css": ":host{--blu:#004590;--blu-notte:#002c64;--giallo:#ffc61a;--carta:#fff;--rule:#c5cfdd;--muted:#3d5578;--f-display:'Sofia Sans Extra Condensed','Arial Narrow',sans-serif;--f-text:'Sofia Sans',system-ui,sans-serif}.ds-blue{background:var(--blu);color:#fff;padding:24px}.ds-btn-line{display:inline-flex;align-items:center;min-height:3rem;padding:.8rem 1.35rem;border:2px solid currentColor;color:inherit;font:750 1rem/1.1 var(--f-text);text-decoration:none;transition:background-color .2s,color .2s}.ds-btn-line:hover{background:#fff;color:var(--blu-notte);border-color:#fff}.ds-btn-line:focus-visible{outline:3px solid var(--giallo);outline-offset:3px}"
+   "refersTo": "button-ghost",
+   "description": "Secondary action on dark grounds.",
+   "html": "<div class=\"ds-dark\"><a class=\"ds-ghost\" href=\"#\">Scopri i corsi</a></div>",
+   "css": ":host{--blu:#004590;--blu-notte:#002c64;--ciano:#49b7e9;--elettrico:#1032cf;--bordo:#dfe4ec;--muted:#4a5466;--f:'Raleway',system-ui,sans-serif}.ds-dark{background:var(--blu-notte);padding:24px}.ds-ghost{display:inline-flex;align-items:center;min-height:3rem;padding:.75rem 1.5rem;border:1.5px solid rgba(255,255,255,.65);border-radius:999px;color:#fff;font:700 .9375rem/1.1 var(--f);text-decoration:none;transition:background-color .2s,color .2s}.ds-ghost:hover{background:#fff;color:var(--blu-notte)}"
+  },
+  {
+   "name": "Filter Pills",
+   "kind": "chip",
+   "refersTo": "filter-pill",
+   "description": "Area filter for the course grid.",
+   "html": "<div class=\"ds-pills\"><a aria-current=\"true\" href=\"#\">Tutti</a><a href=\"#\">Audio</a><a href=\"#\">Cinema &amp; TV</a></div>",
+   "css": ":host{--blu:#004590;--blu-notte:#002c64;--ciano:#49b7e9;--elettrico:#1032cf;--bordo:#dfe4ec;--muted:#4a5466;--f:'Raleway',system-ui,sans-serif}.ds-pills{display:flex;gap:.5rem}.ds-pills a{display:inline-flex;align-items:center;min-height:2.75rem;padding:.5rem 1.15rem;border:1.5px solid var(--bordo);border-radius:999px;background:#fff;color:var(--blu-notte);font:700 .9375rem var(--f);text-decoration:none}.ds-pills a:hover{border-color:var(--blu)}.ds-pills a[aria-current]{background:var(--blu-notte);border-color:var(--blu-notte);color:#fff}"
+  },
+  {
+   "name": "Course Card",
+   "kind": "card",
+   "refersTo": "card",
+   "description": "Rounded card with real photo, title, area and link.",
+   "html": "<a class=\"ds-card\" href=\"#\"><span class=\"ds-card__media\"></span><span class=\"ds-card__body\"><strong>Digital Sound Designer</strong><em>Audio</em><span>Suono per cinema, live, podcast, gaming e ambienti immersivi.</span><b>Scopri il corso →</b></span></a>",
+   "css": ":host{--blu:#004590;--blu-notte:#002c64;--ciano:#49b7e9;--elettrico:#1032cf;--bordo:#dfe4ec;--muted:#4a5466;--f:'Raleway',system-ui,sans-serif}.ds-card{display:flex;flex-direction:column;width:300px;overflow:hidden;border:1px solid var(--bordo);border-radius:14px;background:#fff;color:#141414;text-decoration:none;font-family:var(--f);transition:transform .35s,box-shadow .35s}.ds-card:hover{transform:translateY(-4px);box-shadow:0 18px 40px -22px rgba(0,44,100,.45)}.ds-card__media{display:block;aspect-ratio:4/3;background:#cfd8e6}.ds-card__body{display:flex;flex-direction:column;gap:.4rem;padding:1.1rem 1.25rem 1.25rem}.ds-card__body strong{font-size:1.3rem;font-weight:800;letter-spacing:-.02em}.ds-card__body em{font-style:normal;color:var(--blu);font-size:.875rem;font-weight:700}.ds-card__body span{color:var(--muted);font-size:.9375rem}.ds-card__body b{color:var(--blu);font-size:.9375rem;padding-top:1rem}"
+  },
+  {
+   "name": "News Row",
+   "kind": "custom",
+   "refersTo": "row",
+   "description": "Dated list row with circular arrow; whole row is the link.",
+   "html": "<a class=\"ds-row\" href=\"#\"><span class=\"ds-row__date\"><b>13</b> ott<br><small>2026</small></span><span class=\"ds-row__title\">Pubblicate le graduatorie definitive di ammissione</span><span class=\"ds-row__arrow\">↗</span></a>",
+   "css": ":host{--blu:#004590;--blu-notte:#002c64;--ciano:#49b7e9;--elettrico:#1032cf;--bordo:#dfe4ec;--muted:#4a5466;--f:'Raleway',system-ui,sans-serif}.ds-row{display:grid;grid-template-columns:6rem 1fr auto;align-items:center;gap:1.5rem;padding:1.4rem 0;border-bottom:1px solid var(--bordo);color:#141414;text-decoration:none;font-family:var(--f)}.ds-row:hover{background:#f3f5f8}.ds-row__date{color:var(--blu);font-weight:700}.ds-row__date b{font-size:1.6rem;font-weight:900}.ds-row__date small{color:var(--muted);font-weight:500}.ds-row__title{font-size:1.4rem;font-weight:700;letter-spacing:-.015em}.ds-row__arrow{display:grid;place-items:center;width:2.75rem;height:2.75rem;border:1.5px solid var(--bordo);border-radius:50%}.ds-row:hover .ds-row__arrow{background:var(--blu);border-color:var(--blu);color:#fff}"
+  },
+  {
+   "name": "Headline",
+   "kind": "custom",
+   "refersTo": "headline",
+   "description": "Heavy caps headline with italic second line.",
+   "html": "<h2 class=\"ds-h\">Non una classe. <em>Un set aperto.</em></h2>",
+   "css": ":host{--blu:#004590;--blu-notte:#002c64;--ciano:#49b7e9;--elettrico:#1032cf;--bordo:#dfe4ec;--muted:#4a5466;--f:'Raleway',system-ui,sans-serif}.ds-h{margin:0;font:900 3.5rem/.95 var(--f);letter-spacing:-.035em;text-transform:uppercase;color:#141414}.ds-h em{display:block;font-style:italic;font-weight:500;color:var(--blu)}"
   },
   {
    "name": "Search Field",
    "kind": "input",
    "refersTo": "input",
-   "description": "Square white field, label above, example placeholder.",
+   "description": "Field with label above.",
    "html": "<label class=\"ds-field\"><span>Cerca</span><input type=\"search\" placeholder=\"Es. graduatoria Videomaker…\"></label>",
-   "css": ":host{--blu:#004590;--blu-notte:#002c64;--giallo:#ffc61a;--carta:#fff;--rule:#c5cfdd;--muted:#3d5578;--f-display:'Sofia Sans Extra Condensed','Arial Narrow',sans-serif;--f-text:'Sofia Sans',system-ui,sans-serif}.ds-field{display:grid;gap:.35rem;font:700 .9375rem var(--f-text);color:var(--blu-notte)}.ds-field input{min-height:3rem;padding:0 .9rem;border:2px solid var(--blu-notte);border-radius:0;background:#fff;color:var(--blu-notte);font:400 1rem var(--f-text);caret-color:var(--blu)}.ds-field input::placeholder{color:var(--muted)}.ds-field input:focus-visible{outline:3px solid var(--blu-notte);outline-offset:3px}"
-  },
-  {
-   "name": "Masthead Navigation",
-   "kind": "nav",
-   "refersTo": "navigation",
-   "description": "Blue masthead links with yellow underline for hover and current page.",
-   "html": "<nav class=\"ds-nav\"><a href=\"#\" aria-current=\"page\">Corsi</a><a href=\"#\">Academy</a><a href=\"#\">Bandi e albi</a><a href=\"#\" class=\"ds-cta\">Preiscriviti</a></nav>",
-   "css": ":host{--blu:#004590;--blu-notte:#002c64;--giallo:#ffc61a;--carta:#fff;--rule:#c5cfdd;--muted:#3d5578;--f-display:'Sofia Sans Extra Condensed','Arial Narrow',sans-serif;--f-text:'Sofia Sans',system-ui,sans-serif}.ds-nav{display:flex;gap:1.5rem;align-items:center;background:var(--blu);padding:20px 24px;font:650 1rem var(--f-text)}.ds-nav a{color:#fff;text-decoration:none;padding:.5rem 0;border-bottom:2px solid transparent}.ds-nav a:hover,.ds-nav a[aria-current]{border-bottom-color:var(--giallo)}.ds-nav .ds-cta{background:var(--giallo);color:var(--blu-notte);padding:.5rem 1rem;border:0;font-weight:750}.ds-nav a:focus-visible{outline:3px solid var(--giallo);outline-offset:3px}"
-  },
-  {
-   "name": "Area Chip",
-   "kind": "chip",
-   "refersTo": "area-chip",
-   "description": "Technological area printed onto the photo in its ink.",
-   "html": "<span class=\"ds-chip\">Multimedia</span>",
-   "css": ".ds-chip{display:inline-block;padding:.35rem .55rem;background:#c0392b;color:#fff;font:750 .8125rem/1 'Sofia Sans',system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase}"
-  },
-  {
-   "name": "Fotobusta",
-   "kind": "card",
-   "refersTo": "fotobusta",
-   "description": "A course as a lobby card: duotone photo in the area ink, white margin, condensed title band.",
-   "html": "<a class=\"ds-foto\" href=\"#\" style=\"--ink:#1d6b45\"><span class=\"ds-foto__photo\"></span><span class=\"ds-foto__chip\">Audio</span><strong class=\"ds-foto__title\">Digital Sound Designer</strong><span class=\"ds-foto__line\">Suono per cinema, live, podcast, gaming e ambienti immersivi.</span><span class=\"ds-foto__more\">Scheda del corso <svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"square\"><path d=\"M4 12h15M13 6l6 6-6 6\"/></svg></span></a>",
-   "css": ":host{--blu:#004590;--blu-notte:#002c64;--giallo:#ffc61a;--carta:#fff;--rule:#c5cfdd;--muted:#3d5578;--f-display:'Sofia Sans Extra Condensed','Arial Narrow',sans-serif;--f-text:'Sofia Sans',system-ui,sans-serif}.ds-foto{position:relative;display:flex;flex-direction:column;gap:.5rem;width:320px;padding:.6rem;border:1px solid var(--rule);background:#fff;color:var(--blu-notte);text-decoration:none;transition:border-color .25s}.ds-foto:hover{border-color:var(--blu-notte)}.ds-foto__photo{display:block;aspect-ratio:4/3;background:linear-gradient(var(--ink),var(--ink))}.ds-foto__chip{position:absolute;top:1.35rem;left:1.35rem;padding:.35rem .55rem;background:var(--ink);color:#fff;font:750 .8125rem/1 var(--f-text);letter-spacing:.06em;text-transform:uppercase}.ds-foto__title{margin-top:.5rem;font:850 2rem/.92 var(--f-display);text-transform:uppercase}.ds-foto__line{color:var(--muted);font:400 1rem/1.45 var(--f-text)}.ds-foto__more{display:flex;justify-content:space-between;align-items:center;padding-top:.85rem;border-top:1px solid var(--rule);font:750 .9375rem var(--f-text)}.ds-foto:focus-visible{outline:3px solid var(--blu-notte);outline-offset:3px}"
-  },
-  {
-   "name": "Programme Stamp",
-   "kind": "custom",
-   "refersTo": "stamp",
-   "description": "Date-computed status label, rotated -3deg.",
-   "html": "<span class=\"ds-stamp\">Prossimamente</span> <span class=\"ds-stamp ds-stamp--live\">Oggi</span> <span class=\"ds-stamp ds-stamp--spent\">Concluso</span>",
-   "css": ".ds-stamp{display:inline-block;margin:.5rem;padding:.32rem .5rem .26rem;border:2px solid currentColor;color:#c0392b;font:850 .95rem/1 'Sofia Sans Extra Condensed','Arial Narrow',sans-serif;letter-spacing:.08em;text-transform:uppercase;transform:rotate(-3deg)}.ds-stamp--live{background:#ffc61a;border-color:#002c64;color:#002c64}.ds-stamp--spent{color:#3d5578}"
+   "css": ":host{--blu:#004590;--blu-notte:#002c64;--ciano:#49b7e9;--elettrico:#1032cf;--bordo:#dfe4ec;--muted:#4a5466;--f:'Raleway',system-ui,sans-serif}.ds-field{display:grid;gap:.35rem;font:700 .9375rem var(--f)}.ds-field input{min-height:3rem;padding:0 1rem;border:1.5px solid var(--bordo);border-radius:10px;font:400 1rem var(--f);caret-color:var(--blu)}.ds-field input:focus-visible{outline:3px solid var(--elettrico);outline-offset:3px}"
   }
  ],
  "narrative": {
-  "northStar": "La carta del cinema",
-  "overview": "The site is printed matter from an Italian cinema lobby, not a screen pretending to be film equipment. The front page is a locandina: one huge condensed title, one photograph in a white margin, a billing block of facts at the foot. Each course is a fotobusta, the horizontal lobby card: photo printed in a single ink, white border, title band below. Dated things carry a programme stamp, the way a cinema marks what is coming, on today, or gone.\n\nTwo inks do almost all the work: the institutional blue (binding brand asset) as the dominant field, chrome yellow as the second ink for titles, calls to action and highlights. White poster stock is the paper. A third ink only ever appears inside photographs, and it is fixed per technological area, so the colour of a photo tells you the area before you read it.\n\nRestraint lives in the materials, not in the energy: no shadows, no gradients, no glows, no rounded corners, no HUD labels. Commitment lives in scale: titles are set big and tight, photographs are large, sections alternate whole fields of blue, white and yellow.",
+  "northStar": "Lo stesso Rossellini, più adulto",
+  "overview": "The system keeps what makes the current itsrossellini.it recognisable and removes what makes it read as machine-made. Kept: the institutional blues with cyan, Raleway set heavy and uppercase with a second line in italic, the real hero video, real photography, rounded course cards, pill buttons, the news list with large titles, partner logos in tiles. Removed: monospace micro-labels, section counters, kickers, grid-line backgrounds, glows, outlined giant numbers, the \"REC\" camera frame, coloured stripes, the marquee, 9–10px text.\n\nModern here means restraint and confidence rather than effects: big real footage, big type, generous space, few colours used as whole fields, one accent. Motion is the video itself; the interface only settles the header and lifts cards on hover.",
   "keyCharacteristics": [
-   "Two inks on white: blue field, yellow second ink, white paper.",
-   "Photographs in bicromia, one fixed ink per technological area.",
-   "Extra-condensed gothic in caps for every title; a regular-width sibling for reading.",
-   "Facts set as a poster billing block, never as stat tiles.",
-   "Printed rules (1–2px lines) instead of boxes, shadows or cards-in-cards.",
-   "Programme stamps computed from real dates."
+   "Institutional palette only: blue, deep blue, cyan, electric blue (hover and focus), near-black, white, a cool light grey.",
+   "Raleway everywhere; headlines in 900 caps with an italic 500 second line.",
+   "Real footage and photographs in 14px rounded frames.",
+   "Pill buttons in sentence case; circular arrow buttons on list rows.",
+   "Fields of colour by section: video, light grey, white, deep blue, white, light grey, cyan, near-black."
   ],
   "rules": [
    {
-    "name": "The Two Inks Rule",
-    "body": "Page chrome uses only blue, yellow and white. A third colour on the page must come from a photograph's area ink.",
+    "name": "The Institute Colours Only Rule",
+    "body": "No hue outside the palette: no yellow, green, red or category colours. Technological areas are told apart by name, not by colour.",
     "section": "colors"
    },
    {
-    "name": "The Yellow Is Not Text On Paper Rule",
-    "body": "Yellow is a field or text on blue, never text on white.",
+    "name": "The One Accent Rule",
+    "body": "Cyan is the only accent. It is a fill or large text, never small text on light grounds.",
     "section": "colors"
    },
    {
-    "name": "The Ink Means Area Rule",
-    "body": "An area ink appears only where it identifies an area (photo duotone, area chip, filter swatch). If it does not say \"this is Audio\", it is not used.",
-    "section": "colors"
-   },
-   {
-    "name": "The No Kicker Rule",
-    "body": "Nothing sits above a heading. Area chips and meta lines go after the title, or are printed onto the photo.",
+    "name": "The Two-Voice Headline Rule",
+    "body": "A section headline is heavy caps, optionally followed by one italic line in the accent colour. Never a third voice, never a label above it.",
     "section": "typography"
    },
    {
-    "name": "The Caps Are For Titles Rule",
-    "body": "Uppercase is reserved for condensed titles, billing figures and the area chip. Running text and long credit lines stay in sentence case.",
+    "name": "The Tracking Floor Rule",
+    "body": "Letter-spacing never tighter than −0.04em, whatever the current site does.",
     "section": "typography"
-   },
-   {
-    "name": "The Print Has No Shadow Rule",
-    "body": "No box-shadow, no glow, no blur, no glass. Hover changes ink (border to blue notte, duotone lifting to full colour), never elevation.",
-    "section": "elevation"
    }
   ],
   "dos": [
-   "Do print photographs in the area's ink and keep the white margin around them.",
-   "Do set every title in the extra-condensed cut, uppercase, tight.",
-   "Do set facts as a billing line with the figure in yellow.",
-   "Do compute stamps from real dates and hide them when there is no date.",
-   "Do keep content visible without JavaScript; motion only settles what is already there.",
-   "Do keep reading text at a 53ch measure."
+   "Do keep the current site's voice: heavy caps headline with an italic second line.",
+   "Do use only the institutional palette, with cyan as the single accent.",
+   "Do show real footage and real photographs, rounded at 14px.",
+   "Do keep every action a pill with a verb.",
+   "Do keep content visible without JavaScript and without scrolling animations."
   ],
   "donts": [
-   "Don't put a kicker, eyebrow or section number above a heading.",
-   "Don't use shadows, glows, gradients, glass or rounded corners.",
-   "Don't bring back the HUD costume: timecodes, REC dots, crosshairs, coordinates, mono labels.",
-   "Don't use yellow as text on white.",
-   "Don't show facts as stat tiles (small label over a big number).",
-   "Don't hide content behind scroll-triggered reveals.",
+   "Don't add yellow, green, red or per-area colours.",
+   "Don't bring back monospace micro-labels, \"01 / 05\" counters, kickers, grid backgrounds, glows, outlined numbers, camera frames, coloured card stripes or the marquee.",
+   "Don't set text below 13px.",
+   "Don't put cyan text on white.",
    "Don't invent figures, testimonials or partners; published figures live in the Customizer."
   ]
  }

@@ -1,9 +1,28 @@
-/* ITS Rossellini — progressive enhancement only. Every feature works as plain links without it. */
+/* ITS Rossellini — progressive enhancement only. Every feature works without it. */
 (() => {
 	'use strict';
 
+	const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+	const saveData = Boolean(navigator.connection && navigator.connection.saveData);
+
+	/* Header over the home video: solid once the page scrolls. */
+	const masthead = document.querySelector('[data-masthead]');
+	if (masthead && masthead.classList.contains('masthead--over')) {
+		let ticking = false;
+		const update = () => {
+			masthead.classList.toggle('is-solid', window.scrollY > 24);
+			ticking = false;
+		};
+		window.addEventListener('scroll', () => {
+			if (!ticking) {
+				ticking = true;
+				window.requestAnimationFrame(update);
+			}
+		}, { passive: true });
+		update();
+	}
+
 	/* Mobile navigation */
-	const masthead = document.querySelector('.masthead');
 	const toggle = masthead?.querySelector('.masthead__toggle');
 	if (masthead && toggle) {
 		const setOpen = (open) => {
@@ -20,11 +39,38 @@
 		window.matchMedia('(min-width: 1081px)').addEventListener('change', (mq) => mq.matches && setOpen(false));
 	}
 
-	/* Course wall: filter by area in place, keep the URL shareable. */
+	/* Hero video: plays only when motion and data allow; always pausable. */
+	const video = document.querySelector('[data-hero-video]');
+	const videoToggle = document.querySelector('[data-video-toggle]');
+	if (video && videoToggle) {
+		const setState = (paused) => {
+			videoToggle.classList.toggle('is-paused', paused);
+			videoToggle.setAttribute('aria-label', paused ? videoToggle.dataset.labelPlay : videoToggle.dataset.labelPause);
+		};
+		const play = () => video.play().then(() => setState(false)).catch(() => setState(true));
+		videoToggle.hidden = false;
+		videoToggle.addEventListener('click', () => {
+			if (video.paused) play();
+			else {
+				video.pause();
+				setState(true);
+			}
+		});
+		if (!reduceMotion.matches && !saveData) play();
+		else setState(true);
+		reduceMotion.addEventListener('change', (mq) => {
+			if (mq.matches) {
+				video.pause();
+				setState(true);
+			}
+		});
+	}
+
+	/* Course grid: filter by area in place, keep the URL shareable. */
 	const filter = document.querySelector('.area-filter');
-	const wall = document.querySelector('[data-wall]');
-	if (filter && wall) {
-		const items = [...wall.querySelectorAll('.wall__item')];
+	const grid = document.querySelector('[data-wall]');
+	if (filter && grid) {
+		const items = [...grid.querySelectorAll('.grid__item')];
 		const status = document.querySelector('[data-wall-status]');
 		const links = [...filter.querySelectorAll('a[data-area]')];
 
@@ -33,7 +79,6 @@
 			items.forEach((item) => {
 				const show = !area || item.dataset.area === area;
 				item.hidden = !show;
-				item.classList.toggle('is-feature', show && visible < 2);
 				if (show) visible += 1;
 			});
 			links.forEach((link) => {

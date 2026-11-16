@@ -1,6 +1,6 @@
 <?php
 /**
- * A course as its own locandina: title, area ink, facts as billing, content as credits.
+ * Course page.
  *
  * @package its-rossellini
  */
@@ -11,14 +11,17 @@ get_header();
 
 while ( have_posts() ) :
 	the_post();
-	$area  = its_area( get_the_ID() );
-	$ink   = its_area_ink( $area );
-	$facts = its_facts();
-	$apply = add_query_arg( 'corso', get_post_field( 'post_name' ), its_page_url( 'iscrizioni' ) );
+	$area    = its_area( get_the_ID() );
+	$facts   = its_facts();
+	$apply   = add_query_arg( 'corso', get_post_field( 'post_name' ), its_page_url( 'iscrizioni' ) );
+	$actions = '<div class="page-head__actions">'
+		. '<a class="btn btn--cyan" href="' . esc_url( $apply ) . '">' . esc_html__( 'Preiscriviti a questo corso', 'its-rossellini' ) . '</a>'
+		. '<a class="btn btn--ghost" href="' . esc_url( its_page_url( 'incontriamoci', its_page_url( 'contatti' ) ) ) . '">' . esc_html__( 'Parla con l’orientamento', 'its-rossellini' ) . '</a>'
+		. '</div>';
+	$aside   = ( $area ? '<p class="page-head__area">' . esc_html( $area->name ) . '</p>' : '' ) . $actions;
 	?>
-	<article <?php post_class( 'corso' ); ?> data-ink="<?php echo esc_attr( $ink ); ?>">
+	<article <?php post_class( 'corso' ); ?>>
 		<?php
-		$aside = $area ? '<p class="page-head__area" data-ink="' . esc_attr( $ink ) . '">' . esc_html( $area->name ) . '</p>' : '';
 		get_template_part(
 			'template-parts/page-head',
 			null,
@@ -26,56 +29,50 @@ while ( have_posts() ) :
 				'title'    => get_the_title(),
 				'lead'     => has_excerpt() ? get_the_excerpt() : '',
 				'image_id' => (int) get_post_thumbnail_id(),
-				'ink'      => $ink,
 				'aside'    => $aside,
 			)
 		);
 		?>
 
-		<div class="corso__billing">
-			<div class="wrap corso__billing-grid">
-				<p class="billing__facts billing__facts--course">
-					<span><b><?php echo esc_html( $facts['years'] ); ?></b> <?php echo esc_html( _n( 'anno', 'anni', (int) $facts['years'], 'its-rossellini' ) ); ?></span>
-					<span><b><?php echo esc_html( $facts['hours'] ); ?></b> <?php esc_html_e( 'ore in aula e laboratorio', 'its-rossellini' ); ?></span>
-					<span><b><?php echo esc_html( $facts['internship'] ); ?></b> <?php esc_html_e( 'ore di stage', 'its-rossellini' ); ?></span>
-					<span><b><?php echo esc_html( $facts['places'] ); ?></b> <?php esc_html_e( 'posti', 'its-rossellini' ); ?></span>
-				</p>
-				<div class="corso__actions">
-					<a class="button button--yellow" href="<?php echo esc_url( $apply ); ?>"><?php esc_html_e( 'Preiscriviti a questo corso', 'its-rossellini' ); ?></a>
-					<a class="button button--line" href="<?php echo esc_url( its_page_url( 'incontriamoci', its_page_url( 'contatti' ) ) ); ?>"><?php esc_html_e( 'Parla con l’orientamento', 'its-rossellini' ); ?></a>
-				</div>
-			</div>
+		<div class="facts-strip">
+			<ul class="wrap facts-strip__list" aria-label="<?php esc_attr_e( 'Il corso in breve', 'its-rossellini' ); ?>">
+				<li><strong><?php echo esc_html( $facts['years'] . ' ' . _n( 'anno', 'anni', (int) $facts['years'], 'its-rossellini' ) ); ?></strong> <?php esc_html_e( 'post-diploma', 'its-rossellini' ); ?></li>
+				<li><strong><?php echo esc_html( $facts['hours'] ); ?> <?php esc_html_e( 'ore', 'its-rossellini' ); ?></strong> <?php esc_html_e( 'in aula e laboratorio', 'its-rossellini' ); ?></li>
+				<li><strong><?php echo esc_html( $facts['internship'] ); ?> <?php esc_html_e( 'ore', 'its-rossellini' ); ?></strong> <?php esc_html_e( 'di stage in azienda', 'its-rossellini' ); ?></li>
+				<li><strong><?php echo esc_html( $facts['places'] ); ?> <?php esc_html_e( 'posti', 'its-rossellini' ); ?></strong> <?php esc_html_e( 'per corso', 'its-rossellini' ); ?></li>
+			</ul>
 		</div>
 
-		<div class="wrap corso__body prose prose--credits">
+		<div class="wrap corso__body prose prose--split">
 			<?php the_content(); ?>
 		</div>
 	</article>
 
 	<?php
-	$related_args = array(
-		'post_type'      => 'corso',
-		'posts_per_page' => 3,
-		'post__not_in'   => array( get_the_ID() ),
-		'orderby'        => 'menu_order',
-		'order'          => 'ASC',
-		'no_found_rows'  => true,
+	$related = new WP_Query(
+		array(
+			'post_type'      => 'corso',
+			'posts_per_page' => 4,
+			'post__not_in'   => array( get_the_ID() ),
+			'orderby'        => 'menu_order',
+			'order'          => 'ASC',
+			'no_found_rows'  => true,
+		)
 	);
-	$related      = new WP_Query( $related_args );
 	if ( $related->have_posts() ) :
 		?>
-		<section class="section section--paper section--ruled" aria-labelledby="related-title">
+		<section class="section section--light" aria-labelledby="related-title">
 			<div class="wrap">
 				<div class="section__head section__head--row">
-					<h2 id="related-title" class="display display--m"><?php esc_html_e( 'Altri corsi', 'its-rossellini' ); ?></h2>
+					<h2 id="related-title" class="headline headline--m"><?php esc_html_e( 'Altri corsi', 'its-rossellini' ); ?></h2>
 					<a class="link-arrow" href="<?php echo esc_url( its_page_url( 'offerta-formativa/corsi' ) ); ?>"><?php esc_html_e( 'Tutti i corsi', 'its-rossellini' ); ?><?php echo its_icon( 'arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 				</div>
-				<div class="wall wall--three">
+				<div class="grid">
 					<?php
 					while ( $related->have_posts() ) :
 						$related->the_post();
-						echo '<div class="wall__item">';
-						get_template_part( 'template-parts/fotobusta' );
+						echo '<div class="grid__item">';
+						get_template_part( 'template-parts/course-card' );
 						echo '</div>';
 					endwhile;
 					wp_reset_postdata();

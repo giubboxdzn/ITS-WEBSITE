@@ -168,7 +168,7 @@ def run(out, courses_only=False):
         title = html.unescape(c["title"]["rendered"])
         page = main_html(get(c["link"]))
         lines = text_lines(page)
-        stops = {"Competenze", "Il tuo futuro professionale", "Programma", "Strumenti e tecnologie", "Corsi correlati"}
+        stops = {"Competenze", "Il tuo futuro professionale", "Programma", "Strumenti e tecnologie", "Corsi correlati", "Docenti del corso", "Docenti", "Parla con noi"}
         intro = ""
         if title in lines:
             idx = [i for i, x in enumerate(lines) if x == title][-1]

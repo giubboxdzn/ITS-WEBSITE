@@ -33,6 +33,27 @@ add_action(
 				),
 			),
 		);
+		$wp_customize->add_section( 'its_home', array( 'title' => __( 'Home', 'its-rossellini' ) ) );
+		$wp_customize->add_setting(
+			'its_hero_video',
+			array(
+				'default'           => '',
+				'sanitize_callback' => 'absint',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Media_Control(
+				$wp_customize,
+				'its_hero_video',
+				array(
+					'label'       => __( 'Video della home (MP4, senza audio)', 'its-rossellini' ),
+					'description' => __( 'Come copertina si usa l’immagine in evidenza della pagina iniziale.', 'its-rossellini' ),
+					'section'     => 'its_home',
+					'mime_type'   => 'video',
+				)
+			)
+		);
+
 		foreach ( $sections as $section => [ $title, $fields ] ) {
 			$wp_customize->add_section( $section, array( 'title' => $title ) );
 			foreach ( $fields as $id => [ $label, $default ] ) {

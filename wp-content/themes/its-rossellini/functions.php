@@ -35,8 +35,8 @@ add_action(
 			)
 		);
 
-		add_image_size( 'its-fotobusta', 1200, 900, true );
-		add_image_size( 'its-locandina', 960, 1200, true );
+		add_image_size( 'its-card', 960, 720, true );
+		add_image_size( 'its-portrait', 960, 1200, true );
 	}
 );
 
@@ -66,13 +66,13 @@ add_action(
 add_action(
 	'wp_head',
 	static function (): void {
-		foreach ( array( 'sofia-sans-extra-condensed-latin-wght-normal', 'sofia-sans-latin-wght-normal' ) as $font ) {
+		foreach ( array( 'raleway-latin-wght-normal', 'raleway-latin-wght-italic' ) as $font ) {
 			printf(
 				'<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n",
 				esc_url( ITS_ROSSELLINI_URI . "/assets/fonts/{$font}.woff2" )
 			);
 		}
-		echo '<meta name="theme-color" content="#004590">' . "\n";
+		echo '<meta name="theme-color" content="#002c64">' . "\n";
 	},
 	1
 );
@@ -86,7 +86,7 @@ add_filter(
 	'body_class',
 	static function ( array $classes ): array {
 		if ( is_front_page() ) {
-			$classes[] = 'is-locandina';
+			$classes[] = 'has-hero';
 		}
 		return $classes;
 	}

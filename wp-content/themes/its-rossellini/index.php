@@ -37,7 +37,7 @@ get_template_part(
 ?>
 <div class="wrap page-body page-body--wide">
 	<?php if ( have_posts() ) : ?>
-		<div class="listing__items affissioni affissioni--archive">
+		<div class="rows">
 			<?php
 			while ( have_posts() ) :
 				the_post();

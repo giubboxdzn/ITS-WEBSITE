@@ -63,7 +63,7 @@ while ( have_posts() ) :
 				</div>
 			<?php endif; ?>
 			<div class="field field--actions">
-				<button class="button button--blue" type="submit"><?php esc_html_e( 'Filtra', 'its-rossellini' ); ?></button>
+				<button class="btn btn--blue" type="submit"><?php esc_html_e( 'Filtra', 'its-rossellini' ); ?></button>
 				<?php if ( $filtered ) : ?>
 					<a class="link-plain" href="<?php the_permalink(); ?>"><?php esc_html_e( 'Azzera filtri', 'its-rossellini' ); ?></a>
 				<?php endif; ?>

@@ -1,245 +1,243 @@
 ---
 name: ITS Academy Roberto Rossellini
-description: Cinema print paper (locandina and fotobuste) in two inks for a two-year audiovisual academy in Rome.
+description: The current Rossellini site, modernised — institutional blues and cyan, Raleway, real video and photography.
 colors:
   blu: "#004590"
   blu-notte: "#002c64"
-  giallo: "#ffc61a"
-  carta: "#ffffff"
-  ink-rosso: "#c0392b"
-  ink-verde: "#1d6b45"
-  ink-nero: "#1c1d21"
-  muted: "#3d5578"
-  muted-on-blue: "#c9d8ee"
-  rule: "#c5cfdd"
-  hover-paper: "#f1f5fa"
+  ciano: "#49b7e9"
+  elettrico: "#1032cf"
+  bianco: "#ffffff"
+  chiaro: "#f3f5f8"
+  inchiostro: "#141414"
+  nero: "#080b10"
+  muted: "#4a5466"
+  muted-on-dark: "#b9c6da"
+  bordo: "#dfe4ec"
 typography:
-  poster-title:
-    fontFamily: "Sofia Sans Extra Condensed, Arial Narrow, sans-serif"
-    fontSize: "clamp(4.25rem, 11.5vw, 10.5rem)"
-    fontWeight: 900
-    lineHeight: 0.82
-    letterSpacing: "-0.01em"
-  display:
-    fontFamily: "Sofia Sans Extra Condensed, Arial Narrow, sans-serif"
-    fontSize: "clamp(2.75rem, 6vw, 5.25rem)"
-    fontWeight: 850
-    lineHeight: 0.9
-    letterSpacing: "-0.005em"
-  page-title:
-    fontFamily: "Sofia Sans Extra Condensed, Arial Narrow, sans-serif"
-    fontSize: "clamp(3rem, 7vw, 6rem)"
+  hero:
+    fontFamily: "Raleway, Segoe UI, system-ui, sans-serif"
+    fontSize: "clamp(3.4rem, 9.5vw, 8.25rem)"
     fontWeight: 900
     lineHeight: 0.88
+    letterSpacing: "-0.04em"
+  headline:
+    fontFamily: "Raleway, Segoe UI, system-ui, sans-serif"
+    fontSize: "clamp(2.4rem, 5.2vw, 4.5rem)"
+    fontWeight: 900
+    lineHeight: 0.95
+    letterSpacing: "-0.035em"
+  headline-m:
+    fontFamily: "Raleway, Segoe UI, system-ui, sans-serif"
+    fontSize: "clamp(2rem, 3.6vw, 3rem)"
+    fontWeight: 900
+    lineHeight: 0.95
+    letterSpacing: "-0.035em"
+  page-title:
+    fontFamily: "Raleway, Segoe UI, system-ui, sans-serif"
+    fontSize: "clamp(2.6rem, 6vw, 5.25rem)"
+    fontWeight: 900
+    lineHeight: 0.95
+    letterSpacing: "-0.035em"
+  statement:
+    fontFamily: "Raleway, Segoe UI, system-ui, sans-serif"
+    fontSize: "clamp(1.6rem, 3vw, 2.5rem)"
+    fontWeight: 800
+    lineHeight: 1.08
+    letterSpacing: "-0.03em"
   card-title:
-    fontFamily: "Sofia Sans Extra Condensed, Arial Narrow, sans-serif"
-    fontSize: "clamp(1.75rem, 2.3vw, 2.25rem)"
-    fontWeight: 850
-    lineHeight: 0.92
-  billing:
-    fontFamily: "Sofia Sans Extra Condensed, Arial Narrow, sans-serif"
-    fontSize: "clamp(1.15rem, 1.8vw, 1.6rem)"
-    fontWeight: 650
-    letterSpacing: "0.02em"
+    fontFamily: "Raleway, Segoe UI, system-ui, sans-serif"
+    fontSize: "clamp(1.2rem, 1.5vw, 1.4rem)"
+    fontWeight: 800
+    lineHeight: 1.15
+    letterSpacing: "-0.02em"
+  row-title:
+    fontFamily: "Raleway, Segoe UI, system-ui, sans-serif"
+    fontSize: "clamp(1.15rem, 1.8vw, 1.5rem)"
+    fontWeight: 700
+    lineHeight: 1.22
+    letterSpacing: "-0.015em"
   body:
-    fontFamily: "Sofia Sans, Segoe UI, system-ui, sans-serif"
+    fontFamily: "Raleway, Segoe UI, system-ui, sans-serif"
     fontSize: "1.0625rem"
     fontWeight: 400
-    lineHeight: 1.55
+    lineHeight: 1.6
   lead:
-    fontFamily: "Sofia Sans, Segoe UI, system-ui, sans-serif"
+    fontFamily: "Raleway, Segoe UI, system-ui, sans-serif"
     fontSize: "clamp(1.125rem, 1.6vw, 1.375rem)"
     fontWeight: 400
     lineHeight: 1.45
   ui:
-    fontFamily: "Sofia Sans, Segoe UI, system-ui, sans-serif"
-    fontSize: "1rem"
-    fontWeight: 750
+    fontFamily: "Raleway, Segoe UI, system-ui, sans-serif"
+    fontSize: "0.9375rem"
+    fontWeight: 700
     lineHeight: 1.1
   small:
-    fontFamily: "Sofia Sans, Segoe UI, system-ui, sans-serif"
-    fontSize: "0.9375rem"
-    fontWeight: 650
-  caption:
-    fontFamily: "Sofia Sans, Segoe UI, system-ui, sans-serif"
+    fontFamily: "Raleway, Segoe UI, system-ui, sans-serif"
     fontSize: "0.875rem"
-    fontWeight: 650
-  label:
-    fontFamily: "Sofia Sans, Segoe UI, system-ui, sans-serif"
-    fontSize: "0.8125rem"
-    fontWeight: 750
-    letterSpacing: "0.06em"
+    fontWeight: 700
 rounded:
-  none: "0px"
+  s: "10px"
+  m: "14px"
+  pill: "999px"
 spacing:
   gutter: "clamp(1rem, 4vw, 3.5rem)"
-  section: "clamp(4rem, 8vw, 7rem)"
-  print-margin: "clamp(0.4rem, 0.8vw, 0.6rem)"
+  section: "clamp(4.5rem, 9vw, 8rem)"
+  header: "5rem"
   wrap: "1360px"
 components:
-  button-yellow:
-    backgroundColor: "{colors.giallo}"
+  button-cyan:
+    backgroundColor: "{colors.ciano}"
     textColor: "{colors.blu-notte}"
-    rounded: "{rounded.none}"
-    padding: "0.8rem 1.35rem"
+    typography: "{typography.ui}"
+    rounded: "{rounded.pill}"
+    padding: "0.75rem 1.5rem"
     height: "3rem"
-  button-yellow-hover:
-    backgroundColor: "{colors.carta}"
-    textColor: "{colors.blu-notte}"
+  button-cyan-hover:
+    backgroundColor: "{colors.bianco}"
   button-blue:
     backgroundColor: "{colors.blu}"
-    textColor: "{colors.carta}"
-    rounded: "{rounded.none}"
-    padding: "0.8rem 1.35rem"
+    textColor: "{colors.bianco}"
+    typography: "{typography.ui}"
+    rounded: "{rounded.pill}"
+    padding: "0.75rem 1.5rem"
     height: "3rem"
   button-blue-hover:
-    backgroundColor: "{colors.blu-notte}"
-  area-chip:
-    backgroundColor: "{colors.ink-rosso}"
-    textColor: "{colors.carta}"
-    typography: "{typography.label}"
-    rounded: "{rounded.none}"
-    padding: "0.35rem 0.55rem"
-  input:
-    backgroundColor: "{colors.carta}"
+    backgroundColor: "{colors.elettrico}"
+  card:
+    backgroundColor: "{colors.bianco}"
+    textColor: "{colors.inchiostro}"
+    rounded: "{rounded.m}"
+  filter-pill:
+    backgroundColor: "{colors.bianco}"
     textColor: "{colors.blu-notte}"
-    rounded: "{rounded.none}"
+    typography: "{typography.ui}"
+    rounded: "{rounded.pill}"
+    height: "2.75rem"
+  filter-pill-active:
+    backgroundColor: "{colors.blu-notte}"
+    textColor: "{colors.bianco}"
+  input:
+    backgroundColor: "{colors.bianco}"
+    textColor: "{colors.inchiostro}"
+    rounded: "{rounded.s}"
     height: "3rem"
-    padding: "0 0.9rem"
+    padding: "0 1rem"
 ---
 
 # Design System: ITS Academy Roberto Rossellini
 
 ## Overview
 
-**Creative North Star: "La carta del cinema"**
+**Creative North Star: "Lo stesso Rossellini, più adulto"**
 
-The site is printed matter from an Italian cinema lobby, not a screen pretending to be film equipment. The front page is a locandina: one huge condensed title, one photograph in a white margin, a billing block of facts at the foot. Each course is a fotobusta, the horizontal lobby card: photo printed in a single ink, white border, title band below. Dated things carry a programme stamp, the way a cinema marks what is coming, on today, or gone.
+The system keeps what makes the current itsrossellini.it recognisable and removes what makes it read as machine-made. Kept: the institutional blues with cyan, Raleway set heavy and uppercase with a second line in italic, the real hero video, real photography, rounded course cards, pill buttons, the news list with large titles, partner logos in tiles. Removed: monospace micro-labels, section counters, kickers, grid-line backgrounds, glows, outlined giant numbers, the "REC" camera frame, coloured stripes, the marquee, 9–10px text.
 
-Two inks do almost all the work: the institutional blue (binding brand asset) as the dominant field, chrome yellow as the second ink for titles, calls to action and highlights. White poster stock is the paper. A third ink only ever appears inside photographs, and it is fixed per technological area, so the colour of a photo tells you the area before you read it.
-
-Restraint lives in the materials, not in the energy: no shadows, no gradients, no glows, no rounded corners, no HUD labels. Commitment lives in scale: titles are set big and tight, photographs are large, sections alternate whole fields of blue, white and yellow.
+Modern here means restraint and confidence rather than effects: big real footage, big type, generous space, few colours used as whole fields, one accent. Motion is the video itself; the interface only settles the header and lifts cards on hover.
 
 **Key Characteristics:**
-- Two inks on white: blue field, yellow second ink, white paper.
-- Photographs in bicromia, one fixed ink per technological area.
-- Extra-condensed gothic in caps for every title; a regular-width sibling for reading.
-- Facts set as a poster billing block, never as stat tiles.
-- Printed rules (1–2px lines) instead of boxes, shadows or cards-in-cards.
-- Programme stamps computed from real dates.
+- Institutional palette only: blue, deep blue, cyan, electric blue (hover and focus), near-black, white, a cool light grey.
+- Raleway everywhere; headlines in 900 caps with an italic 500 second line.
+- Real footage and photographs in 14px rounded frames.
+- Pill buttons in sentence case; circular arrow buttons on list rows.
+- Fields of colour by section: video, light grey, white, deep blue, white, light grey, cyan, near-black.
 
 ## Colors
 
-The palette is a two-ink print run plus area inks reserved for photography.
-
 ### Primary
-- **Blu istituzionale** (`#004590`): the binding brand blue. Dominant field of the masthead, the locandina, interior page heads, the claim section and the events board. Also the default photo ink (Cinema & TV).
-- **Blu notte** (`#002c64`): body text on white, footer field, the course billing band, filled filter state.
+- **Blu notte** (`#002c64`): dark sections, masthead, page heads, filled active states, primary buttons on cyan.
+- **Blu** (`#004590`): links, secondary headline lines on light grounds, blue buttons, list bullets, date cells.
 
 ### Secondary
-- **Giallo cromo** (`#ffc61a`): the second ink. Poster titles on blue, primary buttons, emphasis inside claims, the yellow section fields, focus rings on blue grounds, text selection. Never used as text on white (contrast 1.6:1).
-
-### Tertiary
-- **Area inks**, used only for duotone photographs, the area chip printed on the photo and the swatch in the area filter: Cinema & TV `#004590`, Multimedia `#c0392b`, Audio `#1d6b45`, Tech `#1c1d21`. Each is a fixed mapping (filter `its_rossellini_area_inks`), never decoration.
+- **Ciano** (`#49b7e9`): the single accent. Primary buttons on dark grounds, the italic headline line on dark grounds, the final call band, list dots, focus rings on dark. Never text on white (2.3:1); on `#004590` only at large sizes.
+- **Elettrico** (`#1032cf`): hover for links and blue buttons, focus ring on light grounds. Never a surface.
 
 ### Neutral
-- **Carta** (`#ffffff`): the poster stock. Pure white, never cream.
-- **Muted** (`#3d5578`): secondary text on white (7.6:1).
-- **Muted on blue** (`#c9d8ee`): secondary text on blue fields (6.4:1 on blu, 9.4:1 on blu notte).
-- **Rule** (`#c5cfdd`): printed hairlines on white. On blue grounds rules are white at 32% opacity.
+- **Bianco** (`#ffffff`) and **Chiaro** (`#f3f5f8`, cool light grey) alternate as light grounds. The current site's warm paper `#f5f4ef` is replaced by the cool grey to sit with the blues.
+- **Inchiostro** (`#141414`): headlines and body on light grounds.
+- **Nero** (`#080b10`): footer only.
+- **Muted** (`#4a5466`, 7.6:1 on white) and **Muted on dark** (`#b9c6da`, 7.9:1 on deep blue) for secondary text.
+- **Bordo** (`#dfe4ec`): hairlines, card and tile borders. On dark grounds hairlines are white at 20%.
 
 ### Named Rules
-**The Two Inks Rule.** Page chrome uses only blue, yellow and white. A third colour on the page must come from a photograph's area ink.
+**The Institute Colours Only Rule.** No hue outside the palette: no yellow, green, red or category colours. Technological areas are told apart by name, not by colour.
 
-**The Yellow Is Not Text On Paper Rule.** Yellow is a field or text on blue, never text on white.
-
-**The Ink Means Area Rule.** An area ink appears only where it identifies an area (photo duotone, area chip, filter swatch). If it does not say "this is Audio", it is not used.
+**The One Accent Rule.** Cyan is the only accent. It is a fill or large text, never small text on light grounds.
 
 ## Typography
 
-**Display Font:** Sofia Sans Extra Condensed (variable, self-hosted, OFL), fallback Arial Narrow.
-**Body Font:** Sofia Sans (variable, self-hosted, OFL), fallback Segoe UI / system-ui.
-
-One superfamily set like a poster: titles in the extra-condensed cut, uppercase, heavy (850–900), tight leading (0.82–0.95); reading text in the regular width at 17px with 1.55 leading. No monospace anywhere.
+**Font:** Raleway (variable 100–900, normal and italic, self-hosted, OFL), with `font-variant-numeric: lining-nums` so figures sit on the baseline.
 
 ### Hierarchy
-- **Poster title** (900, clamp 4.25–10.5rem, 0.82): the front page title only. Printed in two plates (white under yellow) that settle into register on load.
-- **Page title** (900, clamp 3–6rem, 0.88): interior h1 on the blue head; titles over 26 characters drop to clamp 2.6–4.5rem.
-- **Display** (850, clamp 2.75–5.25rem, 0.9): section headings (h2).
-- **Card title** (850, clamp 1.75–2.25rem, 0.92): fotobusta titles; feature cards up to 3rem.
-- **Billing** (650, clamp 1.15–1.6rem, uppercase, +0.02em): fact lines, with the figure in yellow at 900.
-- **Body** (400, 1.0625rem, 1.55): reading text, measure 53ch (about 75 characters).
-- **Lead** (400, clamp 1.125–1.375rem, 1.45): one-sentence introductions under titles.
-- **UI** (750, 1rem, 1.1): button labels.
-- **Small** (650, 0.9375rem): filter tabs, meta lines, card links, breadcrumbs, footer base.
-- **Caption** (650, 0.875rem): field and table headers, fact labels.
-- **Label** (750, 0.8125rem, uppercase, +0.06em): the area chip only.
+- **Hero** (900, clamp 3.4–8.25rem, 0.88, −0.04em, caps): the home headline only; the italic phrase in cyan stays on one line.
+- **Headline** (900, clamp 2.4–4.5rem, 0.95, −0.035em, caps): section headings; the `<em>` second line is italic 500 on its own line, blue on light grounds, cyan on dark, deep blue on cyan.
+- **Headline M** (900, clamp 2–3rem): secondary section headings.
+- **Page title** (900, clamp 2.6–5.25rem, caps): interior h1; titles longer than 26 characters switch to 800-ish sentence case at clamp 2.1–3.6rem.
+- **Statement** (800, clamp 1.6–2.5rem, −0.03em): the big sentence in the path steps; the 87% claim uses 700 with the figure in 900 cyan.
+- **Card title** (800, clamp 1.2–1.4rem) and **Row title** (700, clamp 1.15–1.5rem).
+- **Body** (400, 1.0625rem, 1.6), measure 50ch; **Lead** (400, clamp 1.125–1.375rem, 1.45).
+- **UI** (700, 0.9375rem): buttons, filters, nav (600), meta lines.
+- **Small** (700, 0.875rem): area labels, table headers, badges (0.8125rem).
 
 ### Named Rules
-**The No Kicker Rule.** Nothing sits above a heading. Area chips and meta lines go after the title, or are printed onto the photo.
+**The Two-Voice Headline Rule.** A section headline is heavy caps, optionally followed by one italic line in the accent colour. Never a third voice, never a label above it.
 
-**The Caps Are For Titles Rule.** Uppercase is reserved for condensed titles, billing figures and the area chip. Running text and long credit lines stay in sentence case.
+**The Tracking Floor Rule.** Letter-spacing never tighter than −0.04em, whatever the current site does.
 
 ## Layout
 
-- Container: `min(100% - 2 × gutter, 1360px)`, gutter `clamp(1rem, 4vw, 3.5rem)`.
-- Sections alternate whole fields: blue → white → yellow → blue → white → yellow → blue notte footer. Vertical rhythm `clamp(4rem, 8vw, 7rem)`.
-- The course wall is a 12-column lobby: the first two visible courses span 6 columns (16:10 photos), the rest span 4 (4:3). 6 columns under 1100px, one column under 640px.
-- Interior pages: blue head with breadcrumb, title, lead and optional portrait photo (4:5) in a white print margin; body below in a 53ch measure, or split 17rem facts / content for events and documents.
-- Breakpoints: 1100px (wall to two columns, footer to two columns), 1080px (navigation collapses behind the Menu button), 900px (all split grids stack), 760px (document table to stacked rows), 640px (single column).
+- Container `min(100% - 2 × gutter, 1360px)`, gutter `clamp(1rem, 4vw, 3.5rem)`, section rhythm `clamp(4.5rem, 9vw, 8rem)`.
+- Home sequence: video hero → courses on light grey → academy split on white → outcome and path on deep blue → news on white → partners on light grey → final call on cyan → footer on near-black.
+- Course grid: 4 columns, 2 under 1100px, 1 under 640px. Split sections stack under 900px.
+- Sticky masthead, 5rem tall; on the home page it is transparent over the video and turns deep blue after 24px of scroll.
+- Breakpoints: 1100px, 1080px (navigation behind the Menu button), 900px, 760px (document table to rows), 640px.
 
 ## Elevation & Depth
 
-Flat by rule. Depth comes from print: the white margin around photos, overlapping plates in the poster title, and the stacking of fields. There are no shadows in the system.
-
-### Named Rules
-**The Print Has No Shadow Rule.** No box-shadow, no glow, no blur, no glass. Hover changes ink (border to blue notte, duotone lifting to full colour), never elevation.
+Mostly flat. One shadow exists: the card hover lift `0 18px 40px -22px rgb(0 44 100 / 0.45)` with a 4px rise. The hero uses a deep-blue legibility scrim over the video; no other gradients, no glows, no glass.
 
 ## Shapes
 
-Square everything: radius 0 on buttons, inputs, chips, cards and photos. Lines are printed rules: 1px hairlines for separation, 1.5–2px blue notte rules to start a list or a group. The only rotated element is the programme stamp (−3°).
+- Photographs, video poster frames, cards, facts panels, filter bar: 14px radius.
+- Inputs and partner tiles: 10px.
+- Buttons, filter pills, badges, search field: full pill.
+- Arrow buttons on list rows and the video control: circles.
+- Rules: 1px hairlines; 1.5px ink rule to open a list.
 
 ## Components
 
 ### Buttons
-Rectangular, 3rem tall, 700–750 weight. **Yellow** is the primary action on blue (hover: white). **Blue** is the primary action on white (hover: blue notte). **Line** is the secondary action (2px current-colour border; hover fills white with blue notte text). `:active` nudges down 1px. Labels name the action: "Prenota un incontro", "Preiscriviti a questo corso".
+Pills, 3rem tall, Raleway 700 at 0.9375rem, sentence case. **Cyan** (deep-blue text) is the primary action on dark grounds and the video; hover goes white. **Blue** on light grounds; hover electric. **Navy** on the cyan band. **Ghost** (white outline) and **Outline** (deep-blue outline) for secondary actions; hover fills. Labels name the action.
 
-### Chips
-The **area chip** is printed onto the top-left corner of a fotobusta photo in the area ink, white label text. On the course page head it inverts: white chip, area-ink text.
+### Chips and badges
+Filter pills: white with a hairline border, deep-blue fill when active. Status badges on events: cyan "In programma", blue "Oggi", grey "Concluso". The course area on the page head is a cyan-outlined pill with white text.
 
-### Cards / Containers
-The **fotobusta** is the only card. White paper, 1px rule border, print margin around the photo, title band below (title, area, one-line teaser, "Scheda del corso" with arrow). Photos are duotone at rest (grayscale image with the area ink screen-blended on top) and lift to full colour on hover and focus. A course without a photo prints its area name as type on an ink field.
+### Cards
+Course card: white, 1px border, 14px radius, 4:3 photo, title, area in blue below the title, one-line teaser, "Scopri il corso" link with arrow. Hover: lift, soft shadow, photo zoom 1.04, title turns blue. The whole card is one link.
+
+### Rows
+News and event rows: date cell (day 900 in blue, month and year), title 700, meta line, circular arrow on the right; the whole row is the link, hover tints the row and fills the arrow blue.
 
 ### Inputs / Fields
-White field, 2px border, square, 3rem tall, blue notte text, blue caret. Labels sit above in 700 weight. On the blue filter bar the border is white; on paper it is blue notte. Placeholders show an example and end with "…".
+White, 1.5px light border, 10px radius, 3rem tall, blue caret; labels above in 700. The document filter sits in a deep-blue rounded bar with a cyan "Filtra" button.
 
 ### Navigation
-Blue masthead, white logo, links at 650 weight with a 2px yellow underline for hover and current page; "Preiscriviti" as a small yellow button. Under 1080px a "Menu" button opens a full-width blue panel listing the links in condensed caps, closed with Escape. Without JavaScript the links stay visible and wrap.
+Logo left; links at 600 with a 2px cyan underline for hover and current page; cyan "Preiscriviti" pill. Under 1080px a pill "Menu" button opens a deep-blue panel with large 800 links; Escape closes it. Without JavaScript the links stay visible.
 
-### Billing Block
-The poster's credits: one centred line of facts in condensed caps with each figure in yellow (2 anni · 1.000 ore in aula e laboratorio · 800+ ore di stage · 28 posti), then a sentence-case credit line with the address and the funding bodies. Course pages use the same line left-aligned beside the actions.
-
-### Programme Stamp
-A small outlined label in condensed caps, rotated −3°, computed from a real date: "Prossimamente" (red on paper, yellow on blue), "Oggi" / "Ultimi giorni" (yellow fill), "Concluso" / "Chiuso" (muted). Never shown for undated items.
-
-### Date Slot
-Every dated item puts its date in the same fixed cell on the left: day in 900 weight, month abbreviation, year. News and events share it.
+### Hero video
+Muted, looping, `playsinline`, no autoplay attribute: the script starts it only when reduced motion and data saving are off. A circular pause/play button is always available; the front page's featured image is the poster.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** print photographs in the area's ink and keep the white margin around them.
-- **Do** set every title in the extra-condensed cut, uppercase, tight.
-- **Do** set facts as a billing line with the figure in yellow.
-- **Do** compute stamps from real dates and hide them when there is no date.
-- **Do** keep content visible without JavaScript; motion only settles what is already there.
-- **Do** keep reading text at a 53ch measure.
+- **Do** keep the current site's voice: heavy caps headline with an italic second line.
+- **Do** use only the institutional palette, with cyan as the single accent.
+- **Do** show real footage and real photographs, rounded at 14px.
+- **Do** keep every action a pill with a verb.
+- **Do** keep content visible without JavaScript and without scrolling animations.
 
 ### Don't:
-- **Don't** put a kicker, eyebrow or section number above a heading.
-- **Don't** use shadows, glows, gradients, glass or rounded corners.
-- **Don't** bring back the HUD costume: timecodes, REC dots, crosshairs, coordinates, mono labels.
-- **Don't** use yellow as text on white.
-- **Don't** show facts as stat tiles (small label over a big number).
-- **Don't** hide content behind scroll-triggered reveals.
+- **Don't** add yellow, green, red or per-area colours.
+- **Don't** bring back monospace micro-labels, "01 / 05" counters, kickers, grid backgrounds, glows, outlined numbers, camera frames, coloured card stripes or the marquee.
+- **Don't** set text below 13px.
+- **Don't** put cyan text on white.
 - **Don't** invent figures, testimonials or partners; published figures live in the Customizer.

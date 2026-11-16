@@ -22,6 +22,7 @@ function its_icon( string $name, string $class = '' ): string {
 		'phone'    => '<path d="M6.5 3.5h3l1.5 4-2 1.5a11 11 0 0 0 6 6l1.5-2 4 1.5v3a2 2 0 0 1-2 2A16.5 16.5 0 0 1 4.5 5.5a2 2 0 0 1 2-2Z"/>',
 		'mail'     => '<rect x="3.5" y="5.5" width="17" height="13"/><path d="m4 6.5 8 6 8-6"/>',
 		'play'     => '<path d="M8 5.5v13l10-6.5Z"/>',
+		'pause'    => '<path d="M8.5 5.5v13M15.5 5.5v13"/>',
 	);
 	if ( ! isset( $paths[ $name ] ) ) {
 		return '';

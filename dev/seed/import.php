@@ -289,10 +289,15 @@ wp_update_post(
 		'post_content' => "<!-- wp:html -->\n<ul class=\"partner-logos\">\n{$partners}</ul>\n<!-- /wp:html -->",
 	)
 );
-// Hero photo for the front page: the producer course's set photo (a real studio).
-$producer = get_posts( array( 'post_type' => 'corso', 'name' => 'cinema-e-tv-producer', 'fields' => 'ids' ) );
+// Front page image (video poster): the editing-room photo the live site uses as its video poster.
+$producer = get_posts( array( 'post_type' => 'corso', 'name' => 'editor-post-production-specialist', 'fields' => 'ids' ) );
 if ( $producer && has_post_thumbnail( $producer[0] ) ) {
 	set_post_thumbnail( $home_id, get_post_thumbnail_id( $producer[0] ) );
+}
+// Hero video (the live site's own footage), muted, with the front page image as poster.
+$video_id = its_seed_image( 0, is_file( $seed_dir . '/media/hero.mp4' ) ? 'hero.mp4' : null, '', $seed_dir );
+if ( $video_id ) {
+	set_theme_mod( 'its_hero_video', $video_id );
 }
 update_option( 'show_on_front', 'page' );
 update_option( 'page_on_front', $home_id );

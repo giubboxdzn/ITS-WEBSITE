@@ -47,7 +47,7 @@ while ( have_posts() ) :
 		<div class="prose">
 			<?php the_content(); ?>
 			<p class="prose__actions">
-				<a class="button button--blue" href="<?php echo esc_url( its_page_url( 'incontriamoci', its_page_url( 'contatti' ) ) ); ?>"><?php esc_html_e( 'Prenota un incontro', 'its-rossellini' ); ?></a>
+				<a class="btn btn--blue" href="<?php echo esc_url( its_page_url( 'incontriamoci', its_page_url( 'contatti' ) ) ); ?>"><?php esc_html_e( 'Prenota un incontro', 'its-rossellini' ); ?></a>
 				<a class="link-arrow" href="<?php echo esc_url( its_page_url( 'eventi' ) ); ?>"><?php esc_html_e( 'Tutti gli eventi', 'its-rossellini' ); ?><?php echo its_icon( 'arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 			</p>
 		</div>
