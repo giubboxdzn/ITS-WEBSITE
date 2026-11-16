@@ -120,7 +120,7 @@
 				'.area-filter', '.doc-filter', '.doc-table', '.article__photo', '.article__nav',
 				'.colophon__grid > *', '.colophon__funding', '.colophon__base',
 			].join(', '),
-			wipe: '.colophon__mark',
+			draw: '.colophon__mark',
 		};
 		const FIRST_VIEW = '.hero, .page-head';
 		const STEP = 80;
@@ -170,6 +170,80 @@
 			el.style.removeProperty('--d');
 		};
 
+		/* The footer logo: its single compound path becomes one path per shape, each drawn 0 → 100%. */
+		const prepareDraw = (mark) => {
+			const source = mark.querySelector('path');
+			if (!source || mark.dataset.drawn) return;
+			mark.dataset.drawn = '1';
+			const tokens = source.getAttribute('d').match(/[a-z]|[+-]?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?/gi) || [];
+			const ARGS = { m: 2, l: 2, t: 2, h: 1, v: 1, c: 6, s: 4, q: 4, a: 7, z: 0 };
+			const parts = [];
+			let cur = '';
+			let cmd = '';
+			let x = 0;
+			let y = 0;
+			let sx = 0;
+			let sy = 0;
+			let i = 0;
+			while (i < tokens.length) {
+				if (/[a-z]/i.test(tokens[i])) cmd = tokens[i++];
+				const lower = cmd.toLowerCase();
+				const rel = cmd === lower;
+				const n = ARGS[lower];
+				if (n === undefined) break;
+				if (lower === 'z') {
+					parts.push(`${cur}Z`);
+					cur = '';
+					x = sx;
+					y = sy;
+					if (i < tokens.length && !/[a-z]/i.test(tokens[i])) break;
+					continue;
+				}
+				const a = tokens.slice(i, i + n).map(Number);
+				i += n;
+				if (a.length < n) break;
+				if (lower === 'm') {
+					if (cur) parts.push(cur);
+					x = sx = rel ? x + a[0] : a[0];
+					y = sy = rel ? y + a[1] : a[1];
+					cur = `M${x},${y}`;
+					cmd = rel ? 'l' : 'L';
+					continue;
+				}
+				if (!cur) cur = `M${x},${y}`;
+				cur += cmd + a.join(',');
+				if (lower === 'h') x = rel ? x + a[0] : a[0];
+				else if (lower === 'v') y = rel ? y + a[0] : a[0];
+				else {
+					x = rel ? x + a[n - 2] : a[n - 2];
+					y = rel ? y + a[n - 1] : a[n - 1];
+				}
+			}
+			if (cur) parts.push(cur);
+			if (parts.length < 2) return;
+			const paths = parts.map((d) => {
+				const path = source.cloneNode(false);
+				path.removeAttribute('id');
+				path.setAttribute('d', d);
+				path.setAttribute('pathLength', '1');
+				return path;
+			});
+			source.replaceWith(...paths);
+			/* Dashes need user units, so the 1px hairline is set in them too (no non-scaling stroke). */
+			const svg = mark.querySelector('svg');
+			const viewWidth = svg?.viewBox.baseVal.width || 0;
+			if (svg && viewWidth) {
+				const hairline = () => mark.style.setProperty('--hairline', String(viewWidth / Math.max(1, svg.getBoundingClientRect().width)));
+				hairline();
+				window.addEventListener('resize', hairline, { passive: true });
+			}
+			/* Left to right: the mark first, then the wordmark. */
+			paths
+				.map((path) => ({ path, left: path.getBBox().x }))
+				.sort((a, b) => a.left - b.left)
+				.forEach(({ path }, rank) => path.style.setProperty('--i', String(rank)));
+		};
+
 		const reveal = (els) => {
 			els.sort((a, b) => {
 				const ra = a.getBoundingClientRect();
@@ -179,9 +253,10 @@
 			els.forEach((el, i) => {
 				const delay = Math.min(i, 8) * STEP;
 				const words = el.dataset.reveal === 'words' ? el.querySelectorAll('.word').length : 0;
+				const strokes = el.dataset.reveal === 'draw' ? el.querySelectorAll('path').length : 0;
 				el.style.setProperty('--d', `${delay}ms`);
 				el.classList.add('is-in');
-				window.setTimeout(() => finish(el), delay + 1900 + words * 55);
+				window.setTimeout(() => finish(el), delay + 1900 + words * 55 + strokes * 40 + (strokes ? 1200 : 0));
 			});
 		};
 
@@ -189,6 +264,7 @@
 		const release = (els) => {
 			els.forEach((el) => {
 				revealer.unobserve(el);
+				drawWatch.unobserve(el);
 				pending.delete(el);
 			});
 			if (els.length) reveal(els);
@@ -196,9 +272,19 @@
 		const revealer = new IntersectionObserver((entries) => {
 			release(entries.filter((entry) => entry.isIntersecting).map((entry) => entry.target));
 		}, { rootMargin: '0px 0px -8% 0px' });
+		/* The footer logo waits until it is well in view: the end of the page. */
+		const drawWatch = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if (!entry.isIntersecting) return;
+				drawWatch.unobserve(entry.target);
+				pending.delete(entry.target);
+				reveal([entry.target]);
+			});
+		}, { threshold: 0.6 });
 		const watch = (el) => {
 			pending.add(el);
-			revealer.observe(el);
+			if (el.dataset.reveal === 'draw') drawWatch.observe(el);
+			else revealer.observe(el);
 		};
 
 		/* Figures count up from zero; the final value stays in the page for assistive tech. */
@@ -287,6 +373,7 @@
 		const enable = (initial) => {
 			root.classList.add('anim');
 			document.querySelectorAll(TARGETS.words).forEach(split);
+			document.querySelectorAll(TARGETS.draw).forEach(prepareDraw);
 			Object.entries(TARGETS).forEach(([type, selector]) => {
 				document.querySelectorAll(selector).forEach((el) => {
 					if (type !== 'words' && el.closest(FIRST_VIEW)) return;
@@ -318,6 +405,7 @@
 			pending.clear();
 			document.querySelectorAll('[data-reveal]').forEach((el) => {
 				revealer.unobserve(el);
+				drawWatch.unobserve(el);
 				el.classList.add('is-in');
 				finish(el);
 			});
