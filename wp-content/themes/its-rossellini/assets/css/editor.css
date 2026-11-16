@@ -1,0 +1,35 @@
+/* Editor: same type and inks as the front end, so editors see what ships. */
+@font-face {
+	font-family: "Sofia Sans Extra Condensed";
+	font-weight: 1 1000;
+	src: url("../fonts/sofia-sans-extra-condensed-latin-wght-normal.woff2") format("woff2-variations");
+}
+@font-face {
+	font-family: "Sofia Sans";
+	font-weight: 1 1000;
+	src: url("../fonts/sofia-sans-latin-wght-normal.woff2") format("woff2-variations");
+}
+
+body {
+	color: #002c64;
+	font-family: "Sofia Sans", system-ui, sans-serif;
+	font-size: 1.0625rem;
+	line-height: 1.55;
+}
+
+h1,
+h2 {
+	font-family: "Sofia Sans Extra Condensed", "Arial Narrow", sans-serif;
+	font-weight: 850;
+	line-height: 1;
+	text-transform: uppercase;
+}
+
+a {
+	color: #004590;
+}
+
+.is-style-lead {
+	font-size: 1.35rem;
+	line-height: 1.45;
+}

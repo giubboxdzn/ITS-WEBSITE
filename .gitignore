@@ -21,3 +21,6 @@
 **/.impeccable/live/cache/
 **/.impeccable/live/manual-edit-apply-transaction.json
 # impeccable-ignore-end
+
+# Local WordPress for theme development (dev/setup.sh): core, SQLite DB, seed content
+.wp/
