@@ -30,6 +30,22 @@ dev/setup.sh      # scarica WordPress 7.1.4 + SQLite, attiva il tema, importa i 
 dev/serve.sh      # http://localhost:8080  (admin / admin)
 ```
 
+Il server ascolta solo su questa macchina (`127.0.0.1`); `HOST=0.0.0.0 dev/serve.sh` per esporlo in rete, `PORT=8090` per cambiare porta.
+
+### Windows (Git Bash)
+
+1. **PHP**: da [windows.php.net/download](https://windows.php.net/download/) lo zip *VS17 x64 Non Thread Safe* (PHP 8.3 o 8.4), estratto in `C:\php`; aggiungere `C:\php` al PATH di Windows. Se manca `VCRUNTIME140.dll`, installare il Visual C++ Redistributable x64.
+2. **php.ini** con le estensioni necessarie, da Git Bash:
+   ```bash
+   cd /c/php && cp php.ini-development php.ini
+   sed -i -E 's|^;extension_dir = "ext"|extension_dir = "C:/php/ext"|; s/^;(extension=(curl|fileinfo|gd|mbstring|openssl|pdo_sqlite|sqlite3))\s*$/\1/' php.ini
+   php -m | grep -iE 'pdo_sqlite|mbstring|gd'
+   ```
+3. **Python 3** da python.org, con l'opzione *Add python.exe to PATH*.
+4. Riaprire Git Bash, poi `dev/setup.sh` e `dev/serve.sh` dalla cartella del repo.
+
+Su Windows il tema è collegato con una *junction* (non servono permessi di amministratore). Per ripartire da un database vuoto basta cancellare `.wp/db/` e rilanciare `dev/setup.sh`.
+
 `dev/seed/fetch.py` legge (solo GET) l'API REST e le pagine pubbliche di itsrossellini.it e salva tutto in `.wp/seed/` (ignorato da git). `dev/seed/import.php` lo importa nel database locale. Non scrive nulla sul sito live.
 
 `dev/mu-plugins/its-dev-content-model.php` registra in locale gli stessi tipi di contenuto di Rossellini Core (`corso`, `evento`, `edizione_corso`, `documento` e relative tassonomie). In produzione non serve: li registra già il plugin.
