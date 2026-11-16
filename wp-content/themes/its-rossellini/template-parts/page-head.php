@@ -2,8 +2,8 @@
 /**
  * Interior page head on deep blue.
  *
- * Args: 'title' (string), 'lead' (string), 'image_id' (int), 'aside' (html string),
- *       'float' (html) a card floating over the photo.
+ * Args: 'title' (string), 'title_html' (escaped html, e.g. with the emphasised phrase), 'lead' (string),
+ *       'image_id' (int), 'aside' (html string), 'float' (html) a card floating over the photo.
  *
  * @package its-rossellini
  */
@@ -20,7 +20,7 @@ $classes  = 'page-head' . ( $image_id ? ' page-head--photo' : '' );
 	<div class="wrap page-head__grid">
 		<div class="page-head__text">
 			<?php its_breadcrumbs(); ?>
-			<h1 class="page-head__title<?php echo $long ? ' page-head__title--long' : ''; ?>"><?php echo esc_html( $title ); ?></h1>
+			<h1 class="page-head__title<?php echo $long ? ' page-head__title--long' : ''; ?>"><?php echo isset( $args['title_html'] ) ? $args['title_html'] : esc_html( $title ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h1>
 			<?php if ( $lead ) : ?>
 				<p class="page-head__lead"><?php echo esc_html( $lead ); ?></p>
 			<?php endif; ?>

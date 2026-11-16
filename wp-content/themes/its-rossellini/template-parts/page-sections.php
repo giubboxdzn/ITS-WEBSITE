@@ -11,6 +11,7 @@
 defined( 'ABSPATH' ) || exit;
 
 $sections = $args['sections'] ?? array();
+$light    = 'light' === ( $args['theme'] ?? '' );
 
 // Surfaces: card grids go on a light panel, never two panels in a row; course cards always do.
 $surfaces = array();
@@ -25,21 +26,25 @@ foreach ( $sections as $n => $section ) {
 	}
 	$surfaces[ $n ] = $wants;
 }
-// What follows the sections (the news panel) is a panel too: the last section stays on the dark.
-$last = count( $sections ) - 1;
-if ( 'panel' === ( $args['next'] ?? '' ) && $last >= 0 && 'panel' === $surfaces[ $last ] && 'courses' !== $sections[ $last ]['kind'] ) {
-	$surfaces[ $last ] = 'dark';
+// On a white page: text on the white, card grids on a pale panel, never two panels in a row.
+if ( $light ) {
+	foreach ( $sections as $n => $section ) {
+		$surfaces[ $n ] = 'text' !== $section['kind'] && 'tint' !== ( $surfaces[ $n - 1 ] ?? '' ) ? 'tint' : 'plain';
+	}
 }
 
 foreach ( $sections as $n => $section ) :
 	$surface = $surfaces[ $n ];
-	$panel   = 'panel' === $surface;
+	$panel   = in_array( $surface, array( 'panel', 'tint' ), true );
 	$id      = $section['id'] ?: 'sezione-' . ( $n + 1 );
 	$body    = $section['body'];
 	$title   = $section['title'];
 	$heading = $title ? $id . '-title' : '';
 	$split   = (bool) $body;
 	$classes = array( $panel ? 'panel' : 'section', 'psec', 'psec--' . $section['kind'], 'psec--' . $surface );
+	if ( $light ) {
+		$classes[] = 'psec--light';
+	}
 	?>
 	<section class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>" id="<?php echo esc_attr( $id ); ?>"<?php echo $heading ? ' aria-labelledby="' . esc_attr( $heading ) . '"' : ''; ?>>
 		<div class="wrap">
@@ -50,7 +55,7 @@ foreach ( $sections as $n => $section ) :
 							<?php if ( $section['eyebrow'] ) : ?>
 								<p class="eyebrow"><?php echo esc_html( $section['eyebrow'] ); ?></p>
 							<?php endif; ?>
-							<h2 id="<?php echo esc_attr( $heading ); ?>" class="display display--m<?php echo $panel ? ' display--dark' : ''; ?>"><?php echo its_display_text( $title ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h2>
+							<h2 id="<?php echo esc_attr( $heading ); ?>" class="display display--m<?php echo $panel || $light ? ' display--dark' : ''; ?>"><?php echo its_display_text( $title ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h2>
 						</div>
 					<?php endif; ?>
 					<?php if ( $body ) : ?>

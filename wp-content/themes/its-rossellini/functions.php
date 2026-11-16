@@ -87,7 +87,7 @@ add_filter( 'emoji_svg_url', '__return_false' );
 add_filter(
 	'body_class',
 	static function ( array $classes ): array {
-		if ( is_front_page() || ( is_page() && its_has_sections() ) ) {
+		if ( is_front_page() ) {
 			$classes[] = 'has-hero';
 		}
 		return $classes;
