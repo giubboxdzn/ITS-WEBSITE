@@ -157,7 +157,126 @@ def faq_items(page_html):
     return items
 
 
-def run(out, courses_only=False, faq_only=False):
+def it_slug(page_html):
+    """Slug of the Italian translation, from the hreflang alternates Polylang prints ('home' for the front page)."""
+    m = re.search(r'<link rel="alternate" href="([^"]+)" hreflang="it"', page_html)
+    if not m:
+        return ""
+    path = urllib.parse.urlparse(m.group(1)).path.strip("/")
+    return path.rsplit("/", 1)[-1] if path else "home"
+
+
+def run_en(out, tx, media_dir, cache):
+    """English half of the live site, each item linked to its Italian translation (it_slug)."""
+    def en(item):
+        return "/en/" in item.get("link", "")
+
+    home = get(BASE + "/en/")
+    home_lines = text_lines(main_html(home))
+    stops = {"Skills", "Your professional future", "Programme", "Tools and technologies", "Related courses", "Course teachers", "Teachers", "Talk to us"}
+    courses = []
+    for c in filter(en, rest("corso")):
+        title = html.unescape(c["title"]["rendered"])
+        page_html = get(c["link"])
+        lines = text_lines(main_html(page_html))
+        idx = [i for i, x in enumerate(lines) if x == title]
+        intro = lines[idx[-1] + 1] if idx and idx[-1] + 1 < len(lines) else ""
+        teaser = ""
+        if title in home_lines:
+            j = home_lines.index(title)
+            teaser = home_lines[j + 1] if j + 1 < len(home_lines) else ""
+        img = media_url(c.get("featured_media"), cache)
+        courses.append({
+            "title": title, "slug": c["slug"], "menu_order": c.get("menu_order", 0), "it_slug": it_slug(page_html),
+            "area": [tx["area_tecnologica"][t]["name"] for t in c.get("area_tecnologica", []) if t in tx["area_tecnologica"]],
+            "excerpt": teaser, "intro": intro,
+            "competenze": section(lines, "Skills", stops),
+            "professioni": section(lines, "Your professional future", stops),
+            "programma": section(lines, "Programme", stops),
+            "strumenti": section(lines, "Tools and technologies", stops),
+            "image": download(img and img["url"], media_dir), "image_alt": img and img["alt"],
+        })
+
+    posts = []
+    for p in filter(en, rest("posts")):
+        img = media_url(p.get("featured_media"), cache) if len(posts) < 24 else None
+        try:
+            slug_it = it_slug(get(p["link"]))
+        except Exception:
+            slug_it = ""
+        posts.append({
+            "title": html.unescape(p["title"]["rendered"]), "slug": p["slug"], "date": p["date"], "it_slug": slug_it,
+            "content": p["content"]["rendered"], "excerpt": re.sub(r"<[^>]+>", "", p["excerpt"]["rendered"]).strip(),
+            "categories": [tx["categories"][t]["name"] for t in p.get("categories", []) if t in tx["categories"]],
+            "image": download(img and img["url"], media_dir), "image_alt": img and img["alt"],
+        })
+
+    events = []
+    for e in filter(en, rest("evento")):
+        page_html = get(e["link"])
+        lines = text_lines(main_html(page_html))
+        def after(label):
+            return lines[lines.index(label) + 1] if label in lines and lines.index(label) + 1 < len(lines) else ""
+        title = html.unescape(e["title"]["rendered"])
+        idx = [i for i, x in enumerate(lines) if x == title]
+        img = media_url(e.get("featured_media"), cache)
+        events.append({
+            "title": title, "slug": e["slug"], "date": e["date"], "it_slug": it_slug(page_html),
+            "description": lines[idx[-1] + 1] if idx and idx[-1] + 1 < len(lines) else "",
+            "data_text": after("Date"), "orario": after("Time"), "modalita": after("Format"), "luogo": after("Location"),
+            "tipo_evento": [tx["tipo_evento"][t]["name"] for t in e.get("tipo_evento", []) if t in tx["tipo_evento"]],
+            "image": download(img and img["url"], media_dir), "image_alt": img and img["alt"],
+        })
+
+    docs = []
+    for d in filter(en, rest("documento")):
+        doc = {
+            "title": html.unescape(d["title"]["rendered"]), "slug": d["slug"], "date": d["date"],
+            "tipo": [tx["tipo"][t]["name"] for t in d.get("tipo", []) if t in tx["tipo"]],
+            "biennio": [tx["biennio"][t]["name"] for t in d.get("biennio", []) if t in tx["biennio"]],
+        }
+        try:
+            page_html = get(d["link"])
+            m = re.search(r'href="([^"]+\.(?:pdf|docx?|xlsx?|zip))"', page_html)
+            doc["file_url"] = m.group(1) if m else ""
+            doc["it_slug"] = it_slug(page_html)
+        except Exception:
+            pass
+        docs.append(doc)
+
+    editions = [{
+        "title": html.unescape(ed["title"]["rendered"]), "slug": ed["slug"], "date": ed["date"],
+        "famiglia": [tx["famiglia"][t]["name"] for t in ed.get("famiglia", []) if t in tx["famiglia"]],
+        "biennio": [tx["biennio"][t]["name"] for t in ed.get("biennio", []) if t in tx["biennio"]],
+    } for ed in filter(en, rest("edizione_corso"))]
+
+    pages = []
+    all_pages = {p["id"]: p for p in rest("pages")}
+    for p in all_pages.values():
+        if not en(p):
+            continue
+        try:
+            page_html = get(p["link"])
+        except Exception:
+            continue
+        content = p["content"]["rendered"]
+        if len(content.strip()) < 40:
+            content = to_blocks(main_html(page_html))
+        parent = all_pages.get(p["parent"])
+        pages.append({
+            "title": html.unescape(p["title"]["rendered"]), "slug": p["slug"], "it_slug": it_slug(page_html),
+            "parent_slug": parent["slug"] if parent else "", "menu_order": p.get("menu_order", 0),
+            "content": content, "link": p["link"],
+            "front": urllib.parse.urlparse(p["link"]).path.rstrip("/") == "/en",
+        })
+
+    return {
+        "courses": courses, "posts": posts, "events": events, "documents": docs, "editions": editions,
+        "pages": pages, "faq": faq_items(get(BASE + "/en/faq/")),
+    }
+
+
+def run(out, courses_only=False, faq_only=False, en_only=False):
     media_dir = os.path.join(out, "media")
     os.makedirs(media_dir, exist_ok=True)
     cache = {}
@@ -166,9 +285,17 @@ def run(out, courses_only=False, faq_only=False):
         data["taxonomies"][tax] = terms(tax)
     tx = data["taxonomies"]
     data_path = os.path.join(out, "data.json")
-    if (courses_only or faq_only) and os.path.exists(data_path):
+    if (courses_only or faq_only or en_only) and os.path.exists(data_path):
         with open(data_path, encoding="utf-8") as f:
             previous = json.load(f)
+    if en_only and os.path.exists(data_path):
+        with open(data_path, encoding="utf-8") as f:
+            previous = json.load(f)
+        previous["en"] = run_en(out, tx, media_dir, cache)
+        with open(data_path, "w", encoding="utf-8") as f:
+            json.dump(previous, f, ensure_ascii=False, indent=1)
+        print("en: " + " ".join(f"{k}={len(v)}" for k, v in previous["en"].items()))
+        return
     if faq_only and os.path.exists(data_path):
         previous["faq"] = faq_items(get(BASE + "/faq/"))
         with open(data_path, "w", encoding="utf-8") as f:
@@ -301,6 +428,7 @@ def run(out, courses_only=False, faq_only=False):
     for m in re.finditer(r'<li class="ros-logo-item[^"]*">(?:<a href="([^"]+)">)?<img[^>]+src="([^"]+)"[^>]*alt="([^"]*)"', home):
         partners.append({"url": m.group(1) or "", "image": download(m.group(2), media_dir), "name": html.unescape(m.group(3))})
     data["partners"] = partners
+    data["en"] = run_en(out, tx, media_dir, cache)
 
     with open(os.path.join(out, "data.json"), "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=1)
@@ -313,5 +441,6 @@ if __name__ == "__main__":
     ap.add_argument("--out", default=os.path.join(os.path.dirname(__file__), "..", "..", ".wp", "seed"))
     ap.add_argument("--courses-only", action="store_true", help="refresh only the courses in an existing data.json")
     ap.add_argument("--faq-only", action="store_true", help="refresh only the FAQ in an existing data.json")
+    ap.add_argument("--en-only", action="store_true", help="add or refresh only the English content in an existing data.json")
     args = ap.parse_args()
-    run(os.path.abspath(args.out), courses_only=args.courses_only, faq_only=args.faq_only)
+    run(os.path.abspath(args.out), courses_only=args.courses_only, faq_only=args.faq_only, en_only=args.en_only)

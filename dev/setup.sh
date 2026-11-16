@@ -14,6 +14,7 @@ WPDIR="$ROOT/.wp"
 WP="$WPDIR/wordpress"
 WP_TAG="${WP_TAG:-7.1.4}"
 SQLITE_TAG="${SQLITE_TAG:-v3.1.3}"
+PLL_TAG="${PLL_TAG:-3.9.2}"
 
 # Git Bash / MSYS: PHP and Python are native Windows programs and need Windows paths.
 WINDOWS=0
@@ -41,6 +42,19 @@ fi
 if [ ! -d "$WPDIR/sqlite-database-integration" ]; then
 	git -c advice.detachedHead=false clone -q --depth 1 --branch "$SQLITE_TAG" https://github.com/WordPress/sqlite-database-integration.git "$WPDIR/sqlite-database-integration"
 	rm -rf "$WPDIR/sqlite-database-integration/.git"
+fi
+
+# Polylang (languages, as on the live site): the GitHub tag has no Composer vendor folder,
+# dev/polylang-autoload.php writes the autoloader Composer would.
+if [ ! -d "$WPDIR/polylang" ]; then
+	git -c advice.detachedHead=false clone -q --depth 1 --branch "$PLL_TAG" https://github.com/polylang/polylang.git "$WPDIR/polylang"
+	rm -rf "$WPDIR/polylang/.git" "$WPDIR/polylang/tests"
+fi
+PLL_DIR="$WP/wp-content/plugins/polylang"
+if [ ! -f "$PLL_DIR/vendor/autoload.php" ]; then
+	rm -rf "$PLL_DIR"
+	cp -R "$WPDIR/polylang" "$PLL_DIR"
+	php "$ROOT/dev/polylang-autoload.php" "$(native_path "$PLL_DIR")"
 fi
 
 PLUGIN="$WP/wp-content/plugins/sqlite-database-integration"
@@ -107,9 +121,11 @@ else
 fi
 
 php "$ROOT/dev/install.php"
+php "$ROOT/dev/languages.php"
 
 if [ "${1:-}" != "--no-seed" ]; then
-	if [ ! -f "$WPDIR/seed/data.json" ]; then
+	SEED="$WPDIR/seed/data.json"
+	if [ ! -f "$SEED" ] || ! grep -q '"en": {' "$SEED"; then
 		# On Windows "python3" is often the Microsoft Store stub: take the first interpreter that runs.
 		PY=""
 		for candidate in python3 python py; do
@@ -122,7 +138,13 @@ if [ "${1:-}" != "--no-seed" ]; then
 			echo "Python 3.8+ non trovato (serve solo per scaricare i contenuti). Installalo o usa: dev/setup.sh --no-seed" >&2
 			exit 1
 		fi
-		"$PY" -I "$ROOT/dev/seed/fetch.py" --out "$WPDIR/seed"
+		if [ -f "$SEED" ]; then
+			echo "Scarico la versione inglese del sito (qualche minuto)..."
+			"$PY" -I "$ROOT/dev/seed/fetch.py" --out "$WPDIR/seed" --en-only
+		else
+			echo "Scarico i contenuti del sito, italiano e inglese (qualche minuto)..."
+			"$PY" -I "$ROOT/dev/seed/fetch.py" --out "$WPDIR/seed"
+		fi
 	fi
 	php "$ROOT/dev/seed/import.php"
 fi

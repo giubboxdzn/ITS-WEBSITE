@@ -52,4 +52,4 @@ $base    = remove_query_arg( 'area' );
 	wp_reset_postdata();
 	?>
 </div>
-<p class="screen-reader-text" role="status" data-wall-status></p>
+<p class="screen-reader-text" role="status" data-wall-status data-one="<?php esc_attr_e( '1 corso', 'its-rossellini' ); ?>" data-many="<?php /* translators: %d: number of courses (kept as %d for the script) */ esc_attr_e( '%d corsi', 'its-rossellini' ); ?>"></p>

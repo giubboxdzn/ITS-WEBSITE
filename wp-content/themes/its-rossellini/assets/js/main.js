@@ -329,7 +329,7 @@
 		const prepareCounter = (el) => {
 			if (el.dataset.count) return null;
 			const text = el.textContent.trim();
-			const m = text.match(/^(\D*)(\d{1,3}(?:\.\d{3})+|\d+)(.*)$/s);
+			const m = text.match(/^(\D*)(\d{1,3}(?:[.,]\d{3})+|\d+)(.*)$/s);
 			if (!m) return null;
 			el.dataset.count = '1';
 			const label = document.createElement('span');
@@ -340,9 +340,9 @@
 			visual.setAttribute('aria-hidden', 'true');
 			visual.textContent = text;
 			el.replaceChildren(label, visual);
-			const target = parseInt(m[2].replace(/\./g, ''), 10);
-			const dots = m[2].includes('.');
-			const format = (v) => m[1] + (dots ? String(v).replace(/\B(?=(\d{3})+(?!\d))/g, '.') : String(v)) + m[3];
+			const target = parseInt(m[2].replace(/[.,]/g, ''), 10);
+			const sep = (m[2].match(/[.,]/) || [''])[0];
+			const format = (v) => m[1] + (sep ? String(v).replace(/\B(?=(\d{3})+(?!\d))/g, sep) : String(v)) + m[3];
 			const counter = { el, visual, target, format, frame: 0, done: false };
 			counters.push(counter);
 			return counter;
@@ -499,6 +499,26 @@
 		});
 	});
 
+	/* Language menus: one open at a time; a click elsewhere or Escape closes them. */
+	const langMenus = [...document.querySelectorAll('details.lang')];
+	if (langMenus.length) {
+		langMenus.forEach((menu) => menu.addEventListener('toggle', () => {
+			if (menu.open) langMenus.forEach((other) => { if (other !== menu) other.open = false; });
+		}));
+		document.addEventListener('click', (event) => {
+			langMenus.forEach((menu) => { if (menu.open && !menu.contains(event.target)) menu.open = false; });
+		});
+		document.addEventListener('keydown', (event) => {
+			if (event.key !== 'Escape') return;
+			langMenus.forEach((menu) => {
+				if (menu.open) {
+					menu.open = false;
+					menu.querySelector('summary')?.focus();
+				}
+			});
+		});
+	}
+
 	/* Course grid: filter by area in place, keep the URL shareable. */
 	const filter = document.querySelector('.area-filter');
 	const grid = document.querySelector('[data-wall]');
@@ -523,7 +543,7 @@
 				if (link.dataset.area === area) link.setAttribute('aria-current', 'true');
 				else link.removeAttribute('aria-current');
 			});
-			if (status) status.textContent = shown.length === 1 ? '1 corso' : `${shown.length} corsi`;
+			if (status) status.textContent = shown.length === 1 ? status.dataset.one : (status.dataset.many || '%d').replace('%d', shown.length);
 			if (motionOn() && grid.animate) {
 				shown.forEach((item, i) => item.animate(
 					[{ opacity: 0, translate: '0 1.25rem' }, { opacity: 1, translate: '0 0' }],

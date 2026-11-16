@@ -26,6 +26,21 @@ function its_courses( int $limit = -1, array $exclude = array() ): WP_Query {
 }
 
 /**
+ * Number of published courses in the visitor's language (Polylang filters the query).
+ */
+function its_course_count(): int {
+	$query = new WP_Query(
+		array(
+			'post_type'      => 'corso',
+			'posts_per_page' => -1,
+			'fields'         => 'ids',
+			'no_found_rows'  => true,
+		)
+	);
+	return count( $query->posts );
+}
+
+/**
  * Areas that actually have courses.
  *
  * @return WP_Term[]

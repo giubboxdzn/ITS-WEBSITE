@@ -1,0 +1,761 @@
+msgid ""
+msgstr "Project-Id-Version: ITS Rossellini\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nX-Domain: its-rossellini\nLanguage: en_GB\nPlural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: 404.php:15
+msgid "Questa scena è stata tagliata."
+msgstr "This scene was cut."
+
+#: 404.php:16
+msgid "La pagina che cerchi non esiste più o ha cambiato indirizzo. Cerca qui sotto o riparti da una di queste pagine."
+msgstr "The page you are looking for no longer exists or has moved. Search below or start again from one of these pages."
+
+#: 404.php:22
+msgid "Pagine principali"
+msgstr "Main pages"
+
+#: 404.php:26
+msgid "I corsi 2026–2028"
+msgstr "Courses 2026–2028"
+
+#: 404.php:27
+msgid "Preiscrizione"
+msgstr "Pre-enrolment"
+
+#: 404.php:28 front-page.php:205
+msgid "Bandi e documenti"
+msgstr "Calls and documents"
+
+#: 404.php:29 inc/customizer.php:15
+msgid "Contatti e sede"
+msgstr "Contact and campus"
+
+#: footer.php:31 inc/customizer.php:21
+msgid "Email"
+msgstr "Email"
+
+#: footer.php:37
+msgid "Offerta e servizi"
+msgstr "Courses and services"
+
+#: footer.php:52
+msgid "Contatti"
+msgstr "Contact"
+
+#: footer.php:56
+msgid "Tutti gli uffici"
+msgstr "All offices"
+
+#: footer.php:61
+msgid "Trasparenza"
+msgstr "Transparency"
+
+#: footer.php:63 inc/helpers.php:354
+msgid "Bandi e albi"
+msgstr "Calls and registers"
+
+#: footer.php:64
+msgid "Amministrazione trasparente"
+msgstr "Transparent administration"
+
+#: footer.php:85
+msgid "Fondazione ITS Academy Roberto Rossellini"
+msgstr "ITS Academy Roberto Rossellini Foundation"
+
+#: footer.php:88
+msgid "Animazioni"
+msgstr "Animations"
+
+#: footer.php:91
+msgid "Torna su"
+msgstr "Back to top"
+
+#: front-page.php:102
+msgid "I nostri partner"
+msgstr "Our partners"
+
+#: front-page.php:111
+msgid "Vieni a vedere i laboratori"
+msgstr "Come and see the labs"
+
+#: front-page.php:112
+msgid "Prenota un open day o un incontro individuale. Ti mostriamo aule, laboratori e il teatro di posa."
+msgstr "Book an open day or a one-to-one meeting. We will show you classrooms, labs and the sound stage."
+
+#: front-page.php:114
+msgid "L’Academy"
+msgstr "The Academy"
+
+#: front-page.php:115
+msgid "Prenota"
+msgstr "Book"
+
+#: front-page.php:119
+msgid "Corsi biennali"
+msgstr "Two-year courses"
+
+#: front-page.php:126
+msgid "Aree tecnologiche"
+msgstr "Technology areas"
+
+#: front-page.php:133
+msgid "Non una classe. <strong>Un set aperto.</strong>"
+msgstr "Not a classroom. <strong>An open set.</strong>"
+
+#: front-page.php:134
+msgid "Qui teoria e pratica entrano nella stessa inquadratura. Produci, sperimenti, sbagli, riprovi e costruisci un portfolio mentre impari."
+msgstr "Here theory and practice share the same frame. You produce, experiment, make mistakes, try again and build a portfolio while you learn."
+
+#: front-page.php:139
+msgid "Imparare facendo"
+msgstr "Learning by doing"
+
+#: front-page.php:143
+msgid "Laboratori veri"
+msgstr "Real labs"
+
+#: front-page.php:143
+msgid "Spazi e tecnologie per lavorare come in produzione."
+msgstr "Spaces and technology to work as you would on a production."
+
+#: front-page.php:144
+msgid "Docenti dall’industria"
+msgstr "Lecturers from the industry"
+
+#: front-page.php:144
+msgid "Professionisti che insegnano facendo."
+msgstr "Professionals who teach by doing."
+
+#: front-page.php:145
+msgid "Imprese nel percorso"
+msgstr "Companies along the way"
+
+#: front-page.php:145
+msgid "Stage, brief e relazioni che iniziano prima del diploma."
+msgstr "Internships, briefs and contacts that start before you graduate."
+
+#: front-page.php:148
+msgid "Teatro di posa"
+msgstr "Sound stage"
+
+#: front-page.php:150
+msgid "Aule, laboratori e set nella sede di Via Tiburtina."
+msgstr "Classrooms, labs and sets at our Via Tiburtina campus."
+
+#: front-page.php:158
+msgid "Trova il tuo <strong>campo d’azione.</strong>"
+msgstr "Find your <strong>field of action.</strong>"
+
+#: front-page.php:164
+msgid "%d percorso biennale, con presenza quotidiana nei laboratori e docenti che lavorano davvero nell’industria creativa e tecnologica."
+msgid_plural "%d percorsi biennali, con presenza quotidiana nei laboratori e docenti che lavorano davvero nell’industria creativa e tecnologica."
+msgstr[0] "%d two-year programme, with daily lab practice and lecturers who really work in the creative and technology industries."
+msgstr[1] "%d two-year programmes, with daily lab practice and lecturers who really work in the creative and technology industries."
+
+#: front-page.php:171
+msgid "Vedi tutti i corsi"
+msgstr "See all courses"
+
+#: front-page.php:177
+msgid "Durata"
+msgstr "Length"
+
+#: front-page.php:177
+msgid "%s anni, dopo il diploma"
+msgstr "%s years, after secondary school"
+
+#: front-page.php:178
+msgid "Aula e laboratorio"
+msgstr "Classroom and lab"
+
+#: front-page.php:178
+msgid "circa %s ore"
+msgstr "about %s hours"
+
+#: front-page.php:179
+msgid "Tirocinio in azienda"
+msgstr "Company internship"
+
+#: front-page.php:179
+msgid "%s ore"
+msgstr "%s hours"
+
+#: front-page.php:180
+msgid "Costo"
+msgstr "Cost"
+
+#: front-page.php:180
+msgid "Percorsi finanziati con risorse pubbliche"
+msgstr "Programmes funded with public resources"
+
+#: front-page.php:181
+msgid "Posti"
+msgstr "Places"
+
+#: front-page.php:181
+msgid "fino a %s per corso"
+msgstr "up to %s per course"
+
+#: front-page.php:182
+msgid "Accesso"
+msgstr "Admission"
+
+#: front-page.php:182
+msgid "Diploma di scuola superiore o titolo estero idoneo"
+msgstr "Upper-secondary diploma or an eligible foreign qualification"
+
+#: front-page.php:183
+msgid "Esperienza all’estero"
+msgstr "Experience abroad"
+
+#: front-page.php:183
+msgid "Tirocini con Erasmus+, secondo bandi e requisiti"
+msgstr "Erasmus+ internships, subject to calls and requirements"
+
+#: front-page.php:184
+msgid "Dopo il diploma"
+msgstr "After graduating"
+
+#: front-page.php:184
+msgid "%s lavora entro 12 mesi"
+msgstr "%s in work within 12 months"
+
+#: front-page.php:190
+msgid "Tutto in chiaro. <strong>Poi decidi.</strong>"
+msgstr "Everything clear. <strong>Then decide.</strong>"
+
+#: front-page.php:191
+msgid "Le risposte che contano prima di candidarti, prese dai bandi e dalle FAQ dell’Academy."
+msgstr "The answers that matter before you apply, taken from the Academy’s calls and FAQ."
+
+#: front-page.php:194
+msgid "ITS Academy Roberto Rossellini"
+msgstr "ITS Academy Roberto Rossellini"
+
+#: front-page.php:204 header.php:58
+msgid "Preiscriviti"
+msgstr "Pre-enrol"
+
+#: front-page.php:217
+msgid "Dal primo ciak <strong>al primo contratto.</strong>"
+msgstr "From the first take <strong>to the first contract.</strong>"
+
+#: front-page.php:220
+msgid "Orientati"
+msgstr "Find your way"
+
+#: front-page.php:221
+msgid "Conosci persone, corsi e laboratori: open day, colloquio individuale, FAQ."
+msgstr "Meet people, courses and labs: open days, one-to-one meetings, FAQ."
+
+#: front-page.php:224
+msgid "Fai esperienza"
+msgstr "Gain experience"
+
+#: front-page.php:228
+msgid "Lavora su brief, set e progetti reali: %s ore, portfolio, lavoro in team."
+msgstr "Work on real briefs, sets and projects: %s hours, a portfolio, teamwork."
+
+#: front-page.php:233
+msgid "Entra nel settore"
+msgstr "Enter the industry"
+
+#: front-page.php:237
+msgid "Porta le competenze dentro un’azienda: %s ore di stage e placement."
+msgstr "Take your skills into a company: %s hours of internship and placement."
+
+#: front-page.php:242
+msgid "Stage e placement"
+msgstr "Internships and placement"
+
+#: front-page.php:250
+msgid "Parti da Roma. <strong>Arriva ovunque.</strong>"
+msgstr "Start in Rome. <strong>Go anywhere.</strong>"
+
+#: front-page.php:251
+msgid "Lezioni, laboratori e teatro di posa sono in Via Tiburtina, a pochi passi dalla Metro B. E con Erasmus+ il tirocinio può portarti all’estero."
+msgstr "Classes, labs and the sound stage are on Via Tiburtina, a short walk from Metro line B. And with Erasmus+ your internship can take you abroad."
+
+#: front-page.php:253
+msgid "Sede legale e operativa"
+msgstr "Registered and operational office"
+
+#: front-page.php:254
+msgid "Metro B"
+msgstr "Metro line B"
+
+#: front-page.php:254
+msgid "Pietralata · Monti Tiburtini"
+msgstr "Pietralata · Monti Tiburtini"
+
+#: front-page.php:255 inc/customizer.php:19
+msgid "Orari"
+msgstr "Opening hours"
+
+#: front-page.php:256
+msgid "Erasmus+"
+msgstr "Erasmus+"
+
+#: front-page.php:256
+msgid "Tirocinio all’estero"
+msgstr "Internship abroad"
+
+#: front-page.php:261
+msgid "Roma"
+msgstr "Rome"
+
+#: front-page.php:281
+msgid "News, eventi, <strong>occasioni.</strong>"
+msgstr "News, events, <strong>opportunities.</strong>"
+
+#: front-page.php:282
+msgid "Tutte le news"
+msgstr "All news"
+
+#: front-page.php:312
+msgid "Tutto quello che <strong>devi sapere.</strong>"
+msgstr "Everything <strong>you need to know.</strong>"
+
+#: front-page.php:316
+msgid "Non trovi la tua domanda?"
+msgstr "Can’t find your question?"
+
+#: front-page.php:317
+msgid "Tutte le FAQ"
+msgstr "All FAQ"
+
+#: front-page.php:318
+msgid "oppure"
+msgstr "or"
+
+#: front-page.php:319
+msgid "scrivici"
+msgstr "write to us"
+
+#: front-page.php:329
+msgid "Vuoi visitare <strong>i laboratori?</strong>"
+msgstr "Want to visit <strong>the labs?</strong>"
+
+#: front-page.php:330
+msgid "Prenota un open day o un incontro individuale."
+msgstr "Book an open day or a one-to-one meeting."
+
+#: front-page.php:334
+msgid "Preiscriviti al biennio"
+msgstr "Pre-enrol for the two-year course"
+
+#: front-page.php:72
+msgid "Il futuro <strong>si gira</strong> adesso."
+msgstr "Your future <strong>starts rolling</strong> now."
+
+#: front-page.php:73
+msgid "Due anni per trasformare il tuo talento in una professione tra cinema, TV, digital, live e tecnologia."
+msgstr "Two years to turn your talent into a profession across cinema, TV, digital media, live production and technology."
+
+#: front-page.php:75 front-page.php:333 single-evento.php:50 templates/template-eventi.php:40
+msgid "Prenota un incontro"
+msgstr "Book a meeting"
+
+#: front-page.php:76
+msgid "Scopri i corsi"
+msgstr "Explore courses"
+
+#: front-page.php:83
+msgid "dei diplomati lavora entro 12 mesi"
+msgstr "of graduates in work within 12 months"
+
+#: front-page.php:88
+msgid "Visita la sede"
+msgstr "Visit the campus"
+
+#: front-page.php:93 front-page.php:93
+msgid "Metti in pausa il video"
+msgstr "Pause the video"
+
+#: front-page.php:93
+msgid "Riproduci il video"
+msgstr "Play the video"
+
+#: functions.php:32
+msgid "Menu principale"
+msgstr "Main menu"
+
+#: functions.php:33
+msgid "Menu footer"
+msgstr "Footer menu"
+
+#: functions.php:34
+msgid "Note legali"
+msgstr "Legal notes"
+
+#: header.php:19
+msgid "Vai al contenuto"
+msgstr "Skip to content"
+
+#: header.php:30
+msgid "Menu"
+msgstr "Menu"
+
+#: header.php:34
+msgid "Principale"
+msgstr "Main"
+
+#: inc/customizer.php:111
+msgid "Via Tiburtina 691, Roma"
+msgstr "Via Tiburtina 691, Rome"
+
+#: inc/customizer.php:112
+msgid "Metro B Pietralata o Monti Tiburtini"
+msgstr "Metro line B, Pietralata or Monti Tiburtini"
+
+#: inc/customizer.php:113
+msgid "Lun–Ven 9:30–13:30 / 14:30–18:30"
+msgstr "Mon–Fri 9:30–13:30 / 14:30–18:30"
+
+#: inc/customizer.php:114
+msgid "Dato pubblicato da ITS Rossellini"
+msgstr "Figure published by ITS Rossellini"
+
+#: inc/customizer.php:17
+msgid "Indirizzo"
+msgstr "Address"
+
+#: inc/customizer.php:18
+msgid "Come arrivare"
+msgstr "Getting here"
+
+#: inc/customizer.php:20
+msgid "Telefono"
+msgstr "Phone"
+
+#: inc/customizer.php:22
+msgid "Instagram (URL)"
+msgstr "Instagram (URL)"
+
+#: inc/customizer.php:23
+msgid "X (URL)"
+msgstr "X (URL)"
+
+#: inc/customizer.php:27
+msgid "Dati pubblicati"
+msgstr "Published figures"
+
+#: inc/customizer.php:29
+msgid "Durata (anni)"
+msgstr "Length (years)"
+
+#: inc/customizer.php:30
+msgid "Ore in aula e laboratorio"
+msgstr "Classroom and lab hours"
+
+#: inc/customizer.php:31
+msgid "Ore di tirocinio"
+msgstr "Internship hours"
+
+#: inc/customizer.php:32
+msgid "Posti per corso"
+msgstr "Places per course"
+
+#: inc/customizer.php:33
+msgid "Diplomati occupati entro 12 mesi"
+msgstr "Graduates in work within 12 months"
+
+#: inc/customizer.php:34
+msgid "Fonte del dato occupazionale"
+msgstr "Source of the employment figure"
+
+#: inc/customizer.php:38 inc/helpers.php:345
+msgid "Home"
+msgstr "Home"
+
+#: inc/customizer.php:51
+msgid "Video della home (MP4, senza audio)"
+msgstr "Home page video (MP4, no audio)"
+
+#: inc/customizer.php:52
+msgid "Come copertina si usa l’immagine in evidenza della pagina iniziale."
+msgstr "The front page’s featured image is used as the cover."
+
+#: inc/helpers.php:101
+msgid "Prossimamente"
+msgstr "Coming soon"
+
+#: inc/helpers.php:313
+msgid "Lingua: %s. Cambia lingua"
+msgstr "Language: %s. Change language"
+
+#: inc/helpers.php:328
+msgid "Precedenti"
+msgstr "Previous"
+
+#: inc/helpers.php:329
+msgid "Successivi"
+msgstr "Next"
+
+#: inc/helpers.php:333
+msgid "Pagine"
+msgstr "Pages"
+
+#: inc/helpers.php:342 inc/helpers.php:362
+msgid "Percorso"
+msgstr "Breadcrumb"
+
+#: inc/helpers.php:353
+msgid "Eventi"
+msgstr "Events"
+
+#: inc/helpers.php:355
+msgid "Edizioni dei corsi"
+msgstr "Course editions"
+
+#: inc/helpers.php:93
+msgid "Chiuso"
+msgstr "Closed"
+
+#: inc/helpers.php:93
+msgid "Concluso"
+msgstr "Completed"
+
+#: inc/helpers.php:96
+msgid "Scade oggi"
+msgstr "Closes today"
+
+#: inc/helpers.php:96
+msgid "Oggi"
+msgstr "Today"
+
+#: inc/helpers.php:99
+msgid "Ultimi giorni"
+msgstr "Last days"
+
+#: index.php:14
+msgid "Risultati per “%s”"
+msgstr "Results for “%s”"
+
+#: index.php:18
+msgid "Avvisi, graduatorie, progetti e risultati degli studenti."
+msgstr "Notices, rankings, projects and student achievements."
+
+#: index.php:23 inc/helpers.php:356
+msgid "News"
+msgstr "News"
+
+#: index.php:58
+msgid "Nessun contenuto trovato. Prova con un’altra parola o torna alla home."
+msgstr "Nothing found. Try another word or go back to the home page."
+
+#: searchform.php:13
+msgid "Cerca nel sito"
+msgstr "Search the site"
+
+#: searchform.php:14
+msgid "Cerca corsi, bandi, news…"
+msgstr "Search courses, calls, news…"
+
+#: searchform.php:15 templates/template-documenti.php:40
+msgid "Cerca"
+msgstr "Search"
+
+#: single-corso.php:18
+msgid "Preiscriviti a questo corso"
+msgstr "Pre-enrol for this course"
+
+#: single-corso.php:19
+msgid "Parla con l’orientamento"
+msgstr "Talk to our guidance team"
+
+#: single-corso.php:23
+msgid "anno"
+msgid_plural "anni"
+msgstr[0] "year"
+msgstr[1] "years"
+
+#: single-corso.php:24
+msgid "ore in aula e lab"
+msgstr "hours in class and lab"
+
+#: single-corso.php:25
+msgid "ore di stage"
+msgstr "internship hours"
+
+#: single-corso.php:26
+msgid "posti"
+msgstr "places"
+
+#: single-corso.php:69
+msgid "Altri corsi"
+msgstr "Other courses"
+
+#: single-corso.php:70
+msgid "Tutti i corsi"
+msgstr "All courses"
+
+#: single-documento.php:22 templates/template-documenti.php:45 templates/template-documenti.php:85 templates/template-documenti.php:101
+msgid "Tipo"
+msgstr "Type"
+
+#: single-documento.php:23 templates/template-documenti.php:56 templates/template-documenti.php:86 templates/template-documenti.php:102
+msgid "Biennio"
+msgstr "Two-year period"
+
+#: single-documento.php:24 templates/template-documenti.php:87 templates/template-documenti.php:103
+msgid "Pubblicato"
+msgstr "Published"
+
+#: single-documento.php:25
+msgid "Formato"
+msgstr "Format"
+
+#: single-documento.php:44
+msgid "Apri il documento (%s)"
+msgstr "Open the document (%s)"
+
+#: single-documento.php:44
+msgid "Apri il documento"
+msgstr "Open the document"
+
+#: single-documento.php:48
+msgid "Il file di questo documento non è ancora disponibile online. Per riceverlo scrivi alla segreteria."
+msgstr "This document’s file is not online yet. To receive it, write to the secretariat."
+
+#: single-documento.php:50
+msgid "Tutti i documenti"
+msgstr "All documents"
+
+#: single-evento.php:19
+msgid "Data"
+msgstr "Date"
+
+#: single-evento.php:20
+msgid "Orario"
+msgstr "Time"
+
+#: single-evento.php:21
+msgid "Modalità"
+msgstr "Format"
+
+#: single-evento.php:22
+msgid "Luogo"
+msgstr "Location"
+
+#: single-evento.php:51
+msgid "Tutti gli eventi"
+msgstr "All events"
+
+#: single.php:41
+msgid "Altre news"
+msgstr "More news"
+
+#: single.php:45
+msgid "Precedente"
+msgstr "Previous"
+
+#: single.php:46
+msgid "Successiva"
+msgstr "Next"
+
+#: template-parts/child-pages.php:21
+msgid "In questa sezione"
+msgstr "In this section"
+
+#: template-parts/course-wall.php:19
+msgid "Filtra i corsi per area"
+msgstr "Filter courses by area"
+
+#: template-parts/course-wall.php:21
+msgid "Tutti"
+msgstr "All"
+
+#: template-parts/course-wall.php:55
+msgid "1 corso"
+msgstr "1 course"
+
+#: template-parts/course-wall.php:55
+msgid "%d corsi"
+msgstr "%d courses"
+
+#: templates/template-corsi.php:19
+msgid "Otto percorsi biennali post-diploma: scegli l’area, poi il mestiere."
+msgstr "Eight two-year post-diploma programmes: choose the area, then the profession."
+
+#: templates/template-corsi.php:23 inc/helpers.php:352
+msgid "Corsi"
+msgstr "Courses"
+
+#: templates/template-documenti.php:103
+msgctxt "document table date format"
+msgid "d/m/Y"
+msgstr "d/m/Y"
+
+#: templates/template-documenti.php:106
+msgid "Scarica: %s"
+msgstr "Download: %s"
+
+#: templates/template-documenti.php:119
+msgid "Nessun documento corrisponde ai filtri. Prova a togliere il biennio o a cercare per nome del corso."
+msgstr "No document matches the filters. Try removing the two-year period or searching by course name."
+
+#: templates/template-documenti.php:28
+msgid "Bandi, graduatorie, convocazioni e albi della Fondazione, per corso e biennio."
+msgstr "The Foundation’s calls, rankings, notices and registers, by course and two-year period."
+
+#: templates/template-documenti.php:38
+msgid "Cerca nei documenti"
+msgstr "Search the documents"
+
+#: templates/template-documenti.php:41
+msgid "Es. graduatoria Videomaker…"
+msgstr "E.g. Videomaker ranking…"
+
+#: templates/template-documenti.php:47
+msgid "Tutti i tipi"
+msgstr "All types"
+
+#: templates/template-documenti.php:58
+msgid "Tutti i bienni"
+msgstr "All periods"
+
+#: templates/template-documenti.php:66
+msgid "Filtra"
+msgstr "Filter"
+
+#: templates/template-documenti.php:68 templates/template-documenti.php:120
+msgid "Azzera filtri"
+msgstr "Clear filters"
+
+#: templates/template-documenti.php:76
+msgid "%s documento"
+msgid_plural "%s documenti"
+msgstr[0] "%s document"
+msgstr[1] "%s documents"
+
+#: templates/template-documenti.php:84
+msgid "Documento"
+msgstr "Document"
+
+#: templates/template-documenti.php:88
+msgid "File"
+msgstr "File"
+
+#: templates/template-edizioni.php:25
+msgid "Altre edizioni"
+msgstr "Other editions"
+
+#: templates/template-edizioni.php:39
+msgid "Tutte le edizioni, in corso e concluse, per corso e biennio."
+msgstr "All editions, current and completed, by course and two-year period."
+
+#: templates/template-eventi.php:20
+msgid "Open day, incontri di orientamento e i set dove lavorano gli studenti."
+msgstr "Open days, guidance meetings and the sets where students work."
+
+#: templates/template-eventi.php:26
+msgid "In programma"
+msgstr "Coming up"
+
+#: templates/template-eventi.php:39
+msgid "Nessun evento in calendario in questo momento. Puoi visitare la sede con un incontro individuale, su appuntamento."
+msgstr "No events scheduled right now. You can visit the campus with a one-to-one meeting, by appointment."
+
+#: templates/template-eventi.php:47
+msgid "Già andati in scena"
+msgstr "Already on stage"

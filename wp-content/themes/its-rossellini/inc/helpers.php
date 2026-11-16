@@ -176,6 +176,16 @@ function its_page_url( string $path, string $fallback = '' ): string {
 }
 
 /**
+ * Thousands written the visitor's way: "1.000" in Italian, "1,000" in English.
+ */
+function its_number( string $figure ): string {
+	if ( str_starts_with( determine_locale(), 'it' ) || ! preg_match( '/^\d{1,3}(\.\d{3})+\+?$/', $figure ) ) {
+		return $figure;
+	}
+	return str_replace( '.', ',', $figure );
+}
+
+/**
  * Site-wide published facts (editable in the Customizer).
  *
  * @return array<string,string>
@@ -183,11 +193,11 @@ function its_page_url( string $path, string $fallback = '' ): string {
 function its_facts(): array {
 	return array(
 		'years'      => (string) get_theme_mod( 'its_fact_years', '2' ),
-		'hours'      => (string) get_theme_mod( 'its_fact_hours', '1.000' ),
+		'hours'      => its_number( (string) get_theme_mod( 'its_fact_hours', '1.000' ) ),
 		'internship' => (string) get_theme_mod( 'its_fact_internship', '800+' ),
 		'places'     => (string) get_theme_mod( 'its_fact_places', '28' ),
 		'employment' => (string) get_theme_mod( 'its_fact_employment', '87%' ),
-		'source'     => (string) get_theme_mod( 'its_fact_employment_source', __( 'Dato pubblicato da ITS Rossellini', 'its-rossellini' ) ),
+		'source'     => its_tr( (string) get_theme_mod( 'its_fact_employment_source', 'Dato pubblicato da ITS Rossellini' ) ),
 	);
 }
 
@@ -210,9 +220,9 @@ function its_article_for_number( string $figure ): string {
  */
 function its_contacts(): array {
 	return array(
-		'address' => (string) get_theme_mod( 'its_address', 'Via Tiburtina 691, Roma' ),
-		'transit' => (string) get_theme_mod( 'its_transit', __( 'Metro B Pietralata o Monti Tiburtini', 'its-rossellini' ) ),
-		'hours'   => (string) get_theme_mod( 'its_hours', __( 'Lun–Ven 9:30–13:30 / 14:30–18:30', 'its-rossellini' ) ),
+		'address' => its_tr( (string) get_theme_mod( 'its_address', 'Via Tiburtina 691, Roma' ) ),
+		'transit' => its_tr( (string) get_theme_mod( 'its_transit', 'Metro B Pietralata o Monti Tiburtini' ) ),
+		'hours'   => its_tr( (string) get_theme_mod( 'its_hours', 'Lun–Ven 9:30–13:30 / 14:30–18:30' ) ),
 		'phone'   => (string) get_theme_mod( 'its_phone', '06 5576493' ),
 		'email'   => (string) get_theme_mod( 'its_email', 'info@itsrossellini.it' ),
 		'instagram' => (string) get_theme_mod( 'its_instagram', 'https://www.instagram.com/itsrossellini/' ),
@@ -221,32 +231,89 @@ function its_contacts(): array {
 }
 
 /**
- * Language links (Polylang), rendered only when Polylang is active.
+ * A Customizer text in the visitor's language: Polylang's string translations first (Languages →
+ * Translations), then the theme's own translation of the default text.
  */
-function its_language_links(): string {
+function its_tr( string $text ): string {
+	if ( '' === $text ) {
+		return $text;
+	}
+	if ( function_exists( 'pll__' ) ) {
+		$translated = pll__( $text );
+		if ( $translated !== $text ) {
+			return $translated;
+		}
+	}
+	return translate( $text, 'its-rossellini' ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText -- Defaults ship in the theme's own translations.
+}
+
+/**
+ * Round flag for a language slug (inline SVG, decorative). Unknown languages get a globe.
+ */
+function its_flag( string $slug ): string {
+	$flags = array(
+		'it' => '<rect width="10" height="30" fill="#009246"/><rect x="10" width="10" height="30" fill="#fff"/><rect x="20" width="10" height="30" fill="#ce2b37"/>',
+		'en' => '<rect x="-15" width="60" height="30" fill="#012169"/><path d="M-15 0 45 30M45 0-15 30" stroke="#fff" stroke-width="6"/><path d="M-15 0 45 30M45 0-15 30" stroke="#c8102e" stroke-width="2"/><path d="M15 0v30M-15 15h60" stroke="#fff" stroke-width="10"/><path d="M15 0v30M-15 15h60" stroke="#c8102e" stroke-width="6"/>',
+	);
+	if ( ! isset( $flags[ $slug ] ) ) {
+		return '<span class="flag flag--none" aria-hidden="true">' . its_icon( 'globe' ) . '</span>';
+	}
+	return '<span class="flag" aria-hidden="true"><svg viewBox="0 0 30 30" focusable="false">' . $flags[ $slug ] . '</svg></span>';
+}
+
+/**
+ * Language switcher (Polylang): flag and language, opening a list of the site's languages.
+ * Each link leads to the same page in that language, or to that language's home page.
+ *
+ * @param string $variant "header" (flag + code) or "footer" (flag + name, opens upwards).
+ */
+function its_language_switcher( string $variant = 'header' ): string {
 	if ( ! function_exists( 'pll_the_languages' ) ) {
 		return '';
 	}
 	$langs = pll_the_languages(
 		array(
-			'raw'           => 1,
-			'hide_if_empty' => 0,
+			'raw'                    => 1,
+			'hide_if_empty'          => 0,
+			'hide_if_no_translation' => 0,
 		)
 	);
-	if ( ! $langs ) {
+	if ( ! is_array( $langs ) || count( $langs ) < 2 ) {
 		return '';
 	}
-	$out = '<ul class="lang">';
+	$current = null;
 	foreach ( $langs as $lang ) {
-		$out .= sprintf(
-			'<li><a href="%1$s" hreflang="%2$s" lang="%2$s"%3$s>%4$s</a></li>',
+		if ( ! empty( $lang['current_lang'] ) ) {
+			$current = $lang;
+		}
+	}
+	$current = $current ?? reset( $langs );
+	$items   = '';
+	foreach ( $langs as $lang ) {
+		$items .= sprintf(
+			'<li><a href="%1$s" hreflang="%2$s" lang="%3$s"%4$s>%5$s<span>%6$s</span>%7$s</a></li>',
 			esc_url( $lang['url'] ),
-			esc_attr( $lang['locale'] ? str_replace( '_', '-', $lang['locale'] ) : $lang['slug'] ),
-			$lang['current_lang'] ? ' aria-current="true"' : '',
-			esc_html( strtoupper( $lang['slug'] ) )
+			esc_attr( str_replace( '_', '-', (string) ( $lang['locale'] ?? $lang['slug'] ) ) ),
+			esc_attr( $lang['slug'] ),
+			empty( $lang['current_lang'] ) ? '' : ' aria-current="true"',
+			its_flag( $lang['slug'] ),
+			esc_html( $lang['name'] ),
+			empty( $lang['current_lang'] ) ? '' : its_icon( 'check', 'lang__check' )
 		);
 	}
-	return $out . '</ul>';
+	$label = 'footer' === $variant
+		? '<span class="lang__name">' . esc_html( $current['name'] ) . '</span>'
+		: '<span class="lang__code" aria-hidden="true">' . esc_html( strtoupper( $current['slug'] ) ) . '</span>';
+	return sprintf(
+		'<details class="lang lang--%1$s"><summary>%2$s%3$s<span class="screen-reader-text">%4$s</span>%5$s</summary><ul class="lang__menu">%6$s</ul></details>',
+		esc_attr( $variant ),
+		its_flag( $current['slug'] ),
+		$label,
+		/* translators: %s: current language name */
+		esc_html( sprintf( __( 'Lingua: %s. Cambia lingua', 'its-rossellini' ), $current['name'] ) ),
+		its_icon( 'chevron', 'lang__chevron' ),
+		$items
+	);
 }
 
 /**

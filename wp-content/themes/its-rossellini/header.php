@@ -54,7 +54,7 @@ defined( 'ABSPATH' ) || exit;
 				?>
 			</nav>
 			<div class="masthead__aside">
-				<?php echo its_language_links(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				<?php echo its_language_switcher( 'header' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				<a class="btn btn--cta btn--small" href="<?php echo esc_url( its_page_url( 'iscrizioni' ) ); ?>"><?php esc_html_e( 'Preiscriviti', 'its-rossellini' ); ?></a>
 			</div>
 		</div>

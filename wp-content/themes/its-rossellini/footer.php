@@ -30,6 +30,7 @@ $funding  = (string) get_post_field( 'post_content', (int) get_option( 'page_on_
 				<?php endif; ?>
 				<li><a href="mailto:<?php echo esc_attr( antispambot( $contacts['email'] ) ); ?>" aria-label="<?php esc_attr_e( 'Email', 'its-rossellini' ); ?>"><?php echo its_icon( 'mail' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a></li>
 			</ul>
+			<?php echo its_language_switcher( 'footer' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</div>
 
 		<nav class="colophon__col" aria-labelledby="footer-offerta">
@@ -86,7 +87,6 @@ $funding  = (string) get_post_field( 'post_content', (int) get_option( 'page_on_
 			<span class="motion-switch__track" aria-hidden="true"><span class="motion-switch__thumb"></span></span>
 			<span><?php esc_html_e( 'Animazioni', 'its-rossellini' ); ?></span>
 		</button>
-		<?php echo its_language_links(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		<a class="to-top" href="#top" data-to-top>
 			<span><?php esc_html_e( 'Torna su', 'its-rossellini' ); ?></span>
 			<span class="to-top__icon" aria-hidden="true"><?php echo its_icon( 'top' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>

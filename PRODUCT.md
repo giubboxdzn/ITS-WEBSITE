@@ -61,6 +61,8 @@ The current itsrossellini.it theme is the visual reference: the new theme stays 
 - **Fourth reference** (deluxhost.net, a hosting site; screenshot kept locally, not committed), adapted to the school's content on the same base: a single comparison card with check rows (here: what the biennio includes, only published facts), a "where we are" block with info chips and a dotted globe, an FAQ accordion, and a richer footer (columns, socials, the logo as an outlined watermark, an animations switch). Not taken: price tables, "most popular" badges, competitor columns, the grid floor.
 - **To move away from** (what makes the current site read as AI-made): monospace micro-labels, "01 / 05" section counters, kickers above headings, grid-line backgrounds, radial glows, outlined giant numbers, the "REC / CH 04" camera frame, coloured stripes on cards, the marquee ticker, 9–10px text.
 
+- **Languages**: Italian (default) and English, as on the live site (Polylang); the visitor switches with a flag selector in the header and the footer.
+
 ## Evidence on Hand
 
 - Published figures (site-wide): 87% of graduates employed within 12 months ("dato pubblicato da ITS Rossellini"), 1,000 hours of classes and labs, 800+ hours of internship, 2 years, 28 places per course, Foundation approved by Regione Lazio in December 2009.

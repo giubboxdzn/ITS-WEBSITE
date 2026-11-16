@@ -507,32 +507,138 @@ dd {
 	gap: 0.5rem;
 }
 
+/* Language switcher: round flag + code (header) or name (footer), opening the list of languages. */
 .lang {
-	display: flex;
-	gap: 0.25rem;
-	margin: 0;
-	padding: 0;
-	list-style: none;
+	position: relative;
 	font-size: 0.875rem;
-	font-weight: 600;
 }
 
-.lang a {
+.lang > summary {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	min-height: 2.75rem;
+	padding: 0.3rem 0.75rem 0.3rem 0.35rem;
+	border: 1px solid var(--bordo);
+	border-radius: 999px;
+	font-weight: 600;
+	list-style: none;
+	cursor: pointer;
+	transition: border-color 0.2s, background-color 0.2s;
+}
+
+.lang > summary::-webkit-details-marker {
+	display: none;
+}
+
+.lang > summary:hover {
+	border-color: var(--elettrico);
+}
+
+.has-hero .masthead:not(.is-solid) .lang > summary {
+	border-color: rgb(255 255 255 / 0.3);
+}
+
+.has-hero .masthead:not(.is-solid) .lang > summary:hover {
+	border-color: var(--bianco);
+}
+
+.flag {
+	display: inline-block;
+	flex: none;
+	width: 1.6rem;
+	height: 1.6rem;
+	overflow: hidden;
+	border-radius: 50%;
+	box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.08);
+}
+
+.flag svg {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.flag--none {
 	display: inline-grid;
 	place-items: center;
-	width: 2.6rem;
-	height: 2.6rem;
+}
+
+.lang__chevron {
+	width: 1rem;
+	height: 1rem;
+	transition: transform 0.3s var(--ease-out);
+}
+
+.lang[open] .lang__chevron {
+	transform: rotate(180deg);
+}
+
+.lang__menu {
+	position: absolute;
+	top: calc(100% + 0.5rem);
+	right: 0;
+	z-index: 40;
+	display: grid;
+	gap: 0.15rem;
+	min-width: 12rem;
+	margin: 0;
+	padding: 0.4rem;
 	border: 1px solid var(--bordo);
-	border-radius: 50%;
+	border-radius: var(--r-md);
+	background: var(--bianco);
+	box-shadow: var(--shadow);
+	list-style: none;
+}
+
+.lang__menu a {
+	display: flex;
+	align-items: center;
+	gap: 0.65rem;
+	padding: 0.55rem 0.7rem;
+	border-radius: 0.85rem;
+	color: var(--inchiostro);
+	font-weight: 500;
 	text-decoration: none;
 }
 
-.has-hero .lang a {
-	border-color: rgb(255 255 255 / 0.25);
+.lang__menu a:hover {
+	background: var(--chiaro);
 }
 
-.lang a[aria-current] {
-	background: currentColor;
+.lang__menu a[aria-current] {
+	font-weight: 700;
+}
+
+.lang__check {
+	width: 1rem;
+	height: 1rem;
+	margin-left: auto;
+	color: var(--elettrico);
+}
+
+/* Footer: next to the social icons, on the dark band; the list opens upwards. */
+.colophon__id .lang {
+	display: inline-block;
+	margin-top: 0.75rem;
+}
+
+.lang--footer > summary {
+	border-color: var(--bordo-dark);
+	background: rgb(255 255 255 / 0.04);
+	color: var(--bianco);
+	font-weight: 500;
+}
+
+.lang--footer > summary:hover {
+	border-color: var(--ciano);
+}
+
+.lang--footer .lang__menu {
+	top: auto;
+	right: auto;
+	bottom: calc(100% + 0.5rem);
+	left: 0;
 }
 
 .masthead__toggle {
@@ -612,6 +718,13 @@ dd {
 	.js .masthead[data-open] .masthead__aside {
 		justify-content: space-between;
 		padding-inline: 0.5rem;
+	}
+
+	.js .masthead[data-open] .lang__menu {
+		top: auto;
+		right: auto;
+		bottom: calc(100% + 0.5rem);
+		left: 0;
 	}
 }
 

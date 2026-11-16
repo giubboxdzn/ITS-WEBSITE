@@ -13,11 +13,12 @@ wp-content/themes/its-rossellini/   il tema (da installare in produzione)
   single.php, single-evento.php, single-documento.php
   templates/                        modelli di pagina: Elenco corsi, Eventi, Bandi e documenti, Edizioni dei corsi
   template-parts/                   card corso, griglia corsi con filtro, riga datata, testata pagina
-  inc/                              helper, icone SVG, query, Customizer
+  inc/                              helper, icone SVG, bandiere e selettore lingua, query, Customizer
+  languages/                        traduzioni del tema: its-rossellini.pot, en_GB.po/.mo/.l10n.php
   assets/css/main.css               tutto lo stile (token in :root)
   assets/js/main.js                 header, video dell'hero, menu mobile, filtro corsi, animazioni legate all'interruttore «Animazioni» (miglioramento progressivo)
   assets/fonts/                     Raleway variabile, normale e corsivo (OFL), self-hosted
-dev/                                ambiente locale (non va in produzione)
+dev/                                ambiente locale (non va in produzione); dev/i18n/build.py compila le traduzioni
 .claude/skills/                     skill per Claude Code: find-skills, impeccable, web-design-guidelines
 ```
 
@@ -26,11 +27,13 @@ dev/                                ambiente locale (non va in produzione)
 Richiede PHP ≥ 8.1 con `pdo_sqlite`, git e Python 3. Nessun MySQL: WordPress gira su SQLite.
 
 ```bash
-dev/setup.sh      # scarica WordPress 7.1.4 + SQLite, attiva il tema, importa i contenuti pubblici del sito
+dev/setup.sh      # scarica WordPress 7.1.4 + SQLite + Polylang, attiva tema e lingue, importa i contenuti pubblici IT ed EN
 dev/serve.sh      # http://localhost:8080  (admin / admin)
 ```
 
-Il server ascolta solo su questa macchina (`127.0.0.1`); `HOST=0.0.0.0 dev/serve.sh` per esporlo in rete, `PORT=8090` per cambiare porta.
+`serve.sh` è raggiungibile anche dalla rete locale: stampa l'indirizzo da aprire sul telefono (stessa Wi-Fi), ad esempio `http://192.168.1.20:8080`. I link del sito seguono l'indirizzo con cui lo apri. `HOST=127.0.0.1 dev/serve.sh` lo limita a questo PC, `PORT=8090` cambia porta. Attenzione: in rete locale anche l'admin (admin / admin) è raggiungibile; usalo solo su reti fidate.
+
+Su Windows, al primo avvio il firewall chiede se consentire PHP: spuntare **Reti private**. Se l'avviso è stato chiuso, da un prompt dei comandi *come amministratore*: `netsh advfirewall firewall add rule name="PHP dev server" dir=in action=allow protocol=TCP localport=8888 profile=private` (con la porta che usi), e verificare che la rete Wi-Fi sia impostata come *privata*.
 
 ### Windows (Git Bash)
 
@@ -48,7 +51,13 @@ Se `serve.sh` risponde *Failed to listen … autorizzazioni di accesso*, la port
 
 Su Windows il tema è collegato con una *junction* (non servono permessi di amministratore). Per ripartire da un database vuoto basta cancellare `.wp/db/` e rilanciare `dev/setup.sh`.
 
-`dev/seed/fetch.py` legge (solo GET) l'API REST e le pagine pubbliche di itsrossellini.it e salva tutto in `.wp/seed/` (ignorato da git). `dev/seed/import.php` lo importa nel database locale. Non scrive nulla sul sito live.
+`dev/seed/fetch.py` legge (solo GET) l'API REST e le pagine pubbliche di itsrossellini.it, in italiano e in inglese, e salva tutto in `.wp/seed/` (ignorato da git). `dev/seed/import.php` lo importa nel database locale. Non scrive nulla sul sito live. Se `data.json` esiste già senza la parte inglese, `setup.sh` scarica solo quella (`fetch.py --en-only`, qualche minuto).
+
+### Lingue (Polylang)
+
+Come sul sito live: italiano predefinito senza prefisso, inglese su `/en/`. `setup.sh` prende **Polylang 3.9.2** da GitHub (`.wp/polylang`) e genera con `dev/polylang-autoload.php` i file che la release ufficiale include (autoload e liste dei moduli), senza Composer; `dev/languages.php` crea le lingue e le opzioni; l'import assegna la lingua a ogni contenuto, collega le traduzioni IT↔EN (dagli `hreflang` del sito live) e crea i menu inglesi.
+
+Il selettore con le bandiere è nell'header (bandiera + codice) e nel footer (bandiera + nome, come nel riferimento): porta alla stessa pagina nell'altra lingua o, se manca la traduzione, alla home di quella lingua. I testi del tema sono tradotti in `languages/en_GB.po`; dopo averli modificati: `python3 -I dev/i18n/build.py` (aggiorna `.pot`, `.po` e compila `.mo` e `.l10n.php`).
 
 `dev/mu-plugins/its-dev-content-model.php` registra in locale gli stessi tipi di contenuto di Rossellini Core (`corso`, `evento`, `edizione_corso`, `documento` e relative tassonomie). In produzione non serve: li registra già il plugin.
 
@@ -56,11 +65,12 @@ Su Windows il tema è collegato con una *junction* (non servono permessi di ammi
 
 1. Installare la cartella `wp-content/themes/its-rossellini` come nuovo tema (slug diverso da `rossellini`, il tema attuale resta intatto per tornare indietro).
 2. Tenere attivo **Rossellini Core**: il tema legge i suoi tipi di contenuto e tassonomie.
-3. **Contenuti delle pagine.** Sul sito attuale quasi tutte le pagine hanno l'editor vuoto, perché il testo è scritto nel tema o nel plugin. Questo tema mostra il contenuto dell'editor, quindi prima di attivarlo i testi vanno inseriti nelle pagine (lo script di import locale mostra il risultato atteso).
-4. Assegnare i modelli: *Elenco corsi* a `/offerta-formativa/corsi/`, *Eventi* a `/eventi/`, *Bandi e documenti* a `/bandi-albi/` e `/bandi/`, *Edizioni dei corsi* a `/offerta-formativa/corsi-in-svolgimento-e-conclusi/`; impostare `/news/` come pagina degli articoli.
-5. Menu: posizioni *Menu principale*, *Menu footer*, *Note legali*.
-6. Home: Customizer → *Home* → video dell'hero (MP4 muto); l'immagine in evidenza della pagina iniziale fa da copertina del video. Il contenuto della pagina (loghi con link) diventa la sezione «I nostri partner».
-7. Customizer → *Contatti e sede* e *Dati pubblicati*: indirizzo, orari, telefono, email, durata, ore, posti, dato occupazionale e fonte.
+3. **Lingue**: con Polylang attivo il selettore con le bandiere compare da solo (italiano e inglese già configurati sul sito live). Le traduzioni dei testi del tema sono incluse (`en_GB`); indirizzo, orari, "come arrivare" e fonte del dato occupazionale, se modificati nel Customizer, si traducono in *Lingue → Traduzioni* (gruppo *ITS Rossellini*).
+4. **Contenuti delle pagine.** Sul sito attuale quasi tutte le pagine hanno l'editor vuoto, perché il testo è scritto nel tema o nel plugin. Questo tema mostra il contenuto dell'editor, quindi prima di attivarlo i testi vanno inseriti nelle pagine (lo script di import locale mostra il risultato atteso).
+5. Assegnare i modelli: *Elenco corsi* a `/offerta-formativa/corsi/`, *Eventi* a `/eventi/`, *Bandi e documenti* a `/bandi-albi/` e `/bandi/`, *Edizioni dei corsi* a `/offerta-formativa/corsi-in-svolgimento-e-conclusi/`; impostare `/news/` come pagina degli articoli.
+6. Menu: posizioni *Menu principale*, *Menu footer*, *Note legali*.
+7. Home: Customizer → *Home* → video dell'hero (MP4 muto); l'immagine in evidenza della pagina iniziale fa da copertina del video. Il contenuto della pagina (loghi con link) diventa la sezione «I nostri partner».
+8. Customizer → *Contatti e sede* e *Dati pubblicati*: indirizzo, orari, telefono, email, durata, ore, posti, dato occupazionale e fonte.
 
 ### Campi personalizzati
 

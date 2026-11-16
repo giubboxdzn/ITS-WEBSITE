@@ -78,3 +78,39 @@ add_action(
 		}
 	}
 );
+
+/**
+ * Customizer texts visitors read, offered for translation in Polylang (Languages → Translations).
+ */
+add_action(
+	'init',
+	static function (): void {
+		if ( ! is_admin() || ! function_exists( 'pll_register_string' ) ) {
+			return;
+		}
+		$texts = array(
+			'its_address'                => 'Via Tiburtina 691, Roma',
+			'its_transit'                => 'Metro B Pietralata o Monti Tiburtini',
+			'its_hours'                  => 'Lun–Ven 9:30–13:30 / 14:30–18:30',
+			'its_fact_employment_source' => 'Dato pubblicato da ITS Rossellini',
+		);
+		foreach ( $texts as $mod => $default ) {
+			pll_register_string( $mod, (string) get_theme_mod( $mod, $default ), 'ITS Rossellini' );
+		}
+	},
+	20
+);
+
+/**
+ * The default Customizer texts, listed for the theme's translation files (never called).
+ *
+ * @return string[]
+ */
+function its_customizer_default_texts(): array {
+	return array(
+		__( 'Via Tiburtina 691, Roma', 'its-rossellini' ),
+		__( 'Metro B Pietralata o Monti Tiburtini', 'its-rossellini' ),
+		__( 'Lun–Ven 9:30–13:30 / 14:30–18:30', 'its-rossellini' ),
+		__( 'Dato pubblicato da ITS Rossellini', 'its-rossellini' ),
+	);
+}

@@ -5,6 +5,12 @@
  * @package its-rossellini-dev
  */
 
+// Links follow the address the page was opened with: localhost on this PC, its LAN IP from a phone.
+$host = (string) ( $_SERVER['HTTP_HOST'] ?? '' );
+if ( preg_match( '/^[a-z0-9.-]+(:\d{1,5})?$/i', $host ) ) {
+	putenv( 'WP_HOME=http://' . $host );
+}
+
 $root = $_SERVER['DOCUMENT_ROOT'];
 $path = rawurldecode( (string) parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH ) );
 $file = realpath( $root . $path );

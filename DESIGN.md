@@ -202,7 +202,10 @@ Depth comes from layering: panels over the canvas, the partner bar over the hero
 Pills, 3rem, Raleway 600. **White** on dark/footage; **Gradient** (electric → blue, white text, blue glow) on light; **Glass** on footage; **Outline** on light; **Outline light** on dark. Arrow icons rotate 45° on hover; buttons lift 1px.
 
 ### Navigation
-Logo, a glass pill holding the links (current page as a white inner pill), language circles, CTA pill (white on the home, gradient elsewhere).
+Logo, a glass pill holding the links (current page as a white inner pill), the language switcher, CTA pill (white on the home, gradient elsewhere).
+
+### Language switcher
+A pill with a round flag (inline SVG: Italy, United Kingdom) and the language code in the header, or the language name in the footer next to the social icons (as in the hosting reference). It opens a white rounded list of the site's languages, each with its flag, name in its own language and a check on the current one; in the footer the list opens upwards. Native `<details>`; one open at a time, closed by a click elsewhere or Escape. Each link leads to the same page in the other language (Polylang), or to that language's home page. Flags are the only non-institutional colours on the site, and only at flag size.
 
 ### Glass cards
 Over the hero footage: a stat card (87%) and a visit/next-event card with a white icon circle. On a course photo: a facts card (years, hours, internship, places) overlapping the photo's left edge.
@@ -226,7 +229,7 @@ Text (display heading, lead) with four navy chips in a 2×2 grid (address, Metro
 Native `<details>` items in navy rounded rows (22px), question as h3, chevron that turns on open; the first item open. Content comes from the FAQ page (Details blocks or heading + paragraph). Works without JavaScript.
 
 ### Footer
-Full-bleed navy band (no inset or corners, user decision, hairline top edge): logo, claim and circular social icons; three columns (offer, contacts, transparency + legal); the funding strip in a white rounded bar; base row with ©, the animations switch, languages and a "Torna su" pill with a white arrow circle (smooth scroll while motion is on); the logo as a giant outlined watermark fading into the bottom edge.
+Full-bleed navy band (no inset or corners, user decision, hairline top edge): logo, claim, circular social icons and the language switcher; three columns (offer, contacts, transparency + legal); the funding strip in a white rounded bar; base row with ©, the animations switch, languages and a "Torna su" pill with a white arrow circle (smooth scroll while motion is on); the logo as a giant outlined watermark fading into the bottom edge.
 
 ### Lists and documents
 Rows in a rounded container with circular arrows; the document filter is a light rounded bar with pill fields; the table is a rounded bordered container.

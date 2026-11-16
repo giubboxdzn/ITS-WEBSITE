@@ -117,7 +117,7 @@ $partners = trim( (string) apply_filters( 'the_content', (string) get_post_field
 		</article>
 		<div class="tile tile--stat bento__s1">
 			<p class="tile__label"><?php esc_html_e( 'Corsi biennali', 'its-rossellini' ); ?></p>
-			<p class="tile__num"><?php echo esc_html( (string) (int) wp_count_posts( 'corso' )->publish ); ?></p>
+			<p class="tile__num"><?php echo esc_html( (string) its_course_count() ); ?></p>
 		</div>
 		<?php if ( $tile_a ) : ?>
 			<figure class="tile tile--img bento__i1"><?php echo wp_get_attachment_image( $tile_a, 'its-card', false, array( 'alt' => '', 'sizes' => '(max-width: 760px) 46vw, 220px' ) ); ?></figure>
@@ -158,7 +158,7 @@ $partners = trim( (string) apply_filters( 'the_content', (string) get_post_field
 			<h2 id="corsi-title" class="display display--dark"><?php echo wp_kses( __( 'Trova il tuo <strong>campo d’azione.</strong>', 'its-rossellini' ), $em ); ?></h2>
 			<p class="lead">
 				<?php
-				$count = (int) wp_count_posts( 'corso' )->publish;
+				$count = its_course_count();
 				printf(
 					/* translators: %d: number of courses */
 					esc_html( _n( '%d percorso biennale, con presenza quotidiana nei laboratori e docenti che lavorano davvero nell’industria creativa e tecnologica.', '%d percorsi biennali, con presenza quotidiana nei laboratori e docenti che lavorano davvero nell’industria creativa e tecnologica.', $count, 'its-rossellini' ) ),

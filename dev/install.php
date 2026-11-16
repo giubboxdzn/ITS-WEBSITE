@@ -17,6 +17,7 @@ $_SERVER['SERVER_NAME'] = 'localhost';
 
 require dirname( __DIR__ ) . '/.wp/wordpress/wp-load.php';
 require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 if ( ! is_blog_installed() ) {
 	wp_install( 'ITS Academy Roberto Rossellini', 'admin', 'admin@example.test', false, '', 'admin' );
@@ -29,5 +30,9 @@ update_option( 'timezone_string', 'Europe/Rome' );
 update_option( 'date_format', 'j F Y' );
 update_option( 'posts_per_page', 12 );
 switch_theme( 'its-rossellini' );
+if ( ! is_plugin_active( 'polylang/polylang.php' ) && is_file( WP_PLUGIN_DIR . '/polylang/polylang.php' ) ) {
+	$activated = activate_plugin( 'polylang/polylang.php' );
+	echo is_wp_error( $activated ) ? 'Polylang: ' . $activated->get_error_message() . "\n" : "Polylang activated.\n";
+}
 flush_rewrite_rules();
 echo 'Theme: ' . wp_get_theme()->get( 'Name' ) . "\n";

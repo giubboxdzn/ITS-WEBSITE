@@ -8,6 +8,11 @@
 
 defined( 'ABSPATH' ) || exit;
 
+// Locally the site answers on localhost and on the PC's LAN IP: Polylang must not cache one home URL.
+if ( ! defined( 'PLL_CACHE_HOME_URL' ) ) {
+	define( 'PLL_CACHE_HOME_URL', false );
+}
+
 add_action(
 	'init',
 	static function (): void {

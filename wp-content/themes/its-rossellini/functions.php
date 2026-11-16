@@ -15,10 +15,11 @@ require ITS_ROSSELLINI_DIR . '/inc/icons.php';
 require ITS_ROSSELLINI_DIR . '/inc/content.php';
 require ITS_ROSSELLINI_DIR . '/inc/customizer.php';
 
+
 add_action(
 	'after_setup_theme',
 	static function (): void {
-		load_theme_textdomain( 'its-rossellini', ITS_ROSSELLINI_DIR . '/languages' );
+		load_theme_textdomain( 'its-rossellini', get_template_directory() . '/languages' );
 		add_theme_support( 'title-tag' );
 		add_theme_support( 'post-thumbnails' );
 		add_theme_support( 'responsive-embeds' );
