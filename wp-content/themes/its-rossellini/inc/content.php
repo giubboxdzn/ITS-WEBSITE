@@ -133,3 +133,37 @@ function its_filter_terms( string $tax ): array {
 	);
 	return is_wp_error( $terms ) ? array() : $terms;
 }
+
+/**
+ * Questions and answers from the FAQ page: native Details blocks, or heading + paragraph pairs.
+ *
+ * @return array<int, array{q: string, a: string}>
+ */
+function its_faq_items( int $limit = 6 ): array {
+	$page = get_page_by_path( 'faq' );
+	if ( $page && function_exists( 'pll_get_post' ) ) {
+		$translated = pll_get_post( $page->ID );
+		$page       = $translated ? get_post( $translated ) : $page;
+	}
+	if ( ! $page ) {
+		return array();
+	}
+	$html  = (string) $page->post_content;
+	$items = array();
+	if ( preg_match_all( '#<details\b[^>]*>\s*<summary[^>]*>(.*?)</summary>(.*?)</details>#s', $html, $rows, PREG_SET_ORDER ) ) {
+		foreach ( $rows as $row ) {
+			$items[] = array(
+				'q' => wp_strip_all_tags( $row[1] ),
+				'a' => trim( (string) preg_replace( '#<!--.*?-->#s', '', $row[2] ) ),
+			);
+		}
+	} elseif ( preg_match_all( '#<h[23][^>]*>(.*?)</h[23]>\s*(<p[^>]*>.*?</p>)#s', $html, $rows, PREG_SET_ORDER ) ) {
+		foreach ( $rows as $row ) {
+			$items[] = array(
+				'q' => wp_strip_all_tags( $row[1] ),
+				'a' => $row[2],
+			);
+		}
+	}
+	return array_slice( $items, 0, $limit );
+}

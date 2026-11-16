@@ -270,6 +270,21 @@ foreach ( $pages as $p ) {
 	}
 }
 
+// FAQ page as native Details blocks (one question per block), editable in the block editor.
+if ( ! empty( $data['faq'] ) && isset( $page_ids['faq'] ) ) {
+	$blocks = array();
+	foreach ( $data['faq'] as $item ) {
+		$blocks[] = "<!-- wp:details -->\n<details class=\"wp-block-details\"><summary>" . esc_html( $item['q'] ) . "</summary><!-- wp:paragraph -->\n<p>" . esc_html( $item['a'] ) . "</p>\n<!-- /wp:paragraph --></details>\n<!-- /wp:details -->";
+	}
+	wp_update_post(
+		array(
+			'ID'           => $page_ids['faq'],
+			'post_excerpt' => 'Risposte su corsi, ammissioni, frequenza, stage e servizi.',
+			'post_content' => implode( "\n\n", $blocks ),
+		)
+	);
+}
+
 // Front page: partner logos as editable content.
 $partners = '';
 foreach ( $data['partners'] as $partner ) {

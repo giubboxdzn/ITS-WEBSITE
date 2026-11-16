@@ -23,6 +23,17 @@ function its_icon( string $name, string $class = '' ): string {
 		'mail'     => '<rect x="3.5" y="5.5" width="17" height="13"/><path d="m4 6.5 8 6 8-6"/>',
 		'play'     => '<path d="M8 5.5v13l10-6.5Z"/>',
 		'pause'    => '<path d="M8.5 5.5v13M15.5 5.5v13"/>',
+		'check'    => '<path d="m5 12.5 4.5 4.5L19 7.5"/>',
+		'chevron'  => '<path d="m6 9.5 6 6 6-6"/>',
+		'clock'    => '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+		'globe'    => '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.6 3.8 5.4 3.8 8.5s-1.3 5.9-3.8 8.5c-2.5-2.6-3.8-5.4-3.8-8.5s1.3-5.9 3.8-8.5Z"/>',
+		'train'    => '<rect x="6" y="3.5" width="12" height="13" rx="3"/><path d="M6 11h12M9 20l-1.5 1.5M15 20l1.5 1.5M9.5 14h.01M14.5 14h.01"/>',
+		'calendar' => '<rect x="4" y="5.5" width="16" height="14" rx="2"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/>',
+		'euro'     => '<path d="M17 7.5a6 6 0 1 0 0 9M5 10.5h8M5 13.5h8"/>',
+		'users'    => '<circle cx="9" cy="9" r="3.25"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0M15.5 6a3.25 3.25 0 0 1 0 6.5M17 14a5.5 5.5 0 0 1 3.5 5"/>',
+		'cap'      => '<path d="M2.5 9.5 12 5l9.5 4.5L12 14Z"/><path d="M6.5 11.5V16c0 1.5 2.5 3 5.5 3s5.5-1.5 5.5-3v-4.5"/>',
+		'instagram' => '<rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.25 6.75h.01"/>',
+		'x'        => '<path d="M4.5 4.5h4l11 15h-4ZM19.5 4.5l-6.25 7M4.5 19.5l6.25-7"/>',
 	);
 	if ( ! isset( $paths[ $name ] ) ) {
 		return '';

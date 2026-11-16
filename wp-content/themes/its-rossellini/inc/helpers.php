@@ -215,6 +215,8 @@ function its_contacts(): array {
 		'hours'   => (string) get_theme_mod( 'its_hours', __( 'Lun–Ven 9:30–13:30 / 14:30–18:30', 'its-rossellini' ) ),
 		'phone'   => (string) get_theme_mod( 'its_phone', '06 5576493' ),
 		'email'   => (string) get_theme_mod( 'its_email', 'info@itsrossellini.it' ),
+		'instagram' => (string) get_theme_mod( 'its_instagram', 'https://www.instagram.com/itsrossellini/' ),
+		'x'         => (string) get_theme_mod( 'its_x', 'https://x.com/Its_Rossellini' ),
 	);
 }
 

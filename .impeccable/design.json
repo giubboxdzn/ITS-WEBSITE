@@ -1,6 +1,6 @@
 {
  "schemaVersion": 2,
- "generatedAt": "2026-11-16T20:08:03+00:00",
+ "generatedAt": "2026-11-16T20:50:58+00:00",
  "title": "Design System: ITS Academy Roberto Rossellini",
  "extensions": {
   "colorMeta": {
@@ -274,6 +274,11 @@
     "name": "card-lift",
     "value": "translateY(-4px) + image scale 1.05",
     "purpose": "Course card hover."
+   },
+   {
+    "name": "motion-switch",
+    "value": "html.motion-off, localStorage its-motion",
+    "purpose": "Footer switch: turns off transitions and stops the hero video; reduced motion does the same."
    }
   ],
   "breakpoints": [
@@ -363,18 +368,43 @@
    "description": "Pill-shaped field with label above.",
    "html": "<label class='ds-field'><span>Cerca</span><input type='search' placeholder='Es. graduatoria Videomaker…'></label>",
    "css": ":host{--elettrico:#1032cf;--blu:#004590;--ciano:#49b7e9;--abisso:#04152b;--abisso-2:#0a2140;--bordo:#e3e9f1;--muted:#55627a;--f:'Raleway',system-ui,sans-serif}.ds-field{display:grid;gap:.35rem;font:600 .875rem var(--f)}.ds-field input{min-height:3rem;padding:0 1.1rem;border:1px solid var(--bordo);border-radius:999px;font:400 1rem var(--f);caret-color:var(--blu)}.ds-field input:focus-visible{outline:3px solid var(--elettrico);outline-offset:3px}"
+  },
+  {
+   "name": "Compare Row",
+   "kind": "card",
+   "refersTo": "tile",
+   "description": "Comparison card row: muted label left, value with a gradient check right.",
+   "html": "<div class='ds-dark'><div class='ds-cmp'><div class='ds-row'><span>Tirocinio in azienda</span><b><i><svg viewBox=\"0 0 24 24\" width=\"14\" height=\"14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"m5 12 5 5 9-10\"/></svg></i>800+ ore</b></div><div class='ds-row'><span>Posti</span><b><i><svg viewBox=\"0 0 24 24\" width=\"14\" height=\"14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"m5 12 5 5 9-10\"/></svg></i>fino a 28 per corso</b></div></div></div>",
+   "css": ":host{--elettrico:#1032cf;--blu:#004590;--ciano:#49b7e9;--abisso:#04152b;--abisso-2:#0a2140;--bordo:#e3e9f1;--muted:#55627a;--f:'Raleway',system-ui,sans-serif}.ds-dark{background:var(--abisso);padding:24px}.ds-cmp{width:30rem;padding:.5rem 1.75rem;border:1px solid rgba(73,183,233,.3);border-radius:40px;background:var(--abisso-2);font-family:var(--f)}.ds-row{display:grid;grid-template-columns:1fr 1.4fr;align-items:center;padding:.9rem 0;border-bottom:1px solid rgba(255,255,255,.08)}.ds-row:last-child{border:0}.ds-row span{color:#a9b8cf;font-size:.875rem}.ds-row b{display:flex;align-items:center;gap:.6rem;color:#fff;font-weight:500}.ds-row i{display:grid;place-items:center;width:1.4rem;height:1.4rem;border-radius:50%;background:linear-gradient(135deg,#1032cf,#2a6fe0);color:#fff}"
+  },
+  {
+   "name": "FAQ Item",
+   "kind": "disclosure",
+   "refersTo": "tile",
+   "description": "Native details row with h3 question and turning chevron.",
+   "html": "<div class='ds-dark'><details class='ds-faq' open><summary><b>Quanto durano i corsi?</b><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\"><path d=\"m6 9 6 6 6-6\"/></svg></summary><p>Due anni: circa 1.000 ore tra aula e laboratorio e 800+ ore di tirocinio.</p></details></div>",
+   "css": ":host{--elettrico:#1032cf;--blu:#004590;--ciano:#49b7e9;--abisso:#04152b;--abisso-2:#0a2140;--bordo:#e3e9f1;--muted:#55627a;--f:'Raleway',system-ui,sans-serif}.ds-dark{background:var(--abisso);padding:24px}.ds-faq{width:32rem;border:1px solid rgba(255,255,255,.1);border-radius:22px;background:var(--abisso-2);color:#fff;font-family:var(--f)}.ds-faq summary{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem 1.25rem;cursor:pointer;list-style:none}.ds-faq summary::-webkit-details-marker{display:none}.ds-faq summary b{font-weight:600}.ds-faq[open] svg{transform:rotate(180deg);color:#49b7e9}.ds-faq p{margin:0;padding:0 1.25rem 1.1rem;color:#a9b8cf;line-height:1.6}"
+  },
+  {
+   "name": "Motion Switch",
+   "kind": "control",
+   "refersTo": "chip",
+   "description": "Footer animations switch: pill track with gradient when on.",
+   "html": "<div class='ds-dark'><button class='ds-sw' role='switch' aria-checked='true'><span class='ds-tr'><span></span></span>Animazioni</button></div>",
+   "css": ":host{--elettrico:#1032cf;--blu:#004590;--ciano:#49b7e9;--abisso:#04152b;--abisso-2:#0a2140;--bordo:#e3e9f1;--muted:#55627a;--f:'Raleway',system-ui,sans-serif}.ds-dark{background:var(--abisso);padding:24px}.ds-sw{display:inline-flex;align-items:center;gap:.6rem;padding:.35rem .9rem .35rem .4rem;border:1px solid rgba(255,255,255,.14);border-radius:999px;background:transparent;color:#fff;font:600 .875rem var(--f)}.ds-tr{position:relative;width:2.25rem;height:1.25rem;border-radius:999px;background:linear-gradient(135deg,#1032cf,#2a6fe0)}.ds-tr span{position:absolute;top:.2rem;left:.2rem;width:.85rem;height:.85rem;border-radius:50%;background:#fff;transform:translateX(1rem)}"
   }
  ],
  "narrative": {
   "northStar": "La scuola, in una card",
-  "overview": "The direction comes from three references the user chose (a dark biotech site, a light AI-health site, a dark IT-services site), translated into the institute's palette and Raleway. Content lives in large rounded containers: the home hero is a rounded card holding the real footage, light sections are white panels inset into a deep-navy canvas, figures and photos sit in a bento of tiles. Type is light and large, in sentence case, with one phrase emphasised. Glass is used only where something floats over imagery: the navigation pill, the stat cards on the hero, the chips on photos.\n\nInterior pages (courses, news, documents) are light: white ground with a soft blue glow at the top, the same pills, radii and type.",
+  "overview": "The direction comes from three references the user chose (a dark biotech site, a light AI-health site, a dark IT-services site), translated into the institute's palette and Raleway; a fourth (a hosting site) adds the comparison card, the place block with the globe, the FAQ accordion and the fuller footer. Content lives in large rounded containers: the home hero is a rounded card holding the real footage, light sections are white panels inset into a deep-navy canvas, figures and photos sit in a bento of tiles. Type is light and large, in sentence case, with one phrase emphasised. Glass is used only where something floats over imagery: the navigation pill, the stat cards on the hero, the chips on photos.\n\nInterior pages (courses, news, documents) are light: white ground with a soft blue glow at the top, the same pills, radii and type.",
   "keyCharacteristics": [
    "Deep-navy canvas made of tones of the institutional blue; white panels inset by 8–16px with 40px corners.",
    "Raleway 300 display, sentence case, one phrase at 600 in cyan (dark) or electric blue (light).",
    "Glass pills and cards over footage and photos.",
    "Bento tiles: a CTA tile, stat tiles (label + number), photo tiles, a list tile, one gradient accent tile.",
    "Pill buttons; the arrow icon rotates to ↗ on hover.",
-   "Photo cards with a bottom scrim, a glass area chip and a white circular arrow."
+   "Photo cards with a bottom scrim, a glass area chip and a white circular arrow.",
+   "One comparison card of published facts, an FAQ accordion on native details, a footer with the logo as an outlined watermark."
   ],
   "rules": [
    {
@@ -410,7 +440,8 @@
    "Don't put a badge or label above a headline.",
    "Don't bring back mono micro-labels, counters, grid backgrounds or HUD frames.",
    "Don't put small white text on the cyan end of a gradient.",
-   "Don't invent figures, testimonials or partners; published figures live in the Customizer."
+   "Don't invent figures, testimonials or partners; published figures live in the Customizer.",
+   "Don't bring in pricing-site devices: plan tiers, \"most popular\" badges, competitor columns."
   ]
  }
 }

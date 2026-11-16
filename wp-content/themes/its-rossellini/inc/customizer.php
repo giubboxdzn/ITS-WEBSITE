@@ -19,6 +19,8 @@ add_action(
 					'its_hours'   => array( __( 'Orari', 'its-rossellini' ), 'Lun–Ven 9:30–13:30 / 14:30–18:30' ),
 					'its_phone'   => array( __( 'Telefono', 'its-rossellini' ), '06 5576493' ),
 					'its_email'   => array( __( 'Email', 'its-rossellini' ), 'info@itsrossellini.it' ),
+					'its_instagram' => array( __( 'Instagram (URL)', 'its-rossellini' ), 'https://www.instagram.com/itsrossellini/' ),
+					'its_x'         => array( __( 'X (URL)', 'its-rossellini' ), 'https://x.com/Its_Rossellini' ),
 				),
 			),
 			'its_facts'    => array(

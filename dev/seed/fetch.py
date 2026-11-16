@@ -147,7 +147,17 @@ def terms(tax):
     return {t["id"]: {"name": html.unescape(t["name"]), "slug": t["slug"]} for t in rest(tax)}
 
 
-def run(out, courses_only=False):
+def faq_items(page_html):
+    """Question/answer pairs from the live FAQ page (numbered list: number, question, answer)."""
+    lines = text_lines(main_html(page_html))
+    items = []
+    for n, line in enumerate(lines):
+        if re.fullmatch(r"\d{2}", line) and n + 2 < len(lines) and lines[n + 1].endswith("?"):
+            items.append({"q": lines[n + 1], "a": lines[n + 2]})
+    return items
+
+
+def run(out, courses_only=False, faq_only=False):
     media_dir = os.path.join(out, "media")
     os.makedirs(media_dir, exist_ok=True)
     cache = {}
@@ -156,9 +166,15 @@ def run(out, courses_only=False):
         data["taxonomies"][tax] = terms(tax)
     tx = data["taxonomies"]
     data_path = os.path.join(out, "data.json")
-    if courses_only and os.path.exists(data_path):
+    if (courses_only or faq_only) and os.path.exists(data_path):
         with open(data_path, encoding="utf-8") as f:
             previous = json.load(f)
+    if faq_only and os.path.exists(data_path):
+        previous["faq"] = faq_items(get(BASE + "/faq/"))
+        with open(data_path, "w", encoding="utf-8") as f:
+            json.dump(previous, f, ensure_ascii=False, indent=1)
+        print(f"faq={len(previous['faq'])} (refreshed)")
+        return
 
     # Courses: home teaser lines + structured sections from each course page.
     home = get(BASE + "/")
@@ -279,6 +295,7 @@ def run(out, courses_only=False):
             "content": content, "link": p["link"],
         })
     data["pages"] = pages
+    data["faq"] = faq_items(get(BASE + "/faq/"))
 
     partners = []
     for m in re.finditer(r'<li class="ros-logo-item[^"]*">(?:<a href="([^"]+)">)?<img[^>]+src="([^"]+)"[^>]*alt="([^"]*)"', home):
@@ -295,5 +312,6 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=os.path.join(os.path.dirname(__file__), "..", "..", ".wp", "seed"))
     ap.add_argument("--courses-only", action="store_true", help="refresh only the courses in an existing data.json")
+    ap.add_argument("--faq-only", action="store_true", help="refresh only the FAQ in an existing data.json")
     args = ap.parse_args()
-    run(os.path.abspath(args.out), courses_only=args.courses_only)
+    run(os.path.abspath(args.out), courses_only=args.courses_only, faq_only=args.faq_only)

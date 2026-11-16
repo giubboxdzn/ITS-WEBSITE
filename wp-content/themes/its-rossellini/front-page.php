@@ -116,15 +116,15 @@ $partners = trim( (string) apply_filters( 'the_content', (string) get_post_field
 			</div>
 		</article>
 		<div class="tile tile--stat bento__s1">
-			<p class="tile__label"><?php esc_html_e( 'Ore in aula e lab', 'its-rossellini' ); ?></p>
-			<p class="tile__num"><?php echo esc_html( $facts['hours'] ); ?></p>
+			<p class="tile__label"><?php esc_html_e( 'Corsi biennali', 'its-rossellini' ); ?></p>
+			<p class="tile__num"><?php echo esc_html( (string) (int) wp_count_posts( 'corso' )->publish ); ?></p>
 		</div>
 		<?php if ( $tile_a ) : ?>
 			<figure class="tile tile--img bento__i1"><?php echo wp_get_attachment_image( $tile_a, 'its-card', false, array( 'alt' => '', 'sizes' => '(max-width: 760px) 46vw, 220px' ) ); ?></figure>
 		<?php endif; ?>
 		<div class="tile tile--stat bento__s2">
-			<p class="tile__label"><?php esc_html_e( 'Ore di stage', 'its-rossellini' ); ?></p>
-			<p class="tile__num"><?php echo esc_html( $facts['internship'] ); ?></p>
+			<p class="tile__label"><?php esc_html_e( 'Aree tecnologiche', 'its-rossellini' ); ?></p>
+			<p class="tile__num"><?php echo esc_html( (string) count( its_course_areas() ) ); ?></p>
 		</div>
 		<?php if ( $tile_b ) : ?>
 			<figure class="tile tile--img bento__i2"><?php echo wp_get_attachment_image( $tile_b, 'its-card', false, array( 'alt' => '', 'sizes' => '(max-width: 760px) 46vw, 220px' ) ); ?></figure>
@@ -145,14 +145,9 @@ $partners = trim( (string) apply_filters( 'the_content', (string) get_post_field
 			<li><strong><?php esc_html_e( 'Imprese nel percorso', 'its-rossellini' ); ?></strong><span><?php esc_html_e( 'Stage, brief e relazioni che iniziano prima del diploma.', 'its-rossellini' ); ?></span></li>
 		</ul>
 		<div class="tile tile--stat tile--accent bento__s3">
-			<p class="tile__label"><?php esc_html_e( 'Posti per corso', 'its-rossellini' ); ?></p>
-			<p class="tile__num"><?php echo esc_html( $facts['places'] ); ?></p>
-			<p class="tile__note">
-				<?php
-				/* translators: %s: course length in years */
-				printf( esc_html__( 'Percorsi di %s anni, post-diploma, finanziati.', 'its-rossellini' ), esc_html( $facts['years'] ) );
-				?>
-			</p>
+			<p class="tile__label"><?php esc_html_e( 'Teatro di posa', 'its-rossellini' ); ?></p>
+			<p class="tile__num">360 m²</p>
+			<p class="tile__note"><?php esc_html_e( 'Aule, laboratori e set nella sede di Via Tiburtina.', 'its-rossellini' ); ?></p>
 		</div>
 	</div>
 </section>
@@ -173,6 +168,43 @@ $partners = trim( (string) apply_filters( 'the_content', (string) get_post_field
 			</p>
 		</div>
 		<?php get_template_part( 'template-parts/course-wall' ); ?>
+		<p class="panel__more"><a class="btn btn--outline" href="<?php echo esc_url( its_page_url( 'offerta-formativa/corsi' ) ); ?>"><?php esc_html_e( 'Vedi tutti i corsi', 'its-rossellini' ); ?><?php echo its_icon( 'arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a></p>
+	</div>
+</section>
+
+<?php
+$compare = array(
+	array( 'calendar', __( 'Durata', 'its-rossellini' ), sprintf( /* translators: %s: years */ __( '%s anni, dopo il diploma', 'its-rossellini' ), $facts['years'] ) ),
+	array( 'cap', __( 'Aula e laboratorio', 'its-rossellini' ), sprintf( /* translators: %s: hours */ __( 'circa %s ore', 'its-rossellini' ), $facts['hours'] ) ),
+	array( 'users', __( 'Tirocinio in azienda', 'its-rossellini' ), sprintf( /* translators: %s: hours */ __( '%s ore', 'its-rossellini' ), $facts['internship'] ) ),
+	array( 'euro', __( 'Costo', 'its-rossellini' ), __( 'Percorsi finanziati con risorse pubbliche', 'its-rossellini' ) ),
+	array( 'users', __( 'Posti', 'its-rossellini' ), sprintf( /* translators: %s: places */ __( 'fino a %s per corso', 'its-rossellini' ), $facts['places'] ) ),
+	array( 'check', __( 'Accesso', 'its-rossellini' ), __( 'Diploma di scuola superiore o titolo estero idoneo', 'its-rossellini' ) ),
+	array( 'globe', __( 'Esperienza all’estero', 'its-rossellini' ), __( 'Tirocini con Erasmus+, secondo bandi e requisiti', 'its-rossellini' ) ),
+	array( 'arrow-up', __( 'Dopo il diploma', 'its-rossellini' ), sprintf( /* translators: %s: share employed */ __( '%s lavora entro 12 mesi', 'its-rossellini' ), $facts['employment'] ) ),
+);
+?>
+<section class="section compare-section" aria-labelledby="compare-title">
+	<div class="wrap">
+		<div class="split-head">
+			<h2 id="compare-title" class="display"><?php echo wp_kses( __( 'Tutto in chiaro. <strong>Poi decidi.</strong>', 'its-rossellini' ), $em ); ?></h2>
+			<p class="lead"><?php esc_html_e( 'Le risposte che contano prima di candidarti, prese dai bandi e dalle FAQ dell’Academy.', 'its-rossellini' ); ?></p>
+		</div>
+		<div class="compare">
+			<div class="compare__brand"><?php echo its_logo(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span class="screen-reader-text"><?php esc_html_e( 'ITS Academy Roberto Rossellini', 'its-rossellini' ); ?></span></div>
+			<dl class="compare__rows">
+				<?php foreach ( $compare as [ $icon, $label, $value ] ) : ?>
+					<div class="compare__row">
+						<dt><?php echo its_icon( $icon ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo esc_html( $label ); ?></dt>
+						<dd><span class="compare__check"><?php echo its_icon( 'check' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span><?php echo esc_html( $value ); ?></dd>
+					</div>
+				<?php endforeach; ?>
+			</dl>
+			<div class="compare__actions">
+				<a class="btn btn--white" href="<?php echo esc_url( its_page_url( 'iscrizioni' ) ); ?>"><?php esc_html_e( 'Preiscriviti', 'its-rossellini' ); ?><?php echo its_icon( 'arrow-up' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+				<a class="btn btn--outline-light" href="<?php echo esc_url( its_page_url( 'bandi-albi' ) ); ?>"><?php esc_html_e( 'Bandi e documenti', 'its-rossellini' ); ?></a>
+			</div>
+		</div>
 	</div>
 </section>
 
@@ -208,6 +240,26 @@ $partners = trim( (string) apply_filters( 'the_content', (string) get_post_field
 				</li>
 			</ol>
 			<a class="btn btn--grad" href="<?php echo esc_url( its_page_url( 'servizi/placement', its_page_url( 'servizi' ) ) ); ?>"><?php esc_html_e( 'Stage e placement', 'its-rossellini' ); ?><?php echo its_icon( 'arrow-up' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+		</div>
+	</div>
+</section>
+
+<section class="section" aria-labelledby="place-title">
+	<div class="wrap place">
+		<div class="place__text">
+			<h2 id="place-title" class="display"><?php echo wp_kses( __( 'Parti da Roma. <strong>Arriva ovunque.</strong>', 'its-rossellini' ), $em ); ?></h2>
+			<p class="lead"><?php esc_html_e( 'Lezioni, laboratori e teatro di posa sono in Via Tiburtina, a pochi passi dalla Metro B. E con Erasmus+ il tirocinio può portarti all’estero.', 'its-rossellini' ); ?></p>
+			<ul class="place__chips">
+				<li><?php echo its_icon( 'pin' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span><strong><?php echo esc_html( $contacts['address'] ); ?></strong><?php esc_html_e( 'Sede legale e operativa', 'its-rossellini' ); ?></span></li>
+				<li><?php echo its_icon( 'train' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span><strong><?php esc_html_e( 'Metro B', 'its-rossellini' ); ?></strong><?php esc_html_e( 'Pietralata · Monti Tiburtini', 'its-rossellini' ); ?></span></li>
+				<li><?php echo its_icon( 'clock' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span><strong><?php esc_html_e( 'Orari', 'its-rossellini' ); ?></strong><?php echo esc_html( $contacts['hours'] ); ?></span></li>
+				<li><a href="<?php echo esc_url( its_page_url( 'servizi/erasmus', its_page_url( 'servizi' ) ) ); ?>"><?php echo its_icon( 'globe' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span><strong><?php esc_html_e( 'Erasmus+', 'its-rossellini' ); ?></strong><?php esc_html_e( 'Tirocinio all’estero', 'its-rossellini' ); ?></span></a></li>
+			</ul>
+		</div>
+		<div class="place__globe" aria-hidden="true">
+			<div class="globe">
+				<span class="globe__pin"><span><?php esc_html_e( 'Roma', 'its-rossellini' ); ?></span></span>
+			</div>
 		</div>
 	</div>
 </section>
@@ -251,6 +303,24 @@ $news   = new WP_Query(
 		</div>
 	</div>
 </section>
+
+<?php $faq = its_faq_items( 6 ); ?>
+<?php if ( $faq ) : ?>
+	<section class="section faq-section" aria-labelledby="faq-title">
+		<div class="wrap wrap--narrow">
+			<div class="panel__head panel__head--center">
+				<h2 id="faq-title" class="display"><?php echo wp_kses( __( 'Tutto quello che <strong>devi sapere.</strong>', 'its-rossellini' ), $em ); ?></h2>
+			</div>
+			<?php get_template_part( 'template-parts/faq-list', null, array( 'items' => $faq ) ); ?>
+			<p class="faq-section__more">
+				<?php esc_html_e( 'Non trovi la tua domanda?', 'its-rossellini' ); ?>
+				<a href="<?php echo esc_url( its_page_url( 'faq' ) ); ?>"><?php esc_html_e( 'Tutte le FAQ', 'its-rossellini' ); ?></a>
+				<?php esc_html_e( 'oppure', 'its-rossellini' ); ?>
+				<a href="<?php echo esc_url( its_page_url( 'contatti' ) ); ?>"><?php esc_html_e( 'scrivici', 'its-rossellini' ); ?></a>.
+			</p>
+		</div>
+	</section>
+<?php endif; ?>
 
 <section class="section" aria-labelledby="cta-title">
 	<div class="wrap">

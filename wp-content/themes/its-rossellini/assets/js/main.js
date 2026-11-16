@@ -39,6 +39,26 @@
 		window.matchMedia('(min-width: 1081px)').addEventListener('change', (mq) => mq.matches && setOpen(false));
 	}
 
+	/* Motion switch (footer): remembered per visitor, also stops the hero video. */
+	const root = document.documentElement;
+	const motionOff = () => root.classList.contains('motion-off') || reduceMotion.matches;
+	const motionToggle = document.querySelector('[data-motion-toggle]');
+	if (motionToggle) {
+		motionToggle.hidden = false;
+		const sync = () => motionToggle.setAttribute('aria-checked', String(!root.classList.contains('motion-off')));
+		sync();
+		motionToggle.addEventListener('click', () => {
+			const off = !root.classList.contains('motion-off');
+			root.classList.toggle('motion-off', off);
+			try {
+				if (off) localStorage.setItem('its-motion', 'off');
+				else localStorage.removeItem('its-motion');
+			} catch (e) { /* storage unavailable: the choice lasts for this page only */ }
+			sync();
+			document.dispatchEvent(new CustomEvent('its:motion', { detail: { off } }));
+		});
+	}
+
 	/* Hero video: plays only when motion and data allow; always pausable. */
 	const video = document.querySelector('[data-hero-video]');
 	const videoToggle = document.querySelector('[data-video-toggle]');
@@ -56,8 +76,14 @@
 				setState(true);
 			}
 		});
-		if (!reduceMotion.matches && !saveData) play();
+		if (!motionOff() && !saveData) play();
 		else setState(true);
+		document.addEventListener('its:motion', (event) => {
+			if (event.detail.off) {
+				video.pause();
+				setState(true);
+			} else if (!saveData) play();
+		});
 		reduceMotion.addEventListener('change', (mq) => {
 			if (mq.matches) {
 				video.pause();
