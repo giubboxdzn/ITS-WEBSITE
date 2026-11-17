@@ -61,6 +61,8 @@ Il selettore con le bandiere è nell'header (bandiera + codice) e nel footer (ba
 
 `dev/mu-plugins/its-dev-content-model.php` registra in locale gli stessi tipi di contenuto di Rossellini Core (`corso`, `evento`, `edizione_corso`, `documento` e relative tassonomie). In produzione non serve: li registra già il plugin.
 
+La copia locale non parla con internet (`WP_HTTP_BLOCK_EXTERNAL` nel `wp-config.php` generato): `dev/mu-plugins/its-dev-offline.php` risponde «servizio non disponibile» alle chiamate verso WordPress.org, così il controllo aggiornamenti si ferma in silenzio invece di stampare in admin il warning *could not establish a secure connection to WordPress.org*. `setup.sh` collega tutti i file di `dev/mu-plugins/`: dopo averne aggiunto uno basta rilanciarlo.
+
 ## Messa in produzione
 
 1. Installare la cartella `wp-content/themes/its-rossellini` come nuovo tema (slug diverso da `rossellini`, il tema attuale resta intatto per tornare indietro).

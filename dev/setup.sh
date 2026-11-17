@@ -113,12 +113,18 @@ if [ "$WINDOWS" = 1 ]; then
 		MSYS_NO_PATHCONV=1 MSYS2_ARG_CONV_EXCL='*' cmd /c mklink /J \
 			"$(cygpath -w "$THEME_LINK")" "$(cygpath -w "$ROOT/wp-content/themes/its-rossellini")" > /dev/null
 	fi
-	rm -f "$MU/its-dev-content-model.php"
-	printf "<?php\nrequire '%s';\n" "$(native_path "$ROOT/dev/mu-plugins/its-dev-content-model.php")" > "$MU/its-dev-content-model.php"
 else
 	ln -sfn "$ROOT/wp-content/themes/its-rossellini" "$THEME_LINK"
-	ln -sfn "$ROOT/dev/mu-plugins/its-dev-content-model.php" "$MU/its-dev-content-model.php"
 fi
+for MU_SRC in "$ROOT"/dev/mu-plugins/*.php; do
+	MU_FILE="$MU/$(basename "$MU_SRC")"
+	if [ "$WINDOWS" = 1 ]; then
+		rm -f "$MU_FILE"
+		printf "<?php\nrequire '%s';\n" "$(native_path "$MU_SRC")" > "$MU_FILE"
+	else
+		ln -sfn "$MU_SRC" "$MU_FILE"
+	fi
+done
 
 php "$ROOT/dev/install.php"
 php "$ROOT/dev/languages.php"
