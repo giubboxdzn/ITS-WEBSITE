@@ -719,6 +719,13 @@ dd {
 	outline-color: var(--ciano);
 }
 
+/* Desktop: the CTA sits as far from the bar's right end as from its top and bottom, so the two curves are concentric. */
+@media (min-width: 1081px) {
+	.masthead__bar {
+		padding-right: 0.8125rem;
+	}
+}
+
 /* Logged in: the sticky bar sits below the WordPress toolbar instead of under it. */
 .admin-bar .masthead {
 	top: 32px;
