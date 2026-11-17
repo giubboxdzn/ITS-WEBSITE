@@ -8,6 +8,13 @@
       "skillPath": "skills/a11y-core/SKILL.md",
       "computedHash": "0a9c55a9d439ebc47d22409f34757d341269618968a3b44d1eea10f7f2a4d073"
     },
+    "accessibilita-siti-app-l4-2004": {
+      "source": "ingegneri-livorno/skill-per-ingegneri",
+      "commit": "d508a6407664256769b1ba75f038fd0527627867",
+      "sourceType": "github",
+      "skillPath": "skills/accessibilita-siti-app-l4-2004/SKILL.md",
+      "computedHash": "c6ab3482976703786993c30bee68a5712e8d1c10bf702c1dee43ce3892070a8b"
+    },
     "accessibility": {
       "source": "addyosmani/web-quality-skills",
       "commit": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
@@ -44,6 +51,13 @@
       "skillPath": "skills/kb-legal-compliance-mapping/SKILL.md",
       "computedHash": "d8d447781474556ab2de824a36c5ce8ba6613a38310a31dcb19bee75bf3c5a8c"
     },
+    "pdf-accessibility": {
+      "source": "community-access/accessibility-agents",
+      "commit": "a538edc9edfb98cdd8bae96d6b79542874b478f7",
+      "sourceType": "github",
+      "skillPath": "skills/pdf-accessibility/SKILL.md",
+      "computedHash": "27874cfc6e01a29e080ce3dc498fa862162b16a2697a6312f744b278cee8bffe"
+    },
     "performance": {
       "source": "addyosmani/web-quality-skills",
       "commit": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
@@ -51,12 +65,26 @@
       "skillPath": "skills/performance/SKILL.md",
       "computedHash": "06902ebc4a8b91bfb8d1a99a03f186f0535b03d1a776ef751206104ef9b86c4c"
     },
+    "performing-ssl-tls-security-assessment": {
+      "source": "mukul975/anthropic-cybersecurity-skills",
+      "commit": "54a798831d2266a3ca61ce68a7acb80b81160d57",
+      "sourceType": "github",
+      "skillPath": "skills/performing-ssl-tls-security-assessment/SKILL.md",
+      "computedHash": "6c4b38978ab5594daf392937212c8a8c8d9718e3a6880709cf8f21532f5740a1"
+    },
     "ux-heuristics": {
       "source": "wondelai/skills",
       "commit": "c5265583b1a9740f06831e1d3e89b35bba3eb430",
       "sourceType": "github",
       "skillPath": "ux-heuristics/SKILL.md",
       "computedHash": "42bf5673212445b63ec0db611cfef58429946b9038b8ba9a6d4397d6161ff93c"
+    },
+    "verifica-accessibilita-dichiarazione-agid": {
+      "source": "ingegneri-livorno/skill-per-ingegneri",
+      "commit": "d508a6407664256769b1ba75f038fd0527627867",
+      "sourceType": "github",
+      "skillPath": "skills/verifica-accessibilita-dichiarazione-agid/SKILL.md",
+      "computedHash": "4add5de08bb8c9164fc0ae71afc36555c7a9d3412ee0d80c7fe65f8461e41c81"
     },
     "web-design-guidelines": {
       "source": "vercel-labs/agent-skills",

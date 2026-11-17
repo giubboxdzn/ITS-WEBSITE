@@ -23,7 +23,10 @@ dev/                                ambiente locale (non va in produzione); dev/
                                     design: impeccable, web-design-guidelines, ux-heuristics
                                     codice WordPress: wp-guard
                                     prestazioni e qualità: web-quality-audit, performance, core-web-vitals
-                                    accessibilità: accessibility (WCAG 2.2), kb-legal-compliance-mapping, accessibility-statement, a11y-core
+                                    accessibilità: accessibility (WCAG 2.2), pdf-accessibility (PDF/UA), a11y-core
+                                    legge: accessibilita-siti-app-l4-2004 e verifica-accessibilita-dichiarazione-agid (Legge Stanca, AgID),
+                                      kb-legal-compliance-mapping e accessibility-statement (EAA, EN 301 549)
+                                    sicurezza: performing-ssl-tls-security-assessment (TLS, con sslyze)
                                     ricerca di altre skill: find-skills
 ```
 

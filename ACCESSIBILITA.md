@@ -26,6 +26,7 @@ Per i soggetti dell'art. 3, comma 1:
   - il **meccanismo di feedback**, con il suo link, con cui chiunque può segnalare problemi o chiedere i contenuti in forma accessibile;
   - il link alla **procedura di attuazione** presso il Difensore civico per il digitale, se la risposta non arriva entro 30 giorni o non è soddisfacente.
 - **Dove si compila.** Gli enti presenti nell'Indice PA (IPA), come la Fondazione, compilano la dichiarazione su [form.agid.gov.it](https://form.agid.gov.it), con accesso del Responsabile per la transizione al digitale. Il sistema genera un link da mettere nel **footer del sito**.
+- **Obiettivi annuali di accessibilità (entro il 31 marzo).** Le linee guida AgID (§ 4.2) li chiedono alle pubbliche amministrazioni dell'art. 1, comma 2, D.Lgs. 165/2001. Una fondazione «gestore di pubblici servizi» con ogni probabilità non vi rientra: da confermare con l'RTD.
 - **Responsabilità (art. 9).** Per i soggetti del comma 1 la violazione rileva sulla responsabilità dirigenziale e disciplinare, ferme le responsabilità civili e penali. Le sanzioni fino al 5% del fatturato riguardano i privati del comma 1-bis.
 
 **European Accessibility Act (D.Lgs. 82/2022, in vigore dal 28/06/2025).** Riguarda prodotti e servizi elencati, come commercio elettronico, banche, trasporti e comunicazioni elettroniche. Un sito informativo di formazione non rientra in quell'elenco, a meno che non venda servizi online (pagamenti, iscrizioni a pagamento). In quel caso va rivalutato.
