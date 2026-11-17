@@ -27,29 +27,39 @@ while ( have_posts() ) :
 	);
 	get_template_part( 'template-parts/page-head', null, array( 'title' => get_the_title() ) );
 	?>
-	<div class="wrap page-body page-body--split">
-		<dl class="facts">
-			<?php foreach ( $facts as $label => $value ) : ?>
-				<div><dt><?php echo esc_html( $label ); ?></dt><dd><?php echo esc_html( $value ); ?></dd></div>
-			<?php endforeach; ?>
-		</dl>
-		<div class="prose">
-			<?php the_content(); ?>
-			<p class="prose__actions">
-				<?php if ( $file ) : ?>
-					<a class="btn btn--blue" href="<?php echo esc_url( $file ); ?>">
-						<?php echo its_icon( 'download' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-						<?php
-						/* translators: %s: file format, e.g. PDF */
-						echo esc_html( $format ? sprintf( __( 'Apri il documento (%s)', 'its-rossellini' ), $format ) : __( 'Apri il documento', 'its-rossellini' ) );
-						?>
-					</a>
-				<?php else : ?>
-					<span class="notice"><?php esc_html_e( 'Il file di questo documento non è ancora disponibile online. Per riceverlo scrivi alla segreteria.', 'its-rossellini' ); ?></span>
-				<?php endif; ?>
-				<a class="link-arrow" href="<?php echo esc_url( its_page_url( 'bandi-albi' ) ); ?>"><?php esc_html_e( 'Tutti i documenti', 'its-rossellini' ); ?><?php echo its_icon( 'arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
-			</p>
+	<div class="wrap page-body reading reading--facts-first">
+		<div class="prose prose--reading reading__main">
+			<?php
+			if ( '' !== trim( get_the_content() ) ) {
+				the_content();
+			} else {
+				echo '<p>' . esc_html__( 'Documento pubblicato dalla Fondazione ITS Academy Roberto Rossellini. Il file è scaricabile dal riquadro qui accanto.', 'its-rossellini' ) . '</p>';
+			}
+			?>
 		</div>
+		<aside class="reading__aside" aria-label="<?php esc_attr_e( 'Dati del documento', 'its-rossellini' ); ?>">
+			<div class="aside-card">
+				<dl class="aside-card__facts">
+					<?php foreach ( $facts as $label => $value ) : ?>
+						<div><dt><?php echo esc_html( $label ); ?></dt><dd><?php echo esc_html( $value ); ?></dd></div>
+					<?php endforeach; ?>
+				</dl>
+				<div class="aside-card__actions">
+					<?php if ( $file ) : ?>
+						<a class="btn btn--grad" href="<?php echo esc_url( $file ); ?>">
+							<?php
+							/* translators: %s: file format, e.g. PDF */
+							echo esc_html( $format ? sprintf( __( 'Apri il documento (%s)', 'its-rossellini' ), $format ) : __( 'Apri il documento', 'its-rossellini' ) );
+							echo its_icon( 'download' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							?>
+						</a>
+					<?php else : ?>
+						<p class="notice"><?php esc_html_e( 'Il file di questo documento non è ancora disponibile online. Per riceverlo scrivi alla segreteria.', 'its-rossellini' ); ?></p>
+					<?php endif; ?>
+					<a class="btn btn--outline" href="<?php echo esc_url( its_page_url( 'bandi-albi' ) ); ?>"><?php esc_html_e( 'Tutti i documenti', 'its-rossellini' ); ?></a>
+				</div>
+			</div>
+		</aside>
 	</div>
 	<?php
 	get_template_part( 'template-parts/cta-card' );

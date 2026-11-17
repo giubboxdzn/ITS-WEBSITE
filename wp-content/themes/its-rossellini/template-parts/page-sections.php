@@ -81,7 +81,8 @@ foreach ( $sections as $n => $section ) :
 			<?php if ( $section['facts'] ) : ?>
 				<div class="figures figures--<?php echo esc_attr( (string) min( 4, count( $section['facts'] ) ) ); ?>">
 					<?php foreach ( $section['facts'] as $f => [ $value, $label ] ) : ?>
-						<div class="tile tile--fact<?php echo count( $section['facts'] ) - 1 === $f ? ' tile--accent' : ''; ?>">
+						<?php $is_text = ! preg_match( '/\d/', $value ) || mb_strlen( $value ) > 12; // A phrase, not a figure. ?>
+						<div class="tile tile--fact<?php echo count( $section['facts'] ) - 1 === $f ? ' tile--accent' : ''; ?><?php echo $is_text ? ' tile--fact-text' : ''; ?>">
 							<p class="tile__num"><?php echo esc_html( $value ); ?></p>
 							<p class="tile__note"><?php echo esc_html( $label ); ?></p>
 						</div>

@@ -37,7 +37,7 @@ msgstr "Email"
 msgid "Offerta e servizi"
 msgstr "Courses and services"
 
-#: footer.php:52
+#: footer.php:52 page.php:62
 msgid "Contatti"
 msgstr "Contact"
 
@@ -311,7 +311,7 @@ msgstr "Your future <strong>starts rolling</strong> now."
 msgid "Due anni per trasformare il tuo talento in una professione tra cinema, TV, digital, live e tecnologia."
 msgstr "Two years to turn your talent into a profession across cinema, TV, digital media, live production and technology."
 
-#: front-page.php:75 single-evento.php:50 template-parts/cta-card.php:23 templates/template-eventi.php:40 inc/sections.php:66
+#: front-page.php:75 page.php:63 single-evento.php:54 template-parts/cta-card.php:23 templates/template-eventi.php:40 inc/sections.php:66
 msgid "Prenota un incontro"
 msgstr "Book a meeting"
 
@@ -335,15 +335,15 @@ msgstr "Pause the video"
 msgid "Riproduci il video"
 msgstr "Play the video"
 
-#: functions.php:34
+#: functions.php:35
 msgid "Menu principale"
 msgstr "Main menu"
 
-#: functions.php:35
+#: functions.php:36
 msgid "Menu footer"
 msgstr "Footer menu"
 
-#: functions.php:36
+#: functions.php:37
 msgid "Note legali"
 msgstr "Legal notes"
 
@@ -499,10 +499,6 @@ msgstr "Figures"
 msgid "Invito finale"
 msgstr "Closing call"
 
-#: inc/sections.php:85
-msgid "In questa pagina"
-msgstr "On this page"
-
 #: index.php:14
 msgid "Risultati per “%s”"
 msgstr "Results for “%s”"
@@ -518,6 +514,22 @@ msgstr "News"
 #: index.php:70
 msgid "Nessun contenuto trovato. Prova con un’altra parola o torna alla home."
 msgstr "Nothing found. Try another word or go back to the home page."
+
+#: page.php:50 inc/prose.php:122 inc/prose.php:122 inc/sections.php:85
+msgid "In questa pagina"
+msgstr "On this page"
+
+#: page.php:53 template-parts/faq-section.php:24
+msgid "Non trovi la tua domanda?"
+msgstr "Can’t find your question?"
+
+#: page.php:54
+msgid "Scrivi all’ufficio giusto o prenota un incontro: ti rispondiamo noi."
+msgstr "Write to the right office or book a meeting: we will get back to you."
+
+#: page.php:58
+msgid "Aggiornato"
+msgstr "Updated"
 
 #: searchform.php:13
 msgid "Cerca nel sito"
@@ -573,7 +585,7 @@ msgstr "Type"
 msgid "Biennio"
 msgstr "Two-year period"
 
-#: single-documento.php:24 templates/template-documenti.php:105 templates/template-documenti.php:121
+#: single-documento.php:24 single.php:46 templates/template-documenti.php:105 templates/template-documenti.php:121
 msgid "Pubblicato"
 msgstr "Published"
 
@@ -581,19 +593,27 @@ msgstr "Published"
 msgid "Formato"
 msgstr "Format"
 
-#: single-documento.php:44
+#: single-documento.php:36
+msgid "Documento pubblicato dalla Fondazione ITS Academy Roberto Rossellini. Il file è scaricabile dal riquadro qui accanto."
+msgstr "Document published by the ITS Academy Roberto Rossellini Foundation. You can download the file from the box alongside."
+
+#: single-documento.php:40
+msgid "Dati del documento"
+msgstr "Document details"
+
+#: single-documento.php:52
 msgid "Apri il documento (%s)"
 msgstr "Open the document (%s)"
 
-#: single-documento.php:44
+#: single-documento.php:52
 msgid "Apri il documento"
 msgstr "Open the document"
 
-#: single-documento.php:48
+#: single-documento.php:57
 msgid "Il file di questo documento non è ancora disponibile online. Per riceverlo scrivi alla segreteria."
 msgstr "This document’s file is not online yet. To receive it, write to the secretariat."
 
-#: single-documento.php:50
+#: single-documento.php:59
 msgid "Tutti i documenti"
 msgstr "All documents"
 
@@ -613,29 +633,55 @@ msgstr "Format"
 msgid "Luogo"
 msgstr "Location"
 
-#: single-evento.php:51
+#: single-evento.php:41
+msgid "Informazioni sull’evento"
+msgstr "Event details"
+
+#: single-evento.php:55
 msgid "Tutti gli eventi"
 msgstr "All events"
 
-#: single.php:41
+#: single.php:43
+msgid "Informazioni sulla news"
+msgstr "News details"
+
+#: single.php:48
+msgid "Categoria"
+msgstr "Category"
+
+#: single.php:50
+msgid "Lettura"
+msgstr "Reading time"
+
+#: single.php:53
+msgid "%d minuto"
+msgid_plural "%d minuti"
+msgstr[0] "%d minute"
+msgstr[1] "%d minutes"
+
+#: single.php:57
+msgid "In questo articolo"
+msgstr "In this article"
+
+#: single.php:58 single.php:89 template-parts/news-panel.php:30
+msgid "Tutte le news"
+msgstr "All news"
+
+#: single.php:62
 msgid "Altre news"
 msgstr "More news"
 
-#: single.php:45
+#: single.php:66
 msgid "Precedente"
 msgstr "Previous"
 
-#: single.php:46
+#: single.php:67
 msgid "Successiva"
 msgstr "Next"
 
-#: single.php:67
+#: single.php:88
 msgid "Altre <strong>news</strong>"
 msgstr "More <strong>news</strong>"
-
-#: single.php:68 template-parts/news-panel.php:30
-msgid "Tutte le news"
-msgstr "All news"
 
 #: template-parts/child-pages.php:21 inc/sections.php:47
 msgid "In questa sezione"
@@ -672,10 +718,6 @@ msgstr "Pre-enrol for the two-year course"
 #: template-parts/faq-section.php:20
 msgid "Tutto quello che <strong>devi sapere.</strong>"
 msgstr "Everything <strong>you need to know.</strong>"
-
-#: template-parts/faq-section.php:24
-msgid "Non trovi la tua domanda?"
-msgstr "Can’t find your question?"
 
 #: template-parts/faq-section.php:25
 msgid "Tutte le FAQ"

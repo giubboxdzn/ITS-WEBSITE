@@ -166,21 +166,24 @@ def local_url(href):
     return re.sub(r"^https?://(?:www\.)?itsrossellini\.it(?=/)(?!/wp-content/)", "", href.strip())
 
 
-def inline(node):
+def inline(node, in_link=False):
     out = []
     for c in node.children:
         if isinstance(c, str):
             out.append(html.escape(c, quote=False))
+        elif c.attrs.get("aria-hidden") == "true" or (in_link and c.tag == "small"):
+            # Decorative arrows, and the document-type tag the live links repeat before the title.
+            continue
         elif c.tag in ("strong", "b"):
-            out.append(f"<strong>{inline(c)}</strong>")
+            out.append(f"<strong>{inline(c, in_link)}</strong>")
         elif c.tag in ("em", "i"):
-            out.append(f"<em>{inline(c)}</em>")
+            out.append(f"<em>{inline(c, in_link)}</em>")
         elif c.tag == "a" and c.attrs.get("href"):
-            out.append(f'<a href="{html.escape(local_url(c.attrs["href"]))}">{inline(c)}</a>')
+            out.append(f'<a href="{html.escape(local_url(c.attrs["href"]))}">{inline(c, True)}</a>')
         elif c.tag == "br":
             out.append("<br>")
         else:
-            out.append(inline(c))
+            out.append(inline(c, in_link))
     return re.sub(r"\s+", " ", "".join(out)).strip()
 
 
@@ -365,7 +368,7 @@ def it_slug(page_html):
 
 
 # Version of the page content format in data.json: setup.sh refreshes only the pages when it is older.
-PAGES_FORMAT = 2
+PAGES_FORMAT = 3
 
 
 def fetch_pages(media_dir, lang):

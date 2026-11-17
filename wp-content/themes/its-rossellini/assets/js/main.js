@@ -155,7 +155,7 @@
 				'.place__chips > li', '.place__globe', '.faq__item', '.faq-section__more',
 				'.cta-card', '.prose-card', '.index-list > li', '.editions__group',
 				'.psec__head > *', '.figures > *', '.pcards > *', '.psteps > *', '.panel__head > .btn',
-				'.prose > *', '.facts > div', '.doc-count', '.empty', '.prose__actions',
+				'.prose > *', '.facts > div', '.doc-count', '.empty', '.prose__actions', '.aside-card',
 				'.area-filter', '.doc-filter', '.doc-table', '.article__photo', '.article__nav',
 				'.colophon__grid > *', '.colophon__funding', '.colophon__base',
 			].join(', '),
@@ -332,7 +332,8 @@
 			if (el.dataset.count) return null;
 			const text = el.textContent.trim();
 			const m = text.match(/^(\D*)(\d{1,3}(?:[.,]\d{3})+|\d+)(.*)$/s);
-			if (!m) return null;
+			/* Only figures count up: not dates, ranges or phrases ("17/11/2027", "30–50", "fino al 31…"). */
+			if (!m || /\d/.test(m[3]) && !/^,\d+\D{0,3}$/.test(m[3]) || m[1].length > 8 || m[3].length > 6) return null;
 			el.dataset.count = '1';
 			const label = document.createElement('span');
 			label.className = 'screen-reader-text';

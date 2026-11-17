@@ -28,15 +28,36 @@ while ( have_posts() ) :
 				</div>
 			</div>
 		</header>
-		<?php if ( has_post_thumbnail() ) : ?>
-			<figure class="wrap article__photo">
-				<?php the_post_thumbnail( 'large', array( 'sizes' => '(max-width: 1100px) 92vw, 1000px' ) ); ?>
-			</figure>
-		<?php endif; ?>
-		<div class="wrap page-body">
-			<div class="prose">
-				<?php the_content(); ?>
+		<?php $prose = its_prose( (string) apply_filters( 'the_content', get_the_content() ), true ); ?>
+		<div class="wrap page-body reading">
+			<div class="reading__main">
+				<?php if ( has_post_thumbnail() ) : ?>
+					<figure class="article__photo">
+						<?php the_post_thumbnail( 'large', array( 'sizes' => '(max-width: 900px) 92vw, 48rem' ) ); ?>
+					</figure>
+				<?php endif; ?>
+				<div class="prose prose--reading">
+					<?php echo $prose['html']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				</div>
 			</div>
+			<aside class="reading__aside" aria-label="<?php esc_attr_e( 'Informazioni sulla news', 'its-rossellini' ); ?>">
+				<div class="aside-card">
+					<dl class="aside-card__facts">
+						<div><dt><?php esc_html_e( 'Pubblicato', 'its-rossellini' ); ?></dt><dd><time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><?php echo esc_html( get_the_date() ); ?></time></dd></div>
+						<?php if ( $cats ) : ?>
+							<div><dt><?php esc_html_e( 'Categoria', 'its-rossellini' ); ?></dt><dd><a class="chip" href="<?php echo esc_url( get_category_link( $cats[0] ) ); ?>"><?php echo esc_html( $cats[0]->name ); ?></a></dd></div>
+						<?php endif; ?>
+						<div><dt><?php esc_html_e( 'Lettura', 'its-rossellini' ); ?></dt><dd>
+							<?php
+							/* translators: %d: minutes */
+							echo esc_html( sprintf( _n( '%d minuto', '%d minuti', $prose['minutes'], 'its-rossellini' ), $prose['minutes'] ) );
+							?>
+						</dd></div>
+					</dl>
+					<?php echo its_toc( $prose['toc'], __( 'In questo articolo', 'its-rossellini' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					<a class="btn btn--outline btn--small" href="<?php echo esc_url( get_permalink( (int) get_option( 'page_for_posts' ) ) ?: its_page_url( 'news' ) ); ?>"><?php esc_html_e( 'Tutte le news', 'its-rossellini' ); ?><?php echo its_icon( 'arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+				</div>
+			</aside>
 		</div>
 		<nav class="wrap article__nav" aria-label="<?php esc_attr_e( 'Altre news', 'its-rossellini' ); ?>">
 			<?php

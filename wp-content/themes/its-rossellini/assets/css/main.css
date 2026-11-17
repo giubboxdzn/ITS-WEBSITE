@@ -1670,7 +1670,7 @@ dd {
 }
 
 .page-head__title--article {
-	max-width: 26ch;
+	max-width: 32ch;
 	font-size: clamp(2rem, 3.8vw, 3.1rem);
 	line-height: 1.1;
 }
@@ -3259,7 +3259,8 @@ dd {
 	gap: clamp(0.75rem, 1.4vw, 1rem);
 }
 
-.figures--1 { --cols: 1; }
+.figures--1,
+.pcards--1 { --cols: 1; }
 .figures--2,
 .pcards--2 { --cols: 2; }
 .figures--3,
@@ -3286,6 +3287,14 @@ dd {
 .tile--fact .tile__num {
 	font-size: clamp(2.6rem, 4.6vw, 4.25rem);
 	white-space: normal;
+}
+
+.tile--fact-text .tile__num {
+	font-size: clamp(1.3rem, 1.8vw, 1.6rem);
+	font-weight: 500;
+	line-height: 1.25;
+	letter-spacing: -0.015em;
+	hyphens: manual;
 }
 
 .tile--fact .tile__note {
@@ -3435,6 +3444,27 @@ dd {
 	transform: translate(2px, -2px);
 }
 
+/* A single card takes the whole row: label and title on the left, text beside them. */
+.pcards--1 .pcard {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+	align-items: center;
+	gap: 0.5rem clamp(1.5rem, 4vw, 4rem);
+}
+
+.pcards--1 .pcard__label {
+	grid-column: 1;
+}
+
+.pcards--1 .pcard__title {
+	grid-column: 1;
+}
+
+.pcards--1 .pcard__text {
+	grid-column: 2;
+	grid-row: 1 / span 2;
+}
+
 /* Numbered steps: the home's round numbers, joined by a rule. */
 .psteps {
 	margin: 0;
@@ -3557,6 +3587,10 @@ dd {
 		--cols: 1;
 	}
 
+	.pcards--1 .pcard {
+		display: flex;
+	}
+
 	.figures--2,
 	.figures--4 {
 		--cols: 2;
@@ -3570,6 +3604,290 @@ dd {
 		display: none;
 	}
 
+}
+
+/* ---------- Text pages: reading column + side card (articles, events, documents, legal notes, FAQ) ---------- */
+
+/* The text keeps a readable measure; the side card fills the rest of the row and stays in view. */
+.reading {
+	display: grid;
+	grid-template-columns: minmax(0, 48rem) minmax(17rem, 21rem);
+	justify-content: space-between;
+	align-items: start;
+	gap: 2.5rem clamp(2.5rem, 6vw, 6rem);
+}
+
+.reading__aside {
+	position: sticky;
+	top: calc(var(--header) + 1.5rem);
+}
+
+.prose--reading {
+	max-width: none;
+	font-size: 1.125rem;
+	line-height: 1.75;
+}
+
+.prose--reading > * + * {
+	margin-top: 1.1em;
+}
+
+.prose--reading > p:first-child {
+	color: var(--inchiostro);
+	font-size: clamp(1.2rem, 1.6vw, 1.375rem);
+	line-height: 1.6;
+}
+
+/* Headings stand apart from the text: heavier, darker, with the gradient rule above. */
+.prose--reading h2 {
+	margin-top: 2.25em;
+	margin-bottom: -0.15em;
+	color: var(--blu-notte);
+	font-size: clamp(1.55rem, 2.4vw, 2.1rem);
+	font-weight: 600;
+	line-height: 1.2;
+	letter-spacing: -0.025em;
+}
+
+.prose--reading h2::before {
+	content: "";
+	display: block;
+	width: 2.5rem;
+	height: 3px;
+	margin-bottom: 0.85rem;
+	border-radius: 2px;
+	background: var(--grad);
+}
+
+.prose--reading > h2:first-child {
+	margin-top: 0;
+}
+
+.prose--reading h3 {
+	margin-top: 1.9em;
+	color: var(--blu);
+	font-size: 1.3rem;
+	font-weight: 600;
+	line-height: 1.3;
+}
+
+.prose--reading :is(h4, h5, h6) {
+	margin-top: 1.6em;
+	color: var(--inchiostro);
+	font-size: 1.1rem;
+	font-weight: 700;
+	line-height: 1.35;
+}
+
+.prose--reading ul li::marker {
+	content: "—  ";
+	color: var(--elettrico);
+}
+
+.prose--reading li strong {
+	color: var(--blu-notte);
+}
+
+.prose--reading img {
+	width: 100%;
+}
+
+/* FAQ page: the accordion uses the whole column. */
+.prose--faq .wp-block-details summary {
+	font-size: 1.125rem;
+}
+
+/* Side card: facts, index, actions. */
+.aside-card {
+	display: grid;
+	gap: 1.4rem;
+	padding: clamp(1.25rem, 2vw, 1.6rem);
+	border-radius: var(--r-lg);
+	background: var(--chiaro);
+}
+
+.aside-card__label {
+	margin: 0 0 0.35rem;
+	color: var(--muted);
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.aside-card__title {
+	margin: 0;
+	font-size: 1.3rem;
+	font-weight: 600;
+	line-height: 1.25;
+	letter-spacing: -0.015em;
+}
+
+.aside-card__text {
+	margin: -0.75rem 0 0;
+	color: var(--muted);
+}
+
+.aside-card__facts {
+	display: grid;
+	gap: 0.85rem;
+	margin: 0;
+}
+
+.aside-card__facts > div + div {
+	padding-top: 0.85rem;
+	border-top: 1px solid var(--bordo);
+}
+
+.aside-card__facts dt {
+	color: var(--muted);
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.aside-card__facts dd {
+	margin: 0.15rem 0 0;
+	font-weight: 600;
+	line-height: 1.4;
+}
+
+.aside-card__facts .chip {
+	background: var(--bianco);
+	text-decoration: none;
+}
+
+.aside-card__toc ol {
+	display: grid;
+	margin: 0 -0.6rem;
+	padding: 0;
+	list-style: none;
+}
+
+.aside-card__toc a {
+	display: flex;
+	align-items: baseline;
+	gap: 0.7rem;
+	padding: 0.4rem 0.6rem;
+	border-radius: 12px;
+	font-size: 0.9375rem;
+	line-height: 1.35;
+	text-decoration: none;
+	transition: background-color 0.2s, color 0.2s;
+}
+
+.aside-card__toc a:hover {
+	background: var(--bianco);
+	color: var(--blu);
+}
+
+.aside-card__actions {
+	display: grid;
+	gap: 0.5rem;
+}
+
+.aside-card__actions .btn,
+.aside-card > .btn {
+	width: 100%;
+	justify-content: center;
+}
+
+.aside-card .notice {
+	margin: 0;
+	background: var(--bianco);
+	font-size: 0.9375rem;
+}
+
+.aside-card__date .date-slot {
+	justify-content: start;
+}
+
+/* Page heads without a photo: title on the left, lead and actions on the right, as "Tutto in chiaro" on the home. */
+@media (min-width: 901px) {
+	.page-head:not(.page-head--photo, .page-head--article) .page-head__text {
+		display: grid;
+		grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+		column-gap: clamp(2.5rem, 6vw, 6rem);
+		align-items: end;
+	}
+
+	.page-head:not(.page-head--photo, .page-head--article) .page-head__text > * {
+		grid-column: 2;
+	}
+
+	.page-head:not(.page-head--photo, .page-head--article) .page-head__text > :is(.crumbs, .page-head__title) {
+		grid-column: 1;
+	}
+
+	.page-head:not(.page-head--photo, .page-head--article) .page-head__title {
+		grid-row: 2;
+		align-self: end;
+	}
+
+	.page-head:not(.page-head--photo, .page-head--article) .page-head__text > :not(.crumbs, .page-head__title) {
+		grid-row: 3;
+		align-self: start;
+		margin-top: 1.25rem;
+	}
+
+	.page-head:not(.page-head--photo, .page-head--article) .page-head__text > .page-head__lead {
+		grid-row: 2;
+		align-self: end;
+		margin-top: 0;
+	}
+}
+
+/* Article photo: at the top of the reading column, beside the side card. */
+.reading__main > .article__photo {
+	margin: 0 0 clamp(1.75rem, 3vw, 2.5rem);
+	padding: 0;
+}
+
+/* Lists that used to stop half-way: the whole row. */
+.index-list {
+	max-width: none;
+}
+
+.index-list ul {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.reading .index-list ul {
+	grid-template-columns: minmax(0, 1fr);
+}
+
+.empty {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	max-width: none;
+	padding: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.empty p {
+	max-width: 60ch;
+}
+
+@media (max-width: 900px) {
+	.reading {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.reading__aside {
+		position: static;
+	}
+
+	.reading--facts-first .reading__aside {
+		order: -1;
+	}
+}
+
+@media (max-width: 640px) {
+	.index-list ul {
+		grid-template-columns: minmax(0, 1fr);
+	}
 }
 
 /* ---------- Motion: on only while the footer switch is on ---------- */

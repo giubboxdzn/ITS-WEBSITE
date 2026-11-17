@@ -125,7 +125,7 @@ php "$ROOT/dev/languages.php"
 
 if [ "${1:-}" != "--no-seed" ]; then
 	SEED="$WPDIR/seed/data.json"
-	if [ ! -f "$SEED" ] || ! grep -q '"en": {' "$SEED" || ! grep -q '"pages_format": 2' "$SEED"; then
+	if [ ! -f "$SEED" ] || ! grep -q '"en": {' "$SEED" || ! grep -q '"pages_format": 3' "$SEED"; then
 		# On Windows "python3" is often the Microsoft Store stub: take the first interpreter that runs.
 		PY=""
 		for candidate in python3 python py; do
