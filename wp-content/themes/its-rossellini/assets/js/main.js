@@ -511,18 +511,21 @@
 		});
 	});
 
-	/* Language menus: one open at a time; a click elsewhere or Escape closes them. */
-	const langMenus = [...document.querySelectorAll('details.lang')];
-	if (langMenus.length) {
-		langMenus.forEach((menu) => menu.addEventListener('toggle', () => {
-			if (menu.open) langMenus.forEach((other) => { if (other !== menu) other.open = false; });
+	/* Pop-overs (languages, search): one open at a time; a click elsewhere or Escape closes them.
+	   The search one puts the cursor in its field. */
+	const popovers = [...document.querySelectorAll('details.lang, details.search-pop')];
+	if (popovers.length) {
+		popovers.forEach((menu) => menu.addEventListener('toggle', () => {
+			if (!menu.open) return;
+			popovers.forEach((other) => { if (other !== menu) other.open = false; });
+			menu.querySelector('input[type="search"]')?.focus();
 		}));
 		document.addEventListener('click', (event) => {
-			langMenus.forEach((menu) => { if (menu.open && !menu.contains(event.target)) menu.open = false; });
+			popovers.forEach((menu) => { if (menu.open && !menu.contains(event.target)) menu.open = false; });
 		});
 		document.addEventListener('keydown', (event) => {
 			if (event.key !== 'Escape') return;
-			langMenus.forEach((menu) => {
+			popovers.forEach((menu) => {
 				if (menu.open) {
 					menu.open = false;
 					menu.querySelector('summary')?.focus();

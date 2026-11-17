@@ -407,6 +407,7 @@ dd {
 }
 
 .masthead__bar {
+	position: relative;
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -514,6 +515,72 @@ dd {
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
+}
+
+/* Site search: a round icon in the bar (beside the menu on phones), opening the field below the bar. */
+.search-pop {
+	margin-left: auto;
+	/* The bar's column gap is 1.5rem: the icon keeps the 0.75rem its neighbours keep. */
+	margin-right: -0.75rem;
+}
+
+.search-pop > summary {
+	display: grid;
+	place-items: center;
+	width: 2.75rem;
+	height: 2.75rem;
+	border: 1px solid var(--bordo);
+	border-radius: 50%;
+	list-style: none;
+	cursor: pointer;
+	transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+}
+
+.search-pop > summary::-webkit-details-marker {
+	display: none;
+}
+
+.search-pop > summary .icon {
+	width: 1.25rem;
+	height: 1.25rem;
+}
+
+.search-pop > summary:hover {
+	border-color: var(--elettrico);
+}
+
+.search-pop[open] > summary {
+	border-color: var(--bianco);
+	background: var(--bianco);
+	color: var(--inchiostro);
+}
+
+.has-hero .masthead:not(.is-solid) .search-pop > summary,
+.masthead--dark .search-pop > summary {
+	border-color: rgb(255 255 255 / 0.3);
+}
+
+.has-hero .masthead:not(.is-solid) .search-pop > summary:hover,
+.masthead--dark .search-pop > summary:hover {
+	border-color: var(--bianco);
+}
+
+.search-pop__panel {
+	position: absolute;
+	top: calc(100% + 0.5rem);
+	right: 0;
+	z-index: 40;
+	width: min(100%, 34rem);
+	padding: 0.5rem;
+	border: 1px solid var(--bordo);
+	border-radius: 2rem;
+	background: var(--bianco);
+	box-shadow: var(--shadow);
+	color: var(--inchiostro);
+}
+
+.search-pop__panel .search-form {
+	max-width: none;
 }
 
 /* Language switcher: round flag + code (header) or name (footer), opening the list of languages. */
@@ -756,6 +823,16 @@ dd {
 @media (max-width: 1080px) {
 	.js .masthead__toggle {
 		display: inline-flex;
+		padding-inline: 0.85rem;
+	}
+
+	/* Logo, search and menu on one line: tighter gaps than on desktop. */
+	.masthead__bar {
+		column-gap: 0.5rem;
+	}
+
+	.search-pop {
+		margin-right: 0;
 	}
 
 	.js .masthead__nav {
@@ -807,6 +884,30 @@ dd {
 		right: auto;
 		bottom: calc(100% + 0.5rem);
 		left: 0;
+	}
+}
+
+/* Under 390px the menu button keeps its icon, its label stays for screen readers; under 340px the logo shrinks. */
+@media (max-width: 389px) {
+	.js .masthead__toggle {
+		justify-content: center;
+		width: 2.75rem;
+		padding: 0;
+	}
+
+	.masthead__toggle > span {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+}
+
+@media (max-width: 340px) {
+	.masthead__logo {
+		width: 150px;
 	}
 }
 

@@ -28,6 +28,16 @@ wp_print_inline_script_tag( "(function(r){r.classList.replace('no-js','js');if('
 			<span class="screen-reader-text"><?php bloginfo( 'name' ); ?></span>
 		</a>
 
+		<details class="search-pop">
+			<summary>
+				<?php echo its_icon( 'search' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				<span class="screen-reader-text"><?php esc_html_e( 'Cerca nel sito', 'its-rossellini' ); ?></span>
+			</summary>
+			<div class="search-pop__panel">
+				<?php get_search_form(); ?>
+			</div>
+		</details>
+
 		<button class="masthead__toggle" type="button" aria-expanded="false" aria-controls="site-nav">
 			<?php echo its_icon( 'menu', 'when-closed' ) . its_icon( 'close', 'when-open' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			<span><?php esc_html_e( 'Menu', 'its-rossellini' ); ?></span>
