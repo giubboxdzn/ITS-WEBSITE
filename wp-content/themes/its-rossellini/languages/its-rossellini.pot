@@ -29,6 +29,10 @@ msgstr ""
 msgid "Contatti e sede"
 msgstr ""
 
+#: footer.php:101
+msgid "Torna su"
+msgstr ""
+
 #: footer.php:31 inc/customizer.php:21
 msgid "Email"
 msgstr ""
@@ -57,16 +61,12 @@ msgstr ""
 msgid "Amministrazione trasparente"
 msgstr ""
 
-#: footer.php:85
+#: footer.php:95
 msgid "Fondazione ITS Academy Roberto Rossellini"
 msgstr ""
 
-#: footer.php:88
+#: footer.php:98
 msgid "Animazioni"
-msgstr ""
-
-#: footer.php:91
-msgid "Torna su"
 msgstr ""
 
 #: front-page.php:102
@@ -465,6 +465,34 @@ msgstr ""
 
 #: inc/helpers.php:373
 msgid "Edizioni dei corsi"
+msgstr ""
+
+#: inc/helpers.php:406
+msgid "Programma regionale FSE+ Lazio 2021-2027"
+msgstr ""
+
+#: inc/helpers.php:408
+msgid "Coesione Italia 21-27 Lazio"
+msgstr ""
+
+#: inc/helpers.php:409
+msgid "Cofinanziato dall’Unione europea"
+msgstr ""
+
+#: inc/helpers.php:410
+msgid "Repubblica Italiana"
+msgstr ""
+
+#: inc/helpers.php:411
+msgid "Regione Lazio"
+msgstr ""
+
+#: inc/helpers.php:415
+msgid "PNRR Istruzione"
+msgstr ""
+
+#: inc/helpers.php:417
+msgid "Futura, la scuola per l’Italia di domani. PNRR Istruzione, finanziato dall’Unione europea NextGenerationEU, Ministero dell’Istruzione e del Merito"
 msgstr ""
 
 #: inc/helpers.php:93

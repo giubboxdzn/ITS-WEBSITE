@@ -295,7 +295,7 @@
 				const strokes = el.dataset.reveal === 'draw' ? el.querySelectorAll('path').length : 0;
 				el.style.setProperty('--d', `${delay}ms`);
 				el.classList.add('is-in');
-				window.setTimeout(() => finish(el), delay + 1900 + words * 55 + strokes * 40 + (strokes ? 1200 : 0));
+				window.setTimeout(() => finish(el), delay + 1900 + words * 55 + strokes * 18);
 			});
 		};
 
@@ -319,7 +319,7 @@
 				pending.delete(entry.target);
 				reveal([entry.target]);
 			});
-		}, { threshold: 0.6 });
+		}, { threshold: 0.2 }); /* The footer mark starts drawing as soon as it shows. */
 		const watch = (el) => {
 			pending.add(el);
 			if (el.dataset.reveal === 'draw') drawWatch.observe(el);
@@ -376,7 +376,7 @@
 					else settle(c);
 				}
 			});
-		}, { threshold: 0.6 });
+		}, { threshold: 0.2 }); /* The footer mark starts drawing as soon as it shows. */
 
 		/* Parallax: the hero footage and the path photo drift against the scroll. */
 		const heroMedia = document.querySelector('.hero__media');

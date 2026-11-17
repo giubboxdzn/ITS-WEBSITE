@@ -29,6 +29,10 @@ msgstr "Calls and documents"
 msgid "Contatti e sede"
 msgstr "Contact and campus"
 
+#: footer.php:101
+msgid "Torna su"
+msgstr "Back to top"
+
 #: footer.php:31 inc/customizer.php:21
 msgid "Email"
 msgstr "Email"
@@ -57,17 +61,13 @@ msgstr "Calls and registers"
 msgid "Amministrazione trasparente"
 msgstr "Transparent administration"
 
-#: footer.php:85
+#: footer.php:95
 msgid "Fondazione ITS Academy Roberto Rossellini"
 msgstr "ITS Academy Roberto Rossellini Foundation"
 
-#: footer.php:88
+#: footer.php:98
 msgid "Animazioni"
 msgstr "Animations"
-
-#: footer.php:91
-msgid "Torna su"
-msgstr "Back to top"
 
 #: front-page.php:102
 msgid "I nostri partner"
@@ -466,6 +466,34 @@ msgstr "Events"
 #: inc/helpers.php:373
 msgid "Edizioni dei corsi"
 msgstr "Course editions"
+
+#: inc/helpers.php:406
+msgid "Programma regionale FSE+ Lazio 2021-2027"
+msgstr "ESF+ Lazio Regional Programme 2021-2027"
+
+#: inc/helpers.php:408
+msgid "Coesione Italia 21-27 Lazio"
+msgstr "Coesione Italia 21-27 Lazio"
+
+#: inc/helpers.php:409
+msgid "Cofinanziato dall’Unione europea"
+msgstr "Co-funded by the European Union (Cofinanziato dall’Unione europea)"
+
+#: inc/helpers.php:410
+msgid "Repubblica Italiana"
+msgstr "Italian Republic"
+
+#: inc/helpers.php:411
+msgid "Regione Lazio"
+msgstr "Lazio Region (Regione Lazio)"
+
+#: inc/helpers.php:415
+msgid "PNRR Istruzione"
+msgstr "PNRR Education"
+
+#: inc/helpers.php:417
+msgid "Futura, la scuola per l’Italia di domani. PNRR Istruzione, finanziato dall’Unione europea NextGenerationEU, Ministero dell’Istruzione e del Merito"
+msgstr "Futura, the school for tomorrow’s Italy. PNRR Education, funded by the European Union NextGenerationEU, Ministry of Education and Merit"
 
 #: inc/helpers.php:93
 msgid "Chiuso"

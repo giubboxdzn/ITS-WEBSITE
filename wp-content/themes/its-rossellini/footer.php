@@ -9,7 +9,7 @@ defined( 'ABSPATH' ) || exit;
 
 $contacts = its_contacts();
 $tel      = preg_replace( '/[^0-9+]/', '', $contacts['phone'] );
-$funding  = (string) get_post_field( 'post_content', (int) get_option( 'page_on_front' ) );
+$funding  = its_funding_logos();
 ?>
 </main>
 
@@ -77,8 +77,18 @@ $funding  = (string) get_post_field( 'post_content', (int) get_option( 'page_on_
 		</nav>
 	</div>
 
-	<?php if ( str_contains( $funding, 'is-wide' ) ) : ?>
-		<div class="wrap colophon__funding"><?php echo apply_filters( 'the_content', $funding ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
+	<?php if ( $funding ) : ?>
+		<div class="wrap colophon__funding">
+			<div class="funding">
+				<?php foreach ( $funding as $block ) : ?>
+					<ul class="funding__block" aria-label="<?php echo esc_attr( $block['label'] ); ?>">
+						<?php foreach ( $block['logos'] as $logo ) : ?>
+							<li><img src="<?php echo esc_url( $logo['src'] ); ?>" alt="<?php echo esc_attr( $logo['alt'] ); ?>" width="<?php echo (int) $logo['width']; ?>" height="<?php echo (int) $logo['height']; ?>" loading="lazy" decoding="async"></li>
+						<?php endforeach; ?>
+					</ul>
+				<?php endforeach; ?>
+			</div>
+		</div>
 	<?php endif; ?>
 
 	<div class="wrap colophon__base">

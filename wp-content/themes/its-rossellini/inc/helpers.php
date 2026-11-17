@@ -383,3 +383,41 @@ function its_breadcrumbs(): void {
 	}
 	echo '</ol></nav>';
 }
+
+/**
+ * Funding logos in the footer, as official vector files (assets/img/funding):
+ * the institutional block of the ESF+ Lazio programme in the order its brand book sets
+ * (Coesione Italia 21-27 Lazio, EU emblem with the co-funding statement, emblem of the Italian Republic,
+ * Regione Lazio), then the PNRR Istruzione "Futura" band. Sources are listed in assets/img/funding/SOURCES.md.
+ *
+ * @return array<int, array{label: string, logos: array<int, array{src: string, alt: string, width: int, height: int}>}>
+ */
+function its_funding_logos(): array {
+	$logo = static function ( string $file, string $alt, float $ratio, int $height ): array {
+		return array(
+			'src'    => ITS_ROSSELLINI_URI . '/assets/img/funding/' . $file . '.svg',
+			'alt'    => $alt,
+			'width'  => (int) round( $height * $ratio ),
+			'height' => $height,
+		);
+	};
+	$blocks = array(
+		array(
+			'label' => __( 'Programma regionale FSE+ Lazio 2021-2027', 'its-rossellini' ),
+			'logos' => array(
+				$logo( 'coesione-italia-lazio', __( 'Coesione Italia 21-27 Lazio', 'its-rossellini' ), 516.75 / 197.75, 44 ),
+				$logo( 'ue-cofinanziato', __( 'Cofinanziato dall’Unione europea', 'its-rossellini' ), 937.75 / 190.75, 44 ),
+				$logo( 'repubblica-italiana', __( 'Repubblica Italiana', 'its-rossellini' ), 702 / 800.3, 44 ),
+				$logo( 'regione-lazio', __( 'Regione Lazio', 'its-rossellini' ), 103.3 / 30, 36 ),
+			),
+		),
+		array(
+			'label' => __( 'PNRR Istruzione', 'its-rossellini' ),
+			'logos' => array(
+				$logo( 'futura-pnrr', __( 'Futura, la scuola per l’Italia di domani. PNRR Istruzione, finanziato dall’Unione europea NextGenerationEU, Ministero dell’Istruzione e del Merito', 'its-rossellini' ), 1370.5 / 281.3, 58 ),
+			),
+		),
+	);
+	return (array) apply_filters( 'its_funding_logos', $blocks );
+}
+

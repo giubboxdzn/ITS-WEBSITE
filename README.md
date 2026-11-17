@@ -75,7 +75,7 @@ Il selettore con le bandiere è nell'header (bandiera + codice) e nel footer (ba
    Il layout a sezioni si attiva da solo su ogni pagina che usa questi stili o titoli H3 (`its_has_sections()` in `inc/sections.php`), anche su *Bandi e albi* sopra l'archivio dei documenti; le pagine scritte come testo semplice (note legali) e le FAQ restano come scritte. Ogni pagina interna finisce con la banda blu: l'*Invito finale* della pagina o, se manca, quello della home.
 5. Assegnare i modelli: *Elenco corsi* a `/offerta-formativa/corsi/`, *Eventi* a `/eventi/`, *Bandi e documenti* a `/bandi-albi/` e `/bandi/`, *Edizioni dei corsi* a `/offerta-formativa/corsi-in-svolgimento-e-conclusi/`; impostare `/news/` come pagina degli articoli.
 6. Menu: posizioni *Menu principale*, *Menu footer*, *Note legali*.
-7. Home: Customizer → *Home* → video dell'hero (MP4 muto); l'immagine in evidenza della pagina iniziale fa da copertina del video. Il contenuto della pagina (loghi con link) diventa la sezione «I nostri partner».
+7. Home: Customizer → *Home* → video dell'hero (MP4 muto); l'immagine in evidenza della pagina iniziale fa da copertina del video. Il contenuto della pagina (loghi con link) diventa la sezione «I nostri partner». I loghi dei finanziatori nel footer sono file vettoriali ufficiali inclusi nel tema (`assets/img/funding/`, fonti in `SOURCES.md`); si cambiano con il filtro `its_funding_logos`.
 8. Customizer → *Contatti e sede* e *Dati pubblicati*: indirizzo, orari, telefono, email, durata, ore, posti, dato occupazionale e fonte.
 
 ### Campi personalizzati

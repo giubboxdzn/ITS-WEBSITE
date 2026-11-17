@@ -2906,27 +2906,84 @@ dd {
 	margin-top: clamp(2.5rem, 5vw, 3.5rem);
 }
 
-.colophon__funding .partner-logos {
+/* Funding logos: official files on white, at their own colours. Brand-book rules for the ESF+ block:
+   equal spacing, a grey rule between marks, at least half the EU emblem's height on each side of it. */
+.funding {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 1.25rem clamp(1.5rem, 4vw, 3.5rem);
+	padding: clamp(1rem, 2vw, 1.5rem) clamp(1rem, 3vw, 2.5rem);
+	border-radius: var(--r-md);
+	background: var(--bianco);
+}
+
+.funding__block {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 0.75rem 0;
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
 
-.colophon__funding li:not(.is-wide) {
-	display: none;
+.funding__block li {
+	display: flex;
+	align-items: center;
+	padding-inline: 1.4rem;
 }
 
-.colophon__funding .is-wide {
-	padding: 0.75rem 1.25rem;
-	border-radius: var(--r-md);
-	background: var(--bianco);
+.funding__block li + li {
+	border-left: 1px solid #c3c9d3;
 }
 
-.colophon__funding img {
-	width: 100%;
-	max-width: 900px;
-	height: auto;
-	margin-inline: auto;
+.funding__block img {
+	width: auto;
+	max-width: none;
+	height: var(--logo-h, 44px);
+}
+
+.funding__block img[height="36"] {
+	--logo-h: 36px;
+}
+
+.funding__block img[height="58"] {
+	--logo-h: 58px;
+}
+
+@media (max-width: 760px) {
+	/* Two marks per row: the rule only between the two. */
+	.funding__block {
+		display: grid;
+		grid-template-columns: auto auto;
+		row-gap: 1rem;
+	}
+
+	.funding__block li {
+		justify-content: center;
+		padding-inline: 0.85rem;
+	}
+
+	.funding__block li:nth-child(odd) {
+		border-left: 0;
+	}
+
+	.funding__block li:only-child {
+		grid-column: 1 / -1;
+	}
+
+	.funding__block img {
+		height: calc(var(--logo-h, 44px) * 0.8);
+	}
+
+	.funding__block img[height="58"] {
+		width: 100%;
+		max-width: 20rem;
+		height: auto;
+	}
 }
 
 .colophon__base {
@@ -3973,7 +4030,7 @@ dd {
 /* Footer logo: each outline is traced from 0 to 100% (pathLength = 1), left to right. */
 .anim [data-reveal="draw"] path {
 	stroke-dasharray: 1 1;
-	transition: stroke-dashoffset 2.4s cubic-bezier(0.65, 0, 0.35, 1) calc(var(--d, 0ms) + var(--i, 0) * 40ms);
+	transition: stroke-dashoffset 1.2s cubic-bezier(0.33, 0, 0.2, 1) calc(var(--d, 0ms) + var(--i, 0) * 18ms);
 }
 
 .anim [data-reveal="draw"]:not(.is-in) path {
