@@ -134,25 +134,16 @@ Da sistemare:
 - `readme.html` e `license.txt` sono pubblici;
 - il meta `generator` espone la versione di Site Kit.
 
-Da aggiungere in cima a `.htaccess`, fuori dai marcatori `# BEGIN WordPress`:
+Il blocco da applicare è in [`server/htaccess-sicurezza.conf`](server/htaccess-sicurezza.conf): va incollato in cima al `.htaccess` della root di WordPress, fuori dai marcatori `# BEGIN WordPress`. Contiene:
+- HSTS;
+- la rimozione di `X-Powered-By`;
+- la CSP in modalità *Report-Only*, escluse admin e login;
+- il blocco di `readme.html` e `license.txt`.
 
-```apache
-<IfModule mod_headers.c>
-	Header always set Strict-Transport-Security "max-age=31536000"
-	Header always unset X-Powered-By
-	Header unset X-Powered-By
-	# Solo sito pubblico: l'admin e il login usano script e worker che questa policy non prevede.
-	<If "%{REQUEST_URI} !~ m#^/wp-(admin|login)#">
-		Header always set Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; media-src 'self'; frame-src 'self' https://www.youtube-nocookie.com https://www.youtube.com https://player.vimeo.com https://www.google.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
-	</If>
-</IfModule>
-<FilesMatch "^(readme\.html|license\.txt)$">
-	Require all denied
-</FilesMatch>
-```
+Contiene solo ciò che manca sul live: gli altri header arrivano già dal server, e ridefinirli li manderebbe due volte. Il server locale applica lo stesso file (`dev/router.php`) e gira con `expose_php=0`, quindi i test locali usano gli header di produzione.
 
 **Come applicarlo:**
-- In `php.ini` impostare anche `expose_php = Off`.
+- In `php.ini` impostare anche `expose_php = Off`. È un'impostazione di sistema: non si cambia da WordPress né da `.user.ini`, ma dal `php.ini` o dal pannello dell'hosting. Finché non è fatto, la riga `Header unset X-Powered-By` del blocco toglie comunque l'header.
 - La CSP parte in modalità *Report-Only*: segnala nella console del browser senza bloccare nulla. Con il nuovo tema e WordPress l'abbiamo provata in modalità bloccante su tutti i tipi di pagina in locale, con zero violazioni. Dopo una o due settimane senza segnalazioni, anche con i plugin del sito (Yoast, Site Kit, moduli), si rinomina in `Content-Security-Policy`.
 - HSTS è senza `includeSubDomains`: va aggiunto solo dopo aver verificato che ogni sottodominio risponda in HTTPS.
 

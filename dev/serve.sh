@@ -13,4 +13,5 @@ if [ "$HOST" = "0.0.0.0" ] && [ -n "$LAN_IP" ] && [ "$LAN_IP" != "0.0.0.0" ]; th
 	echo "Dal telefono:    http://$LAN_IP:$PORT  (stessa rete Wi-Fi)"
 fi
 echo "Ctrl+C per fermare"
-exec php -S "$HOST:$PORT" -t "$ROOT/.wp/wordpress" "$ROOT/dev/router.php"
+# expose_php=0: no "X-Powered-By: PHP/x.y" header, as production should be (see server/htaccess-sicurezza.conf).
+exec php -d expose_php=0 -S "$HOST:$PORT" -t "$ROOT/.wp/wordpress" "$ROOT/dev/router.php"
