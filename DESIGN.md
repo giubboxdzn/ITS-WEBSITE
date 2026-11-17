@@ -241,6 +241,9 @@ Read from core blocks with the theme's block styles: Paragraph *Occhiello* befor
 ### Text pages
 Articles, events, documents, legal notes and the FAQ share one reading layout across the whole row: the text in a 48rem column (1.125rem, line-height 1.75, the first paragraph larger), a side card on the right that stays in view (pale `--chiaro`, 30px): facts (date, category, reading time; event time, mode, place; document type, cycle, format), an index of the headings, and the actions. On articles the photo heads the text column. Headings stand apart from the text: H2 in dark blue 600 with a short gradient rule above, H3 in institutional blue 600; lists use a blue dash, with "Label:" in bold. News imported without structure gets it at display time (a short line standing alone before more text becomes a heading, dashed lines become a list); stored content is not changed. Page heads without a photo split the row: title on the left, lead and actions on the right. Under 900px everything stacks (facts first on events and documents).
 
+### Admin menu icons
+Four 20×20 filled glyphs for the content types, built from the logo's shapes so they belong to the brand and still read at menu size: Corsi a clapperboard with the play triangle cut into the slate; Eventi a ticket with a perforation and the logo's circle; Edizioni dei corsi stacked cards, the front one marked with the logo's two bars (edition II); Documenti e bandi a sheet with a folded corner, lines and a round stamp. Filled, not stroked, so WordPress recolours them with the admin colour scheme like its Dashicons.
+
 ### Lists and documents
 Rows in a rounded container with circular arrows; the document filter is a light rounded bar with pill fields; the table is a rounded bordered container.
 
