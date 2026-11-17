@@ -29,7 +29,15 @@ msgstr ""
 msgid "Contatti e sede"
 msgstr ""
 
-#: footer.php:101
+#: footer.php:100
+msgid "Fondazione ITS Academy Roberto Rossellini"
+msgstr ""
+
+#: footer.php:103
+msgid "Animazioni"
+msgstr ""
+
+#: footer.php:106
 msgid "Torna su"
 msgstr ""
 
@@ -53,7 +61,7 @@ msgstr ""
 msgid "Trasparenza"
 msgstr ""
 
-#: footer.php:63 inc/helpers.php:405
+#: footer.php:63 inc/helpers.php:427
 msgid "Bandi e albi"
 msgstr ""
 
@@ -61,12 +69,12 @@ msgstr ""
 msgid "Amministrazione trasparente"
 msgstr ""
 
-#: footer.php:95
-msgid "Fondazione ITS Academy Roberto Rossellini"
+#: footer.php:67
+msgid "Dichiarazione di accessibilità"
 msgstr ""
 
-#: footer.php:98
-msgid "Animazioni"
+#: footer.php:69
+msgid "Segnala un problema di accessibilità"
 msgstr ""
 
 #: front-page.php:102
@@ -367,19 +375,19 @@ msgstr ""
 msgid "Cambia corso"
 msgstr ""
 
-#: inc/customizer.php:111
+#: inc/customizer.php:152
 msgid "Via Tiburtina 691, Roma"
 msgstr ""
 
-#: inc/customizer.php:112
+#: inc/customizer.php:153
 msgid "Metro B Pietralata o Monti Tiburtini"
 msgstr ""
 
-#: inc/customizer.php:113
+#: inc/customizer.php:154
 msgid "Lun–Ven 9:30–13:30 / 14:30–18:30"
 msgstr ""
 
-#: inc/customizer.php:114
+#: inc/customizer.php:155
 msgid "Dato pubblicato da ITS Rossellini"
 msgstr ""
 
@@ -431,7 +439,7 @@ msgstr ""
 msgid "Fonte del dato occupazionale"
 msgstr ""
 
-#: inc/customizer.php:38 inc/helpers.php:396
+#: inc/customizer.php:38 inc/helpers.php:418
 msgid "Home"
 msgstr ""
 
@@ -443,71 +451,103 @@ msgstr ""
 msgid "Come copertina si usa l’immagine in evidenza della pagina iniziale."
 msgstr ""
 
+#: inc/customizer.php:63
+msgid "Accessibilità"
+msgstr ""
+
+#: inc/customizer.php:64
+msgid "Link nel footer di ogni pagina, come chiede la Legge 4/2004 (art. 3-quater)."
+msgstr ""
+
+#: inc/customizer.php:77
+msgid "Dichiarazione di accessibilità (URL)"
+msgstr ""
+
+#: inc/customizer.php:78
+msgid "Il link generato da form.agid.gov.it, oppure una pagina del sito. Vuoto: la pagina con slug «dichiarazione-di-accessibilita», se esiste."
+msgstr ""
+
+#: inc/customizer.php:93
+msgid "Email per le segnalazioni di accessibilità"
+msgstr ""
+
+#: inc/customizer.php:94
+msgid "Il meccanismo di feedback indicato nella dichiarazione. Vuoto: l’email dei contatti."
+msgstr ""
+
 #: inc/helpers.php:101
 msgid "Prossimamente"
 msgstr ""
 
-#: inc/helpers.php:346
+#: inc/helpers.php:266
+msgid "Segnalazione di accessibilità"
+msgstr ""
+
+#: inc/helpers.php:267
+msgid "Pagina:"
+msgstr ""
+
+#: inc/helpers.php:368
 msgid "Lingua: %s. Cambia lingua"
 msgstr ""
 
-#: inc/helpers.php:361
+#: inc/helpers.php:383
 msgid "Precedenti"
 msgstr ""
 
-#: inc/helpers.php:362
+#: inc/helpers.php:384
 msgid "Successivi"
 msgstr ""
 
-#: inc/helpers.php:366
+#: inc/helpers.php:388
 msgid "Pagine"
 msgstr ""
 
-#: inc/helpers.php:393 inc/helpers.php:413
+#: inc/helpers.php:415 inc/helpers.php:435
 msgid "Percorso"
 msgstr ""
 
-#: inc/helpers.php:404
+#: inc/helpers.php:426
 msgid "Eventi"
 msgstr ""
 
-#: inc/helpers.php:406
+#: inc/helpers.php:428
 msgid "Edizioni dei corsi"
 msgstr ""
 
-#: inc/helpers.php:439
+#: inc/helpers.php:461
 msgid "Sistema nazionale ITS Academy"
 msgstr ""
 
-#: inc/helpers.php:441
+#: inc/helpers.php:463
 msgid "Istituti Tecnici Superiori, It’s my future"
 msgstr ""
 
-#: inc/helpers.php:445
+#: inc/helpers.php:467
 msgid "Programma regionale FSE+ Lazio 2021-2027"
 msgstr ""
 
-#: inc/helpers.php:447
+#: inc/helpers.php:469
 msgid "Coesione Italia 21-27 Lazio"
 msgstr ""
 
-#: inc/helpers.php:448
+#: inc/helpers.php:470
 msgid "Cofinanziato dall’Unione europea"
 msgstr ""
 
-#: inc/helpers.php:449
+#: inc/helpers.php:471
 msgid "Repubblica Italiana"
 msgstr ""
 
-#: inc/helpers.php:450
+#: inc/helpers.php:472
 msgid "Regione Lazio"
 msgstr ""
 
-#: inc/helpers.php:454
+#: inc/helpers.php:476
 msgid "PNRR Istruzione"
 msgstr ""
 
-#: inc/helpers.php:456
+#: inc/helpers.php:478
 msgid "Futura, la scuola per l’Italia di domani. PNRR Istruzione, finanziato dall’Unione europea NextGenerationEU, Ministero dell’Istruzione e del Merito"
 msgstr ""
 
@@ -551,7 +591,7 @@ msgstr ""
 msgid "Avvisi, graduatorie, progetti e risultati degli studenti."
 msgstr ""
 
-#: index.php:23 inc/helpers.php:407
+#: index.php:23 inc/helpers.php:429
 msgid "News"
 msgstr ""
 
@@ -783,7 +823,7 @@ msgstr ""
 msgid "Otto percorsi biennali post-diploma: scegli l’area, poi il mestiere."
 msgstr ""
 
-#: templates/template-corsi.php:23 inc/helpers.php:403
+#: templates/template-corsi.php:23 inc/helpers.php:425
 msgid "Corsi"
 msgstr ""
 

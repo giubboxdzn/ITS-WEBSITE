@@ -247,6 +247,28 @@ function its_article_for_number( string $figure ): string {
 }
 
 /**
+ * Accessibility statement and feedback channel (Legge 4/2004, art. 3-quater), for the footer of every page.
+ * The statement: the Customizer URL (the link form.agid.gov.it generates, or a page), else the page
+ * "dichiarazione-di-accessibilita" if there is one. The feedback: an e-mail that already names the page.
+ *
+ * @return array{statement: string, feedback: string}
+ */
+function its_accessibility_links(): array {
+	$statement = (string) get_theme_mod( 'its_a11y_statement', '' );
+	if ( '' === $statement ) {
+		$fallback  = its_page_url( 'dichiarazione-di-accessibilita', '-' );
+		$statement = '-' === $fallback ? '' : $fallback;
+	}
+	$email = (string) get_theme_mod( 'its_a11y_email', '' ) ?: its_contacts()['email'];
+	$here  = is_singular() ? (string) get_permalink() : home_url( add_query_arg( array() ) );
+	return array(
+		'statement' => $statement,
+		'feedback'  => 'mailto:' . antispambot( $email ) . '?subject=' . rawurlencode( __( 'Segnalazione di accessibilità', 'its-rossellini' ) )
+			. '&body=' . rawurlencode( __( 'Pagina:', 'its-rossellini' ) . ' ' . $here . "\n\n" ),
+	);
+}
+
+/**
  * Contact details (editable in the Customizer).
  *
  * @return array<string,string>

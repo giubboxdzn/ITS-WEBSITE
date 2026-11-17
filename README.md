@@ -2,7 +2,7 @@
 
 Nuovo tema classico per [itsrossellini.it](https://itsrossellini.it), stesso stack del sito attuale: WordPress, PHP, CSS e JavaScript scritti a mano, senza framework né build.
 
-Direzione visiva: **contenitori arrotondati, vetro e titoli leggeri**, sui riferimenti indicati dal committente: home su fondo blu notte con il video dell'hero a tutta larghezza, menu a pillola, card in vetro, griglia di numeri e foto, card dei corsi a immagine, card di confronto con cosa include il biennio, blocco «Parti da Roma» con globo, FAQ ad accordion e footer a colonne con il logo in filigrana e l'interruttore «Animazioni»; pagine interne chiare con un alone azzurro. Solo i colori dell'istituto (blu, blu notte, ciano, blu elettrico e loro toni) e Raleway. Regole complete in [`DESIGN.md`](DESIGN.md), contesto di prodotto in [`PRODUCT.md`](PRODUCT.md).
+Direzione visiva: **contenitori arrotondati, vetro e titoli leggeri**, sui riferimenti indicati dal committente: home su fondo blu notte con il video dell'hero a tutta larghezza, menu a pillola, card in vetro, griglia di numeri e foto, card dei corsi a immagine, card di confronto con cosa include il biennio, blocco «Parti da Roma» con globo, FAQ ad accordion e footer a colonne con il logo in filigrana e l'interruttore «Animazioni»; pagine interne chiare con un alone azzurro. Solo i colori dell'istituto (blu, blu notte, ciano, blu elettrico e loro toni) e Raleway. Regole complete in [`DESIGN.md`](DESIGN.md), contesto di prodotto in [`PRODUCT.md`](PRODUCT.md). Accessibilità e obblighi di legge in [`ACCESSIBILITA.md`](ACCESSIBILITA.md).
 
 ## Struttura
 
@@ -84,6 +84,7 @@ La copia locale non parla con internet (`WP_HTTP_BLOCK_EXTERNAL` nel `wp-config.
 6. Menu: posizioni *Menu principale*, *Menu footer*, *Note legali*.
 7. Home: Customizer → *Home* → video dell'hero (MP4 muto); l'immagine in evidenza della pagina iniziale fa da copertina del video. Il contenuto della pagina (loghi con link) diventa la sezione «I nostri partner». I loghi dei finanziatori nel footer sono file vettoriali ufficiali inclusi nel tema (`assets/img/funding/`, fonti in `SOURCES.md`); si cambiano con il filtro `its_funding_logos`.
 8. Customizer → *Contatti e sede* e *Dati pubblicati*: indirizzo, orari, telefono, email, durata, ore, posti, dato occupazionale e fonte.
+9. **Accessibilità (Legge 4/2004)**: pubblicare la dichiarazione di accessibilità (su form.agid.gov.it se la Fondazione è nell'Indice PA, altrimenti come pagina con slug `dichiarazione-di-accessibilita`) e impostare in Customizer → *Accessibilità* il suo link e l'email per le segnalazioni. Il footer di ogni pagina mostra «Dichiarazione di accessibilità» e «Segnala un problema di accessibilità». Obblighi, verifiche fatte, bozza della dichiarazione e regole per la redazione in [`ACCESSIBILITA.md`](ACCESSIBILITA.md); aggiornamento entro il 23 settembre di ogni anno.
 
 ### Campi personalizzati
 

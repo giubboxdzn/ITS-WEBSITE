@@ -56,6 +56,47 @@ add_action(
 			)
 		);
 
+		// Legge 4/2004, art. 3-quater: the accessibility statement and the feedback channel, linked from every page.
+		$wp_customize->add_section(
+			'its_accessibility',
+			array(
+				'title'       => __( 'Accessibilità', 'its-rossellini' ),
+				'description' => __( 'Link nel footer di ogni pagina, come chiede la Legge 4/2004 (art. 3-quater).', 'its-rossellini' ),
+			)
+		);
+		$wp_customize->add_setting(
+			'its_a11y_statement',
+			array(
+				'default'           => '',
+				'sanitize_callback' => 'esc_url_raw',
+			)
+		);
+		$wp_customize->add_control(
+			'its_a11y_statement',
+			array(
+				'label'       => __( 'Dichiarazione di accessibilità (URL)', 'its-rossellini' ),
+				'description' => __( 'Il link generato da form.agid.gov.it, oppure una pagina del sito. Vuoto: la pagina con slug «dichiarazione-di-accessibilita», se esiste.', 'its-rossellini' ),
+				'section'     => 'its_accessibility',
+				'type'        => 'url',
+			)
+		);
+		$wp_customize->add_setting(
+			'its_a11y_email',
+			array(
+				'default'           => '',
+				'sanitize_callback' => 'sanitize_email',
+			)
+		);
+		$wp_customize->add_control(
+			'its_a11y_email',
+			array(
+				'label'       => __( 'Email per le segnalazioni di accessibilità', 'its-rossellini' ),
+				'description' => __( 'Il meccanismo di feedback indicato nella dichiarazione. Vuoto: l’email dei contatti.', 'its-rossellini' ),
+				'section'     => 'its_accessibility',
+				'type'        => 'email',
+			)
+		);
+
 		foreach ( $sections as $section => [ $title, $fields ] ) {
 			$wp_customize->add_section( $section, array( 'title' => $title ) );
 			foreach ( $fields as $id => [ $label, $default ] ) {

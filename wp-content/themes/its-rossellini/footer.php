@@ -62,6 +62,11 @@ $funding  = its_funding_logos();
 			<ul class="colophon__links">
 				<li><a href="<?php echo esc_url( its_page_url( 'bandi-albi' ) ); ?>"><?php esc_html_e( 'Bandi e albi', 'its-rossellini' ); ?></a></li>
 				<li><a href="<?php echo esc_url( its_page_url( 'bandi-albi/amministrazione-trasparente' ) ); ?>"><?php esc_html_e( 'Amministrazione trasparente', 'its-rossellini' ); ?></a></li>
+				<?php $a11y = its_accessibility_links(); ?>
+				<?php if ( $a11y['statement'] ) : ?>
+					<li><a href="<?php echo esc_url( $a11y['statement'] ); ?>"><?php esc_html_e( 'Dichiarazione di accessibilità', 'its-rossellini' ); ?></a></li>
+				<?php endif; ?>
+				<li><a href="<?php echo esc_url( $a11y['feedback'], array( 'mailto' ) ); ?>"><?php esc_html_e( 'Segnala un problema di accessibilità', 'its-rossellini' ); ?></a></li>
 			</ul>
 			<?php
 			wp_nav_menu(
