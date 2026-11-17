@@ -8,9 +8,9 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Courses, in editorial order.
+ * Courses, in editorial order. Capped: the catalogue is a few dozen at most.
  */
-function its_courses( int $limit = -1, array $exclude = array() ): WP_Query {
+function its_courses( int $limit = 100, array $exclude = array() ): WP_Query {
 	return new WP_Query(
 		array(
 			'post_type'      => 'corso',
@@ -27,17 +27,21 @@ function its_courses( int $limit = -1, array $exclude = array() ): WP_Query {
 
 /**
  * Number of published courses in the visitor's language (Polylang filters the query).
+ * Counted by the database, once per request.
  */
 function its_course_count(): int {
-	$query = new WP_Query(
-		array(
-			'post_type'      => 'corso',
-			'posts_per_page' => -1,
-			'fields'         => 'ids',
-			'no_found_rows'  => true,
-		)
-	);
-	return count( $query->posts );
+	static $count = null;
+	if ( null === $count ) {
+		$query = new WP_Query(
+			array(
+				'post_type'      => 'corso',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+			)
+		);
+		$count = (int) $query->found_posts;
+	}
+	return $count;
 }
 
 /**
@@ -60,37 +64,45 @@ function its_course_areas(): array {
 
 /**
  * Events with a date, upcoming first (dated today or later), then the most recent past ones.
+ * The dates live in meta written in several formats, so they are sorted here: once per request.
  *
  * @return array{upcoming: WP_Post[], past: WP_Post[]}
  */
 function its_events_by_date( int $limit_past = 6 ): array {
-	$posts = get_posts(
-		array(
-			'post_type'      => 'evento',
-			'posts_per_page' => 200,
-			'no_found_rows'  => true,
-		)
-	);
-	$today    = new DateTimeImmutable( 'today', wp_timezone() );
-	$upcoming = array();
-	$past     = array();
-	foreach ( $posts as $post ) {
-		$date = its_event_date( $post->ID );
-		if ( ! $date ) {
-			continue;
+	static $sorted = null;
+	if ( null === $sorted ) {
+		$posts    = get_posts(
+			array(
+				'post_type'      => 'evento',
+				'posts_per_page' => 200,
+				'no_found_rows'  => true,
+			)
+		);
+		$today    = new DateTimeImmutable( 'today', wp_timezone() );
+		$upcoming = array();
+		$past     = array();
+		foreach ( $posts as $post ) {
+			$date = its_event_date( $post->ID );
+			if ( ! $date ) {
+				continue;
+			}
+			$post->its_date = $date;
+			if ( $date >= $today ) {
+				$upcoming[] = $post;
+			} else {
+				$past[] = $post;
+			}
 		}
-		$post->its_date = $date;
-		if ( $date >= $today ) {
-			$upcoming[] = $post;
-		} else {
-			$past[] = $post;
-		}
+		usort( $upcoming, static fn( $a, $b ) => $a->its_date <=> $b->its_date );
+		usort( $past, static fn( $a, $b ) => $b->its_date <=> $a->its_date );
+		$sorted = array(
+			'upcoming' => $upcoming,
+			'past'     => $past,
+		);
 	}
-	usort( $upcoming, static fn( $a, $b ) => $a->its_date <=> $b->its_date );
-	usort( $past, static fn( $a, $b ) => $b->its_date <=> $a->its_date );
 	return array(
-		'upcoming' => $upcoming,
-		'past'     => array_slice( $past, 0, $limit_past ),
+		'upcoming' => $sorted['upcoming'],
+		'past'     => array_slice( $sorted['past'], 0, $limit_past ),
 	);
 }
 

@@ -13,7 +13,9 @@ if ( preg_match( '/^[a-z0-9.-]+(:\d{1,5})?$/i', $host ) ) {
 
 $root = $_SERVER['DOCUMENT_ROOT'];
 $path = rawurldecode( (string) parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH ) );
-$file = realpath( $root . $path );
+// "/../" (also as %2e%2e or with backslashes) must not reach files outside the WordPress folder.
+// Checked on the request, not on realpath(): the theme and the mu-plugins are links to the repo.
+$file = preg_match( '#(^|/)\.\.(/|$)#', str_replace( '\\', '/', $path ) ) ? false : realpath( $root . $path );
 
 if ( false !== $file && is_file( $file ) ) {
 	if ( str_ends_with( $file, '.php' ) ) {

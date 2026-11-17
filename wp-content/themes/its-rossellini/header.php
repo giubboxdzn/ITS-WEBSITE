@@ -11,7 +11,10 @@ defined( 'ABSPATH' ) || exit;
 <head>
 <meta charset="<?php bloginfo( 'charset' ); ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>(function(r){r.classList.replace('no-js','js');if('scrollRestoration' in history){history.scrollRestoration='manual';}var m=null;try{m=localStorage.getItem('its-motion');}catch(e){}if(m==='off'||(m!=='on'&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)){r.classList.add('motion-off');}})(document.documentElement);</script>
+<?php
+// Before any CSS: JS and motion classes, so nothing flashes. Printed by WordPress so a CSP nonce can be added (wp_inline_script_attributes).
+wp_print_inline_script_tag( "(function(r){r.classList.replace('no-js','js');if('scrollRestoration' in history){history.scrollRestoration='manual';}var m=null;try{m=localStorage.getItem('its-motion');}catch(e){}if(m==='off'||(m!=='on'&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)){r.classList.add('motion-off');}})(document.documentElement);" );
+?>
 <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
