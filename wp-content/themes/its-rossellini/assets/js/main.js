@@ -130,8 +130,11 @@
 				setState(true);
 			}
 		});
-		if (motionOn() && !saveData) play();
-		else setState(true);
+		/* The footage starts once the page has loaded: its megabytes must not slow the first view. */
+		if (motionOn() && !saveData) {
+			if (document.readyState === 'complete') play();
+			else window.addEventListener('load', play, { once: true });
+		} else setState(true);
 		document.addEventListener('its:motion', (event) => {
 			if (event.detail.off) {
 				video.pause();
@@ -420,6 +423,8 @@
 			Object.entries(TARGETS).forEach(([type, selector]) => {
 				document.querySelectorAll(selector).forEach((el) => {
 					if (type !== 'words' && el.closest(FIRST_VIEW)) return;
+					/* First-view titles split on the server animate from CSS, with the first paint. */
+					if (el.dataset.split === 'server') return;
 					/* Switched on mid-page: what is already on screen stays put. */
 					if (!initial && !below(el)) return;
 					el.classList.remove('is-in');

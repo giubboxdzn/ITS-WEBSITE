@@ -18,7 +18,7 @@ while ( have_posts() ) :
 			<div class="wrap page-head__grid">
 				<div class="page-head__text">
 					<?php its_breadcrumbs(); ?>
-					<h1 class="page-head__title page-head__title--article"><?php the_title(); ?></h1>
+					<h1 class="page-head__title page-head__title--article" data-split="server"><?php echo its_split_words( esc_html( get_the_title() ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped inside. ?></h1>
 					<p class="article__meta">
 						<time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><?php echo esc_html( get_the_date() ); ?></time>
 						<?php if ( $cats ) : ?>

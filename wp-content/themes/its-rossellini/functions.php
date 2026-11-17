@@ -70,15 +70,40 @@ add_action(
 add_action(
 	'wp_head',
 	static function (): void {
-		foreach ( array( 'raleway-latin-wght-normal', 'raleway-latin-wght-italic' ) as $font ) {
-			printf(
-				'<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n",
-				esc_url( ITS_ROSSELLINI_URI . "/assets/fonts/{$font}.woff2" )
-			);
-		}
+		// Only the upright face: the italic one is used by <em> in texts and loads when a page has it.
+		printf(
+			'<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n",
+			esc_url( ITS_ROSSELLINI_URI . '/assets/fonts/raleway-latin-wght-normal.woff2' )
+		);
 		echo '<meta name="theme-color" content="#002c64">' . "\n";
 	},
 	1
+);
+
+// Meta description from the page's summary, only when no SEO plugin writes one (on the live site Yoast does).
+add_action(
+	'wp_head',
+	static function (): void {
+		foreach ( array( 'WPSEO_VERSION', 'RANK_MATH_VERSION', 'SEOPRESS_VERSION', 'AIOSEO_VERSION', 'THE_SEO_FRAMEWORK_VERSION' ) as $plugin ) {
+			if ( defined( $plugin ) ) {
+				return;
+			}
+		}
+		if ( is_front_page() || is_home() ) {
+			$text = get_bloginfo( 'description' );
+		} elseif ( is_singular() ) {
+			$text = has_excerpt() ? get_the_excerpt() : wp_strip_all_tags( strip_shortcodes( (string) get_post_field( 'post_content', get_queried_object_id() ) ) );
+		} elseif ( is_category() || is_tag() || is_tax() ) {
+			$text = term_description();
+		} else {
+			$text = '';
+		}
+		$text = trim( (string) preg_replace( '/\s+/u', ' ', wp_strip_all_tags( (string) $text ) ) );
+		if ( '' !== $text ) {
+			printf( '<meta name="description" content="%s">' . "\n", esc_attr( wp_html_excerpt( $text, 155, '…' ) ) );
+		}
+	},
+	2
 );
 
 // No third-party requests from the theme: drop the emoji CDN loader.

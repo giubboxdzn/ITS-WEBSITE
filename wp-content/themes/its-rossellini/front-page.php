@@ -69,7 +69,7 @@ $partners = trim( (string) apply_filters( 'the_content', (string) get_post_field
 		</div>
 
 		<div class="hero__content">
-			<h1 id="hero-title" class="hero__title"><?php echo wp_kses( __( 'Il futuro <strong>si gira</strong> adesso.', 'its-rossellini' ), $em ); ?></h1>
+			<h1 id="hero-title" class="hero__title" data-split="server"><?php echo its_split_words( wp_kses( __( 'Il futuro <strong>si gira</strong> adesso.', 'its-rossellini' ), $em ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped inside. ?></h1>
 			<p class="hero__lead"><?php esc_html_e( 'Due anni per trasformare il tuo talento in una professione tra cinema, TV, digital, live e tecnologia.', 'its-rossellini' ); ?></p>
 			<div class="hero__actions">
 				<a class="btn btn--white" href="<?php echo esc_url( $meet_url ); ?>"><?php esc_html_e( 'Prenota un incontro', 'its-rossellini' ); ?><?php echo its_icon( 'arrow-up' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
@@ -120,14 +120,14 @@ $partners = trim( (string) apply_filters( 'the_content', (string) get_post_field
 			<p class="tile__num"><?php echo esc_html( (string) its_course_count() ); ?></p>
 		</div>
 		<?php if ( $tile_a ) : ?>
-			<figure class="tile tile--img bento__i1"><?php echo wp_get_attachment_image( $tile_a, 'its-card', false, array( 'alt' => '', 'sizes' => '(max-width: 760px) 46vw, 220px' ) ); ?></figure>
+			<figure class="tile tile--img bento__i1"><?php echo wp_get_attachment_image( $tile_a, 'its-card', false, array( 'alt' => '', 'loading' => 'lazy', 'sizes' => '(max-width: 760px) 46vw, 220px' ) ); ?></figure>
 		<?php endif; ?>
 		<div class="tile tile--stat bento__s2">
 			<p class="tile__label"><?php esc_html_e( 'Aree tecnologiche', 'its-rossellini' ); ?></p>
 			<p class="tile__num"><?php echo esc_html( (string) count( its_course_areas() ) ); ?></p>
 		</div>
 		<?php if ( $tile_b ) : ?>
-			<figure class="tile tile--img bento__i2"><?php echo wp_get_attachment_image( $tile_b, 'its-card', false, array( 'alt' => '', 'sizes' => '(max-width: 760px) 46vw, 220px' ) ); ?></figure>
+			<figure class="tile tile--img bento__i2"><?php echo wp_get_attachment_image( $tile_b, 'its-card', false, array( 'alt' => '', 'loading' => 'lazy', 'sizes' => '(max-width: 760px) 46vw, 220px' ) ); ?></figure>
 		<?php endif; ?>
 		<div class="bento__head">
 			<h2 id="set-title" class="display"><?php echo wp_kses( __( 'Non una classe. <strong>Un set aperto.</strong>', 'its-rossellini' ), $em ); ?></h2>
@@ -135,7 +135,7 @@ $partners = trim( (string) apply_filters( 'the_content', (string) get_post_field
 		</div>
 		<?php if ( $wide_photo ) : ?>
 			<figure class="tile tile--img bento__wide">
-				<?php echo wp_get_attachment_image( $wide_photo, 'full', false, array( 'alt' => '', 'sizes' => '(max-width: 900px) 92vw, 760px' ) ); ?>
+				<?php echo wp_get_attachment_image( $wide_photo, 'full', false, array( 'alt' => '', 'loading' => 'lazy', 'sizes' => '(max-width: 900px) 92vw, 760px' ) ); ?>
 				<span class="glass-chip" aria-hidden="true"><?php esc_html_e( 'Imparare facendo', 'its-rossellini' ); ?></span>
 			</figure>
 		<?php endif; ?>
@@ -167,7 +167,7 @@ $partners = trim( (string) apply_filters( 'the_content', (string) get_post_field
 				?>
 			</p>
 		</div>
-		<?php get_template_part( 'template-parts/course-wall' ); ?>
+		<?php get_template_part( 'template-parts/course-wall', null, array( 'eager' => 0 ) ); ?>
 		<p class="panel__more"><a class="btn btn--outline" href="<?php echo esc_url( its_page_url( 'offerta-formativa/corsi' ) ); ?>"><?php esc_html_e( 'Vedi tutti i corsi', 'its-rossellini' ); ?><?php echo its_icon( 'arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a></p>
 	</div>
 </section>
@@ -211,7 +211,7 @@ $compare = array(
 <section class="section" aria-labelledby="percorso-title">
 	<div class="wrap overlap">
 		<?php if ( $path_photo ) : ?>
-			<figure class="overlap__media"><?php echo wp_get_attachment_image( $path_photo, 'full', false, array( 'alt' => '', 'sizes' => '(max-width: 900px) 92vw, 60vw' ) ); ?></figure>
+			<figure class="overlap__media"><?php echo wp_get_attachment_image( $path_photo, 'full', false, array( 'alt' => '', 'loading' => 'lazy', 'sizes' => '(max-width: 900px) 92vw, 60vw' ) ); ?></figure>
 		<?php endif; ?>
 		<div class="overlap__card">
 			<h2 id="percorso-title" class="display display--dark display--m"><?php echo wp_kses( __( 'Dal primo ciak <strong>al primo contratto.</strong>', 'its-rossellini' ), $em ); ?></h2>

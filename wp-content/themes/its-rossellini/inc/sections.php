@@ -155,6 +155,43 @@ function its_display_text( string $text ): string {
 }
 
 /**
+ * A first-view title as words that rise from a mask, already in the HTML: the animation starts with the
+ * first paint instead of waiting for the script (the title is the page's largest element, its LCP).
+ * Same markup the script builds for the other titles: the plain text for screen readers, the words hidden
+ * from them. Input: inline HTML already escaped (text and <strong>), as its_display_text() returns it.
+ */
+function its_split_words( string $html ): string {
+	if ( '' === trim( $html ) || ! class_exists( 'DOMDocument' ) ) {
+		return $html;
+	}
+	$doc = new DOMDocument();
+	libxml_use_internal_errors( true );
+	$doc->loadHTML( '<?xml encoding="utf-8"?><div id="its-words">' . $html . '</div>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
+	libxml_clear_errors();
+	$root = $doc->getElementById( 'its-words' );
+	if ( ! $root ) {
+		return $html;
+	}
+	$n    = 0;
+	$walk = static function ( DOMNode $from ) use ( &$walk, &$n ): string {
+		$out = '';
+		foreach ( $from->childNodes as $node ) {
+			if ( $node instanceof DOMText ) {
+				foreach ( preg_split( '/(\s+)/u', $node->textContent, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY ) as $part ) {
+					$out .= '' === trim( $part ) ? ' ' : '<span class="word"><span class="word__in" style="--w:' . $n++ . '">' . esc_html( $part ) . '</span></span>';
+				}
+			} elseif ( $node instanceof DOMElement && in_array( strtolower( $node->tagName ), array( 'strong', 'em', 'br' ), true ) ) {
+				$tag  = strtolower( $node->tagName );
+				$out .= 'br' === $tag ? '<br>' : "<{$tag}>" . $walk( $node ) . "</{$tag}>";
+			}
+		}
+		return $out;
+	};
+	$plain = trim( preg_replace( '/\s+/u', ' ', $root->textContent ) );
+	return '<span class="screen-reader-text">' . esc_html( $plain ) . '</span><span aria-hidden="true">' . $walk( $root ) . '</span>';
+}
+
+/**
  * Inner HTML of a node, limited to inline formatting and links.
  */
 function its_sections_inline( DOMNode $node ): string {

@@ -19,8 +19,9 @@ $cats = get_the_category();
 				the_post_thumbnail(
 					'its-card',
 					array(
-						'sizes' => '(max-width: 760px) 92vw, 420px',
-						'alt'   => '',
+						'sizes'   => '(max-width: 760px) 92vw, 420px',
+						'alt'     => '',
+						'loading' => 'lazy',
 					)
 				);
 			}

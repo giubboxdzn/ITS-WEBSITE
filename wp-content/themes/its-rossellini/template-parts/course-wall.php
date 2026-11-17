@@ -3,7 +3,8 @@
  * Course grid with area filter. Filtering works as plain links (?area=) and is
  * enhanced in place by main.js.
  *
- * Args: 'heading' (h2|h3) level of each course title, h2 when the grid sits directly under the page h1.
+ * Args: 'heading' (h2|h3) level of each course title, h2 when the grid sits directly under the page h1;
+ * 'eager' how many photos load at once (default 4, the first row; 0 when the grid is below the fold).
  *
  * @package its-rossellini
  */
@@ -40,7 +41,7 @@ $base    = remove_query_arg( 'area' );
 				'template-parts/course-card',
 				null,
 				array(
-					'loading' => $index < 4 ? 'eager' : 'lazy',
+					'loading' => $index < ( $args['eager'] ?? 4 ) ? 'eager' : 'lazy',
 					'heading' => $args['heading'] ?? 'h3',
 				)
 			);
