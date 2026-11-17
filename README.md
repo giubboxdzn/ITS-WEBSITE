@@ -104,3 +104,58 @@ add_filter( 'its_rossellini_meta_keys', function ( $keys, $field ) {
 }, 10, 2 );
 ```
 
+
+## Sicurezza in produzione
+
+**Nel tema.**
+- Ogni dato in uscita è escapato.
+- Gli unici input sono i filtri GET (`area`, `tipo`, `biennio`, `q`), tutti sanificati.
+- Niente query SQL dirette, endpoint AJAX/REST o form che scrivono.
+- Il JavaScript scrive solo testo (`textContent`).
+- Il tema non stampa la versione di WordPress (pagine e feed) né il link di scoperta di XML-RPC.
+- `Update URI: false` impedisce aggiornamenti da WordPress.org con lo stesso slug.
+- Lo script inline in `<head>` passa da `wp_print_inline_script_tag()`, quindi accetta un nonce CSP via filtro.
+
+**Sul server (fuori dal tema).** Controllo passivo del sito live del 17/11/2026, solo richieste in lettura.
+
+Già a posto:
+- elenco utenti via API bloccato (401);
+- `?author=` → 404;
+- `xmlrpc.php` → 403;
+- niente `debug.log` e niente elenchi di cartelle;
+- `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy` e `Permissions-Policy` presenti;
+- cookie della lingua `Secure` + `SameSite=Lax`.
+
+Da sistemare:
+- manca `Strict-Transport-Security`;
+- manca una Content Security Policy;
+- `X-Powered-By` espone la versione di PHP;
+- `readme.html` e `license.txt` sono pubblici;
+- il meta `generator` espone la versione di Site Kit.
+
+Da aggiungere in cima a `.htaccess`, fuori dai marcatori `# BEGIN WordPress`:
+
+```apache
+<IfModule mod_headers.c>
+	Header always set Strict-Transport-Security "max-age=31536000"
+	Header always unset X-Powered-By
+	Header unset X-Powered-By
+	# Solo sito pubblico: l'admin e il login usano script e worker che questa policy non prevede.
+	<If "%{REQUEST_URI} !~ m#^/wp-(admin|login)#">
+		Header always set Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; media-src 'self'; frame-src 'self' https://www.youtube-nocookie.com https://www.youtube.com https://player.vimeo.com https://www.google.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
+	</If>
+</IfModule>
+<FilesMatch "^(readme\.html|license\.txt)$">
+	Require all denied
+</FilesMatch>
+```
+
+**Come applicarlo:**
+- In `php.ini` impostare anche `expose_php = Off`.
+- La CSP parte in modalità *Report-Only*: segnala nella console del browser senza bloccare nulla. Con il nuovo tema e WordPress l'abbiamo provata in modalità bloccante su tutti i tipi di pagina in locale, con zero violazioni. Dopo una o due settimane senza segnalazioni, anche con i plugin del sito (Yoast, Site Kit, moduli), si rinomina in `Content-Security-Policy`.
+- HSTS è senza `includeSubDomains`: va aggiunto solo dopo aver verificato che ogni sottodominio risponda in HTTPS.
+
+**Da verificare a parte:**
+- il TLS, con SSL Labs (protocolli e cifrari: da qui non è stato possibile);
+- la protezione dagli attacchi a forza bruta su `wp-login.php`, con limitazione dei tentativi o 2FA via plugin;
+- che core e plugin siano sempre aggiornati.

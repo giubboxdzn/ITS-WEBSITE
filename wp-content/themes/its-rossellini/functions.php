@@ -86,6 +86,12 @@ remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
 remove_action( 'wp_print_styles', 'print_emoji_styles' );
 add_filter( 'emoji_svg_url', '__return_false' );
 
+// Nothing that helps an attacker: no WordPress version (pages and feeds), no XML-RPC discovery link
+// (the live server blocks xmlrpc.php anyway).
+remove_action( 'wp_head', 'wp_generator' );
+remove_action( 'wp_head', 'rsd_link' );
+add_filter( 'the_generator', '__return_empty_string' );
+
 add_filter(
 	'body_class',
 	static function ( array $classes ): array {
