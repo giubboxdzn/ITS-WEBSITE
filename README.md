@@ -86,6 +86,12 @@ Il selettore con le bandiere è nell'header (bandiera + codice) e nel footer (ba
 
 La copia locale non parla con internet (`WP_HTTP_BLOCK_EXTERNAL` nel `wp-config.php` generato): `dev/mu-plugins/its-dev-offline.php` risponde «servizio non disponibile» alle chiamate verso WordPress.org, così il controllo aggiornamenti si ferma in silenzio invece di stampare in admin il warning *could not establish a secure connection to WordPress.org*. `setup.sh` collega tutti i file di `dev/mu-plugins/`: dopo averne aggiunto uno basta rilanciarlo.
 
+### Demo statica (AWS Amplify o altro hosting statico)
+
+Per far vedere il sito senza un server PHP: con `dev/serve.sh` acceso, `python3 -I dev/export-static.py` salva tutte le pagine IT ed EN e i loro file in `.wp/static/` e crea `.wp/static.zip` (link relativi alla radice, quindi funziona su qualsiasi dominio). Le pagine restano `noindex`, perché sono una copia del sito live. Funzionano anche il filtro dei corsi e il selettore della lingua. Non funzionano la ricerca e i filtri dei documenti (`?q=`, `?tipo=`, `?biennio=`), che hanno bisogno di PHP, né l'admin.
+
+Su AWS Amplify: *Create new app → Deploy without Git* e trascinare lo zip. Per la pagina 404, in *Hosting → Rewrites and redirects* aggiungere `/<*>` → `/404.html` con tipo `404 (Rewrite)`.
+
 ## Messa in produzione
 
 1. Installare la cartella `wp-content/themes/its-rossellini` come nuovo tema (slug diverso da `rossellini`, il tema attuale resta intatto per tornare indietro). `style.css` dichiara `Update URI: false`: WordPress non proporrà mai come «aggiornamento» un tema di WordPress.org con lo stesso slug.
