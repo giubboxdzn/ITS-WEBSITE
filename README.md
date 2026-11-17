@@ -19,7 +19,12 @@ wp-content/themes/its-rossellini/   il tema (da installare in produzione)
   assets/js/main.js                 header, video dell'hero, menu mobile, filtro corsi, animazioni legate all'interruttore «Animazioni» (miglioramento progressivo)
   assets/fonts/                     Raleway variabile, normale e corsivo (OFL), self-hosted
 dev/                                ambiente locale (non va in produzione); dev/i18n/build.py compila le traduzioni
-.claude/skills/                     skill per Claude Code: find-skills, impeccable, web-design-guidelines
+.claude/skills/                     skill per Claude Code (versioni bloccate in skills-lock.json):
+                                    design: impeccable, web-design-guidelines, ux-heuristics
+                                    codice WordPress: wp-guard
+                                    prestazioni e qualità: web-quality-audit, performance, core-web-vitals
+                                    accessibilità: accessibility (WCAG 2.2), kb-legal-compliance-mapping, accessibility-statement, a11y-core
+                                    ricerca di altre skill: find-skills
 ```
 
 ## Sviluppo locale
