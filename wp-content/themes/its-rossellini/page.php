@@ -21,7 +21,7 @@ while ( have_posts() ) :
 			'title'    => get_the_title(),
 			'lead'     => has_excerpt() ? get_the_excerpt() : '',
 			'image_id' => (int) get_post_thumbnail_id(),
-			'aside'    => $editorial['actions'] ?? '',
+			'aside'    => its_chosen_course_note() . ( $editorial['actions'] ?? '' ),
 			'float'    => $editorial['float'] ?? '',
 		)
 	);

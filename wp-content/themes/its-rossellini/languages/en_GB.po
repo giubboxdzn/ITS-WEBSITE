@@ -53,7 +53,7 @@ msgstr "All offices"
 msgid "Trasparenza"
 msgstr "Transparency"
 
-#: footer.php:63 inc/helpers.php:372
+#: footer.php:63 inc/helpers.php:405
 msgid "Bandi e albi"
 msgstr "Calls and registers"
 
@@ -231,7 +231,7 @@ msgstr "The answers that matter before you apply, taken from the Academy’s cal
 msgid "ITS Academy Roberto Rossellini"
 msgstr "ITS Academy Roberto Rossellini"
 
-#: front-page.php:204 header.php:58 inc/sections.php:72
+#: front-page.php:204 header.php:62 inc/sections.php:69
 msgid "Preiscriviti"
 msgstr "Pre-enrol"
 
@@ -311,7 +311,7 @@ msgstr "Your future <strong>starts rolling</strong> now."
 msgid "Due anni per trasformare il tuo talento in una professione tra cinema, TV, digital, live e tecnologia."
 msgstr "Two years to turn your talent into a profession across cinema, TV, digital media, live production and technology."
 
-#: front-page.php:75 page.php:63 single-evento.php:54 template-parts/cta-card.php:23 templates/template-eventi.php:40 inc/sections.php:66
+#: front-page.php:75 page.php:63 single-evento.php:54 template-parts/cta-card.php:23 templates/template-eventi.php:40 inc/sections.php:68
 msgid "Prenota un incontro"
 msgstr "Book a meeting"
 
@@ -335,29 +335,37 @@ msgstr "Pause the video"
 msgid "Riproduci il video"
 msgstr "Play the video"
 
-#: functions.php:35
+#: functions.php:36
 msgid "Menu principale"
 msgstr "Main menu"
 
-#: functions.php:36
+#: functions.php:37
 msgid "Menu footer"
 msgstr "Footer menu"
 
-#: functions.php:37
+#: functions.php:38
 msgid "Note legali"
 msgstr "Legal notes"
 
-#: header.php:19
+#: header.php:22
 msgid "Vai al contenuto"
 msgstr "Skip to content"
 
-#: header.php:30
+#: header.php:33
 msgid "Menu"
 msgstr "Menu"
 
-#: header.php:34
+#: header.php:37
 msgid "Principale"
 msgstr "Main"
+
+#: inc/content.php:163
+msgid "Corso scelto"
+msgstr "Chosen course"
+
+#: inc/content.php:167
+msgid "Cambia corso"
+msgstr "Change course"
 
 #: inc/customizer.php:111
 msgid "Via Tiburtina 691, Roma"
@@ -423,7 +431,7 @@ msgstr "Graduates in work within 12 months"
 msgid "Fonte del dato occupazionale"
 msgstr "Source of the employment figure"
 
-#: inc/customizer.php:38 inc/helpers.php:363
+#: inc/customizer.php:38 inc/helpers.php:396
 msgid "Home"
 msgstr "Home"
 
@@ -439,67 +447,67 @@ msgstr "The front page’s featured image is used as the cover."
 msgid "Prossimamente"
 msgstr "Coming soon"
 
-#: inc/helpers.php:313
+#: inc/helpers.php:346
 msgid "Lingua: %s. Cambia lingua"
 msgstr "Language: %s. Change language"
 
-#: inc/helpers.php:328
+#: inc/helpers.php:361
 msgid "Precedenti"
 msgstr "Previous"
 
-#: inc/helpers.php:329
+#: inc/helpers.php:362
 msgid "Successivi"
 msgstr "Next"
 
-#: inc/helpers.php:333
+#: inc/helpers.php:366
 msgid "Pagine"
 msgstr "Pages"
 
-#: inc/helpers.php:360 inc/helpers.php:380
+#: inc/helpers.php:393 inc/helpers.php:413
 msgid "Percorso"
 msgstr "Breadcrumb"
 
-#: inc/helpers.php:371
+#: inc/helpers.php:404
 msgid "Eventi"
 msgstr "Events"
 
-#: inc/helpers.php:373
+#: inc/helpers.php:406
 msgid "Edizioni dei corsi"
 msgstr "Course editions"
 
-#: inc/helpers.php:406
+#: inc/helpers.php:439
 msgid "Sistema nazionale ITS Academy"
 msgstr "National ITS Academy system"
 
-#: inc/helpers.php:408
+#: inc/helpers.php:441
 msgid "Istituti Tecnici Superiori, It’s my future"
 msgstr "Istituti Tecnici Superiori (ITS Academy), It’s my future"
 
-#: inc/helpers.php:412
+#: inc/helpers.php:445
 msgid "Programma regionale FSE+ Lazio 2021-2027"
 msgstr "ESF+ Lazio Regional Programme 2021-2027"
 
-#: inc/helpers.php:414
+#: inc/helpers.php:447
 msgid "Coesione Italia 21-27 Lazio"
 msgstr "Coesione Italia 21-27 Lazio"
 
-#: inc/helpers.php:415
+#: inc/helpers.php:448
 msgid "Cofinanziato dall’Unione europea"
 msgstr "Co-funded by the European Union (Cofinanziato dall’Unione europea)"
 
-#: inc/helpers.php:416
+#: inc/helpers.php:449
 msgid "Repubblica Italiana"
 msgstr "Italian Republic"
 
-#: inc/helpers.php:417
+#: inc/helpers.php:450
 msgid "Regione Lazio"
 msgstr "Lazio Region (Regione Lazio)"
 
-#: inc/helpers.php:421
+#: inc/helpers.php:454
 msgid "PNRR Istruzione"
 msgstr "PNRR Education"
 
-#: inc/helpers.php:423
+#: inc/helpers.php:456
 msgid "Futura, la scuola per l’Italia di domani. PNRR Istruzione, finanziato dall’Unione europea NextGenerationEU, Ministero dell’Istruzione e del Merito"
 msgstr "Futura, the school for tomorrow’s Italy. PNRR Education, funded by the European Union NextGenerationEU, Ministry of Education and Merit"
 
@@ -523,15 +531,15 @@ msgstr "Today"
 msgid "Ultimi giorni"
 msgstr "Last days"
 
-#: inc/sections.php:111
+#: inc/sections.php:112
 msgid "Occhiello"
 msgstr "Eyebrow"
 
-#: inc/sections.php:118
+#: inc/sections.php:119
 msgid "Numeri"
 msgstr "Figures"
 
-#: inc/sections.php:125
+#: inc/sections.php:126
 msgid "Invito finale"
 msgstr "Closing call"
 
@@ -543,7 +551,7 @@ msgstr "Results for “%s”"
 msgid "Avvisi, graduatorie, progetti e risultati degli studenti."
 msgstr "Notices, rankings, projects and student achievements."
 
-#: index.php:23 inc/helpers.php:374
+#: index.php:23 inc/helpers.php:407
 msgid "News"
 msgstr "News"
 
@@ -551,7 +559,7 @@ msgstr "News"
 msgid "Nessun contenuto trovato. Prova con un’altra parola o torna alla home."
 msgstr "Nothing found. Try another word or go back to the home page."
 
-#: page.php:50 inc/prose.php:122 inc/prose.php:122 inc/sections.php:85
+#: page.php:50 inc/prose.php:122 inc/prose.php:122 inc/sections.php:86
 msgid "In questa pagina"
 msgstr "On this page"
 
@@ -723,19 +731,19 @@ msgstr "More <strong>news</strong>"
 msgid "In questa sezione"
 msgstr "In this section"
 
-#: template-parts/course-wall.php:19
+#: template-parts/course-wall.php:20
 msgid "Filtra i corsi per area"
 msgstr "Filter courses by area"
 
-#: template-parts/course-wall.php:21
+#: template-parts/course-wall.php:22
 msgid "Tutti"
 msgstr "All"
 
-#: template-parts/course-wall.php:55
+#: template-parts/course-wall.php:56
 msgid "1 corso"
 msgstr "1 course"
 
-#: template-parts/course-wall.php:55
+#: template-parts/course-wall.php:56
 msgid "%d corsi"
 msgstr "%d courses"
 
@@ -775,7 +783,7 @@ msgstr "News, events, <strong>opportunities.</strong>"
 msgid "Otto percorsi biennali post-diploma: scegli l’area, poi il mestiere."
 msgstr "Eight two-year post-diploma programmes: choose the area, then the profession."
 
-#: templates/template-corsi.php:23 inc/helpers.php:370
+#: templates/template-corsi.php:23 inc/helpers.php:403
 msgid "Corsi"
 msgstr "Courses"
 

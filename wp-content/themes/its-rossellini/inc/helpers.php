@@ -167,12 +167,45 @@ function its_document_file( int $post_id ): ?string {
  * URL of a page by path, falling back to a search-free default.
  */
 function its_page_url( string $path, string $fallback = '' ): string {
-	$page = get_page_by_path( $path );
-	if ( $page && function_exists( 'pll_get_post' ) ) {
-		$translated = pll_get_post( $page->ID );
-		$page       = $translated ? get_post( $translated ) : $page;
+	static $urls = array();
+	if ( ! isset( $urls[ $path ] ) ) {
+		$page = get_page_by_path( $path );
+		if ( ! $page ) {
+			// A page moved under another parent ("incontriamoci" lives in "servizi"): its slug still finds it.
+			$found = get_posts(
+				array(
+					'post_type'      => 'page',
+					'name'           => basename( $path ),
+					'posts_per_page' => 1,
+					'no_found_rows'  => true,
+					'lang'           => '',
+				)
+			);
+			$page  = $found[0] ?? null;
+		}
+		if ( $page && function_exists( 'pll_get_post' ) ) {
+			$translated = pll_get_post( $page->ID );
+			$page       = $translated ? get_post( $translated ) : $page;
+		}
+		$urls[ $path ] = $page ? (string) get_permalink( $page ) : '';
 	}
-	return $page ? (string) get_permalink( $page ) : ( $fallback ?: home_url( '/' ) );
+	return $urls[ $path ] ?: ( $fallback ?: home_url( '/' ) );
+}
+
+/**
+ * Whether a link leads to the page being viewed: a button must never send the visitor where they already are.
+ * Links to a section of the page (#…) and to other sites are not.
+ */
+function its_is_current( string $url ): bool {
+	if ( ! is_singular() || '' !== (string) wp_parse_url( $url, PHP_URL_FRAGMENT ) ) {
+		return false;
+	}
+	$host = (string) wp_parse_url( $url, PHP_URL_HOST );
+	if ( ( '' !== $host && wp_parse_url( home_url(), PHP_URL_HOST ) !== $host ) || ! preg_match( '#^(https?:)?//|^/#', $url ) ) {
+		return false;
+	}
+	$path = static fn( string $link ): string => trailingslashit( (string) wp_parse_url( $link, PHP_URL_PATH ) );
+	return $path( $url ) === $path( (string) get_permalink( get_queried_object_id() ) );
 }
 
 /**

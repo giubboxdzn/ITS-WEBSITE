@@ -24,6 +24,8 @@ if ( ! $links ) {
 		array( its_page_url( 'iscrizioni' ), __( 'Preiscriviti al biennio', 'its-rossellini' ) ),
 	);
 }
+// Never a button to the page being read.
+$links = array_values( array_filter( $links, static fn( array $link ): bool => ! its_is_current( $link[0] ) ) );
 ?>
 <section class="section" aria-labelledby="cta-title">
 	<div class="wrap">
@@ -34,6 +36,7 @@ if ( ! $links ) {
 					<p class="lead"><?php echo wp_kses_post( $text ); ?></p>
 				<?php endif; ?>
 			</div>
+			<?php if ( $links ) : ?>
 			<div class="cta-card__actions">
 				<?php foreach ( $links as $n => [ $url, $label ] ) : ?>
 					<?php if ( 0 === $n ) : ?>
@@ -43,6 +46,7 @@ if ( ! $links ) {
 					<?php endif; ?>
 				<?php endforeach; ?>
 			</div>
+			<?php endif; ?>
 		</div>
 	</div>
 </section>

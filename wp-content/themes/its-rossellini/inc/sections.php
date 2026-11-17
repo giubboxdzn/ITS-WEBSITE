@@ -60,16 +60,17 @@ function its_editorial( int $post_id ): ?array {
 		}
 	}
 	$callout = $parsed['callout'];
-	$links   = $callout['links'] ?? array();
+	$links   = array_values( array_filter( $callout['links'] ?? array(), static fn( array $link ): bool => ! its_is_current( $link[0] ) ) );
 
-	// Actions: the page's own call first, then a meeting (or pre-enrolment).
-	$meet    = array( its_page_url( 'incontriamoci', its_page_url( 'contatti' ) ), __( 'Prenota un incontro', 'its-rossellini' ) );
-	$actions = $links ?: array( $meet );
-	if ( count( $actions ) < 2 && $actions[0][0] !== $meet[0] ) {
-		$actions[] = $meet;
-	}
-	if ( count( $actions ) < 2 ) {
-		$actions[] = array( its_page_url( 'iscrizioni' ), __( 'Preiscriviti', 'its-rossellini' ) );
+	// Actions: the page's own call first, then a meeting, then pre-enrolment; never the page itself.
+	$actions = $links;
+	foreach ( array(
+		array( its_page_url( 'incontriamoci', its_page_url( 'contatti' ) ), __( 'Prenota un incontro', 'its-rossellini' ) ),
+		array( its_page_url( 'iscrizioni' ), __( 'Preiscriviti', 'its-rossellini' ) ),
+	) as $extra ) {
+		if ( count( $actions ) < 2 && ! its_is_current( $extra[0] ) && ! in_array( $extra[0], array_column( $actions, 0 ), true ) ) {
+			$actions[] = $extra;
+		}
 	}
 	$html = '<div class="page-head__actions">';
 	foreach ( array_slice( $actions, 0, 2 ) as $n => [ $url, $label ] ) {

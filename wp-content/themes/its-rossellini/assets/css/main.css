@@ -1788,6 +1788,54 @@ dd {
 	margin-top: 2rem;
 }
 
+/* Pre-enrolment opened from a course page: the chosen course, and a way to change it. */
+.chosen-course {
+	display: inline-flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.35rem 0.85rem;
+	margin: 1.5rem 0 0;
+	padding: 0.55rem 0.6rem 0.55rem 1.1rem;
+	border: 1px solid var(--bordo);
+	border-radius: 1.75rem; /* a pill on one line, a rounded card when it wraps on a phone */
+	background: var(--bianco);
+	box-shadow: var(--shadow);
+	font-size: 0.9375rem;
+}
+
+.chosen-course__label {
+	color: var(--muted);
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.chosen-course__name {
+	color: var(--elettrico);
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.chosen-course__change {
+	padding: 0.35rem 0.8rem;
+	border-radius: 999px;
+	background: var(--chiaro);
+	color: var(--inchiostro);
+	font-size: 0.8125rem;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.chosen-course__name:hover,
+.chosen-course__change:hover {
+	text-decoration: underline;
+}
+
+.chosen-course + .page-head__actions {
+	margin-top: 1.25rem;
+}
+
 .page-head .badge {
 	margin-top: 1.25rem;
 }

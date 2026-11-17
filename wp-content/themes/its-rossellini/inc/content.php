@@ -114,6 +114,74 @@ function its_next_event(): ?WP_Post {
 	return $events['upcoming'][0] ?? null;
 }
 
+// "?corso=" on a page is the theme's parameter (the pre-enrolment page opened from a course), not a request for
+// the course: it is also that post type's query var, and WordPress would render the page with the article template.
+add_filter(
+	'request',
+	static function ( array $vars ): array {
+		if ( ! empty( $vars['pagename'] ) && isset( $vars['corso'] ) ) {
+			unset( $vars['corso'], $vars['name'] );
+			if ( 'corso' === ( $vars['post_type'] ?? '' ) ) {
+				unset( $vars['post_type'] );
+			}
+		}
+		return $vars;
+	}
+);
+
+/**
+ * The course picked on its page ("Preiscriviti a questo corso" opens the pre-enrolment page with ?corso=slug):
+ * the page shows it and the e-mails it suggests name it, so the visitor does not have to remember or retype it.
+ */
+function its_chosen_course(): ?WP_Post {
+	static $course = false;
+	if ( false === $course ) {
+		$course = null;
+		$slug   = isset( $_GET['corso'] ) ? sanitize_title( wp_unslash( $_GET['corso'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( '' !== $slug && is_page() && its_is_current( its_page_url( 'iscrizioni' ) ) ) {
+			$found = get_page_by_path( $slug, OBJECT, 'corso' );
+			if ( $found && function_exists( 'pll_get_post' ) ) {
+				$translated = pll_get_post( $found->ID );
+				$found      = $translated ? get_post( $translated ) : $found;
+			}
+			$course = ( $found && 'publish' === $found->post_status ) ? $found : null;
+		}
+	}
+	return $course;
+}
+
+/**
+ * The chosen course above the pre-enrolment actions, with a way to change it.
+ */
+function its_chosen_course_note(): string {
+	$course = its_chosen_course();
+	if ( ! $course ) {
+		return '';
+	}
+	return sprintf(
+		'<p class="chosen-course"><span class="chosen-course__label">%1$s</span><a class="chosen-course__name" href="%2$s">%3$s</a><a class="chosen-course__change" href="%4$s">%5$s</a></p>',
+		esc_html__( 'Corso scelto', 'its-rossellini' ),
+		esc_url( get_permalink( $course ) ),
+		esc_html( get_the_title( $course ) ),
+		esc_url( its_page_url( 'offerta-formativa/corsi' ) ),
+		esc_html__( 'Cambia corso', 'its-rossellini' )
+	);
+}
+
+// The page's e-mail links carry the chosen course in their subject ("Preiscrizione 2026-2028 – Live Show Specialist").
+add_filter(
+	'the_content',
+	static function ( string $content ): string {
+		$course = its_chosen_course();
+		if ( ! $course || ! str_contains( $content, 'mailto:' ) ) {
+			return $content;
+		}
+		$suffix = rawurlencode( ' – ' . wp_strip_all_tags( get_the_title( $course ) ) );
+		return (string) preg_replace( '/(href="mailto:[^"?]+\?(?:[^"]*&(?:amp;)?)?subject=)([^"&]*)/i', '$1$2' . $suffix, $content );
+	},
+	20
+);
+
 /**
  * Documents filtered by the request (?tipo=, ?biennio=, ?q=), paginated.
  */

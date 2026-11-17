@@ -58,7 +58,8 @@ wp_print_inline_script_tag( "(function(r){r.classList.replace('no-js','js');if('
 			</nav>
 			<div class="masthead__aside">
 				<?php echo its_language_switcher( 'header' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-				<a class="btn btn--cta btn--small" href="<?php echo esc_url( its_page_url( 'iscrizioni' ) ); ?>"><?php esc_html_e( 'Preiscriviti', 'its-rossellini' ); ?></a>
+				<?php $enrol = its_page_url( 'iscrizioni' ); ?>
+				<a class="btn btn--cta btn--small" href="<?php echo esc_url( $enrol ); ?>"<?php echo its_is_current( $enrol ) ? ' aria-current="page"' : ''; ?>><?php esc_html_e( 'Preiscriviti', 'its-rossellini' ); ?></a>
 			</div>
 		</div>
 	</div>
