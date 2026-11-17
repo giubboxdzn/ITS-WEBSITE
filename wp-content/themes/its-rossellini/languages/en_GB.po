@@ -21,7 +21,7 @@ msgstr "Courses 2026–2028"
 msgid "Preiscrizione"
 msgstr "Pre-enrolment"
 
-#: 404.php:28 front-page.php:205
+#: 404.php:28 front-page.php:242
 msgid "Bandi e documenti"
 msgstr "Calls and documents"
 
@@ -101,213 +101,213 @@ msgstr "Book"
 msgid "Corsi biennali"
 msgstr "Two-year courses"
 
-#: front-page.php:126
+#: front-page.php:139
 msgid "Aree tecnologiche"
 msgstr "Technology areas"
 
-#: front-page.php:133
+#: front-page.php:159
 msgid "Non una classe. <strong>Un set aperto.</strong>"
 msgstr "Not a classroom. <strong>An open set.</strong>"
 
-#: front-page.php:134
+#: front-page.php:160
 msgid "Qui teoria e pratica entrano nella stessa inquadratura. Produci, sperimenti, sbagli, riprovi e costruisci un portfolio mentre impari."
 msgstr "Here theory and practice share the same frame. You produce, experiment, make mistakes, try again and build a portfolio while you learn."
 
-#: front-page.php:139
+#: front-page.php:176
 msgid "Imparare facendo"
 msgstr "Learning by doing"
 
-#: front-page.php:143
+#: front-page.php:180
 msgid "Laboratori veri"
 msgstr "Real labs"
 
-#: front-page.php:143
+#: front-page.php:180
 msgid "Spazi e tecnologie per lavorare come in produzione."
 msgstr "Spaces and technology to work as you would on a production."
 
-#: front-page.php:144
+#: front-page.php:181
 msgid "Docenti dall’industria"
 msgstr "Lecturers from the industry"
 
-#: front-page.php:144
+#: front-page.php:181
 msgid "Professionisti che insegnano facendo."
 msgstr "Professionals who teach by doing."
 
-#: front-page.php:145
+#: front-page.php:182
 msgid "Imprese nel percorso"
 msgstr "Companies along the way"
 
-#: front-page.php:145
+#: front-page.php:182
 msgid "Stage, brief e relazioni che iniziano prima del diploma."
 msgstr "Internships, briefs and contacts that start before you graduate."
 
-#: front-page.php:148
+#: front-page.php:185
 msgid "Teatro di posa"
 msgstr "Sound stage"
 
-#: front-page.php:150
+#: front-page.php:187
 msgid "Aule, laboratori e set nella sede di Via Tiburtina."
 msgstr "Classrooms, labs and sets at our Via Tiburtina campus."
 
-#: front-page.php:158
+#: front-page.php:195
 msgid "Trova il tuo <strong>campo d’azione.</strong>"
 msgstr "Find your <strong>field of action.</strong>"
 
-#: front-page.php:164
+#: front-page.php:201
 msgid "%d percorso biennale, con presenza quotidiana nei laboratori e docenti che lavorano davvero nell’industria creativa e tecnologica."
 msgid_plural "%d percorsi biennali, con presenza quotidiana nei laboratori e docenti che lavorano davvero nell’industria creativa e tecnologica."
 msgstr[0] "%d two-year programme, with daily lab practice and lecturers who really work in the creative and technology industries."
 msgstr[1] "%d two-year programmes, with daily lab practice and lecturers who really work in the creative and technology industries."
 
-#: front-page.php:171
+#: front-page.php:208
 msgid "Vedi tutti i corsi"
 msgstr "See all courses"
 
-#: front-page.php:177
+#: front-page.php:214
 msgid "Durata"
 msgstr "Length"
 
-#: front-page.php:177
+#: front-page.php:214
 msgid "%s anni, dopo il diploma"
 msgstr "%s years, after secondary school"
 
-#: front-page.php:178
+#: front-page.php:215
 msgid "Aula e laboratorio"
 msgstr "Classroom and lab"
 
-#: front-page.php:178
+#: front-page.php:215
 msgid "circa %s ore"
 msgstr "about %s hours"
 
-#: front-page.php:179
+#: front-page.php:216
 msgid "Tirocinio in azienda"
 msgstr "Company internship"
 
-#: front-page.php:179
+#: front-page.php:216
 msgid "%s ore"
 msgstr "%s hours"
 
-#: front-page.php:180
+#: front-page.php:217
 msgid "Costo"
 msgstr "Cost"
 
-#: front-page.php:180
+#: front-page.php:217
 msgid "Percorsi finanziati con risorse pubbliche"
 msgstr "Programmes funded with public resources"
 
-#: front-page.php:181
+#: front-page.php:218
 msgid "Posti"
 msgstr "Places"
 
-#: front-page.php:181
+#: front-page.php:218
 msgid "fino a %s per corso"
 msgstr "up to %s per course"
 
-#: front-page.php:182
+#: front-page.php:219
 msgid "Accesso"
 msgstr "Admission"
 
-#: front-page.php:182
+#: front-page.php:219
 msgid "Diploma di scuola superiore o titolo estero idoneo"
 msgstr "Upper-secondary diploma or an eligible foreign qualification"
 
-#: front-page.php:183
+#: front-page.php:220
 msgid "Esperienza all’estero"
 msgstr "Experience abroad"
 
-#: front-page.php:183
+#: front-page.php:220
 msgid "Tirocini con Erasmus+, secondo bandi e requisiti"
 msgstr "Erasmus+ internships, subject to calls and requirements"
 
-#: front-page.php:184
+#: front-page.php:221
 msgid "Dopo il diploma"
 msgstr "After graduating"
 
-#: front-page.php:184
+#: front-page.php:221
 msgid "%s lavora entro 12 mesi"
 msgstr "%s in work within 12 months"
 
-#: front-page.php:190
+#: front-page.php:227
 msgid "Tutto in chiaro. <strong>Poi decidi.</strong>"
 msgstr "Everything clear. <strong>Then decide.</strong>"
 
-#: front-page.php:191
+#: front-page.php:228
 msgid "Le risposte che contano prima di candidarti, prese dai bandi e dalle FAQ dell’Academy."
 msgstr "The answers that matter before you apply, taken from the Academy’s calls and FAQ."
 
-#: front-page.php:194
+#: front-page.php:231
 msgid "ITS Academy Roberto Rossellini"
 msgstr "ITS Academy Roberto Rossellini"
 
-#: front-page.php:204 header.php:62 inc/sections.php:69
+#: front-page.php:241 header.php:72 inc/sections.php:69
 msgid "Preiscriviti"
 msgstr "Pre-enrol"
 
-#: front-page.php:217
+#: front-page.php:267
 msgid "Dal primo ciak <strong>al primo contratto.</strong>"
 msgstr "From the first take <strong>to the first contract.</strong>"
 
-#: front-page.php:220
+#: front-page.php:270
 msgid "Orientati"
 msgstr "Find your way"
 
-#: front-page.php:221
+#: front-page.php:271
 msgid "Conosci persone, corsi e laboratori: open day, colloquio individuale, FAQ."
 msgstr "Meet people, courses and labs: open days, one-to-one meetings, FAQ."
 
-#: front-page.php:224
+#: front-page.php:274
 msgid "Fai esperienza"
 msgstr "Gain experience"
 
-#: front-page.php:228
+#: front-page.php:278
 msgid "Lavora su brief, set e progetti reali: %s ore, portfolio, lavoro in team."
 msgstr "Work on real briefs, sets and projects: %s hours, a portfolio, teamwork."
 
-#: front-page.php:233
+#: front-page.php:283
 msgid "Entra nel settore"
 msgstr "Enter the industry"
 
-#: front-page.php:237
+#: front-page.php:287
 msgid "Porta le competenze dentro un’azienda: %s ore di stage e placement."
 msgstr "Take your skills into a company: %s hours of internship and placement."
 
-#: front-page.php:242
+#: front-page.php:292
 msgid "Stage e placement"
 msgstr "Internships and placement"
 
-#: front-page.php:250
+#: front-page.php:300
 msgid "Parti da Roma. <strong>Arriva ovunque.</strong>"
 msgstr "Start in Rome. <strong>Go anywhere.</strong>"
 
-#: front-page.php:251
+#: front-page.php:301
 msgid "Lezioni, laboratori e teatro di posa sono in Via Tiburtina, a pochi passi dalla Metro B. E con Erasmus+ il tirocinio può portarti all’estero."
 msgstr "Classes, labs and the sound stage are on Via Tiburtina, a short walk from Metro line B. And with Erasmus+ your internship can take you abroad."
 
-#: front-page.php:253
+#: front-page.php:303
 msgid "Sede legale e operativa"
 msgstr "Registered and operational office"
 
-#: front-page.php:254
+#: front-page.php:304
 msgid "Metro B"
 msgstr "Metro line B"
 
-#: front-page.php:254
+#: front-page.php:304
 msgid "Pietralata · Monti Tiburtini"
 msgstr "Pietralata · Monti Tiburtini"
 
-#: front-page.php:255 inc/customizer.php:19
+#: front-page.php:305 inc/customizer.php:19
 msgid "Orari"
 msgstr "Opening hours"
 
-#: front-page.php:256
+#: front-page.php:306
 msgid "Erasmus+"
 msgstr "Erasmus+"
 
-#: front-page.php:256
+#: front-page.php:306
 msgid "Tirocinio all’estero"
 msgstr "Internship abroad"
 
-#: front-page.php:261
+#: front-page.php:311
 msgid "Roma"
 msgstr "Rome"
 
@@ -319,7 +319,7 @@ msgstr "Your future <strong>starts rolling</strong> now."
 msgid "Due anni per trasformare il tuo talento in una professione tra cinema, TV, digital, live e tecnologia."
 msgstr "Two years to turn your talent into a profession across cinema, TV, digital media, live production and technology."
 
-#: front-page.php:75 page.php:63 single-evento.php:54 template-parts/cta-card.php:23 templates/template-eventi.php:40 inc/sections.php:68
+#: front-page.php:75 page.php:63 single-evento.php:54 template-parts/cta-card.php:23 templates/template-eventi.php:41 inc/sections.php:68
 msgid "Prenota un incontro"
 msgstr "Book a meeting"
 
@@ -359,11 +359,15 @@ msgstr "Legal notes"
 msgid "Vai al contenuto"
 msgstr "Skip to content"
 
-#: header.php:33
+#: header.php:34 searchform.php:13
+msgid "Cerca nel sito"
+msgstr "Search the site"
+
+#: header.php:43
 msgid "Menu"
 msgstr "Menu"
 
-#: header.php:37
+#: header.php:47
 msgid "Principale"
 msgstr "Main"
 
@@ -614,10 +618,6 @@ msgstr "Write to the right office or book a meeting: we will get back to you."
 #: page.php:58
 msgid "Aggiornato"
 msgstr "Updated"
-
-#: searchform.php:13
-msgid "Cerca nel sito"
-msgstr "Search the site"
 
 #: searchform.php:14
 msgid "Cerca corsi, bandi, news…"
@@ -898,10 +898,10 @@ msgstr "Open days, guidance meetings and the sets where students work."
 msgid "In programma"
 msgstr "Coming up"
 
-#: templates/template-eventi.php:39
+#: templates/template-eventi.php:40
 msgid "Nessun evento in calendario in questo momento. Puoi visitare la sede con un incontro individuale, su appuntamento."
 msgstr "No events scheduled right now. You can visit the campus with a one-to-one meeting, by appointment."
 
-#: templates/template-eventi.php:47
+#: templates/template-eventi.php:48
 msgid "Già andati in scena"
 msgstr "Already on stage"

@@ -162,7 +162,7 @@ Contiene solo ciò che manca sul live: gli altri header arrivano già dal server
 
 **Come applicarlo:**
 - In `php.ini` impostare anche `expose_php = Off`. È un'impostazione di sistema: non si cambia da WordPress né da `.user.ini`, ma dal `php.ini` o dal pannello dell'hosting. Finché non è fatto, la riga `Header unset X-Powered-By` del blocco toglie comunque l'header.
-- La CSP parte in modalità *Report-Only*: segnala nella console del browser senza bloccare nulla. Con il nuovo tema e WordPress l'abbiamo provata in modalità bloccante su tutti i tipi di pagina in locale, con zero violazioni. Dopo una o due settimane senza segnalazioni, anche con i plugin del sito (Yoast, Site Kit, moduli), si rinomina in `Content-Security-Policy`.
+- La CSP parte in modalità *Report-Only*: segnala nella console del browser senza bloccare nulla. Con il nuovo tema e WordPress l'abbiamo provata in modalità bloccante su tutti i tipi di pagina in locale, con zero violazioni. Dopo una o due settimane senza segnalazioni, anche con i plugin del sito (Yoast, Site Kit, moduli), si rinomina in `Content-Security-Policy` e si aggiunge `upgrade-insecure-requests`, che in modalità Report-Only il browser ignora e segnala come errore in console.
 - HSTS è senza `includeSubDomains`: va aggiunto solo dopo aver verificato che ogni sottodominio risponda in HTTPS.
 
 **Da verificare a parte:**

@@ -21,7 +21,7 @@ msgstr ""
 msgid "Preiscrizione"
 msgstr ""
 
-#: 404.php:28 front-page.php:205
+#: 404.php:28 front-page.php:242
 msgid "Bandi e documenti"
 msgstr ""
 
@@ -101,213 +101,213 @@ msgstr ""
 msgid "Corsi biennali"
 msgstr ""
 
-#: front-page.php:126
+#: front-page.php:139
 msgid "Aree tecnologiche"
 msgstr ""
 
-#: front-page.php:133
+#: front-page.php:159
 msgid "Non una classe. <strong>Un set aperto.</strong>"
 msgstr ""
 
-#: front-page.php:134
+#: front-page.php:160
 msgid "Qui teoria e pratica entrano nella stessa inquadratura. Produci, sperimenti, sbagli, riprovi e costruisci un portfolio mentre impari."
 msgstr ""
 
-#: front-page.php:139
+#: front-page.php:176
 msgid "Imparare facendo"
 msgstr ""
 
-#: front-page.php:143
+#: front-page.php:180
 msgid "Laboratori veri"
 msgstr ""
 
-#: front-page.php:143
+#: front-page.php:180
 msgid "Spazi e tecnologie per lavorare come in produzione."
 msgstr ""
 
-#: front-page.php:144
+#: front-page.php:181
 msgid "Docenti dall’industria"
 msgstr ""
 
-#: front-page.php:144
+#: front-page.php:181
 msgid "Professionisti che insegnano facendo."
 msgstr ""
 
-#: front-page.php:145
+#: front-page.php:182
 msgid "Imprese nel percorso"
 msgstr ""
 
-#: front-page.php:145
+#: front-page.php:182
 msgid "Stage, brief e relazioni che iniziano prima del diploma."
 msgstr ""
 
-#: front-page.php:148
+#: front-page.php:185
 msgid "Teatro di posa"
 msgstr ""
 
-#: front-page.php:150
+#: front-page.php:187
 msgid "Aule, laboratori e set nella sede di Via Tiburtina."
 msgstr ""
 
-#: front-page.php:158
+#: front-page.php:195
 msgid "Trova il tuo <strong>campo d’azione.</strong>"
 msgstr ""
 
-#: front-page.php:164
+#: front-page.php:201
 msgid "%d percorso biennale, con presenza quotidiana nei laboratori e docenti che lavorano davvero nell’industria creativa e tecnologica."
 msgid_plural "%d percorsi biennali, con presenza quotidiana nei laboratori e docenti che lavorano davvero nell’industria creativa e tecnologica."
 msgstr[0] ""
 msgstr[1] ""
 
-#: front-page.php:171
+#: front-page.php:208
 msgid "Vedi tutti i corsi"
 msgstr ""
 
-#: front-page.php:177
+#: front-page.php:214
 msgid "Durata"
 msgstr ""
 
-#: front-page.php:177
+#: front-page.php:214
 msgid "%s anni, dopo il diploma"
 msgstr ""
 
-#: front-page.php:178
+#: front-page.php:215
 msgid "Aula e laboratorio"
 msgstr ""
 
-#: front-page.php:178
+#: front-page.php:215
 msgid "circa %s ore"
 msgstr ""
 
-#: front-page.php:179
+#: front-page.php:216
 msgid "Tirocinio in azienda"
 msgstr ""
 
-#: front-page.php:179
+#: front-page.php:216
 msgid "%s ore"
 msgstr ""
 
-#: front-page.php:180
+#: front-page.php:217
 msgid "Costo"
 msgstr ""
 
-#: front-page.php:180
+#: front-page.php:217
 msgid "Percorsi finanziati con risorse pubbliche"
 msgstr ""
 
-#: front-page.php:181
+#: front-page.php:218
 msgid "Posti"
 msgstr ""
 
-#: front-page.php:181
+#: front-page.php:218
 msgid "fino a %s per corso"
 msgstr ""
 
-#: front-page.php:182
+#: front-page.php:219
 msgid "Accesso"
 msgstr ""
 
-#: front-page.php:182
+#: front-page.php:219
 msgid "Diploma di scuola superiore o titolo estero idoneo"
 msgstr ""
 
-#: front-page.php:183
+#: front-page.php:220
 msgid "Esperienza all’estero"
 msgstr ""
 
-#: front-page.php:183
+#: front-page.php:220
 msgid "Tirocini con Erasmus+, secondo bandi e requisiti"
 msgstr ""
 
-#: front-page.php:184
+#: front-page.php:221
 msgid "Dopo il diploma"
 msgstr ""
 
-#: front-page.php:184
+#: front-page.php:221
 msgid "%s lavora entro 12 mesi"
 msgstr ""
 
-#: front-page.php:190
+#: front-page.php:227
 msgid "Tutto in chiaro. <strong>Poi decidi.</strong>"
 msgstr ""
 
-#: front-page.php:191
+#: front-page.php:228
 msgid "Le risposte che contano prima di candidarti, prese dai bandi e dalle FAQ dell’Academy."
 msgstr ""
 
-#: front-page.php:194
+#: front-page.php:231
 msgid "ITS Academy Roberto Rossellini"
 msgstr ""
 
-#: front-page.php:204 header.php:62 inc/sections.php:69
+#: front-page.php:241 header.php:72 inc/sections.php:69
 msgid "Preiscriviti"
 msgstr ""
 
-#: front-page.php:217
+#: front-page.php:267
 msgid "Dal primo ciak <strong>al primo contratto.</strong>"
 msgstr ""
 
-#: front-page.php:220
+#: front-page.php:270
 msgid "Orientati"
 msgstr ""
 
-#: front-page.php:221
+#: front-page.php:271
 msgid "Conosci persone, corsi e laboratori: open day, colloquio individuale, FAQ."
 msgstr ""
 
-#: front-page.php:224
+#: front-page.php:274
 msgid "Fai esperienza"
 msgstr ""
 
-#: front-page.php:228
+#: front-page.php:278
 msgid "Lavora su brief, set e progetti reali: %s ore, portfolio, lavoro in team."
 msgstr ""
 
-#: front-page.php:233
+#: front-page.php:283
 msgid "Entra nel settore"
 msgstr ""
 
-#: front-page.php:237
+#: front-page.php:287
 msgid "Porta le competenze dentro un’azienda: %s ore di stage e placement."
 msgstr ""
 
-#: front-page.php:242
+#: front-page.php:292
 msgid "Stage e placement"
 msgstr ""
 
-#: front-page.php:250
+#: front-page.php:300
 msgid "Parti da Roma. <strong>Arriva ovunque.</strong>"
 msgstr ""
 
-#: front-page.php:251
+#: front-page.php:301
 msgid "Lezioni, laboratori e teatro di posa sono in Via Tiburtina, a pochi passi dalla Metro B. E con Erasmus+ il tirocinio può portarti all’estero."
 msgstr ""
 
-#: front-page.php:253
+#: front-page.php:303
 msgid "Sede legale e operativa"
 msgstr ""
 
-#: front-page.php:254
+#: front-page.php:304
 msgid "Metro B"
 msgstr ""
 
-#: front-page.php:254
+#: front-page.php:304
 msgid "Pietralata · Monti Tiburtini"
 msgstr ""
 
-#: front-page.php:255 inc/customizer.php:19
+#: front-page.php:305 inc/customizer.php:19
 msgid "Orari"
 msgstr ""
 
-#: front-page.php:256
+#: front-page.php:306
 msgid "Erasmus+"
 msgstr ""
 
-#: front-page.php:256
+#: front-page.php:306
 msgid "Tirocinio all’estero"
 msgstr ""
 
-#: front-page.php:261
+#: front-page.php:311
 msgid "Roma"
 msgstr ""
 
@@ -319,7 +319,7 @@ msgstr ""
 msgid "Due anni per trasformare il tuo talento in una professione tra cinema, TV, digital, live e tecnologia."
 msgstr ""
 
-#: front-page.php:75 page.php:63 single-evento.php:54 template-parts/cta-card.php:23 templates/template-eventi.php:40 inc/sections.php:68
+#: front-page.php:75 page.php:63 single-evento.php:54 template-parts/cta-card.php:23 templates/template-eventi.php:41 inc/sections.php:68
 msgid "Prenota un incontro"
 msgstr ""
 
@@ -359,11 +359,15 @@ msgstr ""
 msgid "Vai al contenuto"
 msgstr ""
 
-#: header.php:33
+#: header.php:34 searchform.php:13
+msgid "Cerca nel sito"
+msgstr ""
+
+#: header.php:43
 msgid "Menu"
 msgstr ""
 
-#: header.php:37
+#: header.php:47
 msgid "Principale"
 msgstr ""
 
@@ -613,10 +617,6 @@ msgstr ""
 
 #: page.php:58
 msgid "Aggiornato"
-msgstr ""
-
-#: searchform.php:13
-msgid "Cerca nel sito"
 msgstr ""
 
 #: searchform.php:14
@@ -898,10 +898,10 @@ msgstr ""
 msgid "In programma"
 msgstr ""
 
-#: templates/template-eventi.php:39
+#: templates/template-eventi.php:40
 msgid "Nessun evento in calendario in questo momento. Puoi visitare la sede con un incontro individuale, su appuntamento."
 msgstr ""
 
-#: templates/template-eventi.php:47
+#: templates/template-eventi.php:48
 msgid "Già andati in scena"
 msgstr ""
