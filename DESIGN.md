@@ -184,7 +184,7 @@ Interior pages (courses, news, documents) are light: white ground with a soft bl
 - Interior pages: white. Light page head (breadcrumb pill, title with the closing phrase in electric blue, lead, actions, the page photo with a light glass index of the sections) → the content: editorial pages as sections (text on the white, card grids on pale `--chiaro` panels, never two in a row; see *Interior sections*), lists as their own components (course wall, event rows, document filter and table, edition groups, news as the home's photo cards), articles and legal notes as text → on articles and course pages a pale panel with more news / other courses → the gradient call card on every interior page (the page's own closing call, else the home's).
 - Bento (desktop): `cta s1 i1 s2 i2 / cta head head head head / wide wide list list s3`; 4 columns under 1100px; 2 under 640px.
 - Course grid: 4 columns, 2 under 1100px, 1 under 640px. News: 3 cards, 1 under 900px.
-- Header: sticky floating bar; transparent at the top, glass after 24px of scroll (dark glass on the home, light glass elsewhere). Under 1080px the nav collapses behind a "Menu" pill.
+- Header: sticky floating pill, detached from the top edge. On the home it is transparent over the footage and turns to dark glass after 24px of scroll; on every other page it is the same deep-navy pill from the start (white text, white CTA). Logged in, it sits below the WordPress toolbar. Under 1080px the nav collapses behind a "Menu" pill.
 
 ## Elevation & Depth
 
@@ -203,7 +203,7 @@ Depth comes from layering: panels over the canvas, the partner bar over the hero
 Pills, 3rem, Raleway 600. **White** on dark/footage; **Gradient** (electric → blue, white text, blue glow) on light; **Glass** on footage; **Outline** on light; **Outline light** on dark. Arrow icons rotate 45° on hover; buttons lift 1px.
 
 ### Navigation
-Logo, a glass pill holding the links (current page as a white inner pill), the language switcher, CTA pill (white on the home, gradient elsewhere).
+Logo, a glass pill holding the links (current page as a white inner pill), the language switcher, white CTA pill; the bar is navy on every page.
 
 ### Language switcher
 A pill with a round flag (inline SVG: Italy, United Kingdom) and the language code in the header, or the language name in the footer next to the social icons (as in the hosting reference). It opens a white rounded list of the site's languages, each with its flag, name in its own language and a check on the current one; in the footer the list opens upwards. Native `<details>`; one open at a time, closed by a click elsewhere or Escape. Each link leads to the same page in the other language (Polylang), or to that language's home page. Flags are the only non-institutional colours on the site, and only at flag size.

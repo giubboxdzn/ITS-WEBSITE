@@ -671,6 +671,72 @@ dd {
 	display: block;
 }
 
+/* Interior pages: the home's dark bar from the start, a navy pill floating over the white page. */
+.masthead--dark {
+	color: var(--bianco);
+}
+
+.masthead.masthead--dark .masthead__bar,
+.masthead.masthead--dark[data-open] .masthead__bar {
+	border-color: var(--bordo-dark);
+	background: rgb(4 21 43 / 0.97);
+	box-shadow: 0 18px 40px -24px rgb(4 21 43 / 0.7);
+	backdrop-filter: blur(18px) saturate(1.4);
+	-webkit-backdrop-filter: blur(18px) saturate(1.4);
+}
+
+.masthead.masthead--dark .masthead__nav > nav {
+	border-color: transparent;
+	background: transparent;
+	backdrop-filter: none;
+	-webkit-backdrop-filter: none;
+}
+
+.masthead--dark .nav a:hover {
+	background: rgb(255 255 255 / 0.12);
+}
+
+.masthead--dark .btn--cta {
+	background: var(--bianco);
+	color: var(--inchiostro);
+	box-shadow: none;
+}
+
+.masthead--dark .lang > summary {
+	border-color: rgb(255 255 255 / 0.3);
+}
+
+.masthead--dark .lang > summary:hover {
+	border-color: var(--bianco);
+}
+
+.masthead--dark .masthead__toggle {
+	border-color: rgb(255 255 255 / 0.25);
+	background: var(--glass-dark);
+}
+
+.masthead--dark :focus-visible {
+	outline-color: var(--ciano);
+}
+
+/* Logged in: the sticky bar sits below the WordPress toolbar instead of under it. */
+.admin-bar .masthead {
+	top: 32px;
+}
+
+@media (max-width: 782px) {
+	.admin-bar .masthead {
+		top: 46px;
+	}
+}
+
+@media (max-width: 600px) {
+	/* The toolbar scrolls away on small screens. */
+	.admin-bar .masthead {
+		top: 0;
+	}
+}
+
 @media (max-width: 1080px) {
 	.js .masthead__toggle {
 		display: inline-flex;
