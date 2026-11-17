@@ -78,7 +78,7 @@ function its_prose( string $html, bool $infer = false ): array {
 			$bold     = 1 === $el->childNodes->length && $el->firstChild instanceof DOMElement && in_array( strtolower( $el->firstChild->tagName ), array( 'strong', 'b' ), true );
 			$standing = $i > 0 && mb_strlen( $plain ) >= 3 && mb_strlen( $plain ) <= 70 && str_word_count( $plain ) <= 10
 				&& ! preg_match( '/[.,;]$/u', $plain ) && ! preg_match( $dash, $plain ) && ! $el->getElementsByTagName( 'a' )->length;
-			if ( $next && ( $bold && mb_strlen( $plain ) <= 90 || $standing ) ) {
+			if ( $next && ( ( $bold && mb_strlen( $plain ) <= 90 ) || $standing ) ) {
 				$heading = $doc->createElement( 'h2' );
 				$heading->appendChild( $doc->createTextNode( rtrim( $plain, ': ' ) ) );
 				$el->parentNode->replaceChild( $heading, $el );

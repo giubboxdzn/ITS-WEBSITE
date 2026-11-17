@@ -24,9 +24,9 @@ $hero_photo = has_post_thumbnail( get_queried_object_id() ) ? (int) get_post_thu
 $photos     = array();
 foreach ( its_courses( 12 )->posts as $course ) {
 	if ( has_post_thumbnail( $course ) ) {
-		$id            = (int) get_post_thumbnail_id( $course );
-		$meta          = wp_get_attachment_metadata( $id );
-		$photos[ $id ] = (int) ( $meta['width'] ?? 0 );
+		$thumb_id            = (int) get_post_thumbnail_id( $course );
+		$meta                = wp_get_attachment_metadata( $thumb_id );
+		$photos[ $thumb_id ] = (int) ( $meta['width'] ?? 0 );
 	}
 }
 unset( $photos[ $hero_photo ] );
@@ -120,14 +120,40 @@ $partners = trim( (string) apply_filters( 'the_content', (string) get_post_field
 			<p class="tile__num"><?php echo esc_html( (string) its_course_count() ); ?></p>
 		</div>
 		<?php if ( $tile_a ) : ?>
-			<figure class="tile tile--img bento__i1"><?php echo wp_get_attachment_image( $tile_a, 'its-card', false, array( 'alt' => '', 'loading' => 'lazy', 'sizes' => '(max-width: 760px) 46vw, 220px' ) ); ?></figure>
+			<figure class="tile tile--img bento__i1">
+			<?php
+			echo wp_get_attachment_image(
+				$tile_a,
+				'its-card',
+				false,
+				array(
+					'alt'     => '',
+					'loading' => 'lazy',
+					'sizes'   => '(max-width: 760px) 46vw, 220px',
+				)
+			);
+			?>
+														</figure>
 		<?php endif; ?>
 		<div class="tile tile--stat bento__s2">
 			<p class="tile__label"><?php esc_html_e( 'Aree tecnologiche', 'its-rossellini' ); ?></p>
 			<p class="tile__num"><?php echo esc_html( (string) count( its_course_areas() ) ); ?></p>
 		</div>
 		<?php if ( $tile_b ) : ?>
-			<figure class="tile tile--img bento__i2"><?php echo wp_get_attachment_image( $tile_b, 'its-card', false, array( 'alt' => '', 'loading' => 'lazy', 'sizes' => '(max-width: 760px) 46vw, 220px' ) ); ?></figure>
+			<figure class="tile tile--img bento__i2">
+			<?php
+			echo wp_get_attachment_image(
+				$tile_b,
+				'its-card',
+				false,
+				array(
+					'alt'     => '',
+					'loading' => 'lazy',
+					'sizes'   => '(max-width: 760px) 46vw, 220px',
+				)
+			);
+			?>
+														</figure>
 		<?php endif; ?>
 		<div class="bento__head">
 			<h2 id="set-title" class="display"><?php echo wp_kses( __( 'Non una classe. <strong>Un set aperto.</strong>', 'its-rossellini' ), $em ); ?></h2>
@@ -135,7 +161,18 @@ $partners = trim( (string) apply_filters( 'the_content', (string) get_post_field
 		</div>
 		<?php if ( $wide_photo ) : ?>
 			<figure class="tile tile--img bento__wide">
-				<?php echo wp_get_attachment_image( $wide_photo, 'full', false, array( 'alt' => '', 'loading' => 'lazy', 'sizes' => '(max-width: 900px) 92vw, 760px' ) ); ?>
+				<?php
+				echo wp_get_attachment_image(
+					$wide_photo,
+					'full',
+					false,
+					array(
+						'alt'     => '',
+						'loading' => 'lazy',
+						'sizes'   => '(max-width: 900px) 92vw, 760px',
+					)
+				);
+				?>
 				<span class="glass-chip" aria-hidden="true"><?php esc_html_e( 'Imparare facendo', 'its-rossellini' ); ?></span>
 			</figure>
 		<?php endif; ?>
@@ -211,7 +248,20 @@ $compare = array(
 <section class="section" aria-labelledby="percorso-title">
 	<div class="wrap overlap">
 		<?php if ( $path_photo ) : ?>
-			<figure class="overlap__media"><?php echo wp_get_attachment_image( $path_photo, 'full', false, array( 'alt' => '', 'loading' => 'lazy', 'sizes' => '(max-width: 900px) 92vw, 60vw' ) ); ?></figure>
+			<figure class="overlap__media">
+			<?php
+			echo wp_get_attachment_image(
+				$path_photo,
+				'full',
+				false,
+				array(
+					'alt'     => '',
+					'loading' => 'lazy',
+					'sizes'   => '(max-width: 900px) 92vw, 60vw',
+				)
+			);
+			?>
+											</figure>
 		<?php endif; ?>
 		<div class="overlap__card">
 			<h2 id="percorso-title" class="display display--dark display--m"><?php echo wp_kses( __( 'Dal primo ciak <strong>al primo contratto.</strong>', 'its-rossellini' ), $em ); ?></h2>

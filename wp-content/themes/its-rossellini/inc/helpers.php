@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 function its_logo(): string {
 	static $svg = null;
 	if ( null === $svg ) {
-		$svg = (string) file_get_contents( ITS_ROSSELLINI_DIR . '/assets/img/logo.svg' );
+		$svg = (string) file_get_contents( ITS_ROSSELLINI_DIR . '/assets/img/logo.svg' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- A file of the theme, not a URL.
 		$svg = preg_replace( '/<svg /', '<svg aria-hidden="true" focusable="false" class="logo__svg" ', $svg, 1 );
 		$svg = preg_replace( '/\s(width|height)="[^"]*"/', '', (string) $svg, 2 );
 	}
@@ -275,11 +275,11 @@ function its_accessibility_links(): array {
  */
 function its_contacts(): array {
 	return array(
-		'address' => its_tr( (string) get_theme_mod( 'its_address', 'Via Tiburtina 691, Roma' ) ),
-		'transit' => its_tr( (string) get_theme_mod( 'its_transit', 'Metro B Pietralata o Monti Tiburtini' ) ),
-		'hours'   => its_tr( (string) get_theme_mod( 'its_hours', 'Lun–Ven 9:30–13:30 / 14:30–18:30' ) ),
-		'phone'   => (string) get_theme_mod( 'its_phone', '06 5576493' ),
-		'email'   => (string) get_theme_mod( 'its_email', 'info@itsrossellini.it' ),
+		'address'   => its_tr( (string) get_theme_mod( 'its_address', 'Via Tiburtina 691, Roma' ) ),
+		'transit'   => its_tr( (string) get_theme_mod( 'its_transit', 'Metro B Pietralata o Monti Tiburtini' ) ),
+		'hours'     => its_tr( (string) get_theme_mod( 'its_hours', 'Lun–Ven 9:30–13:30 / 14:30–18:30' ) ),
+		'phone'     => (string) get_theme_mod( 'its_phone', '06 5576493' ),
+		'email'     => (string) get_theme_mod( 'its_email', 'info@itsrossellini.it' ),
 		'instagram' => (string) get_theme_mod( 'its_instagram', 'https://www.instagram.com/itsrossellini/' ),
 		'x'         => (string) get_theme_mod( 'its_x', 'https://x.com/Its_Rossellini' ),
 	);
@@ -299,7 +299,7 @@ function its_tr( string $text ): string {
 			return $translated;
 		}
 	}
-	return translate( $text, 'its-rossellini' ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText -- Defaults ship in the theme's own translations.
+	return translate( $text, 'its-rossellini' ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText, WordPress.WP.I18n.LowLevelTranslationFunction -- Customizer text: its default ships in the theme's translations.
 }
 
 /**
@@ -448,7 +448,7 @@ function its_breadcrumbs(): void {
  * @return array<int, array{label: string, logos: array<int, array{src: string, alt: string, width: int, height: int}>}>
  */
 function its_funding_logos(): array {
-	$logo = static function ( string $file, string $alt, float $ratio, int $height ): array {
+	$logo   = static function ( string $file, string $alt, float $ratio, int $height ): array {
 		return array(
 			'src'    => ITS_ROSSELLINI_URI . '/assets/img/funding/' . $file . '.svg',
 			'alt'    => $alt,
@@ -481,4 +481,3 @@ function its_funding_logos(): array {
 	);
 	return (array) apply_filters( 'its_funding_logos', $blocks );
 }
-

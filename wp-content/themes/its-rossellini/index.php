@@ -11,17 +11,17 @@ get_header();
 
 if ( is_search() ) {
 	/* translators: %s: search terms */
-	$title = sprintf( __( 'Risultati per “%s”', 'its-rossellini' ), get_search_query() );
-	$lead  = '';
+	$heading = sprintf( __( 'Risultati per “%s”', 'its-rossellini' ), get_search_query() );
+	$lead    = '';
 } elseif ( is_home() && get_option( 'page_for_posts' ) ) {
-	$title = get_the_title( (int) get_option( 'page_for_posts' ) );
-	$lead  = __( 'Avvisi, graduatorie, progetti e risultati degli studenti.', 'its-rossellini' );
+	$heading = get_the_title( (int) get_option( 'page_for_posts' ) );
+	$lead    = __( 'Avvisi, graduatorie, progetti e risultati degli studenti.', 'its-rossellini' );
 } elseif ( is_archive() ) {
-	$title = wp_strip_all_tags( get_the_archive_title() );
-	$lead  = wp_strip_all_tags( get_the_archive_description() );
+	$heading = wp_strip_all_tags( get_the_archive_title() );
+	$lead    = wp_strip_all_tags( get_the_archive_description() );
 } else {
-	$title = __( 'News', 'its-rossellini' );
-	$lead  = '';
+	$heading = __( 'News', 'its-rossellini' );
+	$lead    = '';
 }
 
 $aside = is_search() ? get_search_form( array( 'echo' => false ) ) : '';
@@ -29,7 +29,7 @@ get_template_part(
 	'template-parts/page-head',
 	null,
 	array(
-		'title' => $title,
+		'title' => $heading,
 		'lead'  => $lead,
 		'aside' => $aside,
 	)

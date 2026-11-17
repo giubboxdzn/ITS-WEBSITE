@@ -61,6 +61,21 @@ Su Windows il tema è collegato con una *junction* (non servono permessi di ammi
 
 `dev/seed/fetch.py` legge (solo GET) l'API REST e le pagine pubbliche di itsrossellini.it, in italiano e in inglese, e salva tutto in `.wp/seed/` (ignorato da git). `dev/seed/import.php` lo importa nel database locale. Non scrive nulla sul sito live. Se `data.json` esiste già senza la parte inglese, `setup.sh` scarica solo quella (`fetch.py --en-only`, qualche minuto); se le pagine sono in un formato precedente, riscarica solo le pagine (`fetch.py --pages-only`, un paio di minuti). Le pagine interne del live diventano blocchi dell'editor con gli stili del tema (occhielli, numeri, card, invito finale), con lead (riassunto) e foto (immagine in evidenza).
 
+### Qualità del codice
+
+`phpcs.xml.dist` applica gli standard di WordPress al tema e agli script di `dev/`:
+- WordPress-Extra, comprese le regole di sicurezza su escaping, sanificazione, nonce e SQL;
+- compatibilità con PHP 8.1 e successivi;
+- dominio di traduzione e prefisso `its_`.
+
+Lo stato attuale è 0 errori e 0 avvisi. Le poche eccezioni sono motivate nel file stesso. Per rilanciarlo, con [WPCS 3](https://github.com/WordPress/WordPress-Coding-Standards) installato:
+
+```bash
+composer global require --dev wp-coding-standards/wpcs:^3.1 phpcompatibility/phpcompatibility-wp:"*"
+phpcs          # verifica
+phpcbf         # corregge da solo la formattazione
+```
+
 ### Lingue (Polylang)
 
 Come sul sito live: italiano predefinito senza prefisso, inglese su `/en/`. `setup.sh` prende **Polylang 3.9.2** da GitHub (`.wp/polylang`) e genera con `dev/polylang-autoload.php` i file che la release ufficiale include (autoload e liste dei moduli), senza Composer; `dev/languages.php` crea le lingue e le opzioni; l'import assegna la lingua a ogni contenuto, collega le traduzioni IT↔EN (dagli `hreflang` del sito live) e crea i menu inglesi.

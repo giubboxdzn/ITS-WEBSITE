@@ -20,8 +20,8 @@ $base    = remove_query_arg( 'area' );
 	<nav class="area-filter" aria-label="<?php esc_attr_e( 'Filtra i corsi per area', 'its-rossellini' ); ?>">
 		<ul>
 			<li><a href="<?php echo esc_url( $base ); ?>#corsi" data-area=""<?php echo '' === $current ? ' aria-current="true"' : ''; ?>><?php esc_html_e( 'Tutti', 'its-rossellini' ); ?></a></li>
-			<?php foreach ( $areas as $term ) : ?>
-				<li><a href="<?php echo esc_url( add_query_arg( 'area', $term->slug, $base ) ); ?>#corsi" data-area="<?php echo esc_attr( $term->slug ); ?>"<?php echo $current === $term->slug ? ' aria-current="true"' : ''; ?>><?php echo esc_html( $term->name ); ?></a></li>
+			<?php foreach ( $areas as $area_term ) : ?>
+				<li><a href="<?php echo esc_url( add_query_arg( 'area', $area_term->slug, $base ) ); ?>#corsi" data-area="<?php echo esc_attr( $area_term->slug ); ?>"<?php echo $current === $area_term->slug ? ' aria-current="true"' : ''; ?>><?php echo esc_html( $area_term->name ); ?></a></li>
 			<?php endforeach; ?>
 		</ul>
 	</nav>

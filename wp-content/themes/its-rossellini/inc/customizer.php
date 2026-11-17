@@ -14,11 +14,11 @@ add_action(
 			'its_contacts' => array(
 				__( 'Contatti e sede', 'its-rossellini' ),
 				array(
-					'its_address' => array( __( 'Indirizzo', 'its-rossellini' ), 'Via Tiburtina 691, Roma' ),
-					'its_transit' => array( __( 'Come arrivare', 'its-rossellini' ), 'Metro B Pietralata o Monti Tiburtini' ),
-					'its_hours'   => array( __( 'Orari', 'its-rossellini' ), 'Lun–Ven 9:30–13:30 / 14:30–18:30' ),
-					'its_phone'   => array( __( 'Telefono', 'its-rossellini' ), '06 5576493' ),
-					'its_email'   => array( __( 'Email', 'its-rossellini' ), 'info@itsrossellini.it' ),
+					'its_address'   => array( __( 'Indirizzo', 'its-rossellini' ), 'Via Tiburtina 691, Roma' ),
+					'its_transit'   => array( __( 'Come arrivare', 'its-rossellini' ), 'Metro B Pietralata o Monti Tiburtini' ),
+					'its_hours'     => array( __( 'Orari', 'its-rossellini' ), 'Lun–Ven 9:30–13:30 / 14:30–18:30' ),
+					'its_phone'     => array( __( 'Telefono', 'its-rossellini' ), '06 5576493' ),
+					'its_email'     => array( __( 'Email', 'its-rossellini' ), 'info@itsrossellini.it' ),
 					'its_instagram' => array( __( 'Instagram (URL)', 'its-rossellini' ), 'https://www.instagram.com/itsrossellini/' ),
 					'its_x'         => array( __( 'X (URL)', 'its-rossellini' ), 'https://x.com/Its_Rossellini' ),
 				),

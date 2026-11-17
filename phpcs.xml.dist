@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<ruleset name="ITS Rossellini">
+	<description>WordPress Coding Standards (security, i18n, prefixes, PHP 8.1+) for the theme and the local dev scripts.</description>
+
+	<file>wp-content/themes/its-rossellini</file>
+	<file>dev</file>
+	<exclude-pattern>*/languages/*</exclude-pattern>
+
+	<arg name="extensions" value="php"/>
+	<arg value="sp"/>
+
+	<config name="testVersion" value="8.1-"/>
+	<config name="minimum_wp_version" value="6.9"/>
+
+	<rule ref="WordPress-Extra">
+		<!-- "$a ?: $b" for fallbacks is the theme's convention. -->
+		<exclude name="Universal.Operators.DisallowShortTernary"/>
+	</rule>
+
+	<!-- PHP's DOM API (used to read the editor content) names its properties in camelCase. -->
+	<rule ref="WordPress.NamingConventions.ValidVariableName">
+		<properties>
+			<property name="allowed_custom_properties" type="array">
+				<element value="childNodes"/>
+				<element value="firstChild"/>
+				<element value="ownerDocument"/>
+				<element value="parentNode"/>
+				<element value="tagName"/>
+				<element value="textContent"/>
+			</property>
+		</properties>
+	</rule>
+
+	<rule ref="PHPCompatibilityWP"/>
+
+	<!--
+	The dev/ command-line scripts and the built-in server's router run on the developer's machine, never on a
+	visitor's request: their output goes to a terminal, they write local files directly, generate PHP with
+	var_export(), and the router runs before WordPress is loaded. The dev mu-plugins run inside WordPress and keep
+	every rule.
+	-->
+	<rule ref="WordPress.Security.EscapeOutput">
+		<exclude-pattern>*/dev/install.php</exclude-pattern>
+		<exclude-pattern>*/dev/languages.php</exclude-pattern>
+		<exclude-pattern>*/dev/seed/*</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.WP.AlternativeFunctions">
+		<exclude-pattern>*/dev/languages.php</exclude-pattern>
+		<exclude-pattern>*/dev/polylang-autoload.php</exclude-pattern>
+		<exclude-pattern>*/dev/router.php</exclude-pattern>
+		<exclude-pattern>*/dev/seed/*</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.WP.GlobalVariablesOverride">
+		<exclude-pattern>*/dev/polylang-autoload.php</exclude-pattern>
+		<exclude-pattern>*/dev/router.php</exclude-pattern>
+		<exclude-pattern>*/dev/seed/*</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.PHP.DevelopmentFunctions.error_log_var_export">
+		<exclude-pattern>*/dev/polylang-autoload.php</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.PHP.DiscouragedPHPFunctions.runtime_configuration_putenv">
+		<exclude-pattern>*/dev/router.php</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.PHP.IniSet.display_errors_Disallowed">
+		<exclude-pattern>*/dev/seed/*</exclude-pattern>
+	</rule>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="its-rossellini"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- "its_" has prefixed every public name since the first version: shorter than WPCS likes, unique in practice. -->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<exclude name="WordPress.NamingConventions.PrefixAllGlobals.ShortPrefixPassed"/>
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="its"/>
+			</property>
+		</properties>
+	</rule>
+</ruleset>

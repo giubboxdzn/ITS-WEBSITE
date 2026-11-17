@@ -74,7 +74,7 @@ function its_events_by_date( int $limit_past = 6 ): array {
 		$posts    = get_posts(
 			array(
 				'post_type'      => 'evento',
-				'posts_per_page' => 200,
+				'posts_per_page' => 200, // phpcs:ignore WordPress.WP.PostsPerPage.posts_per_page_posts_per_page -- Every dated event, sorted here by its meta date; a few dozen a year.
 				'no_found_rows'  => true,
 			)
 		);

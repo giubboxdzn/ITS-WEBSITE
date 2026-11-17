@@ -10,13 +10,13 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$contacts = its_contacts();
-$title    = $args['title'] ?? '';
-$text     = $args['text'] ?? '';
-$links    = $args['links'] ?? array();
-if ( '' === $title ) {
-	$title = __( 'Vuoi visitare i laboratori?', 'its-rossellini' );
-	$text  = esc_html__( 'Prenota un open day o un incontro individuale.', 'its-rossellini' ) . ' ' . esc_html( $contacts['address'] . ', ' . $contacts['transit'] ) . '.';
+$contacts  = its_contacts();
+$cta_title = $args['title'] ?? '';
+$text      = $args['text'] ?? '';
+$links     = $args['links'] ?? array();
+if ( '' === $cta_title ) {
+	$cta_title = __( 'Vuoi visitare i laboratori?', 'its-rossellini' );
+	$text      = esc_html__( 'Prenota un open day o un incontro individuale.', 'its-rossellini' ) . ' ' . esc_html( $contacts['address'] . ', ' . $contacts['transit'] ) . '.';
 }
 if ( ! $links ) {
 	$links = array(
@@ -31,7 +31,7 @@ $links = array_values( array_filter( $links, static fn( array $link ): bool => !
 	<div class="wrap">
 		<div class="cta-card">
 			<div>
-				<h2 id="cta-title" class="display"><?php echo its_display_text( $title ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h2>
+				<h2 id="cta-title" class="display"><?php echo its_display_text( $cta_title ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h2>
 				<?php if ( $text ) : ?>
 					<p class="lead"><?php echo wp_kses_post( $text ); ?></p>
 				<?php endif; ?>

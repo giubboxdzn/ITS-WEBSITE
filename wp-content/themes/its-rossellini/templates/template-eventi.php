@@ -27,8 +27,9 @@ while ( have_posts() ) :
 			<?php if ( $events['upcoming'] ) : ?>
 				<div class="rows">
 					<?php
-					foreach ( $events['upcoming'] as $post ) :
-						setup_postdata( $GLOBALS['post'] = $post ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+					foreach ( $events['upcoming'] as $event ) :
+						$GLOBALS['post'] = $event; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- A sorted list, not a query; wp_reset_postdata() restores the post.
+						setup_postdata( $event );
 						get_template_part( 'template-parts/dated-item', null, array( 'show_excerpt' => true ) );
 					endforeach;
 					wp_reset_postdata();
@@ -47,8 +48,9 @@ while ( have_posts() ) :
 				<h2 id="past-title" class="display display--m display--dark listing__title"><?php echo its_display_text( __( 'Già andati in scena', 'its-rossellini' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h2>
 				<div class="rows">
 					<?php
-					foreach ( $events['past'] as $post ) :
-						setup_postdata( $GLOBALS['post'] = $post ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+					foreach ( $events['past'] as $event ) :
+						$GLOBALS['post'] = $event; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- A sorted list, not a query; wp_reset_postdata() restores the post.
+						setup_postdata( $event );
 						get_template_part( 'template-parts/dated-item', null, array( 'show_excerpt' => true ) );
 					endforeach;
 					wp_reset_postdata();

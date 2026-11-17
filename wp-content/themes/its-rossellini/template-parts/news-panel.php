@@ -32,8 +32,9 @@ $news   = new WP_Query(
 		<?php if ( $events['upcoming'] ) : ?>
 			<div class="rows rows--events">
 				<?php
-				foreach ( array_slice( $events['upcoming'], 0, 2 ) as $post ) :
-					setup_postdata( $GLOBALS['post'] = $post ); // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+				foreach ( array_slice( $events['upcoming'], 0, 2 ) as $event ) :
+					$GLOBALS['post'] = $event; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- A sorted list, not a query; wp_reset_postdata() restores the post.
+					setup_postdata( $event );
 					get_template_part( 'template-parts/dated-item' );
 				endforeach;
 				wp_reset_postdata();

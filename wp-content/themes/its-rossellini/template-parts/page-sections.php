@@ -34,28 +34,28 @@ if ( $light ) {
 }
 
 foreach ( $sections as $n => $section ) :
-	$surface = $surfaces[ $n ];
-	$panel   = in_array( $surface, array( 'panel', 'tint' ), true );
-	$id      = $section['id'] ?: 'sezione-' . ( $n + 1 );
-	$body    = $section['body'];
-	$title   = $section['title'];
-	$heading = $title ? $id . '-title' : '';
-	$split   = (bool) $body;
-	$classes = array( $panel ? 'panel' : 'section', 'psec', 'psec--' . $section['kind'], 'psec--' . $surface );
+	$surface       = $surfaces[ $n ];
+	$panel         = in_array( $surface, array( 'panel', 'tint' ), true );
+	$section_id    = $section['id'] ?: 'sezione-' . ( $n + 1 );
+	$body          = $section['body'];
+	$section_title = $section['title'];
+	$heading       = $section_title ? $section_id . '-title' : '';
+	$split         = (bool) $body;
+	$classes       = array( $panel ? 'panel' : 'section', 'psec', 'psec--' . $section['kind'], 'psec--' . $surface );
 	if ( $light ) {
 		$classes[] = 'psec--light';
 	}
 	?>
-	<section class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>" id="<?php echo esc_attr( $id ); ?>"<?php echo $heading ? ' aria-labelledby="' . esc_attr( $heading ) . '"' : ''; ?>>
+	<section class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>" id="<?php echo esc_attr( $section_id ); ?>"<?php echo $heading ? ' aria-labelledby="' . esc_attr( $heading ) . '"' : ''; ?>>
 		<div class="wrap">
-			<?php if ( $title || $body ) : ?>
+			<?php if ( $section_title || $body ) : ?>
 				<div class="psec__head<?php echo $split ? ' psec__head--split' : ''; ?>">
-					<?php if ( $title ) : ?>
+					<?php if ( $section_title ) : ?>
 						<div class="psec__title">
 							<?php if ( $section['eyebrow'] ) : ?>
 								<p class="eyebrow"><?php echo esc_html( $section['eyebrow'] ); ?></p>
 							<?php endif; ?>
-							<h2 id="<?php echo esc_attr( $heading ); ?>" class="display display--m<?php echo $panel || $light ? ' display--dark' : ''; ?>"><?php echo its_display_text( $title ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h2>
+							<h2 id="<?php echo esc_attr( $heading ); ?>" class="display display--m<?php echo $panel || $light ? ' display--dark' : ''; ?>"><?php echo its_display_text( $section_title ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h2>
 						</div>
 					<?php endif; ?>
 					<?php if ( $body ) : ?>
@@ -139,7 +139,18 @@ foreach ( $sections as $n => $section ) :
 								<?php endif; ?>
 							</h3>
 							<?php foreach ( $card['text'] as $text ) : ?>
-								<p class="pcard__text"><?php echo wp_kses( $text, array( 'strong' => array(), 'em' => array(), 'br' => array() ) ); ?></p>
+								<p class="pcard__text">
+								<?php
+								echo wp_kses(
+									$text,
+									array(
+										'strong' => array(),
+										'em'     => array(),
+										'br'     => array(),
+									)
+								);
+								?>
+														</p>
 							<?php endforeach; ?>
 							<?php if ( $card['href'] ) : ?>
 								<span class="pcard__icon" aria-hidden="true"><?php echo its_icon( its_link_icon( $card['href'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>

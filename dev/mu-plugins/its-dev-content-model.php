@@ -125,10 +125,20 @@ add_filter(
 	'gettext_with_context',
 	static function ( string $translation, string $text, string $context, string $domain ): string {
 		static $abbr = array(
-			'Jan' => 'gen', 'Feb' => 'feb', 'Mar' => 'mar', 'Apr' => 'apr', 'May' => 'mag', 'Jun' => 'giu',
-			'Jul' => 'lug', 'Aug' => 'ago', 'Sep' => 'set', 'Oct' => 'ott', 'Nov' => 'nov', 'Dec' => 'dic',
+			'Jan' => 'gen',
+			'Feb' => 'feb',
+			'Mar' => 'mar',
+			'Apr' => 'apr',
+			'May' => 'mag',
+			'Jun' => 'giu',
+			'Jul' => 'lug',
+			'Aug' => 'ago',
+			'Sep' => 'set',
+			'Oct' => 'ott',
+			'Nov' => 'nov',
+			'Dec' => 'dic',
 		);
-		$is_abbr = str_ends_with( $context, ' abbreviation' ) || 'abbreviated month name' === $context;
+		$is_abbr     = str_ends_with( $context, ' abbreviation' ) || 'abbreviated month name' === $context;
 		return ( 'default' === $domain && $is_abbr && isset( $abbr[ $text ] ) && 'en_US' === get_locale() ) ? $abbr[ $text ] : $translation;
 	},
 	10,

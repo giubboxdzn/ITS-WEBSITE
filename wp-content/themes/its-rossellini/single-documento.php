@@ -11,12 +11,12 @@ get_header();
 
 while ( have_posts() ) :
 	the_post();
-	$id      = get_the_ID();
-	$file    = its_document_file( $id );
-	$tipo    = get_the_terms( $id, 'tipo' );
-	$biennio = get_the_terms( $id, 'biennio' );
-	$format  = (string) its_meta( $id, its_meta_keys( 'doc_format' ) );
-	$size    = (string) its_meta( $id, its_meta_keys( 'doc_size' ) );
+	$doc_id  = get_the_ID();
+	$file    = its_document_file( $doc_id );
+	$tipo    = get_the_terms( $doc_id, 'tipo' );
+	$biennio = get_the_terms( $doc_id, 'biennio' );
+	$format  = (string) its_meta( $doc_id, its_meta_keys( 'doc_format' ) );
+	$size    = (string) its_meta( $doc_id, its_meta_keys( 'doc_size' ) );
 	$facts   = array_filter(
 		array(
 			__( 'Tipo', 'its-rossellini' )       => ( $tipo && ! is_wp_error( $tipo ) ) ? $tipo[0]->name : '',

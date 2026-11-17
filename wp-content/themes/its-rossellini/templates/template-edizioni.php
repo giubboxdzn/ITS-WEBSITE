@@ -14,7 +14,7 @@ while ( have_posts() ) :
 	$editions = get_posts(
 		array(
 			'post_type'      => 'edizione_corso',
-			'posts_per_page' => 300,
+			'posts_per_page' => 300, // phpcs:ignore WordPress.WP.PostsPerPage.posts_per_page_posts_per_page -- The whole archive on one page, grouped by course; under a hundred editions.
 			'orderby'        => 'title',
 			'order'          => 'ASC',
 		)

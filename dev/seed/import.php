@@ -39,7 +39,15 @@ $multilingual = $has_polylang && ! empty( $data['en'] );
 
 // Default content WordPress creates on install.
 foreach ( array( 'hello-world', 'sample-page' ) as $default_slug ) {
-	foreach ( get_posts( array( 'name' => $default_slug, 'post_type' => array( 'post', 'page' ), 'post_status' => 'any', 'fields' => 'ids', 'lang' => '' ) ) as $default_id ) {
+	foreach ( get_posts(
+		array(
+			'name'        => $default_slug,
+			'post_type'   => array( 'post', 'page' ),
+			'post_status' => 'any',
+			'fields'      => 'ids',
+			'lang'        => '',
+		)
+	) as $default_id ) {
 		wp_delete_post( $default_id, true );
 	}
 }
@@ -223,7 +231,7 @@ function its_seed_date( string $text ): string {
  * @return array<string,int> slug => id
  */
 function its_seed_courses( array $items, string $lang, string $seed_dir ): array {
-	$labels = array(
+	$labels                                   = array(
 		'it' => array( 'Competenze', 'Professioni', 'Programma', 'Strumenti e tecnologie' ),
 		'en' => array( 'Skills', 'Careers', 'Programme', 'Tools and technologies' ),
 	);
@@ -234,8 +242,8 @@ function its_seed_courses( array $items, string $lang, string $seed_dir ): array
 		'programma'   => array( $programme, 'ol' ),
 		'strumenti'   => array( $tools, 'ul' ),
 	);
-	$ids   = array();
-	$order = 0;
+	$ids                                      = array();
+	$order                                    = 0;
 	foreach ( $items as $c ) {
 		$html = $c['intro'] ? '<p class="is-style-lead">' . esc_html( $c['intro'] ) . "</p>\n" : '';
 		foreach ( $sections as $key => [ $title, $list ] ) {
@@ -381,7 +389,7 @@ function its_seed_pages( array $pages, string $lang, callable $template, string 
 	foreach ( $pages as $p ) {
 		$front = ! empty( $p['front'] ) || 'homepage-it' === $p['slug'] || '/' === wp_parse_url( $p['link'], PHP_URL_PATH );
 		$slug  = $front ? ( 'it' === $lang ? 'home' : 'home-' . $lang ) : $p['slug'];
-		$file = $template( $slug, $p );
+		$file  = $template( $slug, $p );
 		// A page with its own template (course list, events, documents, editions) shows its list from the
 		// database: what was scraped from the live list is not content, only real block content stays.
 		if ( $file && ! str_contains( $p['content'], '<!-- wp:' ) ) {
@@ -507,7 +515,7 @@ $templates = array(
 	'bandi-albi'                      => 'templates/template-documenti.php',
 	'corsi-in-svolgimento-e-conclusi' => 'templates/template-edizioni.php',
 );
-$it = array(
+$it        = array(
 	'corso'          => its_seed_courses( $data['courses'], $it_lang, $seed_dir ),
 	'post'           => its_seed_posts( $data['posts'], $it_lang, $seed_dir ),
 	'evento'         => its_seed_events( $data['events'], $it_lang, $seed_dir ),
@@ -515,7 +523,7 @@ $it = array(
 	'edizione_corso' => its_seed_editions( $data['editions'], $it_lang ),
 	'page'           => its_seed_pages( $data['pages'], $it_lang, static fn( $slug ) => $templates[ $slug ] ?? '', $seed_dir ),
 );
-$page_ids = $it['page'];
+$page_ids  = $it['page'];
 its_seed_faq( $page_ids['faq'] ?? 0, $data['faq'] ?? array(), 'Risposte su corsi, ammissioni, frequenza, stage e servizi.' );
 
 // Front page: partner logos as editable content.
@@ -556,7 +564,7 @@ if ( isset( $page_ids['news'] ) ) {
 }
 
 // Menus: [label, Italian page slug].
-$menus = array(
+$menus     = array(
 	'primary' => array(
 		array( 'Menu principale', 'Main menu' ),
 		array(
@@ -614,7 +622,7 @@ if ( $multilingual ) {
 		$it_slug = $page_alias[ $p['it_slug'] ?? '' ] ?? ( $p['it_slug'] ?? '' );
 		return $templates[ $it_slug ] ?? '';
 	};
-	$en_ids = array(
+	$en_ids      = array(
 		'corso'          => its_seed_courses( $en['courses'], 'en', $seed_dir ),
 		'post'           => its_seed_posts( $en['posts'], 'en', $seed_dir ),
 		'evento'         => its_seed_events( $en['events'], 'en', $seed_dir ),
@@ -622,8 +630,14 @@ if ( $multilingual ) {
 		'edizione_corso' => its_seed_editions( $en['editions'], 'en' ),
 		'page'           => its_seed_pages( $en['pages'], 'en', $en_template, $seed_dir ),
 	);
-	$linked = 0;
-	foreach ( array( 'corso' => 'courses', 'post' => 'posts', 'evento' => 'events', 'documento' => 'documents', 'page' => 'pages' ) as $type => $key ) {
+	$linked      = 0;
+	foreach ( array(
+		'corso'     => 'courses',
+		'post'      => 'posts',
+		'evento'    => 'events',
+		'documento' => 'documents',
+		'page'      => 'pages',
+	) as $type => $key ) {
 		$linked += its_seed_link( $en[ $key ], $it[ $type ], $en_ids[ $type ], 'page' === $type ? $page_alias : array() );
 	}
 

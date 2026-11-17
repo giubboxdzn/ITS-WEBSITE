@@ -173,13 +173,13 @@ function its_split_words( string $html ): string {
 	if ( ! $root ) {
 		return $html;
 	}
-	$n    = 0;
-	$walk = static function ( DOMNode $from ) use ( &$walk, &$n ): string {
+	$n     = 0;
+	$walk  = static function ( DOMNode $from ) use ( &$walk, &$n ): string {
 		$out = '';
 		foreach ( $from->childNodes as $node ) {
 			if ( $node instanceof DOMText ) {
 				foreach ( preg_split( '/(\s+)/u', $node->textContent, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY ) as $part ) {
-					$out .= '' === trim( $part ) ? ' ' : '<span class="word"><span class="word__in" style="--w:' . $n++ . '">' . esc_html( $part ) . '</span></span>';
+					$out .= '' === trim( $part ) ? ' ' : '<span class="word"><span class="word__in" style="--w:' . ( $n++ ) . '">' . esc_html( $part ) . '</span></span>';
 				}
 			} elseif ( $node instanceof DOMElement && in_array( strtolower( $node->tagName ), array( 'strong', 'em', 'br' ), true ) ) {
 				$tag  = strtolower( $node->tagName );
@@ -200,11 +200,22 @@ function its_sections_inline( DOMNode $node ): string {
 	foreach ( $node->childNodes as $child ) {
 		$html .= $node->ownerDocument->saveHTML( $child );
 	}
-	return trim( wp_kses( $html, array( 'a' => array( 'href' => true ), 'strong' => array(), 'em' => array(), 'br' => array(), 'code' => array() ) ) );
+	return trim(
+		wp_kses(
+			$html,
+			array(
+				'a'      => array( 'href' => true ),
+				'strong' => array(),
+				'em'     => array(),
+				'br'     => array(),
+				'code'   => array(),
+			)
+		)
+	);
 }
 
-function its_sections_has_class( DOMNode $node, string $class ): bool {
-	return $node instanceof DOMElement && in_array( $class, preg_split( '/\s+/', (string) $node->getAttribute( 'class' ) ), true );
+function its_sections_has_class( DOMNode $node, string $class_name ): bool {
+	return $node instanceof DOMElement && in_array( $class_name, preg_split( '/\s+/', (string) $node->getAttribute( 'class' ) ), true );
 }
 
 /**
@@ -296,8 +307,8 @@ function its_page_sections( string $content ): array {
 		}
 		if ( 'h3' === $tag ) {
 			$close();
-			$link = $node->getElementsByTagName( 'a' )->item( 0 );
-			$card = array(
+			$link  = $node->getElementsByTagName( 'a' )->item( 0 );
+			$card  = array(
 				'label' => $label,
 				'title' => trim( $node->textContent ),
 				'href'  => $link instanceof DOMElement ? (string) $link->getAttribute( 'href' ) : '',
@@ -310,9 +321,9 @@ function its_page_sections( string $content ): array {
 		if ( ( 'ul' === $tag || 'ol' === $tag ) && its_sections_has_class( $node, 'is-style-facts' ) ) {
 			$close();
 			foreach ( $node->getElementsByTagName( 'li' ) as $li ) {
-				$strong = $li->getElementsByTagName( 'strong' )->item( 0 );
-				$value  = $strong ? trim( $strong->textContent ) : '';
-				$text   = trim( preg_replace( '/\s+/u', ' ', $value ? substr( $li->textContent, strpos( $li->textContent, $value ) + strlen( $value ) ) : $li->textContent ) );
+				$strong             = $li->getElementsByTagName( 'strong' )->item( 0 );
+				$value              = $strong ? trim( $strong->textContent ) : '';
+				$text               = trim( preg_replace( '/\s+/u', ' ', $value ? substr( $li->textContent, strpos( $li->textContent, $value ) + strlen( $value ) ) : $li->textContent ) );
 				$current['facts'][] = array( $value, $text );
 			}
 			continue;
@@ -414,10 +425,15 @@ function its_link_icon( string $href ): string {
  */
 function its_child_cards( int $post_id, string $content ): array {
 	$cards = array();
-	foreach ( get_pages( array( 'parent' => $post_id, 'sort_column' => 'menu_order,post_title' ) ) as $child ) {
+	foreach ( get_pages(
+		array(
+			'parent'      => $post_id,
+			'sort_column' => 'menu_order,post_title',
+		)
+	) as $child ) {
 		$url  = get_permalink( $child );
 		$path = (string) wp_parse_url( $url, PHP_URL_PATH );
-		if ( $path && str_contains( $content, 'href="' . $path . '"' ) || str_contains( $content, 'href="' . $url . '"' ) ) {
+		if ( ( $path && str_contains( $content, 'href="' . $path . '"' ) ) || str_contains( $content, 'href="' . $url . '"' ) ) {
 			continue;
 		}
 		$cards[] = array(

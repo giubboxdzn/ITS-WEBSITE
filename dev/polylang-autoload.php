@@ -53,16 +53,20 @@ foreach ( $files as $file ) {
 			continue;
 		}
 		// Not "Foo::class" and not "new class".
-		for ( $p = $i - 1; $p >= 0 && is_array( $tokens[ $p ] ) && in_array( $tokens[ $p ][0], $skip, true ); $p-- ) {
+		$p = $i - 1;
+		while ( $p >= 0 && is_array( $tokens[ $p ] ) && in_array( $tokens[ $p ][0], $skip, true ) ) {
+			--$p;
 		}
 		if ( $p >= 0 && is_array( $tokens[ $p ] ) && in_array( $tokens[ $p ][0], array( T_DOUBLE_COLON, T_NEW ), true ) ) {
 			continue;
 		}
-		for ( $n = $i + 1; $n < $count && is_array( $tokens[ $n ] ) && in_array( $tokens[ $n ][0], $skip, true ); $n++ ) {
+		$n = $i + 1;
+		while ( $n < $count && is_array( $tokens[ $n ] ) && in_array( $tokens[ $n ][0], $skip, true ) ) {
+			++$n;
 		}
 		if ( $n < $count && is_array( $tokens[ $n ] ) && T_STRING === $tokens[ $n ][0] ) {
-			$class = ltrim( $namespace . '\\' . $tokens[ $n ][1], '\\' );
-			$path  = substr( str_replace( '\\', '/', $file->getPathname() ), strlen( str_replace( '\\', '/', $dir ) ) );
+			$class                       = ltrim( $namespace . '\\' . $tokens[ $n ][1], '\\' );
+			$path                        = substr( str_replace( '\\', '/', $file->getPathname() ), strlen( str_replace( '\\', '/', $dir ) ) );
 			$map[ strtolower( $class ) ] = $path;
 		}
 	}
@@ -85,7 +89,10 @@ if ( ! is_dir( $dir . '/vendor' ) ) {
 file_put_contents( $dir . '/vendor/autoload.php', $php );
 
 // Loader lists the release build writes (src/modules/module-build.php, src/integrations/integration-build.php).
-foreach ( array( 'modules' => 'module', 'integrations' => 'integration' ) as $folder => $type ) {
+foreach ( array(
+	'modules'      => 'module',
+	'integrations' => 'integration',
+) as $folder => $type ) {
 	$loaders = glob( "{$dir}/src/{$folder}/*/load.php" ) ?: array();
 	$list    = '';
 	foreach ( $loaders as $loader ) {

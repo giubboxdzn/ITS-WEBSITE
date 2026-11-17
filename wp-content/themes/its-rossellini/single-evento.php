@@ -11,15 +11,15 @@ get_header();
 
 while ( have_posts() ) :
 	the_post();
-	$id    = get_the_ID();
-	$date  = its_event_date( $id );
-	$state = its_stamp_state( $date );
-	$facts = array_filter(
+	$event_id = get_the_ID();
+	$date     = its_event_date( $event_id );
+	$state    = its_stamp_state( $date );
+	$facts    = array_filter(
 		array(
 			__( 'Data', 'its-rossellini' )     => $date ? wp_date( 'l j F Y', $date->getTimestamp() ) : '',
-			__( 'Orario', 'its-rossellini' )   => (string) its_meta( $id, its_meta_keys( 'event_time' ) ),
-			__( 'Modalità', 'its-rossellini' ) => (string) its_meta( $id, its_meta_keys( 'event_mode' ) ),
-			__( 'Luogo', 'its-rossellini' )    => (string) its_meta( $id, its_meta_keys( 'event_place' ) ),
+			__( 'Orario', 'its-rossellini' )   => (string) its_meta( $event_id, its_meta_keys( 'event_time' ) ),
+			__( 'Modalità', 'its-rossellini' ) => (string) its_meta( $event_id, its_meta_keys( 'event_mode' ) ),
+			__( 'Luogo', 'its-rossellini' )    => (string) its_meta( $event_id, its_meta_keys( 'event_place' ) ),
 		)
 	);
 	get_template_part(

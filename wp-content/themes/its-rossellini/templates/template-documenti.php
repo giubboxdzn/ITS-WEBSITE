@@ -13,13 +13,13 @@ get_header();
 
 while ( have_posts() ) :
 	the_post();
-	$docs     = its_documents_query();
-	$tipi     = its_filter_terms( 'tipo' );
-	$bienni   = its_filter_terms( 'biennio' );
-	$sel_tipo = isset( $_GET['tipo'] ) ? sanitize_title( wp_unslash( $_GET['tipo'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-	$sel_bien = isset( $_GET['biennio'] ) ? sanitize_title( wp_unslash( $_GET['biennio'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-	$query    = isset( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-	$filtered = $sel_tipo || $sel_bien || $query;
+	$docs      = its_documents_query();
+	$tipi      = its_filter_terms( 'tipo' );
+	$bienni    = its_filter_terms( 'biennio' );
+	$sel_tipo  = isset( $_GET['tipo'] ) ? sanitize_title( wp_unslash( $_GET['tipo'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$sel_bien  = isset( $_GET['biennio'] ) ? sanitize_title( wp_unslash( $_GET['biennio'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$query     = isset( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$filtered  = $sel_tipo || $sel_bien || $query;
 	$editorial = its_editorial( get_the_ID() );
 	get_template_part(
 		'template-parts/page-head',
@@ -63,8 +63,8 @@ while ( have_posts() ) :
 					<label for="doc-tipo"><?php esc_html_e( 'Tipo', 'its-rossellini' ); ?></label>
 					<select id="doc-tipo" name="tipo">
 						<option value=""><?php esc_html_e( 'Tutti i tipi', 'its-rossellini' ); ?></option>
-						<?php foreach ( $tipi as $term ) : ?>
-							<option value="<?php echo esc_attr( $term->slug ); ?>"<?php selected( $sel_tipo, $term->slug ); ?>><?php echo esc_html( $term->name ); ?></option>
+						<?php foreach ( $tipi as $filter_term ) : ?>
+							<option value="<?php echo esc_attr( $filter_term->slug ); ?>"<?php selected( $sel_tipo, $filter_term->slug ); ?>><?php echo esc_html( $filter_term->name ); ?></option>
 						<?php endforeach; ?>
 					</select>
 				</div>
@@ -74,8 +74,8 @@ while ( have_posts() ) :
 					<label for="doc-biennio"><?php esc_html_e( 'Biennio', 'its-rossellini' ); ?></label>
 					<select id="doc-biennio" name="biennio">
 						<option value=""><?php esc_html_e( 'Tutti i bienni', 'its-rossellini' ); ?></option>
-						<?php foreach ( $bienni as $term ) : ?>
-							<option value="<?php echo esc_attr( $term->slug ); ?>"<?php selected( $sel_bien, $term->slug ); ?>><?php echo esc_html( $term->name ); ?></option>
+						<?php foreach ( $bienni as $filter_term ) : ?>
+							<option value="<?php echo esc_attr( $filter_term->slug ); ?>"<?php selected( $sel_bien, $filter_term->slug ); ?>><?php echo esc_html( $filter_term->name ); ?></option>
 						<?php endforeach; ?>
 					</select>
 				</div>

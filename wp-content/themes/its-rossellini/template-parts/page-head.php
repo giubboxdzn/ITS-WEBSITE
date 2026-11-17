@@ -10,17 +10,17 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$title    = $args['title'] ?? '';
-$lead     = $args['lead'] ?? '';
-$image_id = (int) ( $args['image_id'] ?? 0 );
-$long     = mb_strlen( $title ) > 26;
-$classes  = 'page-head' . ( $image_id ? ' page-head--photo' : '' );
+$head_title = $args['title'] ?? '';
+$lead       = $args['lead'] ?? '';
+$image_id   = (int) ( $args['image_id'] ?? 0 );
+$long       = mb_strlen( $head_title ) > 26;
+$classes    = 'page-head' . ( $image_id ? ' page-head--photo' : '' );
 ?>
 <header class="<?php echo esc_attr( $classes ); ?>">
 	<div class="wrap page-head__grid">
 		<div class="page-head__text">
 			<?php its_breadcrumbs(); ?>
-			<h1 class="page-head__title<?php echo $long ? ' page-head__title--long' : ''; ?>" data-split="server"><?php echo its_split_words( $args['title_html'] ?? its_display_text( $title ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h1>
+			<h1 class="page-head__title<?php echo $long ? ' page-head__title--long' : ''; ?>" data-split="server"><?php echo its_split_words( $args['title_html'] ?? its_display_text( $head_title ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h1>
 			<?php if ( $lead ) : ?>
 				<p class="page-head__lead"><?php echo esc_html( $lead ); ?></p>
 			<?php endif; ?>
