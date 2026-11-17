@@ -385,7 +385,7 @@ function its_breadcrumbs(): void {
 }
 
 /**
- * Funding logos in the footer, as official vector files (assets/img/funding):
+ * Funding logos in the footer, as official vector files (assets/img/funding): the national ITS logo,
  * the institutional block of the ESF+ Lazio programme in the order its brand book sets
  * (Coesione Italia 21-27 Lazio, EU emblem with the co-funding statement, emblem of the Italian Republic,
  * Regione Lazio), then the PNRR Istruzione "Futura" band. Sources are listed in assets/img/funding/SOURCES.md.
@@ -402,6 +402,12 @@ function its_funding_logos(): array {
 		);
 	};
 	$blocks = array(
+		array(
+			'label' => __( 'Sistema nazionale ITS Academy', 'its-rossellini' ),
+			'logos' => array(
+				$logo( 'its-academy', __( 'Istituti Tecnici Superiori, It’s my future', 'its-rossellini' ), 213 / 146, 54 ),
+			),
+		),
 		array(
 			'label' => __( 'Programma regionale FSE+ Lazio 2021-2027', 'its-rossellini' ),
 			'logos' => array(

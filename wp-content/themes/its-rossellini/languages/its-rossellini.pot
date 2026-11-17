@@ -468,30 +468,38 @@ msgid "Edizioni dei corsi"
 msgstr ""
 
 #: inc/helpers.php:406
-msgid "Programma regionale FSE+ Lazio 2021-2027"
+msgid "Sistema nazionale ITS Academy"
 msgstr ""
 
 #: inc/helpers.php:408
+msgid "Istituti Tecnici Superiori, It’s my future"
+msgstr ""
+
+#: inc/helpers.php:412
+msgid "Programma regionale FSE+ Lazio 2021-2027"
+msgstr ""
+
+#: inc/helpers.php:414
 msgid "Coesione Italia 21-27 Lazio"
 msgstr ""
 
-#: inc/helpers.php:409
+#: inc/helpers.php:415
 msgid "Cofinanziato dall’Unione europea"
 msgstr ""
 
-#: inc/helpers.php:410
+#: inc/helpers.php:416
 msgid "Repubblica Italiana"
 msgstr ""
 
-#: inc/helpers.php:411
+#: inc/helpers.php:417
 msgid "Regione Lazio"
 msgstr ""
 
-#: inc/helpers.php:415
+#: inc/helpers.php:421
 msgid "PNRR Istruzione"
 msgstr ""
 
-#: inc/helpers.php:417
+#: inc/helpers.php:423
 msgid "Futura, la scuola per l’Italia di domani. PNRR Istruzione, finanziato dall’Unione europea NextGenerationEU, Ministero dell’Istruzione e del Merito"
 msgstr ""
 

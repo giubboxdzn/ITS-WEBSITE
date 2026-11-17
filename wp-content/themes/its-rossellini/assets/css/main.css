@@ -2946,13 +2946,6 @@ dd {
 	height: var(--logo-h, 44px);
 }
 
-.funding__block img[height="36"] {
-	--logo-h: 36px;
-}
-
-.funding__block img[height="58"] {
-	--logo-h: 58px;
-}
 
 @media (max-width: 760px) {
 	/* Two marks per row: the rule only between the two. */
@@ -2979,7 +2972,7 @@ dd {
 		height: calc(var(--logo-h, 44px) * 0.8);
 	}
 
-	.funding__block img[height="58"] {
+	.funding__block li:only-child img[width="283"] {
 		width: 100%;
 		max-width: 20rem;
 		height: auto;

@@ -83,7 +83,7 @@ $funding  = its_funding_logos();
 				<?php foreach ( $funding as $block ) : ?>
 					<ul class="funding__block" aria-label="<?php echo esc_attr( $block['label'] ); ?>">
 						<?php foreach ( $block['logos'] as $logo ) : ?>
-							<li><img src="<?php echo esc_url( $logo['src'] ); ?>" alt="<?php echo esc_attr( $logo['alt'] ); ?>" width="<?php echo (int) $logo['width']; ?>" height="<?php echo (int) $logo['height']; ?>" loading="lazy" decoding="async"></li>
+							<li><img src="<?php echo esc_url( $logo['src'] ); ?>" alt="<?php echo esc_attr( $logo['alt'] ); ?>" width="<?php echo (int) $logo['width']; ?>" height="<?php echo (int) $logo['height']; ?>" style="--logo-h: <?php echo (int) $logo['height']; ?>px" loading="lazy" decoding="async"></li>
 						<?php endforeach; ?>
 					</ul>
 				<?php endforeach; ?>
