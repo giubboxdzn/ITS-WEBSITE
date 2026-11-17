@@ -37,21 +37,33 @@ get_template_part(
 ?>
 <div class="wrap page-body page-body--wide">
 	<?php if ( have_posts() ) : ?>
-		<div class="rows">
-			<?php
-			while ( have_posts() ) :
-				the_post();
-				get_template_part(
-					'template-parts/dated-item',
-					null,
-					array(
-						'heading'      => 'h2',
-						'show_excerpt' => true,
-					)
-				);
-			endwhile;
-			?>
-		</div>
+		<?php if ( is_search() ) : ?>
+			<div class="rows">
+				<?php
+				while ( have_posts() ) :
+					the_post();
+					get_template_part(
+						'template-parts/dated-item',
+						null,
+						array(
+							'heading'      => 'h2',
+							'show_excerpt' => true,
+						)
+					);
+				endwhile;
+				?>
+			</div>
+		<?php else : ?>
+			<?php // News and category archives: the home's photo cards. ?>
+			<div class="news-grid">
+				<?php
+				while ( have_posts() ) :
+					the_post();
+					get_template_part( 'template-parts/news-card', null, array( 'heading' => 'h2' ) );
+				endwhile;
+				?>
+			</div>
+		<?php endif; ?>
 		<?php its_pagination(); ?>
 	<?php else : ?>
 		<div class="empty">
@@ -61,4 +73,5 @@ get_template_part(
 	<?php endif; ?>
 </div>
 <?php
+get_template_part( 'template-parts/cta-card' );
 get_footer();

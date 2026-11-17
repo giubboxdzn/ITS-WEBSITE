@@ -154,7 +154,8 @@
 				'.overlap__media', '.overlap__card', '.steps > li',
 				'.place__chips > li', '.place__globe', '.faq__item', '.faq-section__more',
 				'.cta-card', '.prose-card', '.index-list > li', '.editions__group',
-				'.psec__head > *', '.figures > *', '.pcards > *', '.psteps > *',
+				'.psec__head > *', '.figures > *', '.pcards > *', '.psteps > *', '.panel__head > .btn',
+				'.prose > *', '.facts > div', '.doc-count', '.empty', '.prose__actions',
 				'.area-filter', '.doc-filter', '.doc-table', '.article__photo', '.article__nav',
 				'.colophon__grid > *', '.colophon__funding', '.colophon__base',
 			].join(', '),
@@ -379,6 +380,7 @@
 		/* Parallax: the hero footage and the path photo drift against the scroll. */
 		const heroMedia = document.querySelector('.hero__media');
 		const pathPhoto = document.querySelector('.overlap__media img');
+		const headPhoto = document.querySelector('.page-head__frame img');
 		let parallax = false;
 		let queued = false;
 		const drift = () => {
@@ -391,6 +393,8 @@
 				release([...pending].filter((el) => el.getBoundingClientRect().top < vh));
 			}
 			if (heroMedia && y < vh * 1.5) heroMedia.style.translate = `0 ${(y * 0.3).toFixed(1)}px`;
+			/* Interior pages: the page-head photo drifts inside its frame, as the home footage does. */
+			if (headPhoto && y < vh * 1.5) headPhoto.style.translate = `0 ${(Math.min(1, y / vh) * 6).toFixed(2)}%`;
 			if (pathPhoto) {
 				const r = pathPhoto.parentElement.getBoundingClientRect();
 				if (r.bottom > 0 && r.top < vh) {
@@ -455,6 +459,7 @@
 			window.removeEventListener('scroll', onScroll);
 			if (heroMedia) heroMedia.style.translate = '';
 			if (pathPhoto) pathPhoto.style.translate = '';
+			if (headPhoto) headPhoto.style.translate = '';
 		};
 
 		return { enable, disable };

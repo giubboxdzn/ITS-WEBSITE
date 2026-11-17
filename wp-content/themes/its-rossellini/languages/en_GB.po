@@ -231,7 +231,7 @@ msgstr "The answers that matter before you apply, taken from the Academy’s cal
 msgid "ITS Academy Roberto Rossellini"
 msgstr "ITS Academy Roberto Rossellini"
 
-#: front-page.php:204 header.php:58 page.php:48
+#: front-page.php:204 header.php:58 inc/sections.php:72
 msgid "Preiscriviti"
 msgstr "Pre-enrol"
 
@@ -303,34 +303,6 @@ msgstr "Internship abroad"
 msgid "Roma"
 msgstr "Rome"
 
-#: front-page.php:281
-msgid "News, eventi, <strong>occasioni.</strong>"
-msgstr "News, events, <strong>opportunities.</strong>"
-
-#: front-page.php:282
-msgid "Tutte le news"
-msgstr "All news"
-
-#: front-page.php:312
-msgid "Tutto quello che <strong>devi sapere.</strong>"
-msgstr "Everything <strong>you need to know.</strong>"
-
-#: front-page.php:316
-msgid "Non trovi la tua domanda?"
-msgstr "Can’t find your question?"
-
-#: front-page.php:317
-msgid "Tutte le FAQ"
-msgstr "All FAQ"
-
-#: front-page.php:318
-msgid "oppure"
-msgstr "or"
-
-#: front-page.php:319
-msgid "scrivici"
-msgstr "write to us"
-
 #: front-page.php:72
 msgid "Il futuro <strong>si gira</strong> adesso."
 msgstr "Your future <strong>starts rolling</strong> now."
@@ -339,7 +311,7 @@ msgstr "Your future <strong>starts rolling</strong> now."
 msgid "Due anni per trasformare il tuo talento in una professione tra cinema, TV, digital, live e tecnologia."
 msgstr "Two years to turn your talent into a profession across cinema, TV, digital media, live production and technology."
 
-#: front-page.php:75 page.php:47 single-evento.php:50 template-parts/cta-card.php:23 templates/template-eventi.php:40
+#: front-page.php:75 single-evento.php:50 template-parts/cta-card.php:23 templates/template-eventi.php:40 inc/sections.php:66
 msgid "Prenota un incontro"
 msgstr "Book a meeting"
 
@@ -515,17 +487,21 @@ msgstr "Today"
 msgid "Ultimi giorni"
 msgstr "Last days"
 
-#: inc/sections.php:43
+#: inc/sections.php:111
 msgid "Occhiello"
 msgstr "Eyebrow"
 
-#: inc/sections.php:50
+#: inc/sections.php:118
 msgid "Numeri"
 msgstr "Figures"
 
-#: inc/sections.php:57
+#: inc/sections.php:125
 msgid "Invito finale"
 msgstr "Closing call"
+
+#: inc/sections.php:85
+msgid "In questa pagina"
+msgstr "On this page"
 
 #: index.php:14
 msgid "Risultati per “%s”"
@@ -539,13 +515,9 @@ msgstr "Notices, rankings, projects and student achievements."
 msgid "News"
 msgstr "News"
 
-#: index.php:58
+#: index.php:70
 msgid "Nessun contenuto trovato. Prova con un’altra parola o torna alla home."
 msgstr "Nothing found. Try another word or go back to the home page."
-
-#: page.php:21 template-parts/child-pages.php:21
-msgid "In questa sezione"
-msgstr "In this section"
 
 #: searchform.php:13
 msgid "Cerca nel sito"
@@ -555,7 +527,7 @@ msgstr "Search the site"
 msgid "Cerca corsi, bandi, news…"
 msgstr "Search courses, calls, news…"
 
-#: searchform.php:15 templates/template-documenti.php:40
+#: searchform.php:15 templates/template-documenti.php:58
 msgid "Cerca"
 msgstr "Search"
 
@@ -586,22 +558,22 @@ msgid "posti"
 msgstr "places"
 
 #: single-corso.php:69
-msgid "Altri corsi"
-msgstr "Other courses"
+msgid "Altri <strong>corsi</strong>"
+msgstr "Other <strong>courses</strong>"
 
 #: single-corso.php:70
 msgid "Tutti i corsi"
 msgstr "All courses"
 
-#: single-documento.php:22 templates/template-documenti.php:45 templates/template-documenti.php:85 templates/template-documenti.php:101
+#: single-documento.php:22 templates/template-documenti.php:63 templates/template-documenti.php:103 templates/template-documenti.php:119
 msgid "Tipo"
 msgstr "Type"
 
-#: single-documento.php:23 templates/template-documenti.php:56 templates/template-documenti.php:86 templates/template-documenti.php:102
+#: single-documento.php:23 templates/template-documenti.php:74 templates/template-documenti.php:104 templates/template-documenti.php:120
 msgid "Biennio"
 msgstr "Two-year period"
 
-#: single-documento.php:24 templates/template-documenti.php:87 templates/template-documenti.php:103
+#: single-documento.php:24 templates/template-documenti.php:105 templates/template-documenti.php:121
 msgid "Pubblicato"
 msgstr "Published"
 
@@ -657,6 +629,18 @@ msgstr "Previous"
 msgid "Successiva"
 msgstr "Next"
 
+#: single.php:67
+msgid "Altre <strong>news</strong>"
+msgstr "More <strong>news</strong>"
+
+#: single.php:68 template-parts/news-panel.php:30
+msgid "Tutte le news"
+msgstr "All news"
+
+#: template-parts/child-pages.php:21 inc/sections.php:47
+msgid "In questa sezione"
+msgstr "In this section"
+
 #: template-parts/course-wall.php:19
 msgid "Filtra i corsi per area"
 msgstr "Filter courses by area"
@@ -685,9 +669,29 @@ msgstr "Book an open day or a one-to-one meeting."
 msgid "Preiscriviti al biennio"
 msgstr "Pre-enrol for the two-year course"
 
-#: template-parts/page-hero.php:65
-msgid "In questa pagina"
-msgstr "On this page"
+#: template-parts/faq-section.php:20
+msgid "Tutto quello che <strong>devi sapere.</strong>"
+msgstr "Everything <strong>you need to know.</strong>"
+
+#: template-parts/faq-section.php:24
+msgid "Non trovi la tua domanda?"
+msgstr "Can’t find your question?"
+
+#: template-parts/faq-section.php:25
+msgid "Tutte le FAQ"
+msgstr "All FAQ"
+
+#: template-parts/faq-section.php:26
+msgid "oppure"
+msgstr "or"
+
+#: template-parts/faq-section.php:27
+msgid "scrivici"
+msgstr "write to us"
+
+#: template-parts/news-panel.php:29
+msgid "News, eventi, <strong>occasioni.</strong>"
+msgstr "News, events, <strong>opportunities.</strong>"
 
 #: templates/template-corsi.php:19
 msgid "Otto percorsi biennali post-diploma: scegli l’area, poi il mestiere."
@@ -697,60 +701,60 @@ msgstr "Eight two-year post-diploma programmes: choose the area, then the profes
 msgid "Corsi"
 msgstr "Courses"
 
-#: templates/template-documenti.php:103
+#: templates/template-documenti.php:102
+msgid "Documento"
+msgstr "Document"
+
+#: templates/template-documenti.php:106
+msgid "File"
+msgstr "File"
+
+#: templates/template-documenti.php:121
 msgctxt "document table date format"
 msgid "d/m/Y"
 msgstr "d/m/Y"
 
-#: templates/template-documenti.php:106
+#: templates/template-documenti.php:124
 msgid "Scarica: %s"
 msgstr "Download: %s"
 
-#: templates/template-documenti.php:119
+#: templates/template-documenti.php:137
 msgid "Nessun documento corrisponde ai filtri. Prova a togliere il biennio o a cercare per nome del corso."
 msgstr "No document matches the filters. Try removing the two-year period or searching by course name."
 
-#: templates/template-documenti.php:28
+#: templates/template-documenti.php:29
 msgid "Bandi, graduatorie, convocazioni e albi della Fondazione, per corso e biennio."
 msgstr "The Foundation’s calls, rankings, notices and registers, by course and two-year period."
 
-#: templates/template-documenti.php:38
+#: templates/template-documenti.php:56
 msgid "Cerca nei documenti"
 msgstr "Search the documents"
 
-#: templates/template-documenti.php:41
+#: templates/template-documenti.php:59
 msgid "Es. graduatoria Videomaker…"
 msgstr "E.g. Videomaker ranking…"
 
-#: templates/template-documenti.php:47
+#: templates/template-documenti.php:65
 msgid "Tutti i tipi"
 msgstr "All types"
 
-#: templates/template-documenti.php:58
+#: templates/template-documenti.php:76
 msgid "Tutti i bienni"
 msgstr "All periods"
 
-#: templates/template-documenti.php:66
+#: templates/template-documenti.php:84
 msgid "Filtra"
 msgstr "Filter"
 
-#: templates/template-documenti.php:68 templates/template-documenti.php:120
+#: templates/template-documenti.php:86 templates/template-documenti.php:138
 msgid "Azzera filtri"
 msgstr "Clear filters"
 
-#: templates/template-documenti.php:76
+#: templates/template-documenti.php:94
 msgid "%s documento"
 msgid_plural "%s documenti"
 msgstr[0] "%s document"
 msgstr[1] "%s documents"
-
-#: templates/template-documenti.php:84
-msgid "Documento"
-msgstr "Document"
-
-#: templates/template-documenti.php:88
-msgid "File"
-msgstr "File"
 
 #: templates/template-edizioni.php:25
 msgid "Altre edizioni"

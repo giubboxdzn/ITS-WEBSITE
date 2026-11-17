@@ -17,20 +17,88 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Pages drawn with sections. Pilot: Stage & Placement (and its translations) only, until the layout is approved.
+ * Pages drawn with sections: every page whose content uses the theme's block styles or cards
+ * (Heading 3 blocks). Text written as plain HTML (legal notes) and Details blocks (FAQ) stay as written.
  */
 function its_has_sections( ?int $post_id = null ): bool {
 	$post_id = $post_id ?: (int) get_queried_object_id();
-	if ( ! $post_id || 'page' !== get_post_type( $post_id ) || get_page_template_slug( $post_id ) ) {
+	if ( ! $post_id || 'page' !== get_post_type( $post_id ) ) {
 		return false;
 	}
-	$pilot = get_page_by_path( 'servizi/placement' );
-	if ( ! $pilot ) {
-		return false;
+	$editorial = (bool) preg_match( '/is-style-(eyebrow|facts|callout)\b|<!-- wp:heading \{"level":3/', (string) get_post_field( 'post_content', $post_id ) );
+	return (bool) apply_filters( 'its_has_sections', $editorial, $post_id );
+}
+
+/**
+ * Everything an editorial page needs: its sections (with the child pages it does not link yet),
+ * the page-head actions and index, and the closing call. Null for pages without sections.
+ *
+ * @return array{sections: array, actions: string, float: string, cta: array}|null
+ */
+function its_editorial( int $post_id ): ?array {
+	if ( ! its_has_sections( $post_id ) ) {
+		return null;
 	}
-	$ids = function_exists( 'pll_get_post_translations' ) ? array_map( 'intval', pll_get_post_translations( $pilot->ID ) ) : array();
-	$ids[] = (int) $pilot->ID;
-	return (bool) apply_filters( 'its_has_sections', in_array( $post_id, $ids, true ), $post_id );
+	$content = (string) apply_filters( 'the_content', (string) get_post_field( 'post_content', $post_id ) );
+	$parsed  = its_page_sections( $content );
+	$cards   = its_child_cards( $post_id, $content );
+	if ( $cards ) {
+		$parsed['sections'][] = array(
+			'title'   => __( 'In questa sezione', 'its-rossellini' ),
+			'id'      => 'in-questa-sezione',
+			'eyebrow' => '',
+			'body'    => array(),
+			'facts'   => array(),
+			'cards'   => $cards,
+			'kind'    => 'cards',
+		);
+	}
+	$index = array();
+	foreach ( $parsed['sections'] as $section ) {
+		if ( $section['title'] ) {
+			$index[] = array( $section['id'], $section['eyebrow'] ?: $section['title'] );
+		}
+	}
+	$callout = $parsed['callout'];
+	$links   = $callout['links'] ?? array();
+
+	// Actions: the page's own call first, then a meeting (or pre-enrolment).
+	$meet    = array( its_page_url( 'incontriamoci', its_page_url( 'contatti' ) ), __( 'Prenota un incontro', 'its-rossellini' ) );
+	$actions = $links ?: array( $meet );
+	if ( count( $actions ) < 2 && $actions[0][0] !== $meet[0] ) {
+		$actions[] = $meet;
+	}
+	if ( count( $actions ) < 2 ) {
+		$actions[] = array( its_page_url( 'iscrizioni' ), __( 'Preiscriviti', 'its-rossellini' ) );
+	}
+	$html = '<div class="page-head__actions">';
+	foreach ( array_slice( $actions, 0, 2 ) as $n => [ $url, $label ] ) {
+		$icon  = its_link_icon( $url );
+		$html .= 0 === $n
+			? '<a class="btn btn--grad" href="' . esc_url( $url ) . '">' . esc_html( $label ) . its_icon( 'arrow' === $icon ? 'arrow-up' : $icon ) . '</a>'
+			: '<a class="btn btn--outline" href="' . esc_url( $url ) . '">' . esc_html( $label ) . '</a>';
+	}
+	$html .= '</div>';
+
+	$float = '';
+	if ( count( $index ) > 2 ) {
+		$float = '<nav class="glass-card page-index" aria-labelledby="page-index-title"><p id="page-index-title" class="page-index__title">' . esc_html__( 'In questa pagina', 'its-rossellini' ) . '</p><ol>';
+		foreach ( $index as $n => [ $anchor, $label ] ) {
+			$float .= '<li><a href="#' . esc_attr( $anchor ) . '"><span class="page-index__n" aria-hidden="true">' . sprintf( '%02d', $n + 1 ) . '</span>' . esc_html( $label ) . '</a></li>';
+		}
+		$float .= '</ol></nav>';
+	}
+
+	return array(
+		'sections' => $parsed['sections'],
+		'actions'  => $html,
+		'float'    => $float,
+		'cta'      => $callout ? array(
+			'title' => $callout['title'],
+			'text'  => implode( ' ', $callout['text'] ),
+			'links' => $links,
+		) : array(),
+	);
 }
 
 add_action(

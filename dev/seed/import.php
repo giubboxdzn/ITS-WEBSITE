@@ -381,6 +381,12 @@ function its_seed_pages( array $pages, string $lang, callable $template, string 
 	foreach ( $pages as $p ) {
 		$front = ! empty( $p['front'] ) || 'homepage-it' === $p['slug'] || '/' === wp_parse_url( $p['link'], PHP_URL_PATH );
 		$slug  = $front ? ( 'it' === $lang ? 'home' : 'home-' . $lang ) : $p['slug'];
+		$file = $template( $slug, $p );
+		// A page with its own template (course list, events, documents, editions) shows its list from the
+		// database: what was scraped from the live list is not content, only real block content stays.
+		if ( $file && ! str_contains( $p['content'], '<!-- wp:' ) ) {
+			$p['content'] = '';
+		}
 		// Scraped sections start at h3 on the live markup; under the page h1 they are h2.
 		if ( ! str_contains( $p['content'], '<h2' ) ) {
 			$p['content'] = preg_replace( array( '/<h3(\b[^>]*)>/', '/<\/h3>/' ), array( '<h2$1>', '</h2>' ), $p['content'] );
@@ -404,7 +410,6 @@ function its_seed_pages( array $pages, string $lang, callable $template, string 
 		if ( ! $front && $p['slug'] !== $slug ) {
 			$ids[ $p['slug'] ] = $id;
 		}
-		$file = $template( $slug, $p );
 		if ( $file ) {
 			update_post_meta( $id, '_wp_page_template', $file );
 		}

@@ -1704,6 +1704,12 @@ dd {
 	margin: 0;
 }
 
+.page-head__frame {
+	display: block;
+	overflow: clip;
+	border-radius: var(--r-xl);
+}
+
 .page-head__photo img {
 	width: 100%;
 	max-height: min(64vh, 560px);
@@ -3679,6 +3685,11 @@ dd {
 	transition:
 		filter 1.6s var(--ease-out) var(--d, 0ms),
 		scale 1.9s var(--ease-out) var(--d, 0ms);
+}
+
+/* Page-head photos: a little larger so the scroll drift never shows an edge. */
+.anim .page-head__frame img {
+	scale: 1.1;
 }
 
 /* Large page-head photos (courses): the same focus pull on load. */

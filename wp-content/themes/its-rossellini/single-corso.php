@@ -63,11 +63,11 @@ while ( have_posts() ) :
 	);
 	if ( $related->have_posts() ) :
 		?>
-		<section class="section section--light" aria-labelledby="related-title">
+		<section class="panel psec psec--light psec--tint" aria-labelledby="related-title">
 			<div class="wrap">
-				<div class="section__head section__head--row">
-					<h2 id="related-title" class="headline headline--m"><?php esc_html_e( 'Altri corsi', 'its-rossellini' ); ?></h2>
-					<a class="link-arrow" href="<?php echo esc_url( its_page_url( 'offerta-formativa/corsi' ) ); ?>"><?php esc_html_e( 'Tutti i corsi', 'its-rossellini' ); ?><?php echo its_icon( 'arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+				<div class="panel__head">
+					<h2 id="related-title" class="display display--m display--dark"><?php echo wp_kses( __( 'Altri <strong>corsi</strong>', 'its-rossellini' ), array( 'strong' => array() ) ); ?></h2>
+					<a class="btn btn--outline" href="<?php echo esc_url( its_page_url( 'offerta-formativa/corsi' ) ); ?>"><?php esc_html_e( 'Tutti i corsi', 'its-rossellini' ); ?><?php echo its_icon( 'arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 				</div>
 				<div class="grid">
 					<?php
@@ -84,6 +84,7 @@ while ( have_posts() ) :
 		</section>
 		<?php
 	endif;
+	get_template_part( 'template-parts/cta-card' );
 endwhile;
 
 get_footer();

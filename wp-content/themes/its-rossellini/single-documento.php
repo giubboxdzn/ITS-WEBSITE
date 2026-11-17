@@ -52,6 +52,7 @@ while ( have_posts() ) :
 		</div>
 	</div>
 	<?php
+	get_template_part( 'template-parts/cta-card' );
 endwhile;
 
 get_footer();

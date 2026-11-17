@@ -2,6 +2,8 @@
 /**
  * News card: rounded photo, date and category, title.
  *
+ * Args: 'heading' (h2|h3) level of the title, h2 on the news archive.
+ *
  * @package its-rossellini
  */
 
@@ -25,7 +27,8 @@ $cats = get_the_category();
 			?>
 		</div>
 		<div class="news-card__body">
-			<h3 class="news-card__title"><?php the_title(); ?></h3>
+			<?php $heading = 'h2' === ( $args['heading'] ?? '' ) ? 'h2' : 'h3'; ?>
+			<<?php echo tag_escape( $heading ); ?> class="news-card__title"><?php the_title(); ?></<?php echo tag_escape( $heading ); ?>>
 			<p class="news-card__meta">
 				<time datetime="<?php echo esc_attr( get_the_date( 'Y-m-d' ) ); ?>"><?php echo esc_html( get_the_date( 'j M Y' ) ); ?></time>
 				<?php if ( $cats ) : ?>

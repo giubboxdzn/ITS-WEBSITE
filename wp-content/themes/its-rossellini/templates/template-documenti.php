@@ -20,20 +20,38 @@ while ( have_posts() ) :
 	$sel_bien = isset( $_GET['biennio'] ) ? sanitize_title( wp_unslash( $_GET['biennio'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	$query    = isset( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	$filtered = $sel_tipo || $sel_bien || $query;
+	$editorial = its_editorial( get_the_ID() );
 	get_template_part(
 		'template-parts/page-head',
 		null,
 		array(
-			'title' => get_the_title(),
-			'lead'  => has_excerpt() ? get_the_excerpt() : __( 'Bandi, graduatorie, convocazioni e albi della Fondazione, per corso e biennio.', 'its-rossellini' ),
+			'title'    => get_the_title(),
+			'lead'     => has_excerpt() ? get_the_excerpt() : __( 'Bandi, graduatorie, convocazioni e albi della Fondazione, per corso e biennio.', 'its-rossellini' ),
+			'image_id' => (int) get_post_thumbnail_id(),
+			'aside'    => $editorial['actions'] ?? '',
+			'float'    => $editorial['float'] ?? '',
 		)
 	);
+	if ( $editorial ) {
+		get_template_part(
+			'template-parts/page-sections',
+			null,
+			array(
+				'sections' => $editorial['sections'],
+				'theme'    => 'light',
+			)
+		);
+	}
 	?>
-	<div class="wrap page-body page-body--wide">
-		<?php if ( '' !== trim( get_the_content() ) ) : ?>
+	<div class="wrap page-body page-body--wide" id="archivio">
+		<?php if ( ! $editorial && '' !== trim( get_the_content() ) ) : ?>
 			<div class="prose"><?php the_content(); ?></div>
 		<?php endif; ?>
-		<?php get_template_part( 'template-parts/child-pages' ); ?>
+		<?php
+		if ( ! $editorial ) {
+			get_template_part( 'template-parts/child-pages' );
+		}
+		?>
 
 		<form class="doc-filter" method="get" action="<?php the_permalink(); ?>" role="search" aria-label="<?php esc_attr_e( 'Cerca nei documenti', 'its-rossellini' ); ?>">
 			<div class="field field--grow">
@@ -122,6 +140,7 @@ while ( have_posts() ) :
 		<?php endif; ?>
 	</div>
 	<?php
+	get_template_part( 'template-parts/cta-card', null, $editorial['cta'] ?? array() );
 endwhile;
 
 get_footer();

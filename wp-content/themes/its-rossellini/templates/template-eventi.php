@@ -23,7 +23,7 @@ while ( have_posts() ) :
 	?>
 	<div class="wrap page-body page-body--wide">
 		<section class="listing" aria-labelledby="upcoming-title">
-			<h2 id="upcoming-title" class="listing__title"><?php esc_html_e( 'In programma', 'its-rossellini' ); ?></h2>
+			<h2 id="upcoming-title" class="display display--m display--dark listing__title"><?php echo its_display_text( __( 'In programma', 'its-rossellini' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h2>
 			<?php if ( $events['upcoming'] ) : ?>
 				<div class="rows">
 					<?php
@@ -44,7 +44,7 @@ while ( have_posts() ) :
 
 		<?php if ( $events['past'] ) : ?>
 			<section class="listing listing--past" aria-labelledby="past-title">
-				<h2 id="past-title" class="listing__title"><?php esc_html_e( 'Già andati in scena', 'its-rossellini' ); ?></h2>
+				<h2 id="past-title" class="display display--m display--dark listing__title"><?php echo its_display_text( __( 'Già andati in scena', 'its-rossellini' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h2>
 				<div class="rows">
 					<?php
 					foreach ( $events['past'] as $post ) :
@@ -58,6 +58,7 @@ while ( have_posts() ) :
 		<?php endif; ?>
 	</div>
 	<?php
+	get_template_part( 'template-parts/cta-card' );
 endwhile;
 
 get_footer();
