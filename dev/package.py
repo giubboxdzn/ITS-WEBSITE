@@ -32,6 +32,7 @@ STRAY = re.compile(r"(^|/)(\.git\w*|\.DS_Store|Thumbs\.db|desktop\.ini|node_modu
 
 
 def fail(message):
+    sys.stdout.flush()
     print(f"\n✗ {message}", file=sys.stderr)
     sys.exit(1)
 
