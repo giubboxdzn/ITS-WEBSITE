@@ -316,18 +316,33 @@
 					timers.delete(el);
 					finish(el);
 				}, delay + 1900 + words * 55 + strokes * 18));
+				counters.forEach((c) => {
+					if (c.owner === el) countTo(c, c.target, delay);
+				});
 			});
 		};
 
-		/* Scrolling back up: what sinks to the bottom of the screen goes out the way it came in, and comes in again on the way down. */
-		const conceal = (el) => {
-			if (!el.classList.contains('is-in') || !types.has(el)) return;
-			window.clearTimeout(timers.get(el));
-			timers.delete(el);
-			el.dataset.reveal = types.get(el);
-			el.style.removeProperty('--d');
-			el.classList.remove('is-in');
-			pending.add(el);
+		/* Scrolling back up: what sinks to the bottom of the screen plays the same animation in reverse, staggered from
+		   the bottom up (the last in goes out first), figures counting back down; it comes in again on the way down. */
+		const conceal = (els) => {
+			const out = els.filter((el) => el.classList.contains('is-in') && types.has(el));
+			out.sort((a, b) => {
+				const ra = a.getBoundingClientRect();
+				const rb = b.getBoundingClientRect();
+				return rb.top - ra.top || rb.left - ra.left;
+			});
+			out.forEach((el, i) => {
+				const delay = Math.min(i, 8) * STEP;
+				window.clearTimeout(timers.get(el));
+				timers.delete(el);
+				el.dataset.reveal = types.get(el);
+				el.style.setProperty('--d', `${delay}ms`);
+				el.classList.remove('is-in');
+				pending.add(el);
+				counters.forEach((c) => {
+					if (c.owner === el) countTo(c, 0, delay);
+				});
+			});
 		};
 
 		/* Out of view through the bottom edge (the visitor is going up), not through the top. */
@@ -338,15 +353,17 @@
 
 		const revealer = new IntersectionObserver((entries) => {
 			const coming = [];
+			const leaving = [];
 			entries.forEach((entry) => {
 				const el = entry.target;
 				if (entry.isIntersecting) {
 					if (!el.classList.contains('is-in')) coming.push(el);
 				} else if (goneBelow(entry)) {
-					conceal(el);
+					leaving.push(el);
 				}
 			});
 			if (coming.length) reveal(coming);
+			if (leaving.length) conceal(leaving);
 		}, { rootMargin: `0px 0px -${ENTER * 100}% 0px` });
 		const drawWatch = new IntersectionObserver((entries) => {
 			entries.forEach((entry) => {
@@ -354,19 +371,21 @@
 				if (enough(entry)) {
 					if (!el.classList.contains('is-in')) reveal([el]);
 				} else if (goneBelow(entry)) {
-					conceal(el);
+					conceal([el]);
 				}
 			});
 		}, { threshold: SHOWN });
 		/* The exit line: crossed downwards while going up, things go out; crossed upwards, they come in if still out. */
 		const exitWatch = new IntersectionObserver((entries) => {
 			const coming = [];
+			const leaving = [];
 			entries.forEach((entry) => {
 				const el = entry.target;
-				if (dir < 0 && !entry.isIntersecting && goneBelow(entry)) conceal(el);
+				if (dir < 0 && !entry.isIntersecting && goneBelow(entry)) leaving.push(el);
 				else if (dir > 0 && entry.isIntersecting && !el.classList.contains('is-in')) coming.push(el);
 			});
 			if (coming.length) reveal(coming);
+			if (leaving.length) conceal(leaving);
 		}, { rootMargin: `0px 0px -${EXIT * 100}% 0px` });
 		const watch = (el) => {
 			watched.add(el);
@@ -391,12 +410,18 @@
 				comeIn();
 				return;
 			}
-			const line = window.innerHeight * (1 - EXIT);
-			const out = [...watched].filter((el) => el.classList.contains('is-in') && el.getBoundingClientRect().top > line);
-			out.forEach(conceal);
+			/* The stagger runs over what is on screen; what is already below it goes out on its own. */
+			const vh = window.innerHeight;
+			const shown = [...watched]
+				.filter((el) => el.classList.contains('is-in'))
+				.map((el) => ({ el, top: el.getBoundingClientRect().top }))
+				.filter((item) => item.top > vh * (1 - EXIT));
+			conceal(shown.filter((item) => item.top < vh).map((item) => item.el));
+			conceal(shown.filter((item) => item.top >= vh).map((item) => item.el));
 		};
 
-		/* Figures count up from zero; the final value stays in the page for assistive tech. */
+		/* Figures count up from zero (and back down when their tile goes out); the final value stays in the page for
+		   assistive tech. A figure inside a revealed element follows it; one in the first view counts when it shows. */
 		const counters = [];
 		const prepareCounter = (el) => {
 			if (el.dataset.count) return null;
@@ -416,48 +441,41 @@
 			const target = parseInt(m[2].replace(/[.,]/g, ''), 10);
 			const sep = (m[2].match(/[.,]/) || [''])[0];
 			const format = (v) => m[1] + (sep ? String(v).replace(/\B(?=(\d{3})+(?!\d))/g, sep) : String(v)) + m[3];
-			const counter = { el, visual, target, format, frame: 0, done: false };
+			const counter = { el, visual, target, format, frame: 0, value: target, to: target, owner: null };
 			counters.push(counter);
 			return counter;
 		};
-		const settle = (c) => {
+		const show = (c, value) => {
 			window.cancelAnimationFrame(c.frame);
 			c.frame = 0;
-			c.visual.textContent = c.format(c.target);
-			c.done = true;
+			c.value = value;
+			c.to = value;
+			c.visual.textContent = c.format(value);
 		};
-		/* Below the fold again: back to zero, to count up the next time. */
-		const rewind = (c) => {
+		const settle = (c) => show(c, c.target);
+		const rewind = (c) => show(c, 0);
+		/* From the value on screen to the given one, with the same curve both ways. */
+		const countTo = (c, to, delay = 0) => {
+			if (c.to === to) return;
 			window.cancelAnimationFrame(c.frame);
-			c.frame = 0;
-			c.visual.textContent = c.format(0);
-			c.done = false;
-		};
-		const count = (c) => {
-			const start = performance.now() + (c.el.closest('.hero') ? 700 : 0);
+			c.to = to;
+			const from = c.value;
+			const start = performance.now() + delay;
 			const duration = 1500;
 			const tick = (now) => {
 				const t = Math.min(1, Math.max(0, (now - start) / duration));
-				c.visual.textContent = c.format(Math.round(c.target * (1 - (1 - t) ** 3)));
-				if (t < 1) c.frame = window.requestAnimationFrame(tick);
-				else {
-					c.frame = 0;
-					c.done = true;
-				}
+				c.value = Math.round(from + (to - from) * (1 - (1 - t) ** 3));
+				c.visual.textContent = c.format(c.value);
+				c.frame = t < 1 ? window.requestAnimationFrame(tick) : 0;
 			};
 			c.frame = window.requestAnimationFrame(tick);
 		};
 		const counterWatch = new IntersectionObserver((entries) => {
 			entries.forEach((entry) => {
 				const c = counters.find((item) => item.el === entry.target);
-				if (!c) return;
-				if (enough(entry)) {
-					if (c.done || c.frame) return;
-					if (motionOn()) count(c);
-					else settle(c);
-				} else if (goneBelow(entry)) {
-					rewind(c);
-				}
+				if (!c || !enough(entry)) return;
+				if (motionOn()) countTo(c, c.target, c.el.closest('.hero') ? 700 : 0);
+				else settle(c);
 			});
 		}, { threshold: SHOWN });
 
@@ -548,6 +566,11 @@
 			document.querySelectorAll('.tile__num, .glass-card__num').forEach((el) => {
 				const c = prepareCounter(el) || counters.find((item) => item.el === el);
 				if (!c) return;
+				c.owner = [...watched].find((w) => w !== el && w.contains(el)) || null;
+				if (c.owner) {
+					if (!c.owner.classList.contains('is-in')) rewind(c);
+					return;
+				}
 				if (initial || below(el)) rewind(c);
 				counterWatch.observe(el);
 			});

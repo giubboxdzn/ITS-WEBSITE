@@ -4256,14 +4256,11 @@ dd {
 }
 
 /* Scroll reveals, set up by the script (.anim) and released in batches with a stagger (--d).
-   Scrolling back up, what sinks into the bottom quarter of the screen goes out the same way, quicker and all together
-   (the :not(.is-in) transitions, fast from the first frame so it shows while it moves), and plays again on the way down. */
+   Scrolling back up, what sinks into the bottom quarter of the screen plays the same animation in reverse (the same
+   transitions, staggered from the bottom up), and plays it again on the way down. */
 .anim [data-reveal="up"]:not(.is-in) {
 	opacity: 0;
 	translate: 0 2rem;
-	transition:
-		opacity 0.35s var(--ease-out),
-		translate 0.45s var(--ease-out);
 }
 
 .anim [data-reveal="up"] {
@@ -4287,9 +4284,6 @@ dd {
 .anim [data-reveal="words"]:not(.is-in) .word__in {
 	translate: 0 115%;
 	filter: blur(0.12em);
-	transition:
-		translate 0.4s var(--ease-out),
-		filter 0.4s var(--ease-out);
 }
 
 .anim [data-reveal="words"] .word__in {
@@ -4306,7 +4300,6 @@ dd {
 
 .anim [data-reveal="draw"]:not(.is-in) path {
 	stroke-dashoffset: 1;
-	transition: stroke-dashoffset 0.6s var(--ease-out);
 }
 
 .count {
@@ -4326,9 +4319,6 @@ dd {
 .anim .overlap__media[data-reveal="up"]:not(.is-in) img {
 	filter: blur(18px);
 	scale: 1.22;
-	transition:
-		filter 0.4s var(--ease-out),
-		scale 0.45s var(--ease-out);
 }
 
 .anim .overlap__media[data-reveal="up"] img {
