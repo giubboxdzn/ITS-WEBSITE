@@ -13,11 +13,12 @@ Direzione visiva: **contenitori arrotondati, vetro e titoli leggeri**, sui rifer
 
 | | |
 |---|---|
-| Tema | ITS Rossellini 1.1.0, cartella e slug `its-rossellini` |
+| Tema | ITS Rossellini 1.2.0, cartella e slug `its-rossellini` |
 | WordPress | 6.9 o successivo, provato fino alla 7.1 |
 | PHP | 8.1 o successivo (sul live: PHP 8.4, Apache) |
 | Plugin necessari | **Rossellini Core** (tipi di contenuto), **Polylang** (italiano e inglese) |
-| Plugin del live compatibili | Yoast SEO, Site Kit by Google, Cookie Notice |
+| Plugin del live compatibili | Yoast SEO, Site Kit by Google, Cookie Notice, WP Consent API |
+| Pacchetto di produzione | `python3 -I dev/package.py` → `dist/its-rossellini-<versione>.zip` (vedi [Messa in produzione](#messa-in-produzione)) |
 | Build | nessuna: si modificano direttamente i file CSS, JS e PHP |
 | Licenza | GPL-2.0-or-later; font Raleway con licenza OFL |
 
@@ -69,6 +70,7 @@ Direzione visiva: **contenitori arrotondati, vetro e titoli leggeri**, sui rifer
 ```
 wp-content/themes/its-rossellini/   il tema (da installare in produzione)
   style.css                         intestazione del tema (nome, versione, requisiti); lo stile è in assets/css/main.css
+  readme.txt                        dentro lo zip: requisiti, plugin, installazione, aggiornamento, changelog
   functions.php                     avvio: supporti, menu, formati immagine, CSS e JS
   front-page.php                    home (video, corsi, academy, percorso, news, partner)
   page.php                          pagina interna: a sezioni se usa gli stili del tema, altrimenti testo
@@ -90,13 +92,16 @@ wp-content/themes/its-rossellini/   il tema (da installare in produzione)
     customizer.php                  impostazioni del Customizer (contatti, dati pubblicati, video, accessibilità)
     icons.php                       icone SVG, bandiere e selettore della lingua
     admin.php                       icone del menu admin per Corsi, Eventi, Edizioni e Documenti
+    requirements.php                avviso nell'admin se manca un plugin necessario, con «Installa» o «Attiva»
   languages/                        traduzioni del tema: its-rossellini.pot, en_GB.po/.mo/.l10n.php
   assets/css/main.css               tutto lo stile (token in :root)
   assets/js/main.js                 header, video dell'hero, menu mobile, filtro corsi, animazioni legate all'interruttore «Animazioni» (miglioramento progressivo)
   assets/css/editor.css             stile dell'editor a blocchi
   assets/fonts/                     Raleway variabile, normale e corsivo (OFL), self-hosted
   assets/img/                       logo, loghi dei finanziatori (funding/, con le fonti in SOURCES.md)
-dev/                                ambiente locale (non va in produzione); dev/i18n/build.py compila le traduzioni
+dev/                                ambiente locale (non va in produzione); dev/i18n/build.py compila le traduzioni;
+                                    dev/package.py crea il pacchetto di produzione
+dist/                               pacchetti creati da dev/package.py (ignorata da git)
 server/htaccess-sicurezza.conf      header di sicurezza per il server di produzione
 docs/img/                           logo per questo README (copie del logo del tema, in blu e in bianco)
 .claude/skills/                     skill per Claude Code (versioni bloccate in skills-lock.json):
@@ -164,6 +169,7 @@ In WSL (`bash` da PowerShell) si è in Linux: PHP e Python vanno installati dent
 | `mu-plugins/its-dev-offline.php` | Ferma in silenzio le chiamate a WordPress.org, perché la copia locale non va su internet |
 | `i18n/build.py` | Aggiorna `.pot` e `.po` e compila `.mo` e `.l10n.php` |
 | `export-static.py` | Esporta il sito locale in HTML statico per una demo |
+| `package.py` | Controlla il tema e crea lo zip di produzione in `dist/` (vedi [Messa in produzione](#messa-in-produzione)) |
 
 ### Contenuti di prova
 
@@ -294,20 +300,48 @@ Le durate (0,8 s per la dissolvenza, 1 s per lo spostamento, ecc.) sono nel CSS 
 - Se l'hosting offre un **ambiente di prova** (staging), fare tutti i passaggi prima lì.
 - Scegliere un orario con poco traffico, lontano dalle scadenze dei bandi.
 
-### Preparare lo zip del tema
+### Plugin e dipendenze
 
-Dalla cartella del repository:
+Il tema **non ha dipendenze da scaricare**: niente Composer, npm o build. Font, icone e loghi sono dentro lo zip, e il tema non chiama servizi esterni. Le uniche dipendenze sono plugin di WordPress:
+
+| Plugin | Serve? | Da dove | Senza |
+|---|---|---|---|
+| **Rossellini Core** | Sì | Già installato sul sito attuale. Non è su WordPress.org: per un sito nuovo si copia la sua cartella da `wp-content/plugins` del sito attuale (FTP o file manager dell'hosting) | Corsi, eventi, edizioni e documenti non si vedono |
+| **Polylang** | Sì, per l'inglese | Già installato sul sito attuale; altrimenti *Plugin → Aggiungi nuovo* o il pulsante nell'avviso del tema | Il sito resta solo in italiano, senza selettore della lingua |
+| Yoast SEO, Site Kit by Google, Cookie Notice, WP Consent API | No | Già sul sito attuale | Il tema funziona lo stesso |
+
+WordPress controlla da solo i requisiti scritti in `style.css` (WordPress 6.9 e PHP 8.1 o successivi) e rifiuta lo zip se non sono soddisfatti. Per i plugin ci pensa il tema: dopo l'attivazione, se Rossellini Core o Polylang mancano o sono disattivati, l'admin mostra un avviso con il pulsante **Installa** (Polylang, da WordPress.org) o **Attiva**. Per Rossellini Core, se non è installato, l'avviso spiega da dove copiarlo. Nessun plugin viene installato senza un clic. L'avviso è in `inc/requirements.php`.
+
+**Sito nuovo o di prova.** Il modo più semplice è clonare il sito attuale (ambiente di prova dell'hosting, o ripristino di una copia JetBackup su un altro dominio): così arrivano anche i plugin, le lingue di Polylang, i contenuti e le impostazioni. Poi si carica lo zip del tema. Partendo da un WordPress vuoto, l'ordine è: Rossellini Core → Polylang (lingue: italiano predefinito, inglese su `/en/`) → tema → plugin facoltativi.
+
+### Preparare il pacchetto
+
+Dalla cartella del repository, dopo aver fatto commit di tutte le modifiche:
+
+```bash
+python3 -I dev/package.py
+```
+
+Crea `dist/its-rossellini-<versione>.zip` (oggi `its-rossellini-1.2.0.zip`, circa 1,3 MB) e accanto il file `.sha256` con l'impronta, utile per verificare di caricare proprio quello. Lo zip esce dall'ultimo commit, quindi contiene solo i file del tema nel repository: niente `dev/`, documentazione o file locali. Prima di crearlo lo script controlla che:
+- il tema non abbia modifiche non committate (non finirebbero nello zip);
+- la versione sia la stessa in `style.css` e in `readme.txt` (*Stable tag*), con la sua voce nel changelog;
+- le traduzioni siano compilate e aggiornate;
+- i file PHP e `main.js` non abbiano errori di sintassi.
+
+Poi verifica lo zip stesso: una sola cartella `its-rossellini/`, i file obbligatori presenti (`style.css`, `functions.php`, `index.php`, `screenshot.png`, `readme.txt`), nessun file da non pubblicare. Se qualcosa non va, si ferma e dice cosa sistemare.
+
+Dentro lo zip c'è `readme.txt`, con requisiti, plugin, installazione, passaggi dopo l'attivazione, aggiornamento e changelog: chi riceve solo lo zip ha le istruzioni essenziali.
+
+Senza Python, lo stesso zip (senza i controlli) si ottiene con:
 
 ```bash
 git archive --format=zip --prefix=its-rossellini/ -o its-rossellini.zip HEAD:wp-content/themes/its-rossellini
 ```
 
-Lo zip contiene solo il tema, senza `dev/` né documentazione. Da Windows, senza riga di comando: tasto destro su `wp-content/themes/its-rossellini` → *Comprimi in file ZIP*. Lo zip deve contenere la cartella `its-rossellini/`, non i file sciolti.
-
 ### Passaggi
 
-1. Installare la cartella `wp-content/themes/its-rossellini` come nuovo tema: *Aspetto → Temi → Aggiungi nuovo tema → Carica tema*, con lo zip qui sopra. Lo slug è diverso da `rossellini`: il tema attuale resta intatto per tornare indietro. `style.css` dichiara `Update URI: false`: WordPress non proporrà mai come «aggiornamento» un tema di WordPress.org con lo stesso slug.
-2. Tenere attivo **Rossellini Core**: il tema legge i suoi tipi di contenuto e tassonomie, e dà a Corsi, Eventi, Edizioni dei corsi e Documenti e bandi le proprie icone nel menu dell'admin (`inc/admin.php`, filtro `register_post_type_args`).
+1. Installare il tema: *Aspetto → Temi → Aggiungi nuovo tema → Carica tema*, con `dist/its-rossellini-<versione>.zip`. Lo slug è diverso da `rossellini`: il tema attuale resta intatto per tornare indietro. `style.css` dichiara `Update URI: false`: WordPress non proporrà mai come «aggiornamento» un tema di WordPress.org con lo stesso slug.
+2. Tenere attivi **Rossellini Core** e **Polylang** (vedi [Plugin e dipendenze](#plugin-e-dipendenze)). Rossellini Core: il tema legge i suoi tipi di contenuto e tassonomie, e dà a Corsi, Eventi, Edizioni dei corsi e Documenti e bandi le proprie icone nel menu dell'admin (`inc/admin.php`, filtro `register_post_type_args`).
 3. **Lingue**: con Polylang attivo il selettore con le bandiere compare da solo (italiano e inglese già configurati sul sito live). Le traduzioni dei testi del tema sono incluse (`en_GB`); indirizzo, orari, "come arrivare" e fonte del dato occupazionale, se modificati nel Customizer, si traducono in *Lingue → Traduzioni* (gruppo *ITS Rossellini*).
 4. **Contenuti delle pagine.** Sul sito attuale quasi tutte le pagine hanno l'editor vuoto, perché il testo è scritto nel tema o nel plugin. Questo tema mostra il contenuto dell'editor, quindi prima di attivarlo i testi vanno inseriti nelle pagine (lo script di import locale mostra il risultato atteso). Le pagine interne si compongono con blocchi standard e tre stili del tema, da cui il layout sceglie da solo i componenti della home:
    - **Riassunto** della pagina → sottotitolo dell'hero; **immagine in evidenza** → foto dell'hero.
@@ -342,9 +376,10 @@ Lo zip contiene solo il tema, senza `dev/` né documentazione. Da Windows, senza
 
 ### Aggiornare il tema in seguito
 
-1. Aumentare `Version` in `style.css` (per esempio 1.1.0 → 1.2.0).
-2. Ricreare lo zip e caricarlo in *Aspetto → Temi → Aggiungi nuovo tema → Carica tema*: WordPress propone *Sostituisci quello attuale con quello caricato*.
-3. Svuotare la cache del sito, se presente. CSS e JS cambiano versione da soli, quindi i browser li riscaricano.
+1. Aumentare la versione in `style.css` (`Version`) e in `readme.txt` (`Stable tag`), per esempio 1.2.0 → 1.3.0, e aggiungere la voce nel changelog di `readme.txt`. Numeri: il terzo per le correzioni, il secondo per le novità, il primo per i cambiamenti che richiedono interventi sui contenuti.
+2. Commit, poi `python3 -I dev/package.py`.
+3. Caricare il nuovo zip in *Aspetto → Temi → Aggiungi nuovo tema → Carica tema*: WordPress propone *Sostituisci quello attuale con quello caricato*.
+4. Svuotare la cache del sito, se presente. CSS e JS cambiano versione da soli, quindi i browser li riscaricano.
 
 ### Campi personalizzati
 
@@ -427,6 +462,11 @@ Contiene solo ciò che manca sul live: gli altri header arrivano già dal server
 | Le animazioni non partono | Interruttore «Animazioni» spento, oppure «riduci movimento» attivo nel sistema operativo |
 | Link che puntano a `localhost` aprendo il sito da un altro dispositivo | Aprire il sito con l'indirizzo di rete stampato da `serve.sh`, non con `localhost` |
 | Si vuole ripartire da zero | Cancellare `.wp/db/` e rilanciare `dev/setup.sh` |
+| In locale, nella console dell'admin: *Unexpected token '<'* | Il Polylang locale viene dal sorgente GitHub, che non ha `js/build/admin.min.js`. Non riguarda il tema né la produzione, dove Polylang arriva completo da WordPress.org |
+| `package.py`: *modifiche non committate* | Fare commit delle modifiche al tema, oppure annullarle, e rilanciare |
+| `package.py`: *Traduzioni non aggiornate* | `python3 -I dev/i18n/build.py`, tradurre le nuove voci in `en_GB.po`, rilanciare `build.py`, commit |
+| Caricando lo zip: *Il pacchetto non può essere installato* o *Stile mancante* | Lo zip non ha la cartella `its-rossellini/` al primo livello: usare quello creato da `package.py` |
+| Dopo l'attivazione compare l'avviso «servono questi plugin» | Usare i pulsanti dell'avviso; per Rossellini Core vedi [Plugin e dipendenze](#plugin-e-dipendenze) |
 
 ## Punti aperti
 

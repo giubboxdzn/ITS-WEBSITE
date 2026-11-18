@@ -17,6 +17,9 @@ require ITS_ROSSELLINI_DIR . '/inc/customizer.php';
 require ITS_ROSSELLINI_DIR . '/inc/sections.php';
 require ITS_ROSSELLINI_DIR . '/inc/prose.php';
 require ITS_ROSSELLINI_DIR . '/inc/admin.php';
+if ( is_admin() ) {
+	require ITS_ROSSELLINI_DIR . '/inc/requirements.php';
+}
 
 
 add_action(

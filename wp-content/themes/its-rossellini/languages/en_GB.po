@@ -343,15 +343,15 @@ msgstr "Pause the video"
 msgid "Riproduci il video"
 msgstr "Play the video"
 
-#: functions.php:36
+#: functions.php:39
 msgid "Menu principale"
 msgstr "Main menu"
 
-#: functions.php:37
+#: functions.php:40
 msgid "Menu footer"
 msgstr "Footer menu"
 
-#: functions.php:38
+#: functions.php:41
 msgid "Note legali"
 msgstr "Legal notes"
 
@@ -574,6 +574,34 @@ msgstr "Today"
 #: inc/helpers.php:99
 msgid "Ultimi giorni"
 msgstr "Last days"
+
+#: inc/requirements.php:38
+msgid "Registra corsi, eventi, edizioni e documenti: senza, quelle pagine restano vuote."
+msgstr "Registers courses, events, editions and documents: without it, those pages stay empty."
+
+#: inc/requirements.php:45
+msgid "Gestisce italiano e inglese: senza, il sito resta solo in italiano e il selettore della lingua non compare."
+msgstr "Handles Italian and English: without it, the site stays in Italian only and the language switcher does not show."
+
+#: inc/requirements.php:58
+msgid "Attiva"
+msgstr "Activate"
+
+#: inc/requirements.php:62
+msgid "Chiedi a un amministratore di installarlo."
+msgstr "Ask an administrator to install it."
+
+#: inc/requirements.php:65
+msgid "Installa da WordPress.org"
+msgstr "Install from WordPress.org"
+
+#: inc/requirements.php:67
+msgid "Non è su WordPress.org: si copia dal sito attuale, la sua cartella in wp-content/plugins, poi si attiva in Plugin."
+msgstr "Not on WordPress.org: copy its folder in wp-content/plugins from the current site, then activate it in Plugins."
+
+#: inc/requirements.php:83
+msgid "Tema ITS Rossellini: servono questi plugin."
+msgstr "ITS Rossellini theme: these plugins are needed."
 
 #: inc/sections.php:112
 msgid "Occhiello"

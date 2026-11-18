@@ -343,15 +343,15 @@ msgstr ""
 msgid "Riproduci il video"
 msgstr ""
 
-#: functions.php:36
+#: functions.php:39
 msgid "Menu principale"
 msgstr ""
 
-#: functions.php:37
+#: functions.php:40
 msgid "Menu footer"
 msgstr ""
 
-#: functions.php:38
+#: functions.php:41
 msgid "Note legali"
 msgstr ""
 
@@ -573,6 +573,34 @@ msgstr ""
 
 #: inc/helpers.php:99
 msgid "Ultimi giorni"
+msgstr ""
+
+#: inc/requirements.php:38
+msgid "Registra corsi, eventi, edizioni e documenti: senza, quelle pagine restano vuote."
+msgstr ""
+
+#: inc/requirements.php:45
+msgid "Gestisce italiano e inglese: senza, il sito resta solo in italiano e il selettore della lingua non compare."
+msgstr ""
+
+#: inc/requirements.php:58
+msgid "Attiva"
+msgstr ""
+
+#: inc/requirements.php:62
+msgid "Chiedi a un amministratore di installarlo."
+msgstr ""
+
+#: inc/requirements.php:65
+msgid "Installa da WordPress.org"
+msgstr ""
+
+#: inc/requirements.php:67
+msgid "Non è su WordPress.org: si copia dal sito attuale, la sua cartella in wp-content/plugins, poi si attiva in Plugin."
+msgstr ""
+
+#: inc/requirements.php:83
+msgid "Tema ITS Rossellini: servono questi plugin."
 msgstr ""
 
 #: inc/sections.php:112

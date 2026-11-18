@@ -30,3 +30,6 @@ __pycache__/
 
 # Third-party design references (Dribbble), local only
 .impeccable/references/
+
+# Production package of the theme (dev/package.py)
+dist/
