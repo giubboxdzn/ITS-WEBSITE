@@ -516,6 +516,44 @@ Contiene solo ciò che manca sul live: gli altri header arrivano già dal server
 - la protezione dagli attacchi a forza bruta su `wp-login.php`, con limitazione dei tentativi o 2FA via plugin;
 - che core e plugin siano sempre aggiornati.
 
+### Dominio, DNS e posta
+
+Verifica passiva del 18/11/2026: registri pubblici dei certificati HTTPS dal 2017, record DNS, registri degli indirizzi IP, link nei contenuti del sito. Niente scansione di porte o di indirizzi.
+
+**Cosa gira sul dominio.** Nessun'altra piattaforma oltre a queste: i certificati emessi dal 2017 coprono solo questi nomi, e non ci sono certificati jolly (`*.itsrossellini.it`).
+
+| Indirizzo | Cos'è | Dove |
+|---|---|---|
+| `itsrossellini.it`, `www` | Il sito WordPress | Keliweb, server `web116.keliweb.com` |
+| `iscrizioni.itsrossellini.it` | Portale iscrizioni, Laravel con pannello Backpack (certificato dal 13/05/2026) | Linode/Akamai |
+| Posta `@itsrossellini.it` | Google Workspace (MX di Google, firma DKIM `google._domainkey` attiva) | Google |
+| DNS | Zona del dominio | Register.it |
+
+La vecchia installazione `/its2024/` non c'è più (404).
+
+**Da correggere nel DNS** (pannello Register.it):
+
+| Record | Oggi | Da fare |
+|---|---|---|
+| SPF (`TXT` su `itsrossellini.it`) | `v=spf1 include:spf.webapps.net ip4:185.221.174.14 ~all`: autorizza solo i server Keliweb, non Google, che invece spedisce la posta | Aggiungere `include:_spf.google.com`. L'IP `185.221.174.14` è un altro server Keliweb (`web74`): toglierlo se non spedisce più. Un solo record SPF, entro 10 ricerche DNS |
+| DMARC (`TXT` su `_dmarc.itsrossellini.it`) | Assente: chiunque può fingersi `@itsrossellini.it` con meno filtri | Aggiungere `v=DMARC1; p=none; rua=mailto:<casella per i report>; fo=1`; dopo 2–4 settimane di report puliti passare a `p=quarantine` |
+| `pop.itsrossellini.it` | CNAME verso `mail.register.it`, la vecchia posta Register.it | Togliere, se nessuno la usa più |
+| `_autodiscover._tcp` (`SRV`) | Verso `ms-it.securemail.pro`, posta Register.it: Outlook può configurarsi lì invece che su Google | Togliere |
+| `ftp.itsrossellini.it` | Punta al server del sito | Togliere se l'FTP non si usa; altrimenti usare SFTP |
+| `MS=…` (`TXT`) | Verifica del dominio per Microsoft 365 | Togliere, se l'istituto non usa Microsoft 365 |
+| CAA | Assente (facoltativo) | `0 issue "letsencrypt.org"`: solo Let's Encrypt, che oggi emette tutti i certificati del dominio, può emetterne di nuovi |
+
+**Portale iscrizioni** (a cura di chi lo gestisce):
+- il link «Prendi visione dell'informativa» porta a un PDF che non esiste più (404), mentre la presa visione è obbligatoria;
+- la pagina di accesso dell'amministrazione (`/admin/login`) è pubblica: limitarla per indirizzo IP o aggiungere la verifica in due passaggi;
+- quando non ci sono corsi aperti, il modulo resta compilabile con l'elenco dei corsi vuoto e nessun messaggio;
+- i font arrivano dai server di Google (dati di navigazione a terzi): meglio ospitarli sul portale.
+
+**Per ripetere la verifica:**
+- certificati: [crt.sh](https://crt.sh/?q=%25.itsrossellini.it);
+- record: `dig +short TXT itsrossellini.it`, `dig +short TXT _dmarc.itsrossellini.it`, `dig +short MX itsrossellini.it`, oppure Google Admin Toolbox *Check MX*;
+- dopo una modifica i record si aggiornano in qualche ora.
+
 ## Problemi comuni
 
 | Problema | Soluzione |
@@ -547,9 +585,12 @@ Contiene solo ciò che manca sul live: gli altri header arrivano già dal server
 - **Testi delle pagine**: vanno inseriti nell'editor prima dell'attivazione (passaggio 4).
 - **Portale iscrizioni**: le domande si inviano su [iscrizioni.itsrossellini.it](https://iscrizioni.itsrossellini.it/), un'applicazione separata (Laravel, su un altro server), non WordPress. Il tema non la integra (decisione del 18/11/2026): i pulsanti «Preiscriviti» portano alla pagina `/iscrizioni/`. Da sistemare, a cura di chi gestisce il portale e la redazione (verifica del 18/11/2026):
   - nel modulo del portale il link «Prendi visione dell'informativa» porta a un PDF che non esiste più (404), mentre la presa visione è obbligatoria;
-  - il testo della pagina `/iscrizioni/` del live dice «senza rimandarti a un portale esterno», ma le domande si inviano proprio dal portale.
+  - il testo della pagina `/iscrizioni/` del live dice «senza rimandarti a un portale esterno», ma le domande si inviano proprio dal portale;
+  - altri punti del portale in [Dominio, DNS e posta](#dominio-dns-e-posta).
 - **Accessibilità**: dichiarazione da pubblicare e PDF da riesportare ([`ACCESSIBILITA.md`](ACCESSIBILITA.md)).
 - **Server**: header di sicurezza da applicare e TLS da verificare ([sopra](#sicurezza-in-produzione)).
+- **DNS e posta**: SPF senza Google, DMARC assente, record di vecchi servizi da togliere ([Dominio, DNS e posta](#dominio-dns-e-posta)).
+- **Privacy**: il sito rimanda a Google Forms e Google Docs (prenotazioni degli open day), Eventbrite (eventi) e Google Drive (foto). L'informativa li deve citare: oggi nomina solo il «Modulo Google».
 
 ## Crediti e licenze
 
