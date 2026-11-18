@@ -289,8 +289,13 @@
 		/* Each element keeps its reveal type after it settles ("done"), so it can play again. */
 		const types = new WeakMap();
 		const timers = new Map();
+		const watched = new Set();
 		const pending = new Set(); /* watched and hidden, waiting to come in */
-		const forced = new Set(); /* brought in by the end of the page, still under the reveal line */
+		/* Going up, what sinks into the bottom quarter of the screen goes out there, in view. */
+		const EXIT = 0.25;
+		/* Going down, things come in above the bottom 8%. */
+		const ENTER = 0.08;
+		let dir = 0; /* 1 down, -1 up, 0 not scrolled yet */
 
 		const reveal = (els) => {
 			els.sort((a, b) => {
@@ -314,12 +319,11 @@
 			});
 		};
 
-		/* Scrolling back up: what drops below the fold goes out the way it came in, and comes in again on the way down. */
+		/* Scrolling back up: what sinks to the bottom of the screen goes out the way it came in, and comes in again on the way down. */
 		const conceal = (el) => {
 			if (!el.classList.contains('is-in') || !types.has(el)) return;
 			window.clearTimeout(timers.get(el));
 			timers.delete(el);
-			forced.delete(el);
 			el.dataset.reveal = types.get(el);
 			el.style.removeProperty('--d');
 			el.classList.remove('is-in');
@@ -337,28 +341,59 @@
 			entries.forEach((entry) => {
 				const el = entry.target;
 				if (entry.isIntersecting) {
-					forced.delete(el);
 					if (!el.classList.contains('is-in')) coming.push(el);
 				} else if (goneBelow(entry)) {
 					conceal(el);
 				}
 			});
 			if (coming.length) reveal(coming);
-		}, { rootMargin: '0px 0px -8% 0px' });
+		}, { rootMargin: `0px 0px -${ENTER * 100}% 0px` });
 		const drawWatch = new IntersectionObserver((entries) => {
 			entries.forEach((entry) => {
 				const el = entry.target;
 				if (enough(entry)) {
-					forced.delete(el);
 					if (!el.classList.contains('is-in')) reveal([el]);
 				} else if (goneBelow(entry)) {
 					conceal(el);
 				}
 			});
 		}, { threshold: SHOWN });
+		/* The exit line: crossed downwards while going up, things go out; crossed upwards, they come in if still out. */
+		const exitWatch = new IntersectionObserver((entries) => {
+			const coming = [];
+			entries.forEach((entry) => {
+				const el = entry.target;
+				if (dir < 0 && !entry.isIntersecting && goneBelow(entry)) conceal(el);
+				else if (dir > 0 && entry.isIntersecting && !el.classList.contains('is-in')) coming.push(el);
+			});
+			if (coming.length) reveal(coming);
+		}, { rootMargin: `0px 0px -${EXIT * 100}% 0px` });
 		const watch = (el) => {
+			watched.add(el);
 			if (types.get(el) === 'draw') drawWatch.observe(el);
 			else revealer.observe(el);
+			exitWatch.observe(el);
+		};
+		/* What is still out but in view, above the entry line, comes in. */
+		const comeIn = () => {
+			const vh = window.innerHeight;
+			const coming = [...pending].filter((el) => {
+				if (el.classList.contains('is-in')) return false;
+				const r = el.getBoundingClientRect();
+				return r.top < vh * (1 - ENTER) && r.bottom > 0;
+			});
+			if (coming.length) reveal(coming);
+		};
+		/* When the direction turns, what the observers will not report (already past their line) is settled at once:
+		   going up, what is shown in the bottom quarter goes out; going down, what is still out in view comes in. */
+		const turn = () => {
+			if (dir > 0) {
+				comeIn();
+				return;
+			}
+			const line = window.innerHeight * (1 - EXIT);
+			const out = [...watched].filter((el) => el.classList.contains('is-in') && el.getBoundingClientRect().top > line);
+			out.forEach(conceal);
 		};
 
 		/* Figures count up from zero; the final value stays in the page for assistive tech. */
@@ -432,21 +467,27 @@
 		const headPhoto = document.querySelector('.page-head__frame img');
 		let parallax = false;
 		let queued = false;
+		let lastY = 0;
 		const drift = () => {
 			queued = false;
 			if (!parallax) return;
 			const vh = window.innerHeight;
 			const y = window.scrollY;
+			/* Direction, from moves of 24px or more within the page: small adjustments and overscroll bounces do not turn it. */
+			const end = document.documentElement.scrollHeight - vh;
+			const at = Math.max(0, Math.min(y, end));
+			if (Math.abs(at - lastY) >= 24) {
+				const now = at > lastY ? 1 : -1;
+				lastY = at;
+				if (now !== dir) {
+					dir = now;
+					turn();
+				}
+			}
 			/* At the very bottom, whatever is left (the footer mark) comes in too. */
-			if (pending.size && y + vh >= document.documentElement.scrollHeight - 4) {
+			if (dir >= 0 && pending.size && y >= end - 4) {
 				const last = [...pending].filter((el) => el.getBoundingClientRect().top < vh);
-				last.forEach((el) => forced.add(el));
 				if (last.length) reveal(last);
-			} else if (forced.size) {
-				/* Those never cross the reveal line, so they go back out once they are off screen. */
-				forced.forEach((el) => {
-					if (el.getBoundingClientRect().top >= vh) conceal(el);
-				});
 			}
 			if (heroMedia && y < vh * 1.5) heroMedia.style.translate = `0 ${(y * 0.3).toFixed(1)}px`;
 			/* Interior pages: the page-head photo drifts inside its frame, as the home footage does. */
@@ -459,11 +500,19 @@
 				}
 			}
 		};
+		/* At rest, the screen is whole again: what went out in view comes back in, and the next move sets the direction anew. */
+		let idle = 0;
+		const rest = () => {
+			dir = 0;
+			comeIn();
+		};
 		const onScroll = () => {
 			if (!queued) {
 				queued = true;
 				window.requestAnimationFrame(drift);
 			}
+			window.clearTimeout(idle);
+			idle = window.setTimeout(rest, 400);
 		};
 
 		const below = (el) => el.getBoundingClientRect().top > window.innerHeight;
@@ -503,6 +552,8 @@
 				counterWatch.observe(el);
 			});
 			parallax = true;
+			lastY = Math.max(0, window.scrollY);
+			dir = 0;
 			window.addEventListener('scroll', onScroll, { passive: true });
 			drift();
 		};
@@ -510,12 +561,16 @@
 		const disable = () => {
 			root.classList.remove('anim');
 			pending.clear();
-			forced.clear();
+			window.clearTimeout(idle);
 			timers.forEach((id) => window.clearTimeout(id));
 			timers.clear();
-			document.querySelectorAll('[data-reveal]').forEach((el) => {
+			watched.forEach((el) => {
 				revealer.unobserve(el);
 				drawWatch.unobserve(el);
+				exitWatch.unobserve(el);
+			});
+			watched.clear();
+			document.querySelectorAll('[data-reveal]').forEach((el) => {
 				el.classList.add('is-in');
 				finish(el);
 			});
