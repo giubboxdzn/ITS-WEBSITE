@@ -286,6 +286,12 @@
 				.forEach(({ path }, rank) => path.style.setProperty('--i', String(rank)));
 		};
 
+		/* Each element keeps its reveal type after it settles ("done"), so it can play again. */
+		const types = new WeakMap();
+		const timers = new Map();
+		const pending = new Set(); /* watched and hidden, waiting to come in */
+		const forced = new Set(); /* brought in by the end of the page, still under the reveal line */
+
 		const reveal = (els) => {
 			els.sort((a, b) => {
 				const ra = a.getBoundingClientRect();
@@ -294,38 +300,64 @@
 			});
 			els.forEach((el, i) => {
 				const delay = Math.min(i, 8) * STEP;
-				const words = el.dataset.reveal === 'words' ? el.querySelectorAll('.word').length : 0;
-				const strokes = el.dataset.reveal === 'draw' ? el.querySelectorAll('path').length : 0;
+				const type = types.get(el);
+				const words = type === 'words' ? el.querySelectorAll('.word').length : 0;
+				const strokes = type === 'draw' ? el.querySelectorAll('path').length : 0;
+				pending.delete(el);
+				window.clearTimeout(timers.get(el));
 				el.style.setProperty('--d', `${delay}ms`);
 				el.classList.add('is-in');
-				window.setTimeout(() => finish(el), delay + 1900 + words * 55 + strokes * 18);
+				timers.set(el, window.setTimeout(() => {
+					timers.delete(el);
+					finish(el);
+				}, delay + 1900 + words * 55 + strokes * 18));
 			});
 		};
 
-		const pending = new Set();
-		const release = (els) => {
-			els.forEach((el) => {
-				revealer.unobserve(el);
-				drawWatch.unobserve(el);
-				pending.delete(el);
-			});
-			if (els.length) reveal(els);
+		/* Scrolling back up: what drops below the fold goes out the way it came in, and comes in again on the way down. */
+		const conceal = (el) => {
+			if (!el.classList.contains('is-in') || !types.has(el)) return;
+			window.clearTimeout(timers.get(el));
+			timers.delete(el);
+			forced.delete(el);
+			el.dataset.reveal = types.get(el);
+			el.style.removeProperty('--d');
+			el.classList.remove('is-in');
+			pending.add(el);
 		};
+
+		/* Out of view through the bottom edge (the visitor is going up), not through the top. */
+		const goneBelow = (entry) => entry.boundingClientRect.bottom > (entry.rootBounds ? entry.rootBounds.bottom : window.innerHeight);
+		/* The footer logo and the figures start as soon as a fifth of them shows (rounding can land just under it). */
+		const SHOWN = 0.2;
+		const enough = (entry) => entry.isIntersecting && entry.intersectionRatio >= SHOWN - 0.01;
+
 		const revealer = new IntersectionObserver((entries) => {
-			release(entries.filter((entry) => entry.isIntersecting).map((entry) => entry.target));
+			const coming = [];
+			entries.forEach((entry) => {
+				const el = entry.target;
+				if (entry.isIntersecting) {
+					forced.delete(el);
+					if (!el.classList.contains('is-in')) coming.push(el);
+				} else if (goneBelow(entry)) {
+					conceal(el);
+				}
+			});
+			if (coming.length) reveal(coming);
 		}, { rootMargin: '0px 0px -8% 0px' });
-		/* The footer logo waits until it is well in view: the end of the page. */
 		const drawWatch = new IntersectionObserver((entries) => {
 			entries.forEach((entry) => {
-				if (!entry.isIntersecting) return;
-				drawWatch.unobserve(entry.target);
-				pending.delete(entry.target);
-				reveal([entry.target]);
+				const el = entry.target;
+				if (enough(entry)) {
+					forced.delete(el);
+					if (!el.classList.contains('is-in')) reveal([el]);
+				} else if (goneBelow(entry)) {
+					conceal(el);
+				}
 			});
-		}, { threshold: 0.2 }); /* The footer mark starts drawing as soon as it shows. */
+		}, { threshold: SHOWN });
 		const watch = (el) => {
-			pending.add(el);
-			if (el.dataset.reveal === 'draw') drawWatch.observe(el);
+			if (types.get(el) === 'draw') drawWatch.observe(el);
 			else revealer.observe(el);
 		};
 
@@ -355,8 +387,16 @@
 		};
 		const settle = (c) => {
 			window.cancelAnimationFrame(c.frame);
+			c.frame = 0;
 			c.visual.textContent = c.format(c.target);
 			c.done = true;
+		};
+		/* Below the fold again: back to zero, to count up the next time. */
+		const rewind = (c) => {
+			window.cancelAnimationFrame(c.frame);
+			c.frame = 0;
+			c.visual.textContent = c.format(0);
+			c.done = false;
 		};
 		const count = (c) => {
 			const start = performance.now() + (c.el.closest('.hero') ? 700 : 0);
@@ -365,21 +405,26 @@
 				const t = Math.min(1, Math.max(0, (now - start) / duration));
 				c.visual.textContent = c.format(Math.round(c.target * (1 - (1 - t) ** 3)));
 				if (t < 1) c.frame = window.requestAnimationFrame(tick);
-				else c.done = true;
+				else {
+					c.frame = 0;
+					c.done = true;
+				}
 			};
 			c.frame = window.requestAnimationFrame(tick);
 		};
 		const counterWatch = new IntersectionObserver((entries) => {
 			entries.forEach((entry) => {
-				if (!entry.isIntersecting) return;
-				counterWatch.unobserve(entry.target);
 				const c = counters.find((item) => item.el === entry.target);
-				if (c && !c.done) {
+				if (!c) return;
+				if (enough(entry)) {
+					if (c.done || c.frame) return;
 					if (motionOn()) count(c);
 					else settle(c);
+				} else if (goneBelow(entry)) {
+					rewind(c);
 				}
 			});
-		}, { threshold: 0.2 }); /* The footer mark starts drawing as soon as it shows. */
+		}, { threshold: SHOWN });
 
 		/* Parallax: the hero footage and the path photo drift against the scroll. */
 		const heroMedia = document.querySelector('.hero__media');
@@ -394,7 +439,14 @@
 			const y = window.scrollY;
 			/* At the very bottom, whatever is left (the footer mark) comes in too. */
 			if (pending.size && y + vh >= document.documentElement.scrollHeight - 4) {
-				release([...pending].filter((el) => el.getBoundingClientRect().top < vh));
+				const last = [...pending].filter((el) => el.getBoundingClientRect().top < vh);
+				last.forEach((el) => forced.add(el));
+				if (last.length) reveal(last);
+			} else if (forced.size) {
+				/* Those never cross the reveal line, so they go back out once they are off screen. */
+				forced.forEach((el) => {
+					if (el.getBoundingClientRect().top >= vh) conceal(el);
+				});
 			}
 			if (heroMedia && y < vh * 1.5) heroMedia.style.translate = `0 ${(y * 0.3).toFixed(1)}px`;
 			/* Interior pages: the page-head photo drifts inside its frame, as the home footage does. */
@@ -425,22 +477,29 @@
 					if (type !== 'words' && el.closest(FIRST_VIEW)) return;
 					/* First-view titles split on the server animate from CSS, with the first paint. */
 					if (el.dataset.split === 'server') return;
-					/* Switched on mid-page: what is already on screen stays put. */
-					if (!initial && !below(el)) return;
-					el.classList.remove('is-in');
-					el.dataset.reveal = type;
+					types.set(el, type);
 					if (initial && el.closest(FIRST_VIEW)) {
+						el.classList.remove('is-in');
+						el.dataset.reveal = type;
 						window.requestAnimationFrame(() => window.requestAnimationFrame(() => reveal([el])));
-					} else {
-						watch(el);
+						return;
 					}
+					/* Switched on mid-page: what is already on screen stays put, and plays from the next time it comes in. */
+					if (!initial && !below(el)) {
+						el.classList.add('is-in');
+						el.dataset.reveal = 'done';
+					} else {
+						el.classList.remove('is-in');
+						el.dataset.reveal = type;
+						pending.add(el);
+					}
+					watch(el);
 				});
 			});
 			document.querySelectorAll('.tile__num, .glass-card__num').forEach((el) => {
 				const c = prepareCounter(el) || counters.find((item) => item.el === el);
-				if (!c || (!initial && !below(el))) return;
-				c.done = false;
-				c.visual.textContent = c.format(0);
+				if (!c) return;
+				if (initial || below(el)) rewind(c);
 				counterWatch.observe(el);
 			});
 			parallax = true;
@@ -451,6 +510,9 @@
 		const disable = () => {
 			root.classList.remove('anim');
 			pending.clear();
+			forced.clear();
+			timers.forEach((id) => window.clearTimeout(id));
+			timers.clear();
 			document.querySelectorAll('[data-reveal]').forEach((el) => {
 				revealer.unobserve(el);
 				drawWatch.unobserve(el);

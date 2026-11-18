@@ -70,6 +70,7 @@
 	--header: 5.25rem;
 
 	--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+	--ease-in: cubic-bezier(0.3, 0, 1, 1);
 }
 
 /* ---------- Base ---------- */
@@ -4255,10 +4256,15 @@ dd {
 	}
 }
 
-/* Scroll reveals, set up by the script (.anim) and released in batches with a stagger (--d). */
+/* Scroll reveals, set up by the script (.anim) and released in batches with a stagger (--d).
+   Scrolling back up, what drops below the fold goes out the same way, quicker and all together (the :not(.is-in)
+   transitions), so it plays again on the way down. */
 .anim [data-reveal="up"]:not(.is-in) {
 	opacity: 0;
 	translate: 0 2rem;
+	transition:
+		opacity 0.45s var(--ease-in),
+		translate 0.6s var(--ease-in);
 }
 
 .anim [data-reveal="up"] {
@@ -4282,6 +4288,9 @@ dd {
 .anim [data-reveal="words"]:not(.is-in) .word__in {
 	translate: 0 115%;
 	filter: blur(0.12em);
+	transition:
+		translate 0.5s var(--ease-in),
+		filter 0.5s var(--ease-in);
 }
 
 .anim [data-reveal="words"] .word__in {
@@ -4298,6 +4307,7 @@ dd {
 
 .anim [data-reveal="draw"]:not(.is-in) path {
 	stroke-dashoffset: 1;
+	transition: stroke-dashoffset 0.6s var(--ease-in);
 }
 
 .count {
@@ -4317,6 +4327,9 @@ dd {
 .anim .overlap__media[data-reveal="up"]:not(.is-in) img {
 	filter: blur(18px);
 	scale: 1.22;
+	transition:
+		filter 0.5s var(--ease-in),
+		scale 0.6s var(--ease-in);
 }
 
 .anim .overlap__media[data-reveal="up"] img {
