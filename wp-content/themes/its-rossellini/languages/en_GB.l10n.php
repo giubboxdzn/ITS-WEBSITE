@@ -196,6 +196,7 @@ return array(
 		'Successiva' => 'Next',
 		'Successivi' => 'Next',
 		'Teatro di posa' => 'Sound stage',
+		'Teatro di posa, superficie (vuoto: non si mostra)' => 'Sound stage, area (empty: not shown)',
 		'Telefono' => 'Phone',
 		'Tema ITS Rossellini: servono questi plugin.' => 'ITS Rossellini theme: these plugins are needed.',
 		'Tipo' => 'Type',

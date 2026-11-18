@@ -46,6 +46,7 @@
 	</rule>
 	<rule ref="WordPress.WP.AlternativeFunctions">
 		<exclude-pattern>*/dev/languages.php</exclude-pattern>
+		<exclude-pattern>*/dev/testi-pagine.php</exclude-pattern>
 		<exclude-pattern>*/dev/polylang-autoload.php</exclude-pattern>
 		<exclude-pattern>*/dev/router.php</exclude-pattern>
 		<exclude-pattern>*/dev/seed/*</exclude-pattern>

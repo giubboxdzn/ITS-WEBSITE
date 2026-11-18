@@ -30,6 +30,7 @@ add_action(
 					'its_fact_hours'             => array( __( 'Ore in aula e laboratorio', 'its-rossellini' ), '1.000' ),
 					'its_fact_internship'        => array( __( 'Ore di tirocinio', 'its-rossellini' ), '800+' ),
 					'its_fact_places'            => array( __( 'Posti per corso', 'its-rossellini' ), '28' ),
+					'its_fact_stage'             => array( __( 'Teatro di posa, superficie (vuoto: non si mostra)', 'its-rossellini' ), '360 m²' ),
 					'its_fact_employment'        => array( __( 'Diplomati occupati entro 12 mesi', 'its-rossellini' ), '87%' ),
 					'its_fact_employment_source' => array( __( 'Fonte del dato occupazionale', 'its-rossellini' ), 'Dato pubblicato da ITS Rossellini' ),
 				),

@@ -97,3 +97,4 @@ Key decisions, in order; dates from the project history.
 | 17/11/2026 | Funding bar built only from the official vector logos (sources in `assets/img/funding/SOURCES.md`). |
 | 18/11/2026 | Scroll animations are reversible: going back up, things go out in view with the same animation in reverse, and play again on the way down. |
 | 18/11/2026 | The enrolment portal (iscrizioni.itsrossellini.it) is not integrated into the site. |
+| 18/11/2026 | Every published figure is edited in the Customizer, the sound stage area (360 m²) included: none is written in the code. |

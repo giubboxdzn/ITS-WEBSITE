@@ -2,7 +2,7 @@
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.2.0
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,7 +27,7 @@ Se manca un plugin necessario, dopo l'attivazione l'admin mostra un avviso con i
 == Installazione ==
 
 1. Fare una copia di sicurezza completa del sito (file e database).
-2. Aspetto → Temi → Aggiungi nuovo tema → Carica tema → scegliere its-rossellini-1.2.0.zip → Installa ora.
+2. Aspetto → Temi → Aggiungi nuovo tema → Carica tema → scegliere lo zip del tema (its-rossellini-<versione>.zip) → Installa ora.
 3. Non attivarlo subito: prima inserire i testi nelle pagine e controllare con "Anteprima dal vivo" (vedi sotto).
 4. Attivare il tema. Se compare l'avviso dei plugin, usare i pulsanti "Installa" o "Attiva".
 
@@ -38,7 +38,7 @@ Se manca un plugin necessario, dopo l'attivazione l'admin mostra un avviso con i
 3. Aspetto → Menu: posizioni "Menu principale", "Menu footer", "Note legali".
 4. Aspetto → Personalizza:
    * Home: video dell'hero (MP4 senza audio);
-   * Contatti e sede, Dati pubblicati: indirizzo, orari, telefono, email, numeri dei bandi;
+   * Contatti e sede, Dati pubblicati: indirizzo, orari, telefono, email, numeri dei bandi, superficie del teatro di posa;
    * Accessibilità: link alla dichiarazione di accessibilità (form.agid.gov.it) ed email per le segnalazioni.
 5. Lingue → Traduzioni, gruppo "ITS Rossellini": traduzioni in inglese di indirizzo, orari, "come arrivare" e fonte del dato occupazionale, se modificati.
 6. Svuotare la cache del sito, se ne usa una.
@@ -52,6 +52,9 @@ Aspetto → Temi → attivare il tema precedente. I contenuti non cambiano.
 Caricare lo zip della nuova versione da Aspetto → Temi → Aggiungi nuovo tema → Carica tema e scegliere "Sostituisci quello attuale con quello caricato". CSS e JavaScript cambiano versione da soli, i browser li riscaricano.
 
 == Changelog ==
+
+= 1.3.0 - 18/11/2026 =
+* Superficie del teatro di posa nel Customizer (Dati pubblicati), come gli altri numeri: nessun dato è più scritto nel codice. Lasciata vuota, la cifra non si mostra.
 
 = 1.2.0 - 18/11/2026 =
 * Animazioni allo scroll reversibili: risalendo, ciò che scende nell'ultimo quarto dello schermo esce con la stessa animazione dell'entrata al contrario, e riparte scendendo; i numeri tornano a zero e ricontano.

@@ -183,7 +183,9 @@ $partners = trim( (string) apply_filters( 'the_content', (string) get_post_field
 		</ul>
 		<div class="tile tile--stat tile--accent bento__s3">
 			<p class="tile__label"><?php esc_html_e( 'Teatro di posa', 'its-rossellini' ); ?></p>
-			<p class="tile__num">360 m²</p>
+			<?php if ( '' !== $facts['stage'] ) : ?>
+				<p class="tile__num"><?php echo esc_html( $facts['stage'] ); ?></p>
+			<?php endif; ?>
 			<p class="tile__note"><?php esc_html_e( 'Aule, laboratori e set nella sede di Via Tiburtina.', 'its-rossellini' ); ?></p>
 		</div>
 	</div>

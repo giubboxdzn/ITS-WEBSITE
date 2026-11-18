@@ -13,7 +13,7 @@ Direzione visiva: **contenitori arrotondati, vetro e titoli leggeri**, sui rifer
 
 | | |
 |---|---|
-| Tema | ITS Rossellini 1.2.0, cartella e slug `its-rossellini` |
+| Tema | ITS Rossellini 1.3.0, cartella e slug `its-rossellini` |
 | WordPress | 6.9 o successivo, provato fino alla 7.1 |
 | PHP | 8.1 o successivo (sul live: PHP 8.4, Apache) |
 | Plugin necessari | **Rossellini Core** (tipi di contenuto), **Polylang** (italiano e inglese) |
@@ -89,7 +89,7 @@ Sono script leggibili, non programmi `.exe` compilati: si possono controllare pr
    ```
 4. Aprire **http://localhost:8080**. Per l'admin: **http://localhost:8080/wp-admin** con utente `admin` e password `admin`, valide solo in locale.
 5. **Dove si lavora.** Solo in `wp-content/themes/its-rossellini/`. WordPress legge il tema direttamente dal repository, quindi una modifica salvata si vede ricaricando la pagina, senza riavviare nulla. CSS e JavaScript hanno come versione la data del file: il browser scarica sempre quelli nuovi.
-6. **Prima di ogni commit**: `phpcs` (vedi [Qualità del codice](#qualità-del-codice)) e una prova in locale delle pagine toccate, in italiano e in inglese, da desktop e da telefono.
+6. **Prima di ogni commit**: `phpcs` (vedi [Qualità del codice](#qualità-del-codice)) e i test, `python3 -I dev/test/run.py` (vedi [Test](#test)). Per le modifiche grafiche, anche un'occhiata alle pagine toccate, in italiano e in inglese, da desktop e da telefono.
 
 ## Struttura
 
@@ -128,8 +128,10 @@ wp-content/themes/its-rossellini/   il tema (da installare in produzione)
 avvia-windows.cmd, avvia-mac.command, avvia-linux.sh
                                     avvio del sito in locale con un doppio clic (vedi «Avvio con un doppio clic»)
 dev/                                ambiente locale (non va in produzione); dev/i18n/build.py compila le traduzioni;
-                                    dev/package.py crea il pacchetto di produzione
-dist/                               pacchetti creati da dev/package.py (ignorata da git)
+                                    dev/package.py crea il pacchetto di produzione; dev/testi-pagine.php i testi per il live;
+                                    dev/test/ i test nel browser
+dist/                               creata dagli script, ignorata da git: lo zip del tema (dev/package.py)
+                                    e i testi delle pagine per il live (dev/testi-pagine.php)
 server/htaccess-sicurezza.conf      header di sicurezza per il server di produzione
 docs/img/                           logo per questo README (copie del logo del tema, in blu e in bianco)
 .claude/skills/                     skill per Claude Code (versioni bloccate in skills-lock.json):
@@ -199,6 +201,8 @@ In WSL (`bash` da PowerShell) si è in Linux: PHP e Python vanno installati dent
 | `mu-plugins/its-dev-offline.php` | Ferma in silenzio le chiamate a WordPress.org, perché la copia locale non va su internet |
 | `i18n/build.py` | Aggiorna `.pot` e `.po` e compila `.mo` e `.l10n.php` |
 | `export-static.py` | Esporta il sito locale in HTML statico per una demo |
+| `testi-pagine.php` | Prepara in `dist/testi-pagine/` i testi da inserire nelle pagine del live (vedi [Messa in produzione](#passaggi), passaggio 4) |
+| `test/run.py` | Test nel browser (vedi [Test](#test)) |
 | `package.py` | Controlla il tema e crea lo zip di produzione in `dist/` (vedi [Messa in produzione](#messa-in-produzione)) |
 
 ### Contenuti di prova
@@ -222,7 +226,30 @@ phpcs          # verifica
 phpcbf         # corregge da solo la formattazione
 ```
 
-Per il JavaScript non c'è un linter configurato: almeno `node --check wp-content/themes/its-rossellini/assets/js/main.js` per la sintassi, e la console del browser senza errori.
+Per il JavaScript non c'è un linter configurato: almeno `node --check wp-content/themes/its-rossellini/assets/js/main.js` per la sintassi, e la console del browser senza errori (i test lo controllano su ogni pagina).
+
+### Test
+
+Test in un browser vero (Chromium, con Playwright per Python) sul WordPress locale:
+
+```bash
+python3 -I dev/test/run.py --installa   # una volta sola: crea .wp/venv con Playwright e Chromium (circa 150 MB)
+python3 -I dev/test/run.py              # tutti i test, circa un minuto e mezzo
+python3 -I dev/test/run.py animazioni   # solo alcune serie: pagine, animazioni, admin, pacchetto
+```
+
+Su Windows al posto di `python3` si usa `py` (oppure `python`), da Git Bash o dal prompt dei comandi.
+
+Il runner avvia da solo un server PHP su una porta libera e lo spegne alla fine; con `--url http://localhost:8080` usa invece un sito locale già acceso. Serve il WordPress locale (`dev/setup.sh` o un file `avvia-*`, una volta). Nulla viene inviato al sito live.
+
+| Serie | Cosa controlla |
+|---|---|
+| `pagine` | Ogni tipo di pagina, in italiano e in inglese, trovata nei menu e nei contenuti: home, pagine del menu, scheda corso, evento, documento, articolo, ricerca, 404. Per ciascuna: stato della risposta, nessun errore PHP o JavaScript, un solo h1, lingua, titolo, immagini con `alt`, «Vai al contenuto» come primo Tab, nessuno scorrimento laterale a 320 px. In più: i link di header e footer non portano a pagine rotte |
+| `animazioni` | Le animazioni allo scroll come descritte in [`DESIGN.md`](DESIGN.md#motion): entrata scendendo, uscita in vista risalendo con le stesse durate, numeri che salgono e tornano a zero, logo del footer, niente nascosto a scroll fermo; con «riduci movimento» il sito è statico |
+| `admin` | L'avviso dei plugin: assente con tutto attivo; con Polylang disattivato compare con «Attiva», e il pulsante lo riattiva. Polylang viene comunque riattivato alla fine, nel database locale |
+| `pacchetto` | Se il tema non ha modifiche non committate, crea lo zip con `dev/package.py` e ne controlla il contenuto |
+
+Alla fine: ✓ se tutto è passato, altrimenti l'elenco dei controlli falliti e le schermate in `.wp/test-results/`.
 
 ### Lingue (Polylang)
 
@@ -260,12 +287,13 @@ Lo zip va rigenerato e ricaricato dopo ogni modifica che si vuole mostrare nella
 | | Email | info@itsrossellini.it |
 | | Instagram, X (URL) | profili ufficiali |
 | Dati pubblicati | Durata (anni), ore in aula e laboratorio, ore di tirocinio, posti per corso | 2, 1.000, 800+, 28 |
+| | Teatro di posa, superficie (vuoto: la cifra non si mostra) | 360 m² |
 | | Diplomati occupati entro 12 mesi | 87% |
 | | Fonte del dato occupazionale † | Dato pubblicato da ITS Rossellini |
 | Accessibilità | Dichiarazione di accessibilità (URL) | vuoto: pagina con slug `dichiarazione-di-accessibilita`, se esiste |
 | | Email per le segnalazioni | vuoto: l'email dei contatti |
 
-I numeri vanno aggiornati qui quando cambiano i bandi. L'unico dato scritto nel codice è la superficie del teatro di posa (360 m², in `front-page.php`).
+I numeri vanno aggiornati qui quando cambiano i bandi: nessun dato è scritto nel codice.
 
 ### Parametri negli indirizzi
 
@@ -352,7 +380,7 @@ Dalla cartella del repository, dopo aver fatto commit di tutte le modifiche:
 python3 -I dev/package.py
 ```
 
-Crea `dist/its-rossellini-<versione>.zip` (oggi `its-rossellini-1.2.0.zip`, circa 1,3 MB) e accanto il file `.sha256` con l'impronta, utile per verificare di caricare proprio quello. Lo zip esce dall'ultimo commit, quindi contiene solo i file del tema nel repository: niente `dev/`, documentazione o file locali. Prima di crearlo lo script controlla che:
+Crea `dist/its-rossellini-<versione>.zip` (oggi `its-rossellini-1.3.0.zip`, circa 1,3 MB) e accanto il file `.sha256` con l'impronta, utile per verificare di caricare proprio quello. Lo zip esce dall'ultimo commit, quindi contiene solo i file del tema nel repository: niente `dev/`, documentazione o file locali. Prima di crearlo lo script controlla che:
 - il tema non abbia modifiche non committate (non finirebbero nello zip);
 - la versione sia la stessa in `style.css` e in `readme.txt` (*Stable tag*), con la sua voce nel changelog;
 - le traduzioni siano compilate e aggiornate;
@@ -380,7 +408,17 @@ git archive --format=zip --prefix=its-rossellini/ -o its-rossellini.zip HEAD:wp-
    - Elenco stile **Numeri**: una cifra per voce, la cifra in grassetto e poi l'etichetta (`**800** ore di tirocinio`).
    - Gruppo stile **Invito finale** (titolo, testo, pulsanti) → banda blu di chiusura; i suoi pulsanti sono anche le azioni dell'hero.
    Il layout a sezioni si attiva da solo su ogni pagina che usa questi stili o titoli H3 (`its_has_sections()` in `inc/sections.php`), anche su *Bandi e albi* sopra l'archivio dei documenti; le pagine scritte come testo semplice (note legali) e le FAQ restano come scritte. Ogni pagina interna finisce con la banda blu: l'*Invito finale* della pagina o, se manca, quello della home.
-   Per copiare i testi già pronti: in locale aprire la pagina in *Pagine → Modifica*, menu ⋮ → *Editor del codice*, copiare tutto e incollarlo nella stessa pagina del sito vero.
+   **I testi sono già pronti nel sito locale.** Per averli tutti insieme:
+   ```bash
+   php dev/testi-pagine.php        # crea dist/testi-pagine/index.html
+   ```
+   Si apre nel browser. Mostra tutte le pagine, italiane e inglesi, ognuna con:
+   - il link diretto all'editor di quella pagina sul live;
+   - il codice dei blocchi, il riassunto e il nome dell'immagine in evidenza, ciascuno con il pulsante «Copia»;
+   - il modello da assegnare, se ne serve uno;
+   - una spunta «Fatto», che resta salvata in quel browser.
+
+   Le pagine sono divise in «Da inserire», «Già sul live» (il testo c'è già: basta controllarlo) e «Solo il modello» (mostrano un elenco). Se una pagina usa file della libreria media (loghi dei partner, PDF), la scheda li elenca, da controllare dopo l'incollo. Nulla viene inviato al live: si incolla a mano, pagina per pagina.
 5. Assegnare i modelli: *Elenco corsi* a `/offerta-formativa/corsi/`, *Eventi* a `/eventi/`, *Bandi e documenti* a `/bandi-albi/` e `/bandi/`, *Edizioni dei corsi* a `/offerta-formativa/corsi-in-svolgimento-e-conclusi/`; impostare `/news/` come pagina degli articoli.
 6. Menu: posizioni *Menu principale*, *Menu footer*, *Note legali*.
 7. Home: Customizer → *Home* → video dell'hero (MP4 muto); l'immagine in evidenza della pagina iniziale fa da copertina del video. Il contenuto della pagina (loghi con link) diventa la sezione «I nostri partner». I loghi dei finanziatori nel footer sono file vettoriali ufficiali inclusi nel tema (`assets/img/funding/`, fonti in `SOURCES.md`); si cambiano con il filtro `its_funding_logos`.
@@ -497,6 +535,8 @@ Contiene solo ciò che manca sul live: gli altri header arrivano già dal server
 | Il doppio clic su `avvia-linux.sh` apre l'editor | Dipende dal file manager: lanciarlo da terminale con `./avvia-linux.sh` |
 | In locale, nella console dell'admin: *Unexpected token '<'* | Il Polylang locale viene dal sorgente GitHub, che non ha `js/build/admin.min.js`. Non riguarda il tema né la produzione, dove Polylang arriva completo da WordPress.org |
 | `package.py`: *modifiche non committate* | Fare commit delle modifiche al tema, oppure annullarle, e rilanciare |
+| `dev/test/run.py`: *Playwright non è installato* | `python3 -I dev/test/run.py --installa`, una volta sola |
+| `dev/test/run.py`: un controllo fallisce | Leggere il motivo sotto la ✗ e guardare la schermata in `.wp/test-results/`; il log del server dei test è in `.wp/test-results/server.log` |
 | `package.py`: *Traduzioni non aggiornate* | `python3 -I dev/i18n/build.py`, tradurre le nuove voci in `en_GB.po`, rilanciare `build.py`, commit |
 | Caricando lo zip: *Il pacchetto non può essere installato* o *Stile mancante* | Lo zip non ha la cartella `its-rossellini/` al primo livello: usare quello creato da `package.py` |
 | Dopo l'attivazione compare l'avviso «servono questi plugin» | Usare i pulsanti dell'avviso; per Rossellini Core vedi [Plugin e dipendenze](#plugin-e-dipendenze) |

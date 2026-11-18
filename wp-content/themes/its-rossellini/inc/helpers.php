@@ -229,6 +229,7 @@ function its_facts(): array {
 		'hours'      => its_number( (string) get_theme_mod( 'its_fact_hours', '1.000' ) ),
 		'internship' => (string) get_theme_mod( 'its_fact_internship', '800+' ),
 		'places'     => (string) get_theme_mod( 'its_fact_places', '28' ),
+		'stage'      => trim( (string) get_theme_mod( 'its_fact_stage', '360 m²' ) ),
 		'employment' => (string) get_theme_mod( 'its_fact_employment', '87%' ),
 		'source'     => its_tr( (string) get_theme_mod( 'its_fact_employment_source', 'Dato pubblicato da ITS Rossellini' ) ),
 	);

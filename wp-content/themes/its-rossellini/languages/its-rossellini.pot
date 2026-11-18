@@ -21,7 +21,7 @@ msgstr ""
 msgid "Preiscrizione"
 msgstr ""
 
-#: 404.php:28 front-page.php:242
+#: 404.php:28 front-page.php:244
 msgid "Bandi e documenti"
 msgstr ""
 
@@ -61,7 +61,7 @@ msgstr ""
 msgid "Trasparenza"
 msgstr ""
 
-#: footer.php:63 inc/helpers.php:427
+#: footer.php:63 inc/helpers.php:428
 msgid "Bandi e albi"
 msgstr ""
 
@@ -145,169 +145,169 @@ msgstr ""
 msgid "Teatro di posa"
 msgstr ""
 
-#: front-page.php:187
+#: front-page.php:189
 msgid "Aule, laboratori e set nella sede di Via Tiburtina."
 msgstr ""
 
-#: front-page.php:195
+#: front-page.php:197
 msgid "Trova il tuo <strong>campo d’azione.</strong>"
 msgstr ""
 
-#: front-page.php:201
+#: front-page.php:203
 msgid "%d percorso biennale, con presenza quotidiana nei laboratori e docenti che lavorano davvero nell’industria creativa e tecnologica."
 msgid_plural "%d percorsi biennali, con presenza quotidiana nei laboratori e docenti che lavorano davvero nell’industria creativa e tecnologica."
 msgstr[0] ""
 msgstr[1] ""
 
-#: front-page.php:208
+#: front-page.php:210
 msgid "Vedi tutti i corsi"
 msgstr ""
 
-#: front-page.php:214
+#: front-page.php:216
 msgid "Durata"
 msgstr ""
 
-#: front-page.php:214
+#: front-page.php:216
 msgid "%s anni, dopo il diploma"
 msgstr ""
 
-#: front-page.php:215
+#: front-page.php:217
 msgid "Aula e laboratorio"
 msgstr ""
 
-#: front-page.php:215
+#: front-page.php:217
 msgid "circa %s ore"
 msgstr ""
 
-#: front-page.php:216
+#: front-page.php:218
 msgid "Tirocinio in azienda"
 msgstr ""
 
-#: front-page.php:216
+#: front-page.php:218
 msgid "%s ore"
 msgstr ""
 
-#: front-page.php:217
+#: front-page.php:219
 msgid "Costo"
 msgstr ""
 
-#: front-page.php:217
+#: front-page.php:219
 msgid "Percorsi finanziati con risorse pubbliche"
 msgstr ""
 
-#: front-page.php:218
+#: front-page.php:220
 msgid "Posti"
 msgstr ""
 
-#: front-page.php:218
+#: front-page.php:220
 msgid "fino a %s per corso"
 msgstr ""
 
-#: front-page.php:219
+#: front-page.php:221
 msgid "Accesso"
 msgstr ""
 
-#: front-page.php:219
+#: front-page.php:221
 msgid "Diploma di scuola superiore o titolo estero idoneo"
 msgstr ""
 
-#: front-page.php:220
+#: front-page.php:222
 msgid "Esperienza all’estero"
 msgstr ""
 
-#: front-page.php:220
+#: front-page.php:222
 msgid "Tirocini con Erasmus+, secondo bandi e requisiti"
 msgstr ""
 
-#: front-page.php:221
+#: front-page.php:223
 msgid "Dopo il diploma"
 msgstr ""
 
-#: front-page.php:221
+#: front-page.php:223
 msgid "%s lavora entro 12 mesi"
 msgstr ""
 
-#: front-page.php:227
+#: front-page.php:229
 msgid "Tutto in chiaro. <strong>Poi decidi.</strong>"
 msgstr ""
 
-#: front-page.php:228
+#: front-page.php:230
 msgid "Le risposte che contano prima di candidarti, prese dai bandi e dalle FAQ dell’Academy."
 msgstr ""
 
-#: front-page.php:231
+#: front-page.php:233
 msgid "ITS Academy Roberto Rossellini"
 msgstr ""
 
-#: front-page.php:241 header.php:72 inc/sections.php:69
+#: front-page.php:243 header.php:72 inc/sections.php:69
 msgid "Preiscriviti"
 msgstr ""
 
-#: front-page.php:267
+#: front-page.php:269
 msgid "Dal primo ciak <strong>al primo contratto.</strong>"
 msgstr ""
 
-#: front-page.php:270
+#: front-page.php:272
 msgid "Orientati"
 msgstr ""
 
-#: front-page.php:271
+#: front-page.php:273
 msgid "Conosci persone, corsi e laboratori: open day, colloquio individuale, FAQ."
 msgstr ""
 
-#: front-page.php:274
+#: front-page.php:276
 msgid "Fai esperienza"
 msgstr ""
 
-#: front-page.php:278
+#: front-page.php:280
 msgid "Lavora su brief, set e progetti reali: %s ore, portfolio, lavoro in team."
 msgstr ""
 
-#: front-page.php:283
+#: front-page.php:285
 msgid "Entra nel settore"
 msgstr ""
 
-#: front-page.php:287
+#: front-page.php:289
 msgid "Porta le competenze dentro un’azienda: %s ore di stage e placement."
 msgstr ""
 
-#: front-page.php:292
+#: front-page.php:294
 msgid "Stage e placement"
 msgstr ""
 
-#: front-page.php:300
+#: front-page.php:302
 msgid "Parti da Roma. <strong>Arriva ovunque.</strong>"
 msgstr ""
 
-#: front-page.php:301
+#: front-page.php:303
 msgid "Lezioni, laboratori e teatro di posa sono in Via Tiburtina, a pochi passi dalla Metro B. E con Erasmus+ il tirocinio può portarti all’estero."
 msgstr ""
 
-#: front-page.php:303
+#: front-page.php:305
 msgid "Sede legale e operativa"
 msgstr ""
 
-#: front-page.php:304
+#: front-page.php:306
 msgid "Metro B"
 msgstr ""
 
-#: front-page.php:304
+#: front-page.php:306
 msgid "Pietralata · Monti Tiburtini"
 msgstr ""
 
-#: front-page.php:305 inc/customizer.php:19
+#: front-page.php:307 inc/customizer.php:19
 msgid "Orari"
 msgstr ""
 
-#: front-page.php:306
+#: front-page.php:308
 msgid "Erasmus+"
 msgstr ""
 
-#: front-page.php:306
+#: front-page.php:308
 msgid "Tirocinio all’estero"
 msgstr ""
 
-#: front-page.php:311
+#: front-page.php:313
 msgid "Roma"
 msgstr ""
 
@@ -379,19 +379,19 @@ msgstr ""
 msgid "Cambia corso"
 msgstr ""
 
-#: inc/customizer.php:152
+#: inc/customizer.php:153
 msgid "Via Tiburtina 691, Roma"
 msgstr ""
 
-#: inc/customizer.php:153
+#: inc/customizer.php:154
 msgid "Metro B Pietralata o Monti Tiburtini"
 msgstr ""
 
-#: inc/customizer.php:154
+#: inc/customizer.php:155
 msgid "Lun–Ven 9:30–13:30 / 14:30–18:30"
 msgstr ""
 
-#: inc/customizer.php:155
+#: inc/customizer.php:156
 msgid "Dato pubblicato da ITS Rossellini"
 msgstr ""
 
@@ -436,46 +436,50 @@ msgid "Posti per corso"
 msgstr ""
 
 #: inc/customizer.php:33
-msgid "Diplomati occupati entro 12 mesi"
+msgid "Teatro di posa, superficie (vuoto: non si mostra)"
 msgstr ""
 
 #: inc/customizer.php:34
+msgid "Diplomati occupati entro 12 mesi"
+msgstr ""
+
+#: inc/customizer.php:35
 msgid "Fonte del dato occupazionale"
 msgstr ""
 
-#: inc/customizer.php:38 inc/helpers.php:418
+#: inc/customizer.php:39 inc/helpers.php:419
 msgid "Home"
 msgstr ""
 
-#: inc/customizer.php:51
+#: inc/customizer.php:52
 msgid "Video della home (MP4, senza audio)"
 msgstr ""
 
-#: inc/customizer.php:52
+#: inc/customizer.php:53
 msgid "Come copertina si usa l’immagine in evidenza della pagina iniziale."
 msgstr ""
 
-#: inc/customizer.php:63
+#: inc/customizer.php:64
 msgid "Accessibilità"
 msgstr ""
 
-#: inc/customizer.php:64
+#: inc/customizer.php:65
 msgid "Link nel footer di ogni pagina, come chiede la Legge 4/2004 (art. 3-quater)."
 msgstr ""
 
-#: inc/customizer.php:77
+#: inc/customizer.php:78
 msgid "Dichiarazione di accessibilità (URL)"
 msgstr ""
 
-#: inc/customizer.php:78
+#: inc/customizer.php:79
 msgid "Il link generato da form.agid.gov.it, oppure una pagina del sito. Vuoto: la pagina con slug «dichiarazione-di-accessibilita», se esiste."
 msgstr ""
 
-#: inc/customizer.php:93
+#: inc/customizer.php:94
 msgid "Email per le segnalazioni di accessibilità"
 msgstr ""
 
-#: inc/customizer.php:94
+#: inc/customizer.php:95
 msgid "Il meccanismo di feedback indicato nella dichiarazione. Vuoto: l’email dei contatti."
 msgstr ""
 
@@ -483,75 +487,75 @@ msgstr ""
 msgid "Prossimamente"
 msgstr ""
 
-#: inc/helpers.php:266
+#: inc/helpers.php:267
 msgid "Segnalazione di accessibilità"
 msgstr ""
 
-#: inc/helpers.php:267
+#: inc/helpers.php:268
 msgid "Pagina:"
 msgstr ""
 
-#: inc/helpers.php:368
+#: inc/helpers.php:369
 msgid "Lingua: %s. Cambia lingua"
 msgstr ""
 
-#: inc/helpers.php:383
+#: inc/helpers.php:384
 msgid "Precedenti"
 msgstr ""
 
-#: inc/helpers.php:384
+#: inc/helpers.php:385
 msgid "Successivi"
 msgstr ""
 
-#: inc/helpers.php:388
+#: inc/helpers.php:389
 msgid "Pagine"
 msgstr ""
 
-#: inc/helpers.php:415 inc/helpers.php:435
+#: inc/helpers.php:416 inc/helpers.php:436
 msgid "Percorso"
 msgstr ""
 
-#: inc/helpers.php:426
+#: inc/helpers.php:427
 msgid "Eventi"
 msgstr ""
 
-#: inc/helpers.php:428
+#: inc/helpers.php:429
 msgid "Edizioni dei corsi"
 msgstr ""
 
-#: inc/helpers.php:461
+#: inc/helpers.php:462
 msgid "Sistema nazionale ITS Academy"
 msgstr ""
 
-#: inc/helpers.php:463
+#: inc/helpers.php:464
 msgid "Istituti Tecnici Superiori, It’s my future"
 msgstr ""
 
-#: inc/helpers.php:467
+#: inc/helpers.php:468
 msgid "Programma regionale FSE+ Lazio 2021-2027"
 msgstr ""
 
-#: inc/helpers.php:469
+#: inc/helpers.php:470
 msgid "Coesione Italia 21-27 Lazio"
 msgstr ""
 
-#: inc/helpers.php:470
+#: inc/helpers.php:471
 msgid "Cofinanziato dall’Unione europea"
 msgstr ""
 
-#: inc/helpers.php:471
+#: inc/helpers.php:472
 msgid "Repubblica Italiana"
 msgstr ""
 
-#: inc/helpers.php:472
+#: inc/helpers.php:473
 msgid "Regione Lazio"
 msgstr ""
 
-#: inc/helpers.php:476
+#: inc/helpers.php:477
 msgid "PNRR Istruzione"
 msgstr ""
 
-#: inc/helpers.php:478
+#: inc/helpers.php:479
 msgid "Futura, la scuola per l’Italia di domani. PNRR Istruzione, finanziato dall’Unione europea NextGenerationEU, Ministero dell’Istruzione e del Merito"
 msgstr ""
 
@@ -623,7 +627,7 @@ msgstr ""
 msgid "Avvisi, graduatorie, progetti e risultati degli studenti."
 msgstr ""
 
-#: index.php:23 inc/helpers.php:429
+#: index.php:23 inc/helpers.php:430
 msgid "News"
 msgstr ""
 
@@ -851,7 +855,7 @@ msgstr ""
 msgid "Otto percorsi biennali post-diploma: scegli l’area, poi il mestiere."
 msgstr ""
 
-#: templates/template-corsi.php:23 inc/helpers.php:425
+#: templates/template-corsi.php:23 inc/helpers.php:426
 msgid "Corsi"
 msgstr ""
 
