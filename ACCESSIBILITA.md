@@ -18,6 +18,8 @@ Sul sito live, al 17/11/2026, non c'è nessun link a una dichiarazione di access
 
 Resta comunque da far confermare l'inquadramento a un legale o all'RTD.
 
+**Portale iscrizioni.** Le domande di ammissione si inviano su `iscrizioni.itsrossellini.it`, un sito separato (non WordPress, su un altro server). La dichiarazione si compila per ciascun sito: quella di itsrossellini.it non copre il portale. Con l'RTD va valutata una dichiarazione propria anche per il portale, che è il servizio con cui i candidati presentano la domanda.
+
 Per i soggetti dell'art. 3, comma 1:
 
 - **Conformità tecnica.** Requisiti di accessibilità delle linee guida AgID, cioè la norma UNI CEI EN 301 549, che rimanda alle WCAG 2.1 livello AA.
@@ -50,7 +52,8 @@ Per i soggetti dell'art. 3, comma 1:
 - Movimento:
   - interruttore «Animazioni» nel footer e rispetto di «riduci movimento» del sistema;
   - video della home senza audio, sempre fermabile;
-  - nessun contenuto lampeggiante.
+  - nessun contenuto lampeggiante;
+  - animazioni allo scroll, in entrata e in uscita (risalendo): seguono lo stesso interruttore; a scroll fermo tutto ciò che è sullo schermo è visibile; senza JavaScript non è nascosto nulla (aggiunte il 18/11/2026).
 - Lingua della pagina dichiarata (it/en). Titoli animati letti da tastiera e screen reader come testo intero.
 
 **Footer di ogni pagina**
@@ -177,6 +180,28 @@ Oggi sia Word sia Google Docs producono PDF con tag:
 **Modulo Word (1):** «Istanza di iscrizione». Va bene come modulo compilabile se usa titoli, campi con etichetta e niente tabelle per impaginare. Affiancargli il PDF accessibile se è solo da leggere.
 
 Per i documenti già usati in procedure concluse (bandi e graduatorie di edizioni passate), la riesportazione può essere sostituita dall'impegno a fornirli in formato accessibile su richiesta, indicandoli nella dichiarazione.
+
+## 6. Verifiche ricorrenti
+
+| Quando | Cosa | Chi |
+|---|---|---|
+| Ogni anno entro il 23 settembre | Aggiornare la dichiarazione su form.agid.gov.it, riesaminando i punti 2 e 5 | RTD, con lo sviluppatore |
+| A ogni nuovo PDF | Controllo di tag, lingua e titolo (punto 5) prima di pubblicarlo | Redazione |
+| A ogni modifica del tema | Le verifiche qui sotto sulle pagine toccate | Sviluppatore |
+| Quando cambiano sito, ente o RTD | Dati nell'Indice PA | RTD |
+
+**Come ripetere le verifiche del tema.** Su queste pagine, in italiano e in inglese, da desktop e da telefono: home, elenco corsi, scheda corso, una pagina a sezioni (per esempio Servizi), news, un articolo, eventi, un evento, bandi e albi, un documento, FAQ, preiscrizione, ricerca, pagina non trovata.
+
+1. **Automatiche.** Chrome, F12 → *Lighthouse* → *Accessibilità*; estensione gratuita axe DevTools → *Scan*. Obiettivo: 0 violazioni, come al punto 2.
+2. **Tastiera** (solo Tab, Maiusc+Tab, Invio, Esc):
+   - «Vai al contenuto» è il primo elemento;
+   - il focus è sempre visibile e mai sotto l'header;
+   - menu mobile, ricerca e selettore della lingua si aprono e si chiudono con Esc.
+3. **Zoom.** Al 400%, o con la finestra larga 320 px: niente scorrimento orizzontale, niente testo tagliato.
+4. **Movimento.** Con l'interruttore «Animazioni» spento nessuna animazione. Con «riduci movimento» attivo nel sistema e nessuna scelta nel footer, animazioni spente.
+5. **Screen reader.** NVDA (Windows, gratuito) o VoiceOver (Mac, iPhone): titoli letti interi, numeri con il valore finale, immagini con il testo alternativo.
+6. **Contrasto.** Per nuovi colori o testi su foto: Colour Contrast Analyser (gratuito), almeno 4,5:1 (3:1 per il testo grande).
+7. **PDF.** PAC (gratuito, Windows) o veraPDF: tag, lingua, titolo del documento.
 
 ## Fonti
 

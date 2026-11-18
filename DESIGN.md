@@ -188,7 +188,37 @@ Interior pages (courses, news, documents) are light: white ground with a soft bl
 
 ## Elevation & Depth
 
-Depth comes from layering: panels over the canvas, the partner bar over the hero's lower edge, glass over footage, the white path card over its photo. Motion is JavaScript-led and exists only while the footer switch "Animazioni" is on (remembered per visitor; flipping it reloads the page from the top; with no choice made, the system reduced-motion setting decides; hidden without JavaScript). The same motion runs on every page, interior ones included. On: the hero and page heads come in on load (headline words rise from a mask and sharpen from a blur, like a focus pull, then lead, actions, glass cards, partner bar; on course pages the large photo comes into focus); headings, cards, rows, tiles and footer columns rise in staggered batches as they enter the viewport; figures count up from zero; scrolling back up, whatever sinks into the bottom quarter of the screen goes out there, in view, with the same animation in reverse: same durations and curves, staggered from the bottom up (cards fade and sink, headline words drop back into their mask, the footer logo un-draws, figures count back down to zero); when the scroll stops, what went out above the entry line comes back, so the screen is never left with gaps; every reveal plays again on the way down without a reload, while what leaves through the top stays in place; the hero footage, the path photo and the page-head photos drift with the scroll, and the path photo comes into focus as it appears; the globe turns and Rome pings; FAQ items open and close with a height animation; as soon as the footer comes into view the outlined footer logo is traced stroke by stroke from 0 to 100%, left to right, in about a second and a half; filtered course cards fade back in. Off: a static site, no transitions, video paused, accordions native. A reload always starts at the top of the page; back/forward return to where the visitor was. Nothing is hidden without JavaScript, and assistive tech reads the plain heading text and final figures. Shadows are soft and offset (`0 30px 60px -36px rgb(4 21 43 / 0.45)`); primary buttons carry a blue glow (`0 14px 32px -12px rgb(16 50 207 / 0.65)`). Glass: white text sits on navy glass (`rgb(4 21 43 / 0.42–0.5)`, blur 12–18px), dark text on light glass (white at 86%): measured on the real pixels behind the text, both keep WCAG AA over the brightest frame of a photo or of the footage. On phones the hero scrim covers the whole width, because the text does. Page-load headlines (hero, page heads, articles) arrive already split into words from the server (`its_split_words()`), and their rise starts from CSS with the first paint: they are the largest element on screen, and they must not wait for the script.
+Depth comes from layering: panels over the canvas, the partner bar over the hero's lower edge, glass over footage, the white path card over its photo. Shadows are soft and offset (`0 30px 60px -36px rgb(4 21 43 / 0.45)`); primary buttons carry a blue glow (`0 14px 32px -12px rgb(16 50 207 / 0.65)`). Glass: white text sits on navy glass (`rgb(4 21 43 / 0.42–0.5)`, blur 12–18px), dark text on light glass (white at 86%): measured on the real pixels behind the text, both keep WCAG AA over the brightest frame of a photo or of the footage. On phones the hero scrim covers the whole width, because the text does.
+
+## Motion
+
+Motion is JavaScript-led and exists only while the footer switch "Animazioni" is on (remembered per visitor; flipping it reloads the page from the top; with no choice made, the system reduced-motion setting decides; hidden without JavaScript). The same motion runs on every page, interior ones included.
+
+**On:**
+- **Page load.** The hero and page heads come in: headline words rise from a mask and sharpen from a blur, like a focus pull, then lead, actions, glass cards, partner bar; on course pages the large photo comes into focus. Page-load headlines (hero, page heads, articles) arrive already split into words from the server (`its_split_words()`), and their rise starts from CSS with the first paint: they are the largest element on screen, and they must not wait for the script.
+- **Going down.** Headings, cards, rows, tiles and footer columns rise in staggered batches as they enter the viewport; figures count up from zero; as soon as the footer comes into view the outlined footer logo is traced stroke by stroke from 0 to 100%, left to right, in about a second and a half.
+- **Going back up.** Whatever sinks into the bottom quarter of the screen goes out there, in view, with the same animation in reverse: same durations and curves, staggered from the bottom up (cards fade and sink, headline words drop back into their mask, the footer logo un-draws, figures count back down to zero). What leaves through the top stays in place.
+- **At rest.** What went out above the entry line comes back, so the screen is never left with gaps; every reveal plays again on the way down, without a reload.
+- **Always.** The hero footage, the path photo and the page-head photos drift with the scroll, and the path photo comes into focus as it appears; the globe turns and Rome pings; FAQ items open and close with a height animation; filtered course cards fade back in.
+
+**Off:** a static site, no transitions, video paused, accordions native.
+
+A reload always starts at the top of the page; back/forward return to where the visitor was. Nothing is hidden without JavaScript, and assistive tech reads the plain heading text and final figures.
+
+### Timing
+
+The same transitions run in and out.
+
+| Element | Animation | Duration and curve |
+|---|---|---|
+| Cards, text, rows, tiles | fade in, rise 2rem | opacity 0.8s, translate 1s, `--ease-out` (`cubic-bezier(0.16, 1, 0.3, 1)`) |
+| Headline words | rise from a mask, blur 0.12em to sharp | translate 1.1s, blur 1.5s, `--ease-out`, +55ms per word |
+| Footer logo | each outline traced 0 → 100% | 1.2s `cubic-bezier(0.33, 0, 0.2, 1)`, +18ms per outline, left to right |
+| Path photo | blur 18px to sharp, scale 1.22 to 1.1 | blur 1.6s, scale 1.9s, `--ease-out` |
+| Figures | count 0 → value | 1.5s, cubic ease-out; on the hero 700ms later |
+| Batches | stagger | 80ms between items, at most 8 steps; top-down in, bottom-up out |
+
+Lines on the screen: things come in above the bottom 8% and, going up, go out below 75%; the direction turns after 24px of scroll; "at rest" is 400ms without scrolling; the footer logo and hero figures wait until a fifth of them shows. Code: the `Motion` module in `assets/js/main.js` (constants `STEP`, `ENTER`, `EXIT`) and *Scroll reveals* in `assets/css/main.css`.
 
 ## Shapes
 
@@ -255,6 +285,7 @@ Rows in a rounded container with circular arrows; the document filter is a light
 - **Do** use glass only over imagery.
 - **Do** keep every action a pill with a verb, and the ↗ arrow on primary actions.
 - **Do** use real photography; photos under 1200px stay in tiles and cards, never full width.
+- **Do** keep motion symmetric: what comes in one way goes out the same way, and nothing on screen stays hidden once the scroll stops.
 
 ### Don't:
 - **Don't** add yellow, green, red or per-area colours.

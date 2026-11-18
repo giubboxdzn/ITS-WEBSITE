@@ -45,7 +45,7 @@ A non-university tertiary path (ITS Academy, Italian national system) that train
 
 - Course catalogue filterable by technological area (Cinema & TV, Multimedia, Audio, Tech).
 - News, events, documents with filters by type and biennium.
-- Pre-enrolment and contact flows; the actual forms are outside the theme (undecided: plugin or external link).
+- Pre-enrolment and contact flows. Applications are submitted on a separate portal, iscrizioni.itsrossellini.it (a Laravel application on its own server, not WordPress). The theme's pre-enrolment page prepares the application (requirements, steps, help) and is not integrated with the portal (user decision, 18/11/2026). Contacts are e-mail links to the right office.
 - Institutional pages: transparency, registers (teachers, suppliers, professionals), privacy and cookie policies.
 - Must keep working with Polylang language switching and Yoast SEO output.
 - No trackers or external requests added by the theme.
@@ -79,4 +79,21 @@ The current itsrossellini.it theme is the visual reference: the new theme stays 
 
 ## Accessibility & Inclusion
 
-Public-funded educational institution: target WCAG 2.2 AA (Italian public-sector expectations), readable on low-end phones, respect `prefers-reduced-motion`, no content hidden behind scroll animations.
+Public-funded educational institution: target WCAG 2.2 AA (Italian public-sector expectations), readable on low-end phones, respect `prefers-reduced-motion`, no content hidden behind scroll animations. Legal obligations (Legge 4/2004, the accessibility statement on form.agid.gov.it) are in `ACCESSIBILITA.md`.
+
+## Decisions
+
+Key decisions, in order; dates from the project history.
+
+| Date | Decision |
+|---|---|
+| 16/11/2026 | Same stack as the live site: classic WordPress theme, hand-written CSS and JavaScript, no framework or build. |
+| 16/11/2026 | The first direction ("locandina e fotobusta": yellow second ink, area colours, condensed face) is rejected as not modern and not on-brand; the theme follows the current site, modernised. |
+| 16/11/2026 | Visual references: three Dribbble shots, then deluxhost.net for the comparison card, the place block, the FAQ and the footer. |
+| 16/11/2026 | Home hero and footer run edge to edge, without inset or corners. |
+| 16/11/2026 | Motion only behind the footer switch "Animazioni"; flipping it reloads the page from the top. |
+| 16/11/2026 | Italian and English, with flags in the header and the footer, as on the live site (Polylang). |
+| 17/11/2026 | Every interior page on white; the navy floating header on every page. |
+| 17/11/2026 | Funding bar built only from the official vector logos (sources in `assets/img/funding/SOURCES.md`). |
+| 18/11/2026 | Scroll animations are reversible: going back up, things go out in view with the same animation in reverse, and play again on the way down. |
+| 18/11/2026 | The enrolment portal (iscrizioni.itsrossellini.it) is not integrated into the site. |
