@@ -25,6 +25,7 @@ Direzione visiva: **contenitori arrotondati, vetro e titoli leggeri**, sui rifer
 ## Indice
 
 - [Documentazione del progetto](#documentazione-del-progetto)
+- [Avvio con un doppio clic](#avvio-con-un-doppio-clic)
 - [Primo avvio, per chi riceve il progetto](#primo-avvio-per-chi-riceve-il-progetto)
 - [Struttura](#struttura)
 - [Sviluppo locale](#sviluppo-locale)
@@ -48,6 +49,31 @@ Direzione visiva: **contenitori arrotondati, vetro e titoli leggeri**, sui rifer
 | [`wp-content/themes/its-rossellini/assets/img/funding/SOURCES.md`](wp-content/themes/its-rossellini/assets/img/funding/SOURCES.md) | Fonti ufficiali dei loghi dei finanziatori | Se cambiano i loghi nel footer |
 | [`phpcs.xml.dist`](phpcs.xml.dist) | Regole di qualità del codice PHP | Prima di ogni commit |
 
+## Avvio con un doppio clic
+
+Per vedere il sito in locale senza usare il terminale, nella cartella del progetto:
+
+| Sistema | File | Cosa fa la prima volta |
+|---|---|---|
+| Windows 10 e 11 | `avvia-windows.cmd` | Se mancano, propone di installare Git per Windows e Python con winget. Scarica PHP 8.4 dentro `.wp\php`, senza installarlo nel sistema, e lo verifica con l'impronta pubblicata da php.net |
+| macOS | `avvia-mac.command` | Se mancano PHP, Python o git, propone di installarli con Homebrew (o gli strumenti di Xcode per git) |
+| Linux | `avvia-linux.sh` | Se mancano, propone di installare i pacchetti con `apt-get` (Debian, Ubuntu); su altre distribuzioni dice quali servono |
+
+Poi, su tutti i sistemi:
+1. la prima volta installa WordPress e scarica i contenuti del sito, in qualche minuto (`dev/setup.sh`);
+2. avvia il server su una porta libera, a partire dalla 8080;
+3. apre il browser sul sito. L'admin è su `/wp-admin`, con utente `admin` e password `admin`, valide solo in locale.
+
+Dalla seconda volta il sito parte in pochi secondi. Se è già acceso, il file apre solo il browser. Per fermarlo basta chiudere la finestra.
+
+Nulla viene installato senza conferma. Il sito risponde solo da questo PC. Per provarlo dal telefono sulla stessa Wi-Fi, da terminale: `avvia-windows.cmd --rete` (oppure `./avvia-mac.command --rete`, `./avvia-linux.sh --rete`). Con `--aggiorna` riscarica prima i contenuti dal sito live.
+
+Al primo doppio clic il sistema può chiedere conferma:
+- **Windows**, se il progetto è stato scaricato come zip da GitHub: *Windows ha protetto il PC* → *Ulteriori informazioni* → *Esegui comunque*;
+- **macOS**: tasto destro sul file → *Apri* → *Apri*.
+
+Sono script leggibili, non programmi `.exe` compilati: si possono controllare prima di eseguirli, non vanno ricompilati a ogni modifica e l'antivirus non li blocca come eseguibili sconosciuti. La logica comune è in `dev/avvia.sh`, la preparazione di Windows in `dev/windows/avvia.ps1`.
+
 ## Primo avvio, per chi riceve il progetto
 
 1. **Accesso al codice.** Chiedere l'invito come collaboratore del repository GitHub, poi:
@@ -56,7 +82,7 @@ Direzione visiva: **contenitori arrotondati, vetro e titoli leggeri**, sui rifer
    cd ITS-WEBSITE
    ```
 2. **Requisiti.** PHP 8.1 o successivo con `pdo_sqlite`, git e Python 3 (su Windows vedi [sotto](#windows-git-bash)). Non serve MySQL.
-3. **Installazione locale** (la prima volta qualche minuto: scarica WordPress e i contenuti pubblici del sito):
+3. **Installazione locale**: doppio clic sul file del proprio sistema ([sopra](#avvio-con-un-doppio-clic)), oppure da terminale (la prima volta qualche minuto: scarica WordPress e i contenuti pubblici del sito):
    ```bash
    dev/setup.sh
    dev/serve.sh
@@ -99,6 +125,8 @@ wp-content/themes/its-rossellini/   il tema (da installare in produzione)
   assets/css/editor.css             stile dell'editor a blocchi
   assets/fonts/                     Raleway variabile, normale e corsivo (OFL), self-hosted
   assets/img/                       logo, loghi dei finanziatori (funding/, con le fonti in SOURCES.md)
+avvia-windows.cmd, avvia-mac.command, avvia-linux.sh
+                                    avvio del sito in locale con un doppio clic (vedi «Avvio con un doppio clic»)
 dev/                                ambiente locale (non va in produzione); dev/i18n/build.py compila le traduzioni;
                                     dev/package.py crea il pacchetto di produzione
 dist/                               pacchetti creati da dev/package.py (ignorata da git)
@@ -159,6 +187,8 @@ In WSL (`bash` da PowerShell) si è in Linux: PHP e Python vanno installati dent
 
 | Script | Cosa fa |
 |---|---|
+| `avvia.sh` | Avvio in un passo: controlla i requisiti (e propone di installarli), la prima volta lancia `setup.sh`, avvia `serve.sh` su una porta libera e apre il browser. `--rete`, `--aggiorna` |
+| `windows/avvia.ps1` | Solo Windows: prepara Git Bash, PHP portatile in `.wp\php` e Python, poi lancia `avvia.sh`. Usato da `avvia-windows.cmd` |
 | `setup.sh` | Installa WordPress, SQLite e Polylang in `.wp/`, crea `wp-config.php`, collega tema e mu-plugin, importa i contenuti. Si può rilanciare: rifà solo ciò che manca. `--no-seed` salta l'import |
 | `serve.sh` | Avvia il server PHP integrato (porta 8080, raggiungibile in rete locale) |
 | `router.php` | Instrada le richieste del server locale e applica gli stessi header di `server/htaccess-sicurezza.conf` |
@@ -462,6 +492,9 @@ Contiene solo ciò che manca sul live: gli altri header arrivano già dal server
 | Le animazioni non partono | Interruttore «Animazioni» spento, oppure «riduci movimento» attivo nel sistema operativo |
 | Link che puntano a `localhost` aprendo il sito da un altro dispositivo | Aprire il sito con l'indirizzo di rete stampato da `serve.sh`, non con `localhost` |
 | Si vuole ripartire da zero | Cancellare `.wp/db/` e rilanciare `dev/setup.sh` |
+| `avvia-windows.cmd` si chiude subito o dice che PowerShell è bloccato | Aprirlo da un prompt dei comandi per leggere il messaggio. Se l'organizzazione blocca gli script PowerShell, seguire l'installazione a mano ([Windows (Git Bash)](#windows-git-bash)) |
+| `avvia-windows.cmd`: *VCRUNTIME140.dll non trovato* | Accettare l'installazione del Visual C++ Redistributable che il file propone, oppure scaricarlo da Microsoft (vc_redist.x64.exe) |
+| Il doppio clic su `avvia-linux.sh` apre l'editor | Dipende dal file manager: lanciarlo da terminale con `./avvia-linux.sh` |
 | In locale, nella console dell'admin: *Unexpected token '<'* | Il Polylang locale viene dal sorgente GitHub, che non ha `js/build/admin.min.js`. Non riguarda il tema né la produzione, dove Polylang arriva completo da WordPress.org |
 | `package.py`: *modifiche non committate* | Fare commit delle modifiche al tema, oppure annullarle, e rilanciare |
 | `package.py`: *Traduzioni non aggiornate* | `python3 -I dev/i18n/build.py`, tradurre le nuove voci in `en_GB.po`, rilanciare `build.py`, commit |

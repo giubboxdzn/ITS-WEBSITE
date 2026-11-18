@@ -1,2 +1,7 @@
 # Shell scripts must keep LF line endings, also on Windows checkouts (core.autocrlf).
 *.sh text eol=lf
+# Windows launchers: CRLF, as cmd.exe and Windows PowerShell expect (the .ps1 is UTF-8 with BOM, for PowerShell 5.1).
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+# Mac launcher: LF, like the shell scripts.
+*.command text eol=lf
