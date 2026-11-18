@@ -124,7 +124,7 @@ function Get-PortablePhp {
 	$extDir = (Join-Path $dir 'ext').Replace('\', '/')
 	$ini = [regex]::Replace($ini, '(?m)^;[ \t]*extension_dir[ \t]*=[ \t]*"ext"[ \t]*(?=\r?$)', "extension_dir = `"$extDir`"")
 	foreach ($ext in @('curl', 'fileinfo', 'gd', 'mbstring', 'openssl', 'pdo_sqlite', 'sqlite3', 'zip')) {
-		$ini = [regex]::Replace($ini, "(?m)^;(extension=$ext)(?=[ \t]*\r?$)", '$1')
+		$ini = [regex]::Replace($ini, '(?m)^;(extension=' + $ext + ')(?=[ \t]*\r?$)', '$1')
 	}
 	$ini += "`r`n; ITS Rossellini (avvia-windows.cmd)`r`nmemory_limit = 512M`r`nupload_max_filesize = 64M`r`npost_max_size = 64M`r`n"
 	[IO.File]::WriteAllText((Join-Path $dir 'php.ini'), $ini, (New-Object System.Text.UTF8Encoding $false))
